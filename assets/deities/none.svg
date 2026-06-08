@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360">
+  <rect width="240" height="360" fill="#12110e"/>
+  <path d="M24 18h192v324H24z" fill="#e8dfcb" opacity=".16" stroke="#d9a83f" stroke-width="4"/>
+  <path d="M120 38v284M70 75l100 210M170 75 70 285" stroke="#e8dfcb" stroke-width="3" opacity=".45"/>
+  <text x="120" y="327" text-anchor="middle" font-family="serif" font-size="26" font-weight="700" fill="#e8dfcb">CUERVOS</text>
+</svg>

@@ -1,0 +1,95 @@
+<form class="{{cssClass}} camc-sheet camc-item camc-item-{{item.type}}" autocomplete="off">
+  <header class="camc-hero camc-item-hero {{#if (eq item.type "vehiculo")}}vehicle{{/if}}">
+    <div class="camc-portrait-stack">
+      <img class="camc-portrait profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    </div>
+    <section class="camc-identity">
+      <input class="camc-name char-name" name="name" type="text" value="{{item.name}}"/>
+      <div class="camc-identity-grid item-meta">
+        <label><span>Clase</span><input type="text" value="{{item.type}}" disabled/></label>
+        {{#if system.tamano}}
+        <label><span>Tamaño</span><select name="system.tamano">{{#select system.tamano}}{{#each config.tamanos as |label key|}}<option value="{{key}}">{{label}}</option>{{/each}}{{/select}}</select></label>
+        {{/if}}
+        {{#if system.deterioro}}
+        <label><span>Deterioro</span><select name="system.deterioro">{{#select system.deterioro}}{{#each config.deterioro as |label key|}}<option value="{{key}}">{{label}}</option>{{/each}}{{/select}}</select></label>
+        {{/if}}
+        {{#if system.disponibilidad}}
+        <label><span>Disponibilidad</span><select name="system.disponibilidad">{{#select system.disponibilidad}}<option value="muy_raro">Muy raro</option><option value="raro">Raro</option><option value="infrecuente">Infrecuente</option><option value="frecuente">Frecuente</option><option value="muy_frecuente">Muy frecuente</option>{{/select}}</select></label>
+        {{/if}}
+        {{#if isPortable}}
+        <label><span>Carga</span><input name="system.carga.espacios" type="number" step="0.5" min="0" value="{{cargaEspacios}}"/></label>
+        <label><span>Ubicación</span><select name="system.carga.ubicacion">{{#select system.carga.ubicacion}}{{#each config.ubicacionesCarga as |label key|}}<option value="{{key}}">{{label}}</option>{{/each}}{{/select}}</select></label>
+        {{/if}}
+        {{#if (eq system.deterioro "R")}}
+        <button type="button" class="camc-action-button roll-decay"><i class="fas fa-recycle"></i> Caducidad</button>
+        {{/if}}
+      </div>
+    </section>
+    {{#if (eq item.type "vehiculo")}}
+    <aside class="camc-vehicle-head">
+      <div class="camc-resource-card"><div class="camc-resource-head"><i class="fas fa-heart-pulse"></i><span>Estructura</span><strong>{{system.estructura.value}} / {{system.estructura.max}}</strong></div><div class="camc-progress health {{structureTone}}"><i style="width: {{structurePct}}%"></i></div><div class="camc-resource-actions"><button type="button" class="camc-adjust" data-path="system.estructura.value" data-delta="-1">−</button><input name="system.estructura.value" type="number" value="{{system.estructura.value}}"/><input name="system.estructura.max" type="number" value="{{system.estructura.max}}"/><button type="button" class="camc-adjust" data-path="system.estructura.value" data-delta="1">+</button></div></div>
+      <div class="camc-stack-stat"><i class="fas fa-dice-d6"></i><span>Daño</span><b>{{system.dados_dano}}</b></div>
+    </aside>
+    {{/if}}
+  </header>
+
+  <nav class="camc-tabs tabs" data-group="primary">
+    <a class="item active" data-tab="principal"><i class="fas fa-gauge-high"></i> Principal</a>
+  </nav>
+
+  <main class="camc-body">
+    <section class="tab active" data-group="primary" data-tab="principal">
+      {{#if (eq item.type "arma")}}
+      <div class="camc-grid camc-item-grid">
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-crossed-swords"></i> Arma</h2>
+          <div class="camc-form-grid">
+            <label><span>Categoría</span><select name="system.categoria">{{#select system.categoria}}{{#each config.categoriasArma as |cat key|}}<option value="{{key}}">{{cat.label}}</option>{{/each}}{{/select}}</select></label>
+            <label><span>Alcance</span><input name="system.alcance" type="text" value="{{system.alcance}}"/></label>
+            <label><span>Dados extra</span><input name="system.dano" type="text" value="{{system.dano}}" placeholder="Ej. 1D"/></label>
+            <label><span>Daño fijo</span><input name="system.dano_fijo" type="number" value="{{system.dano_fijo}}"/></label>
+            <label><span>Munición actual</span><input name="system.municion.value" type="number" value="{{system.municion.value}}"/></label>
+            <label><span>Munición máx.</span><input name="system.municion.max" type="number" value="{{system.municion.max}}"/></label>
+          </div>
+          <div class="camc-rule-strip"><b>{{categoriaArmaLabel}}</b><span>Daño: {{formulaDanoLabel}}</span></div>
+          <div class="camc-progress ammo"><i style="width: {{ammoPct}}%"></i></div>
+          <label class="camc-block"><span>Especial</span><textarea name="system.especial" placeholder="{{system.regla_dano}}">{{system.especial}}</textarea></label>
+          <div class="camc-quick-actions"><button type="button" class="camc-action-button danger roll-damage"><i class="fas fa-dice-d6"></i> Tirar daño</button><button type="button" class="camc-action-button toggle-equipped {{#if system.equipada}}active{{/if}}"><i class="fas fa-toggle-on"></i> {{#if system.equipada}}Equipada{{else}}Equipar{{/if}}</button></div>
+        </section>
+        <section class="camc-panel camc-side-description"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section>
+      </div>
+      {{/if}}
+
+      {{#if (eq item.type "armadura")}}
+      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-vest"></i> Armadura</h2><div class="camc-form-grid"><label><span>Nivel</span><input name="system.nivel" type="number" value="{{system.nivel}}"/></label><label><span>Penalización</span><input name="system.penalizacion" type="number" value="{{system.penalizacion}}"/></label><label><span>Compatible</span><input name="system.compatible" type="checkbox" {{checked system.compatible}}/></label></div><button type="button" class="camc-action-button toggle-equipped {{#if system.equipada}}active{{/if}}">{{#if system.equipada}}Desequipar{{else}}Equipar{{/if}}</button></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
+      {{/if}}
+
+      {{#if (eq item.type "escudo")}}
+      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-shield"></i> Escudo</h2><div class="camc-form-grid"><label><span>Nivel</span><input name="system.nivel" type="number" value="{{system.nivel}}"/></label><label><span>Penalización</span><input name="system.penalizacion" type="number" value="{{system.penalizacion}}"/></label></div><button type="button" class="camc-action-button toggle-equipped {{#if system.equipado}}active{{/if}}">{{#if system.equipado}}Desequipar{{else}}Equipar{{/if}}</button></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
+      {{/if}}
+
+      {{#if (eq item.type "don")}}
+      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-bolt"></i> Don</h2><div class="camc-form-grid"><label><span>Deidad</span><input name="system.deidad" type="text" value="{{system.deidad}}"/></label><label><span>Virtud</span><input name="system.virtud" type="text" value="{{system.virtud}}"/></label><label><span>Coste en proezas</span><input name="system.coste_proezas" type="number" value="{{system.coste_proezas}}"/></label><label><span>Coste descriptivo</span><input name="system.coste_descripcion" type="text" value="{{system.coste_descripcion}}"/></label></div><div class="camc-cost-box"><i class="fas fa-bolt-lightning"></i><b>{{system.coste_proezas}}</b><span>proezas</span><button type="button" class="camc-action-button use-don"><i class="fas fa-bolt"></i> Usar don</button></div><label class="camc-block"><span>Efecto</span><textarea name="system.efecto">{{system.efecto}}</textarea></label></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
+      {{/if}}
+
+      {{#if (eq item.type "objeto")}}
+      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-box"></i> Objeto</h2><div class="camc-form-grid"><label><span>Tipo</span><input name="system.tipo" type="text" value="{{system.tipo}}"/></label><label><span>Cantidad</span><input name="system.cantidad" type="number" value="{{system.cantidad}}"/></label></div><button type="button" class="camc-action-button toggle-equipped {{#if system.equipada}}active{{/if}}">{{#if system.equipada}}Desequipar{{else}}Equipar{{/if}}</button><label class="camc-block"><span>Especial / regla</span><textarea name="system.especial">{{system.especial}}</textarea></label></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
+      {{/if}}
+
+      {{#if (eq item.type "vehiculo")}}
+      <div class="camc-grid camc-vehicle-grid">
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-motorcycle"></i> Vehículo</h2><div class="camc-form-grid"><label><span>Maniobrabilidad</span><input name="system.maniobrabilidad" type="number" value="{{system.maniobrabilidad}}"/></label><label><span>Ocupantes</span><input name="system.ocupantes" type="number" value="{{system.ocupantes}}"/></label><label><span>Dados de daño</span><input name="system.dados_dano" type="text" value="{{system.dados_dano}}"/></label></div><label class="camc-block"><span>Modificaciones</span><textarea name="system.modificaciones">{{system.modificaciones}}</textarea></label></section>
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-wrench"></i> Acciones rápidas</h2><div class="camc-vehicle-actions"><button type="button" class="vehicle-action" data-action="accelerate"><i class="fas fa-gauge-high"></i><b>Acelerar</b><span>Prueba 1d6 + maniobra.</span></button><button type="button" class="vehicle-action" data-action="maneuver"><i class="fas fa-route"></i><b>Maniobra</b><span>Evitar obstáculos o perseguir.</span></button><button type="button" class="vehicle-action danger" data-action="damage"><i class="fas fa-explosion"></i><b>Aplicar daño</b><span>Tira daño del vehículo.</span></button><button type="button" class="vehicle-action" data-action="repair"><i class="fas fa-screwdriver-wrench"></i><b>Reparar</b><span>Restaura 1 Estructura.</span></button></div></section>
+        <section class="camc-panel wide"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section>
+      </div>
+      {{/if}}
+
+      {{#if (eq item.type "talento")}}
+      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-star"></i> Talento</h2><label><span>Cargo</span><input name="system.cargo" type="text" value="{{system.cargo}}"/></label><label><span>Efecto</span><textarea name="system.efecto">{{system.efecto}}</textarea></label></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
+      {{/if}}
+
+      {{#if (eq item.type "regla")}}
+      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-scroll"></i> Regla</h2><label><span>Categoría</span><input name="system.categoria" type="text" value="{{system.categoria}}"/></label><label><span>Resumen</span><textarea name="system.resumen">{{system.resumen}}</textarea></label></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
+      {{/if}}
+    </section>
+  </main>
+</form>

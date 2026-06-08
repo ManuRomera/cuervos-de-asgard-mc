@@ -1,0 +1,68 @@
+{
+  "attributes": [
+    "car",
+    "des",
+    "fue",
+    "int",
+    "per"
+  ],
+  "skills": {
+    "atletismo": "des",
+    "auxilio": "int",
+    "conducir": "des",
+    "conversacion": "car",
+    "cultura": "int",
+    "entorno": "per",
+    "fuerza_bruta": "fue",
+    "idioma_extranjero": "int",
+    "idioma_mitico": "int",
+    "informacion": "int",
+    "intimidacion": "car",
+    "lucha": "des",
+    "mecanica": "int",
+    "memoria": "int",
+    "observacion": "per",
+    "ocultacion": "des",
+    "oido": "per",
+    "psicologia": "per",
+    "punteria": "per",
+    "rastreo": "per",
+    "seduccion": "car",
+    "sigilo": "des",
+    "subterfugio": "car",
+    "supervivencia": "per"
+  },
+  "creation": {
+    "attribute_array": [
+      0,
+      1,
+      2,
+      4,
+      6
+    ],
+    "skill_distribution": "4 habilidades a 3D, 8 habilidades a 2D, el resto a 1D",
+    "favoured_skill_bonus": 3,
+    "favoured_skills_per_role": 4
+  },
+  "passives": {
+    "agilidad": "3 × Atletismo + DES",
+    "evasion": "3 × Conducir + DES",
+    "aplomo": "CAR + INT + 5",
+    "perspicacia": "INT + PER + 5",
+    "iniciativa": "DES + INT",
+    "resistencia_fisica": "12 - FUE"
+  },
+  "dice": {
+    "basic": "Tirada de habilidad: 1D/2D/3D + atributo + modificadores contra dificultad.",
+    "critical": "Dos o más seises en la tirada: crítico y se gana 1 proeza.",
+    "fumble": "Todos los dados muestran 1: pifia.",
+    "proeza": "Puede gastarse para reforzar tiradas o activar dones, según el efecto."
+  },
+  "equipment": {
+    "foot_capacity": "A pie se pueden llevar 6 espacios de equipo.",
+    "saddlebags": "Las alforjas de la moto aportan 8 espacios de equipo. Las alforjas extra añaden otros 8, pero no aumentan la carga a pie.",
+    "sizes": "Objeto pequeño: 0,5 espacios; mediano: 1 espacio; grande: 2 espacios; no equipable: no cuenta como carga personal.",
+    "decay": "El equipo reciclado usado al final de la aventura tira 1D: 4-6 sigue funcionando, 3 requiere Mecánica 12, 2 requiere Mecánica 18, 1 queda roto salvo crítico de reparación.",
+    "search": "Buscar equipo exige Supervivencia; negociar trueque o favores usa Conversación."
+  }
+}

@@ -1,0 +1,132 @@
+[
+  {
+    "name": "Moto",
+    "type": "vehiculo",
+    "img": "icons/vehicles/motorcycle.webp",
+    "system": {
+      "tipo": "moto",
+      "dados_dano": "2D",
+      "estructura": { "value": 15, "max": 15 },
+      "maniobrabilidad": 2,
+      "ocupantes": 1,
+      "descripcion": "El vehículo por excelencia de los Cuervos de Asgard. Rápida, maniobrable y versátil."
+    }
+  },
+  {
+    "name": "Moto con sidecar",
+    "type": "vehiculo",
+    "img": "icons/vehicles/motorcycle-sidecar.webp",
+    "system": {
+      "tipo": "moto_sidecar",
+      "dados_dano": "3D",
+      "estructura": { "value": 20, "max": 20 },
+      "maniobrabilidad": 1,
+      "ocupantes": 2,
+      "descripcion": "Permite llevar un pasajero adicional, útil para patrullas."
+    }
+  },
+  {
+    "name": "Automóvil",
+    "type": "vehiculo",
+    "img": "icons/vehicles/car.webp",
+    "system": {
+      "tipo": "automovil",
+      "dados_dano": "4D",
+      "estructura": { "value": 25, "max": 25 },
+      "maniobrabilidad": 0,
+      "ocupantes": 4,
+      "descripcion": "Vehículo común recuperado del Viejo Mundo."
+    }
+  },
+  {
+    "name": "Todoterreno",
+    "type": "vehiculo",
+    "img": "icons/vehicles/suv.webp",
+    "system": {
+      "tipo": "todoterreno",
+      "dados_dano": "5D",
+      "estructura": { "value": 30, "max": 30 },
+      "maniobrabilidad": 0,
+      "ocupantes": 5,
+      "descripcion": "Ideal para terrenos difíciles de las Llanuras Yermas."
+    }
+  },
+  {
+    "name": "Furgoneta",
+    "type": "vehiculo",
+    "img": "icons/vehicles/van.webp",
+    "system": {
+      "tipo": "furgoneta",
+      "dados_dano": "5D",
+      "estructura": { "value": 30, "max": 30 },
+      "maniobrabilidad": -1,
+      "ocupantes": 8,
+      "descripcion": "Vehículo espacioso para transporte de personas o mercancías."
+    }
+  },
+  {
+    "name": "Camioneta / Furgón",
+    "type": "vehiculo",
+    "img": "icons/vehicles/truck.webp",
+    "system": {
+      "tipo": "camioneta",
+      "dados_dano": "6D",
+      "estructura": { "value": 35, "max": 35 },
+      "maniobrabilidad": -2,
+      "ocupantes": 3,
+      "descripcion": "Robusta y con buena capacidad de carga."
+    }
+  },
+  {
+    "name": "Autobús",
+    "type": "vehiculo",
+    "img": "icons/vehicles/bus.webp",
+    "system": {
+      "tipo": "autobus",
+      "dados_dano": "7D",
+      "estructura": { "value": 40, "max": 40 },
+      "maniobrabilidad": -3,
+      "ocupantes": 30,
+      "descripcion": "Utilizado para transportar comunidades enteras."
+    }
+  },
+  {
+    "name": "Camión",
+    "type": "vehiculo",
+    "img": "icons/vehicles/truck-heavy.webp",
+    "system": {
+      "tipo": "camion",
+      "dados_dano": "8D",
+      "estructura": { "value": 45, "max": 45 },
+      "maniobrabilidad": -4,
+      "ocupantes": 3,
+      "descripcion": "Gran capacidad de transporte para caravanas."
+    }
+  },
+  {
+    "name": "Remolque articulado",
+    "type": "vehiculo",
+    "img": "icons/vehicles/trailer.webp",
+    "system": {
+      "tipo": "remolque",
+      "dados_dano": "9D",
+      "estructura": { "value": 50, "max": 50 },
+      "maniobrabilidad": -5,
+      "ocupantes": 2,
+      "descripcion": "Inmenso vehículo para caravanas de supervivientes."
+    }
+  },
+  {
+    "name": "Excavadora",
+    "type": "vehiculo",
+    "img": "icons/vehicles/excavator.webp",
+    "system": {
+      "tipo": "excavadora",
+      "dados_dano": "10D",
+      "estructura": { "value": 60, "max": 60 },
+      "maniobrabilidad": -6,
+      "ocupantes": 1,
+      "descripcion": "Maquinaria pesada para construcción o demolición."
+    }
+  }
+]

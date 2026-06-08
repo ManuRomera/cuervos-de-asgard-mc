@@ -1,0 +1,73 @@
+<form class="{{cssClass}} camc-sheet camc-community camc-community-infographic" autocomplete="off">
+  <header class="camc-community-top">
+    <section class="camc-community-title">
+      <input class="camc-name char-name" name="name" type="text" value="{{actor.name}}" placeholder="Nombre del asentamiento"/>
+      <div class="camc-community-fields">
+        <label><span>Nombre interno</span><input name="system.nombre" type="text" value="{{system.nombre}}"/></label>
+        <label><span>Capítulo</span><input name="system.capitulo" type="text" value="{{system.capitulo}}"/></label>
+        <label><span>Censo</span><input name="system.poblacion" type="number" value="{{system.poblacion}}"/></label>
+        <label><span>Reputación</span><input name="system.reputacion.value" type="number" min="0" max="10" value="{{system.reputacion.value}}"/></label>
+      </div>
+    </section>
+    <aside class="camc-community-runes">ᚲ ᚢ ᛖ ᚱ ᚹ ᛟ ᛋ</aside>
+  </header>
+
+  <section class="camc-community-stage">
+    <button type="button" class="community-img-button" title="Cambiar imagen del asentamiento">
+      <img src="{{actor.img}}" alt="{{actor.name}}"/>
+      <i class="fas fa-camera"></i>
+    </button>
+
+    <section class="camc-community-left camc-community-orbit">
+      <article class="camc-community-stat {{riesgo.tone}}">
+        <span>Estado</span>
+        <b>{{riesgo.label}}</b>
+        <small>{{riesgo.text}}</small>
+      </article>
+      <article class="camc-community-stat">
+        <span>Población</span>
+        <b>{{system.poblacion}}</b>
+        <small>{{populationTier}}</small>
+      </article>
+    </section>
+
+    <section class="camc-community-right camc-community-orbit">
+      <article class="camc-community-stat">
+        <span>Reputación</span>
+        <b>{{system.reputacion.value}} / 10</b>
+        <div class="camc-progress"><i style="width: {{reputacionPct}}%"></i></div>
+        <small>{{reputacionEstado}}</small>
+      </article>
+      <button type="button" class="community-generate camc-action-button"><i class="fas fa-dice"></i><span>Generar asentamiento</span></button>
+    </section>
+
+    <section class="camc-community-resources">
+      {{#each recursos as |r|}}
+      <article class="camc-resource-chip {{r.tone}}">
+        <i class="fas {{r.icon}}"></i>
+        <span>{{r.label}}</span>
+        <b>{{r.value}}</b>
+        <div class="camc-stepper">
+          <button type="button" class="camc-adjust" data-path="system.recursos.{{r.key}}" data-delta="-1">-</button>
+          <button type="button" class="camc-adjust" data-path="system.recursos.{{r.key}}" data-delta="1">+</button>
+        </div>
+      </article>
+      {{/each}}
+    </section>
+  </section>
+
+  <nav class="camc-tabs tabs" data-group="primary">
+    <a class="item active" data-tab="resumen"><i class="fas fa-gauge-high"></i> Resumen</a>
+  </nav>
+
+  <main class="camc-body camc-community-tabs-body">
+    <section class="tab active" data-group="primary" data-tab="resumen">
+      <div class="camc-grid camc-community-summary">
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-shield"></i> Defensas</h2><textarea name="system.defensas">{{system.defensas}}</textarea></section>
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-handshake"></i> Aliados</h2><textarea name="system.aliados">{{system.aliados}}</textarea></section>
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-skull"></i> Amenazas</h2><textarea name="system.amenazas">{{system.amenazas}}</textarea></section>
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-book"></i> Notas</h2><textarea name="system.notas">{{system.notas}}</textarea></section>
+      </div>
+    </section>
+  </main>
+</form>

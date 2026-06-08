@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360">
+  <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#6e1f18"/><stop offset="1" stop-color="#1b1512"/></linearGradient></defs>
+  <rect width="240" height="360" fill="url(#g)"/>
+  <path d="M28 18h184v324H28z" fill="none" stroke="#d9a83f" stroke-width="5"/>
+  <path d="M105 52h30v92h45l-60 142-60-142h45z" fill="#e8dfcb" opacity=".82" stroke="#111" stroke-width="4"/>
+  <path d="M42 56c48 28 108 28 156 0M42 304c48-28 108-28 156 0" fill="none" stroke="#d9a83f" stroke-width="4"/>
+  <text x="120" y="327" text-anchor="middle" font-family="serif" font-size="30" font-weight="700" fill="#e8dfcb">THOR</text>
+</svg>

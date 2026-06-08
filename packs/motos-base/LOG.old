@@ -1,0 +1,7 @@
+2026/06/02-21:21:33.904746 30c384000 Recovering log #23
+2026/06/02-21:21:33.905236 30c384000 Delete type=3 #19
+2026/06/02-21:21:33.905262 30c384000 Delete type=0 #23
+2026/06/02-21:44:33.418682 3051ef000 Level-0 table #28: started
+2026/06/02-21:44:33.418844 3051ef000 Level-0 table #28: 0 bytes OK
+2026/06/02-21:44:33.419178 3051ef000 Delete type=0 #26
+2026/06/02-21:44:33.419225 3051ef000 Manual compaction at level-0 from '!actors!FSp4TCHzVlq5m4Kz' @ 72057594037927935 : 1 .. '!actors.items!xFy7qMdbkFdgXB92.wO938LKUFvFUkKtO' @ 0 : 0; will stop at (end)

@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Autoridad de carretera",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/presidente.webp",
+    "system": {
+      "cargo": "Presidente",
+      "efecto": "Cuando el capítulo actúa unido bajo tus órdenes, puedes declarar una prioridad clara de la escena. El DJ puede conceder +1D a la primera tirada que siga esa orden si el grupo acepta el riesgo.",
+      "descripcion": "Talento de liderazgo para marcar rumbo, asumir responsabilidad y mantener unido al capítulo."
+    }
+  },
+  {
+    "name": "Mano derecha",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/vicepresidente.webp",
+    "system": {
+      "cargo": "Vicepresidente",
+      "efecto": "Una vez por escena puedes cubrir a otro Cuervo que esté actuando por el capítulo. Describe cómo le apoyas y dale +1D o reduce en 1D una penalización circunstancial.",
+      "descripcion": "Talento de apoyo para sostener la mesa presidencial y reemplazar al Presidente cuando haga falta."
+    }
+  },
+  {
+    "name": "Inspirar",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/secretario.webp",
+    "system": {
+      "cargo": "Secretario",
+      "efecto": "Cuando recuerdas una gesta, pronuncias un juramento o conviertes una escena en leyenda del club, el DJ puede conceder proezas al grupo por la interpretación memorable.",
+      "descripcion": "Talento del Secretario: conserva memoria, relato y sentido mítico del capítulo."
+    }
+  },
+  {
+    "name": "Cuentas claras",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/tesorero.webp",
+    "system": {
+      "cargo": "Tesorero",
+      "efecto": "Una vez por sesión puedes localizar, conservar o reasignar un recurso menor del capítulo si explicas dónde estaba guardado y qué coste social o material implica.",
+      "descripcion": "Talento de administración de recursos, favores, deuda y supervivencia logística."
+    }
+  },
+  {
+    "name": "Nadie pasa",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/sargento_armas.webp",
+    "system": {
+      "cargo": "Sargento de armas",
+      "efecto": "Cuando proteges a otro Cuervo o mantienes una línea de defensa, puedes recibir tú una consecuencia física menor para darle +1D a su siguiente tirada de resistencia, lucha o huida.",
+      "descripcion": "Talento de seguridad, pelea y presencia intimidante."
+    }
+  },
+  {
+    "name": "Ruta segura",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/capitan_rutas.webp",
+    "system": {
+      "cargo": "Capitán de rutas",
+      "efecto": "Antes de un viaje o persecución puedes declarar una ruta preparada. Si el grupo la sigue, la primera complicación de terreno, clima o orientación se afronta con +1D.",
+      "descripcion": "Talento de exploración, navegación, vigilancia de ruta y conocimiento del asfalto."
+    }
+  },
+  {
+    "name": "Arreglo de emergencia",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/mecanico_jefe.webp",
+    "system": {
+      "cargo": "Mecánico jefe",
+      "efecto": "Una vez por escena puedes improvisar una reparación suficiente para que una moto, arma o pieza de equipo funcione hasta el final de la escena. Después deberá repararse con tiempo y recursos.",
+      "descripcion": "Talento de mecánica práctica, apaños de carretera y soluciones con lo que haya a mano."
+    }
+  },
+  {
+    "name": "Full Patch",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/full_patch.svg",
+    "system": {
+      "cargo": "Full Patch",
+      "efecto": "Cuando actúas en nombre del club y pones en juego tu reputación, puedes pedir al DJ una ventaja narrativa razonable ligada al parche. Si abusas de ello, el club también paga el precio.",
+      "descripcion": "Talento genérico de pertenencia plena al capítulo."
+    }
+  }
+]

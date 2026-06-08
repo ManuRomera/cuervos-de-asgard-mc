@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360">
+  <rect width="240" height="360" fill="#111318"/>
+  <path d="M24 18h192v324H24z" fill="#e8dfcb" opacity=".13" stroke="#d9a83f" stroke-width="5"/>
+  <path d="M120 58c34 0 62 29 62 64 0 52-62 126-62 126S58 174 58 122c0-35 28-64 62-64z" fill="#e8dfcb" opacity=".82"/>
+  <circle cx="98" cy="125" r="12" fill="#111318"/>
+  <path d="M130 126h35M76 238h88" stroke="#0f8794" stroke-width="8" stroke-linecap="round"/>
+  <text x="120" y="327" text-anchor="middle" font-family="serif" font-size="30" font-weight="700" fill="#e8dfcb">ODIN</text>
+</svg>

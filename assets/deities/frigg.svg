@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360">
+  <rect width="240" height="360" fill="#1b1a28"/>
+  <path d="M24 18h192v324H24z" fill="#e8dfcb" opacity=".13" stroke="#d9a83f" stroke-width="5"/>
+  <path d="M62 132c46-68 70-68 116 0-31 70-85 70-116 0z" fill="#e8dfcb" opacity=".86"/>
+  <path d="M62 132c26 18 90 18 116 0M120 66v196" fill="none" stroke="#0f8794" stroke-width="7"/>
+  <text x="120" y="327" text-anchor="middle" font-family="serif" font-size="30" font-weight="700" fill="#e8dfcb">FRIGG</text>
+</svg>

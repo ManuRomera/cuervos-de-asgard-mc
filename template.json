@@ -1,0 +1,288 @@
+{
+  "Actor": {
+    "types": ["personaje", "pnj", "comunidad", "moto"],
+    "templates": {
+      "baseStats": {
+        "atributos": {
+          "car": { "value": 0 },
+          "des": { "value": 0 },
+          "fue": { "value": 0 },
+          "int": { "value": 0 },
+          "per": { "value": 0 }
+        },
+        "valores_pasivos": {
+          "agilidad": 0,
+          "evasion": 0,
+          "aplomo": 0,
+          "perspicacia": 0
+        },
+        "combate": {
+          "salud": { "value": 14, "max": 14 },
+          "proezas": { "value": 3, "max": 3 },
+          "resistencia_fisica": 12,
+          "iniciativa": 0,
+          "dano_bonus": 0
+        },
+        "proteccion": {
+          "armadura_nivel": 0,
+          "armadura_penalizacion": 0,
+          "escudo_nivel": 0,
+          "escudo_penalizacion": 0
+        }
+      },
+      "skills": {
+        "habilidades": {
+          "atletismo": { "value": 1, "atributo": "des" },
+          "auxilio": { "value": 1, "atributo": "int" },
+          "conducir": { "value": 1, "atributo": "des" },
+          "conversacion": { "value": 1, "atributo": "car" },
+          "cultura": { "value": 1, "atributo": "int" },
+          "entorno": { "value": 1, "atributo": "per" },
+          "fuerza_bruta": { "value": 1, "atributo": "fue" },
+          "idioma_extranjero": { "value": 1, "atributo": "int", "especializacion": "" },
+          "idioma_mitico": { "value": 1, "atributo": "int", "especializacion": "" },
+          "informacion": { "value": 1, "atributo": "int" },
+          "intimidacion": { "value": 1, "atributo": "car" },
+          "lucha": { "value": 1, "atributo": "des" },
+          "mecanica": { "value": 1, "atributo": "int" },
+          "memoria": { "value": 1, "atributo": "int" },
+          "observacion": { "value": 1, "atributo": "per" },
+          "ocultacion": { "value": 1, "atributo": "des" },
+          "oido": { "value": 1, "atributo": "per" },
+          "psicologia": { "value": 1, "atributo": "per" },
+          "punteria": { "value": 1, "atributo": "per" },
+          "rastreo": { "value": 1, "atributo": "per" },
+          "seduccion": { "value": 1, "atributo": "car" },
+          "sigilo": { "value": 1, "atributo": "des" },
+          "subterfugio": { "value": 1, "atributo": "car" },
+          "supervivencia": { "value": 1, "atributo": "per" }
+        },
+        "habilidades_favorecidas": []
+      }
+    },
+    "personaje": {
+      "templates": ["baseStats", "skills"],
+      "biografia": {
+        "jugador": "",
+        "concepto": "",
+        "cargo": "full_patch",
+        "talento": "",
+        "deidad": "",
+        "virtud": "",
+        "don_principal": "",
+        "motivacion": "",
+        "cita": "",
+        "entorno_nacimiento": "",
+        "defecto_grave": "",
+        "defecto_leve": "",
+        "descripcion": "",
+        "historia": ""
+      },
+      "faltas": { "value": 0, "max": 3 },
+      "reputacion": { "value": 6 },
+      "experiencia": { "total": 0, "gastada": 0 },
+      "vehiculo": {
+        "nombre": "",
+        "tipo": "moto",
+        "estructura": { "value": 15, "max": 15 },
+        "dados_dano": "2D",
+        "maniobrabilidad": 2,
+        "modificaciones": ""
+      },
+      "mount": {
+        "uuid": "",
+        "name": "",
+        "img": ""
+      },
+      "carga": {
+        "mochila_max": 6,
+        "alforjas_base": 8,
+        "alforjas_extra": false
+      },
+      "chaleco": {
+        "nombre_izq": "",
+        "nombre_der": "",
+        "merito_izq_1": "",
+        "merito_der_1": "",
+        "merito_izq_2": "",
+        "merito_der_2": "",
+        "merito_izq_3": "",
+        "merito_der_3": "",
+        "merito_izq_4": "",
+        "merito_der_4": ""
+      },
+      "nivel": 1,
+      "notas": ""
+    },
+    "pnj": {
+      "templates": ["baseStats"],
+      "biografia": {
+        "descripcion": "",
+        "raza": "",
+        "reino": "",
+        "rasgos": ""
+      },
+      "habilidades_clave": {
+        "atletismo": { "value": 1, "atributo": "des" },
+        "conducir": { "value": 1, "atributo": "des" },
+        "fuerza_bruta": { "value": 1, "atributo": "fue" },
+        "lucha": { "value": 1, "atributo": "des" },
+        "punteria": { "value": 1, "atributo": "per" },
+        "observacion": { "value": 1, "atributo": "per" },
+        "supervivencia": { "value": 1, "atributo": "per" }
+      },
+      "armas": [],
+      "especial": ""
+    },
+    "comunidad": {
+      "nombre": "",
+      "capitulo": "",
+      "poblacion": 0,
+      "reputacion": { "value": 0 },
+      "recursos": {
+        "comida": 0,
+        "agua": 0,
+        "combustible": 0,
+        "medicina": 0,
+        "municion": 0,
+        "repuestos": 0
+      },
+      "defensas": "",
+      "aliados": "",
+      "amenazas": "",
+      "notas": ""
+    },
+    "moto": {
+      "identidad": {
+        "marca": "",
+        "modelo": "",
+        "apodo": "",
+        "tipo": "Moto normal",
+        "anio": "",
+        "origen": "",
+        "antiguo_dueno": "",
+        "historia": "",
+        "juramento": "",
+        "detalles_visuales": ""
+      },
+      "tecnica": {
+        "motor": "",
+        "cilindrada": "",
+        "refrigeracion": "",
+        "combustible": "",
+        "transmision": "",
+        "chasis": "",
+        "suspension": "",
+        "ruedas": "",
+        "deposito": "",
+        "escape": "",
+        "autonomia": "",
+        "ruido": "",
+        "particularidad": ""
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": { "value": 15, "max": 15 },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": { "value": 0, "max": 8 },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  "Item": {
+    "types": ["arma", "armadura", "escudo", "don", "objeto", "vehiculo", "talento", "regla"],
+    "arma": {
+      "tipo": "cuerpo_a_cuerpo",
+      "categoria": "",
+      "dano": "",
+      "dano_fijo": 0,
+      "tamano": "mediano",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "alcance": "cuerpo_a_cuerpo",
+      "municion": { "value": 0, "max": 0 },
+      "especial": "",
+      "descripcion": "",
+      "equipada": false,
+      "carga": { "ubicacion": "mochila", "espacios": 0 }
+    },
+    "armadura": {
+      "nivel": 1,
+      "penalizacion": 0,
+      "tipo": "armadura",
+      "tamano": "mediano",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "compatible": false,
+      "descripcion": "",
+      "equipada": false,
+      "carga": { "ubicacion": "mochila", "espacios": 0 }
+    },
+    "escudo": {
+      "nivel": 1,
+      "penalizacion": 1,
+      "tipo": "escudo",
+      "tamano": "mediano",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "descripcion": "",
+      "equipado": false,
+      "carga": { "ubicacion": "mochila", "espacios": 0 }
+    },
+    "don": {
+      "deidad": "",
+      "coste_proezas": 0,
+      "coste_descripcion": "",
+      "virtud": "",
+      "efecto": "",
+      "descripcion": ""
+    },
+    "objeto": {
+      "tipo": "general",
+      "tamano": "mediano",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "cantidad": 1,
+      "especial": "",
+      "descripcion": "",
+      "equipada": false,
+      "carga": { "ubicacion": "mochila", "espacios": 0 }
+    },
+    "vehiculo": {
+      "tipo": "moto",
+      "dados_dano": "2D",
+      "estructura": { "value": 15, "max": 15 },
+      "maniobrabilidad": 2,
+      "ocupantes": 1,
+      "modificaciones": "",
+      "descripcion": ""
+    },
+    "talento": {
+      "cargo": "",
+      "efecto": "",
+      "descripcion": ""
+    },
+    "regla": {
+      "categoria": "",
+      "resumen": "",
+      "descripcion": ""
+    }
+  }
+}

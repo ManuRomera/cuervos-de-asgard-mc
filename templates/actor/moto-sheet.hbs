@@ -1,0 +1,185 @@
+<form class="{{cssClass}} camc-sheet camc-moto-sheet camc-moto-infographic" autocomplete="off">
+  <header class="camc-moto-top camc-moto-compact-head">
+    <section class="camc-moto-title">
+      <input class="camc-name char-name" name="name" type="text" value="{{actor.name}}" placeholder="Nombre de la montura"/>
+      <div>
+        <label><span>Marca</span><input name="system.identidad.marca" type="text" value="{{system.identidad.marca}}" title="{{system.identidad.marca}}"/></label>
+        <label><span>Modelo</span><input name="system.identidad.modelo" type="text" value="{{system.identidad.modelo}}" title="{{system.identidad.modelo}}"/></label>
+        <label><span>Tipo</span><input name="system.identidad.tipo" type="text" value="{{system.identidad.tipo}}" title="{{system.identidad.tipo}}"/></label>
+        <label><span>Apodo</span><input name="system.identidad.apodo" type="text" value="{{system.identidad.apodo}}" title="{{system.identidad.apodo}}"/></label>
+      </div>
+    </section>
+    <aside class="camc-moto-runes" aria-hidden="true">ᚱ ᚢ ᚾ ᚨ ᛟ ᛞ ᛁ ᚾ ᚦ ᛟ ᚱ</aside>
+  </header>
+
+  <section class="camc-moto-stage camc-moto-landscape">
+    <button type="button" class="moto-img-button camc-moto-image-ring" title="Cambiar imagen de la moto">
+      <img class="camc-moto-img profile-img" src="{{actor.img}}" data-edit="img" alt="{{actor.name}}"/>
+    </button>
+
+    <div class="camc-moto-kpis">
+      <article class="camc-moto-stat {{status.tone}}">
+        <span>Estado</span><b>{{status.label}}</b><small>{{status.note}}</small>
+      </article>
+      <article class="camc-moto-stat">
+        <span>Estructura</span><b>{{system.reglas.estructura.value}} / {{system.reglas.estructura.max}}</b>
+        <div class="camc-progress {{structureTone}}"><i style="width: {{structurePct}}%"></i></div>
+      </article>
+      <article class="camc-moto-stat">
+        <span>Maniobra</span><b>{{system.reglas.maniobrabilidad}}</b>
+      </article>
+      <article class="camc-moto-stat">
+        <span>Daño</span><b>{{system.reglas.dados_dano}}</b>
+      </article>
+      <article class="camc-moto-stat">
+        <span>Tuneado</span><b>{{modsUsed}} / {{modsMax}}</b>
+      </article>
+      <article class="camc-moto-stat {{#if cargoOver}}danger{{/if}}">
+        <span>Alforjas</span><b>{{cargoUsed}} / {{cargoMax}}</b>
+        <div class="camc-progress {{#if cargoOver}}danger{{else}}good{{/if}}"><i style="width: {{cargoPct}}%"></i></div>
+      </article>
+    </div>
+
+    <div class="camc-moto-actions">
+      <button type="button" class="camc-action-button moto-roll-drive" data-action="Conducir" title="Conducir"><i class="fas fa-motorcycle"></i><span>Conducir</span></button>
+      <button type="button" class="camc-action-button moto-roll-drive" data-action="Maniobra" title="Maniobra"><i class="fas fa-route"></i><span>Maniobra</span></button>
+      <button type="button" class="camc-action-button danger moto-roll-damage" data-action="Embestir" title="Embestir"><i class="fas fa-burst"></i><span>Embestir</span></button>
+      <button type="button" class="camc-action-button danger moto-roll-damage" data-action="Arrollar" title="Arrollar"><i class="fas fa-truck-monster"></i><span>Arrollar</span></button>
+      {{#if extendedMotoRules}}<button type="button" class="camc-action-button moto-roll-drive" data-action="Forzar motor" title="Forzar motor"><i class="fas fa-gauge-high"></i><span>Forzar</span></button>{{/if}}
+      <button type="button" class="camc-action-button moto-repair" title="Reparar +1"><i class="fas fa-screwdriver-wrench"></i><span>Reparar</span></button>
+      <button type="button" class="camc-action-button danger moto-apply-damage" title="Aplicar daño"><i class="fas fa-heart-crack"></i><span>Daño</span></button>
+      {{#if owner}}<button type="button" class="camc-action-button moto-apply-owner" title="Aplicar a {{owner.name}}"><i class="fas fa-user-check"></i><span>Aplicar</span></button>{{/if}}
+    </div>
+  </section>
+
+  <nav class="camc-tabs tabs" data-group="primary">
+    <a class="item active" data-tab="identidad"><i class="fas fa-id-card"></i> Identidad</a>
+    <a class="item" data-tab="mecanica"><i class="fas fa-gears"></i> Mecánica</a>
+    <a class="item" data-tab="tuneado"><i class="fas fa-wrench"></i> Tuneado</a>
+    <a class="item" data-tab="carga"><i class="fas fa-suitcase"></i> Alforjas</a>
+    <a class="item" data-tab="generador"><i class="fas fa-dice"></i> Generador</a>
+  </nav>
+
+  <main class="camc-body camc-moto-tabs-body">
+    <section class="tab active" data-group="primary" data-tab="identidad">
+      <div class="camc-grid camc-two-grid">
+        <section class="camc-panel"><h2 class="camc-panel-title">Identidad</h2>
+          <div class="camc-form-grid">
+            <label><span>Año / procedencia</span><input name="system.identidad.anio" type="text" value="{{system.identidad.anio}}"/></label>
+            <label><span>Antiguo dueño</span><input name="system.identidad.antiguo_dueno" type="text" value="{{system.identidad.antiguo_dueno}}"/></label>
+          </div>
+          <label class="camc-block"><span>Origen</span><textarea name="system.identidad.origen">{{system.identidad.origen}}</textarea></label>
+          <label class="camc-block"><span>Historia</span><textarea name="system.identidad.historia">{{system.identidad.historia}}</textarea></label>
+        </section>
+        <section class="camc-panel"><h2 class="camc-panel-title">Alma de la máquina</h2>
+          <label class="camc-block"><span>Juramento / superstición</span><textarea name="system.identidad.juramento">{{system.identidad.juramento}}</textarea></label>
+          <label class="camc-block"><span>Detalles visuales</span><textarea name="system.identidad.detalles_visuales">{{system.identidad.detalles_visuales}}</textarea></label>
+          <label class="camc-block"><span>Notas</span><textarea name="system.notas">{{system.notas}}</textarea></label>
+        </section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="mecanica">
+      <div class="camc-grid camc-two-grid">
+        <section class="camc-panel"><h2 class="camc-panel-title">Datos técnicos</h2>
+          <div class="camc-form-grid">
+            <label><span>Motor</span><input name="system.tecnica.motor" type="text" value="{{system.tecnica.motor}}"/></label>
+            <label><span>Cilindrada</span><input name="system.tecnica.cilindrada" type="text" value="{{system.tecnica.cilindrada}}"/></label>
+            <label><span>Refrigeración</span><input name="system.tecnica.refrigeracion" type="text" value="{{system.tecnica.refrigeracion}}"/></label>
+            <label><span>Combustible</span><input name="system.tecnica.combustible" type="text" value="{{system.tecnica.combustible}}"/></label>
+            <label><span>Transmisión</span><input name="system.tecnica.transmision" type="text" value="{{system.tecnica.transmision}}"/></label>
+            <label><span>Chasis</span><input name="system.tecnica.chasis" type="text" value="{{system.tecnica.chasis}}"/></label>
+            <label><span>Suspensión</span><input name="system.tecnica.suspension" type="text" value="{{system.tecnica.suspension}}"/></label>
+            <label><span>Ruedas</span><input name="system.tecnica.ruedas" type="text" value="{{system.tecnica.ruedas}}"/></label>
+            <label><span>Depósito</span><input name="system.tecnica.deposito" type="text" value="{{system.tecnica.deposito}}"/></label>
+            <label><span>Escape</span><input name="system.tecnica.escape" type="text" value="{{system.tecnica.escape}}"/></label>
+            <label><span>Autonomía</span><input name="system.tecnica.autonomia" type="text" value="{{system.tecnica.autonomia}}"/></label>
+            <label><span>Ruido</span><input name="system.tecnica.ruido" type="text" value="{{system.tecnica.ruido}}"/></label>
+          </div>
+          <label class="camc-block"><span>Particularidad mecánica</span><textarea name="system.tecnica.particularidad">{{system.tecnica.particularidad}}</textarea></label>
+        </section>
+        <section class="camc-panel"><h2 class="camc-panel-title">Reglas</h2>
+          <div class="camc-form-grid">
+            <label><span>Daño base</span><input name="system.reglas.base_dados_dano" type="text" value="{{system.reglas.base_dados_dano}}"/></label>
+            <label><span>Estructura actual</span><input name="system.reglas.estructura.value" type="number" value="{{system.reglas.estructura.value}}"/></label>
+            <label><span>Estructura base</span><input name="system.reglas.base_estructura" type="number" value="{{system.reglas.base_estructura}}"/></label>
+            <label><span>Maniobrabilidad base</span><input name="system.reglas.base_maniobrabilidad" type="number" value="{{system.reglas.base_maniobrabilidad}}"/></label>
+            <label><span>Plazas</span><input name="system.reglas.plazas" type="number" value="{{system.reglas.plazas}}"/></label>
+            <label><span>Ranuras máx.</span><input name="system.reglas.mods_funcionales_max" type="number" value="{{system.reglas.mods_funcionales_max}}"/></label>
+            <label><span>Penalizador daño grave</span><input name="system.reglas.penalizador_dano_grave" type="number" value="{{system.reglas.penalizador_dano_grave}}"/></label>
+            <label><span>Capacidad base</span><input name="system.reglas.base_alforjas" type="number" value="{{system.reglas.base_alforjas}}"/></label>
+            <label class="camc-checkline"><input name="system.reglas.sidecar" type="checkbox" {{checked system.reglas.sidecar}}/> Tiene sidecar</label>
+          </div>
+          <label><span>Mantenimiento</span><input name="system.reglas.mantenimiento" type="text" value="{{system.reglas.mantenimiento}}"/></label>
+        </section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="tuneado">
+      <div class="camc-grid camc-two-grid">
+        <section class="camc-panel"><div class="camc-panel-header"><h2 class="camc-panel-title">Modificaciones funcionales {{modsUsed}} / {{modsMax}}</h2><button type="button" class="moto-add-mod camc-icon-button" data-type="funcional"><i class="fas fa-plus"></i></button></div>
+          <ol class="camc-mod-list">
+            {{#each functionalMods as |mod|}}
+            <li class="camc-mod-row item {{#if mod.system.equipada}}equipped{{/if}}" data-item-id="{{mod.id}}" draggable="true">
+              <img src="{{mod.img}}"/>
+              <div><button type="button" class="moto-item-edit camc-row-name">{{mod.name}}</button><small>{{mod.system.especial}}</small></div>
+              <button type="button" class="moto-mod-toggle camc-icon-button {{#if mod.system.equipada}}active{{/if}}" title="{{#if mod.system.equipada}}Desequipar{{else}}Equipar{{/if}}"><i class="fas fa-toggle-on"></i></button>
+              <button type="button" class="moto-roll-mechanic camc-icon-button" data-action="instalar" title="Instalar con Mecánica DF 15"><i class="fas fa-screwdriver-wrench"></i></button>
+              <button type="button" class="moto-delete-mod camc-icon-button danger"><i class="fas fa-trash"></i></button>
+            </li>
+            {{else}}<li class="camc-empty">Arrastra modificaciones de moto aquí o pulsa +.</li>{{/each}}
+          </ol>
+        </section>
+        <section class="camc-panel"><div class="camc-panel-header"><h2 class="camc-panel-title">Modificaciones estéticas</h2><button type="button" class="moto-add-mod camc-icon-button" data-type="estetica"><i class="fas fa-plus"></i></button></div>
+          <ol class="camc-mod-list">
+            {{#each cosmeticMods as |mod|}}
+            <li class="camc-mod-row cosmetic item" data-item-id="{{mod.id}}" draggable="true">
+              <img src="{{mod.img}}"/>
+              <div><button type="button" class="moto-item-edit camc-row-name">{{mod.name}}</button><small>{{mod.system.descripcion}}</small></div>
+              <button type="button" class="moto-delete-mod camc-icon-button danger"><i class="fas fa-trash"></i></button>
+            </li>
+            {{else}}<li class="camc-empty">Sin detalles estéticos.</li>{{/each}}
+          </ol>
+        </section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="carga">
+      <div class="camc-grid camc-two-grid">
+        <section class="camc-panel"><h2 class="camc-panel-title">Alforjas</h2>
+          <div class="camc-form-grid">
+            <label><span>Usado</span><input type="text" value="{{cargoUsed}}" readonly/></label>
+            <label><span>Capacidad base</span><input name="system.reglas.base_alforjas" type="number" value="{{system.reglas.base_alforjas}}"/></label>
+          </div>
+          <div class="camc-progress {{#if cargoOver}}danger{{else}}good{{/if}}"><i style="width: {{cargoPct}}%"></i></div>
+          <ol class="camc-item-list dense camc-moto-cargo-list">
+            {{#each cargoItems as |row|}}
+            <li class="camc-item-row" data-item-id="{{row.id}}">
+              <img src="{{row.item.img}}"/>
+              <div><b>{{row.item.name}}</b><small>{{row.actorName}} · {{row.totalLabel}} espacios</small></div>
+              <span class="camc-pill">{{row.totalLabel}} / {{../cargoMax}}</span>
+              <button type="button" class="moto-cargo-remove camc-icon-button" data-uuid="{{row.uuid}}" title="Sacar de alforjas"><i class="fas fa-arrow-up-from-bracket"></i></button>
+            </li>
+            {{else}}<li class="camc-empty">Arrastra equipo a esta hoja para guardarlo en las alforjas.</li>{{/each}}
+          </ol>
+        </section>
+        <section class="camc-panel"><h2 class="camc-panel-title">Carga narrativa</h2><textarea name="system.carga.notas">{{system.carga.notas}}</textarea></section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="generador">
+      <section class="camc-panel camc-generator-panel">
+        <h2 class="camc-panel-title">Generador de monturas</h2>
+        {{#unless extendedMotoRules}}<p class="camc-rules-note"><i class="fas fa-circle-info"></i> Modo manual estricto activo: el generador no añadirá tuneos funcionales con reglas ampliadas. Puedes activarlos en Ajustes del sistema &gt; Reglas ampliadas de motos.</p>{{/unless}}
+        <div class="camc-quick-actions">
+          <button type="button" class="camc-action-button moto-generate" data-mode="full"><i class="fas fa-dice"></i> Generar moto</button>
+          <button type="button" class="camc-action-button moto-generate" data-mode="full"><i class="fas fa-rotate"></i> Regenerar detalles</button>
+          <button type="button" class="camc-action-button moto-generate" data-mode="name">Solo nombre</button>
+          <button type="button" class="camc-action-button moto-generate" data-mode="style">Solo estética</button>
+          <button type="button" class="camc-action-button moto-generate" data-mode="engine">Solo motor</button>
+          <button type="button" class="camc-action-button moto-generate" data-mode="story">Generar historia</button>
+        </div>
+      </section>
+    </section>
+  </main>
+</form>

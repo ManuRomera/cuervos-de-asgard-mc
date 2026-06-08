@@ -1,0 +1,396 @@
+<form class="{{cssClass}} camc-sheet camc-character portrait-{{portraitMode}} deity-{{deityKey}} cargo-{{cargoKey}} {{#if skillEditUnlocked}}skill-editing{{else}}skill-locked{{/if}} {{#if vestCalibration}}vest-calibration{{/if}}" style="--camc-standee-scale: {{portraitScale}};" autocomplete="off">
+  <header class="camc-hero camc-character-hero">
+    <div class="camc-portrait-stack">
+      <div class="camc-portrait-frame">
+        <img class="camc-deity-banner" src="{{deityBanner}}" alt=""/>
+        <img class="camc-portrait profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+        <img class="camc-cargo-patch" src="{{cargoPatch}}" alt=""/>
+      </div>
+    </div>
+
+    <section class="camc-identity">
+      <div class="camc-name-row">
+        <img class="camc-header-logo" src="{{logo}}" alt=""/>
+        <input class="camc-name char-name" name="name" type="text" value="{{actor.name}}" placeholder="Nombre del cuervo"/>
+        <button type="button" class="camc-sheet-img-button" data-edit="img" title="Cambiar imagen del personaje"><i class="fas fa-camera"></i></button>
+      </div>
+      <div class="camc-identity-grid">
+        <label><span>Cargo</span>
+          <select name="system.biografia.cargo">
+            {{#select system.biografia.cargo}}
+            {{#each config.cargos as |cargo key|}}<option value="{{key}}">{{cargo.label}}</option>{{/each}}
+            {{/select}}
+          </select>
+        </label>
+        <label><span>Deidad</span>
+          <select name="system.biografia.deidad">
+            {{#select system.biografia.deidad}}
+            <option value="">—</option>
+            {{#each config.dioses as |dios key|}}<option value="{{key}}">{{dios.label}}</option>{{/each}}
+            {{/select}}
+          </select>
+        </label>
+        <label><span>Virtud</span><input type="text" value="{{deidadActual.virtud}}" readonly/></label>
+        <label><span>Talento</span><input type="text" value="{{cargoTalent.name}}" readonly/></label>
+        <label><span>Jugador</span><input name="system.biografia.jugador" type="text" value="{{system.biografia.jugador}}"/></label>
+        <label><span>Concepto</span><input name="system.biografia.concepto" type="text" value="{{system.biografia.concepto}}"/></label>
+        <label class="camc-wide camc-motivation"><span>Motivación</span><input name="system.biografia.motivacion" type="text" value="{{system.biografia.motivacion}}"/></label>
+      </div>
+    </section>
+
+    <aside class="camc-vitals">
+      <div class="camc-resource-card major">
+        <div class="camc-resource-head"><i class="fas fa-heart-pulse"></i><span>Salud</span><strong>{{system.combate.salud.value}} / {{system.combate.salud.max}}</strong></div>
+        <div class="camc-progress health {{saludTone}}"><i style="width: {{saludPct}}%"></i></div>
+        <div class="camc-resource-actions">
+          <button type="button" class="health-minus"><i class="fas fa-minus"></i></button>
+          <input name="system.combate.salud.value" type="number" value="{{system.combate.salud.value}}"/>
+          <input name="system.combate.salud.max" type="number" value="{{system.combate.salud.max}}"/>
+          <button type="button" class="health-plus"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+      <div class="camc-resource-card major">
+        <div class="camc-resource-head"><i class="fas fa-bolt"></i><span>Proezas</span><strong>{{system.combate.proezas.value}} / {{system.combate.proezas.max}}</strong></div>
+        <div class="camc-progress proezas"><i style="width: {{proezasPct}}%"></i></div>
+        <div class="camc-resource-actions">
+          <button type="button" class="spend-proeza"><i class="fas fa-minus"></i></button>
+          <input name="system.combate.proezas.value" type="number" value="{{system.combate.proezas.value}}"/>
+          <input name="system.combate.proezas.max" type="number" value="{{system.combate.proezas.max}}"/>
+          <button type="button" class="gain-proeza"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+      <div class="camc-mini-vitals">
+        <div class="camc-derived-mini"><i class="fas fa-shield-halved"></i><span>Res. Física</span><strong>{{system.combate.resistencia_fisica}}</strong></div>
+        <button type="button" class="camc-derived-mini roll-initiative" title="Tirar iniciativa · {{initiativeWeapon.label}}"><i class="fas fa-crossed-swords"></i><span>Iniciativa</span><strong>{{system.combate.iniciativa}}</strong><small>{{initiativeWeapon.label}}</small></button>
+      </div>
+      <div class="camc-health-penalty {{healthPenalty.tone}}"><i class="fas fa-triangle-exclamation"></i> {{healthPenalty.label}}{{#if healthPenalty.resistencia}} · {{healthPenalty.resistencia}}{{/if}}</div>
+    </aside>
+  </header>
+
+  <nav class="camc-tabs tabs" data-group="primary">
+    <a class="item active" data-tab="resumen"><i class="fas fa-gauge-high"></i> Resumen</a>
+    <a class="item" data-tab="habilidades"><i class="fas fa-dice-d6"></i> Habilidades</a>
+    <a class="item" data-tab="combate"><i class="fas fa-crossed-swords"></i> Combate</a>
+    <a class="item" data-tab="equipo"><i class="fas fa-suitcase"></i> Equipo</a>
+    <a class="item" data-tab="chaleco"><i class="fas fa-vest"></i> Chaleco</a>
+    <a class="item" data-tab="biografia"><i class="fas fa-book-rune"></i> Biografía</a>
+  </nav>
+
+  <main class="camc-body">
+    <section class="tab active" data-group="primary" data-tab="resumen">
+      <div class="camc-grid camc-summary-grid">
+        <section class="camc-panel camc-attributes-panel">
+          <h2 class="camc-panel-title"><i class="fas fa-skull"></i> Atributos</h2>
+          <div class="camc-attr-list">
+            {{#each attrCards as |attr|}}
+            <article class="camc-attr-card camc-attr-{{attr.key}} score-{{attr.tone}}">
+              <i class="camc-attr-icon fas {{#if (eq attr.key "car")}}fa-masks-theater{{/if}}{{#if (eq attr.key "des")}}fa-feather{{/if}}{{#if (eq attr.key "fue")}}fa-fist-raised{{/if}}{{#if (eq attr.key "int")}}fa-brain{{/if}}{{#if (eq attr.key "per")}}fa-eye{{/if}}"></i>
+              <div><b>{{attr.short}}</b><span>{{attr.label}}</span></div>
+              <select class="camc-attr-select" data-attribute="{{attr.key}}">
+                {{#each attr.options as |option|}}
+                <option value="{{option.value}}" {{#if option.selected}}selected{{/if}}>{{option.value}}</option>
+                {{/each}}
+              </select>
+              <small>{{attr.signed}}</small>
+            </article>
+            {{/each}}
+          </div>
+          <div class="camc-passive-strip">
+            {{#each derivedCards as |d|}}
+            <article><i class="fas {{d.icon}}"></i><span>{{d.label}}</span><b>{{d.value}}</b></article>
+            {{/each}}
+          </div>
+        </section>
+
+        <section class="camc-panel">
+          <div class="camc-panel-header camc-skill-tools compact">
+            <h2 class="camc-panel-title"><i class="fas fa-star"></i> Habilidades destacadas</h2>
+            <button type="button" class="skill-edit-toggle camc-icon-button {{#if skillEditUnlocked}}active{{/if}}" title="{{#if skillEditUnlocked}}Bloquear edición de dados{{else}}Desbloquear edición de dados{{/if}}"><i class="fas fa-wrench"></i></button>
+          </div>
+          <div class="camc-skill-list compact">
+            {{#each habilidadesDestacadas as |skill|}}
+            <div class="camc-skill-row {{#if skill.favorecida}}fav{{/if}}" data-skill="{{skill.key}}">
+              <button type="button" class="fav-toggle camc-icon-button" data-skill="{{skill.key}}" title="Favorecida"><i class="{{#if skill.favorecida}}fas{{else}}far{{/if}} fa-star"></i></button>
+              <button type="button" class="roll-skill camc-skill-name" data-skill="{{skill.key}}">{{skill.label}}</button>
+              <span class="camc-pill attr-{{skill.atributo}}">{{skill.atributoShort}}</span>
+              <span class="camc-skill-dice" title="{{skill.value}} dados">
+                {{#each skill.dice as |die|}}<button type="button" class="skill-die {{#if die.active}}active{{/if}}" data-skill="{{die.skill}}" data-value="{{die.rank}}"><i class="fas fa-dice-six"></i></button>{{/each}}
+              </span>
+              <span class="camc-bonus">{{skill.bonificador}}</span>
+            </div>
+            {{/each}}
+          </div>
+          <button type="button" class="camc-action-button auto-role-skills" title="Usar habilidades del cargo"><i class="fas fa-list-check"></i> Usar habilidades del cargo</button>
+        </section>
+
+        <section class="camc-panel camc-active-equipment">
+          <h2 class="camc-panel-title"><i class="fas fa-road"></i> Equipo activo</h2>
+          <h3><i class="fas fa-crossed-swords"></i> Armas</h3>
+          <ol class="camc-item-list dense">
+            {{#each itemsByType.armasEquipadas as |item|}}
+            <li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true">
+              <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.categoria_label}}</small></div>
+              <span class="camc-pill copper">{{item.system.dano}}{{#if item.system.dano_fijo}}+{{item.system.dano_fijo}}{{/if}}</span>
+              <button type="button" class="item-roll-damage camc-die-button"><i class="fas fa-dice-d6"></i></button>
+              <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+            </li>
+            {{else}}<li class="camc-item-row camc-unarmed"><i class="fas fa-hand-fist"></i><div><b>Desarmado</b><small>Lucha · daño 1 + FUE/2</small></div><span class="camc-pill copper">1</span></li>{{/each}}
+          </ol>
+          <h3><i class="fas fa-shield"></i> Protección</h3>
+          <ol class="camc-item-list dense">
+            {{#each itemsByType.proteccionesEquipadas as |item|}}
+            <li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true">
+              <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.type}}</small></div>
+              <span class="camc-pill cyan">Nivel {{item.system.nivel}}</span>
+              <span class="camc-pill">Pen. {{item.system.penalizacion}}</span>
+              <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+            </li>
+            {{else}}<li class="camc-empty">No hay armadura ni escudo equipados.</li>{{/each}}
+          </ol>
+          <h3><i class="fas fa-bolt"></i> Dones y talentos</h3>
+          <ol class="camc-item-list dense">
+            {{#each itemsByType.dones as |item|}}
+            <li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true">
+              <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.deidad}} · coste {{item.system.coste_proezas}}</small></div>
+              <button type="button" class="use-don camc-die-button" title="Usar don"><i class="fas fa-bolt"></i></button>
+              <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+            </li>
+            {{/each}}
+            {{#each itemsByType.talentos as |item|}}
+            <li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true">
+              <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.cargo}}</small></div>
+              <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+            </li>
+            {{else}}
+            <li class="camc-item-row">
+              <i class="fas fa-star"></i><div><button type="button" class="use-cargo-talent camc-row-name">{{cargoTalent.name}}</button><small>{{cargoActual.label}}</small></div>
+            </li>
+            {{/each}}
+          </ol>
+          <h3><i class="fas fa-motorcycle"></i> Mi montura</h3>
+          <section class="camc-mount-card {{#if mount.linked}}linked{{else}}empty{{/if}} {{#if mount.damaged}}damaged{{/if}} {{#if mount.unusable}}unusable{{/if}}">
+            {{#if mount.linked}}
+            <img src="{{mount.img}}" alt="{{mount.name}}"/>
+            <div class="camc-mount-info">
+              <b>{{mount.name}}</b>
+              <span>{{mount.marca}} {{mount.modelo}}</span>
+              <small>{{mount.tipo}} · EST {{mount.estructura.value}}/{{mount.estructura.max}} · MAN {{mount.maniobrabilidad}} · Daño {{mount.dano}} · Mods {{mount.modsUsed}}/{{mount.modsMax}}</small>
+              {{#if mount.damaged}}<em>Dañada: +3 dificultad a tiradas del piloto.</em>{{/if}}
+            </div>
+            <div class="camc-mount-actions">
+              <button type="button" class="mount-open camc-icon-button" title="Abrir moto"><i class="fas fa-up-right-from-square"></i></button>
+              <button type="button" class="mount-roll-drive camc-icon-button" data-action="Conducir" title="Conducir"><i class="fas fa-motorcycle"></i></button>
+              <button type="button" class="mount-repair camc-icon-button" title="Reparar +1"><i class="fas fa-screwdriver-wrench"></i></button>
+              <button type="button" class="mount-damage camc-icon-button danger" title="Daño -1"><i class="fas fa-heart-crack"></i></button>
+              <button type="button" class="mount-unlink camc-icon-button danger" title="Desvincular"><i class="fas fa-link-slash"></i></button>
+            </div>
+            {{else}}
+            <div class="camc-mount-info">
+              <b>Sin montura vinculada</b>
+              <span>Arrastra una moto sobre la ficha o crea una nueva.</span>
+              {{#if mount.warning}}<small>{{mount.warning}}</small>{{/if}}
+            </div>
+            <div class="camc-mount-actions">
+              <button type="button" class="mount-create camc-action-button"><i class="fas fa-plus"></i> Crear moto</button>
+              <button type="button" class="mount-generate camc-action-button"><i class="fas fa-dice"></i> Generar</button>
+            </div>
+            {{/if}}
+          </section>
+        </section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="habilidades">
+      <section class="camc-panel">
+        <div class="camc-panel-header camc-skill-tools">
+          <h2 class="camc-panel-title"><i class="fas fa-dice-d6"></i> Habilidades</h2>
+          <div class="camc-skill-tool-actions">
+            <button type="button" class="skill-edit-toggle camc-icon-button {{#if skillEditUnlocked}}active{{/if}}" title="{{#if skillEditUnlocked}}Bloquear edición de dados{{else}}Desbloquear edición de dados{{/if}}"><i class="fas fa-wrench"></i></button>
+            <button type="button" class="camc-action-button auto-role-skills" title="Usar habilidades del cargo"><i class="fas fa-list-check"></i> Usar habilidades del cargo</button>
+          </div>
+        </div>
+        <div class="camc-skill-list full">
+          {{#each habilidades as |skill|}}
+          <div class="camc-skill-row {{#if skill.favorecida}}fav{{/if}}" data-skill="{{skill.key}}">
+            <button type="button" class="fav-toggle camc-icon-button" data-skill="{{skill.key}}"><i class="{{#if skill.favorecida}}fas{{else}}far{{/if}} fa-star"></i></button>
+            <button type="button" class="roll-skill camc-skill-name" data-skill="{{skill.key}}">{{skill.label}}</button>
+            <select name="system.habilidades.{{skill.key}}.atributo">
+              {{#select skill.atributo}}
+              {{#each ../config.atributos as |attr key|}}<option value="{{key}}">{{attr.short}}</option>{{/each}}
+              {{/select}}
+            </select>
+            <span class="camc-skill-dice" title="{{skill.value}} dados">
+              {{#each skill.dice as |die|}}<button type="button" class="skill-die {{#if die.active}}active{{/if}}" data-skill="{{die.skill}}" data-value="{{die.rank}}"><i class="fas fa-dice-six"></i></button>{{/each}}
+            </span>
+            <span class="camc-bonus">{{skill.bonificador}}</span>
+          </div>
+          {{/each}}
+        </div>
+      </section>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="combate">
+      <div class="camc-grid camc-combat-grid compact-combat">
+        <section class="camc-panel">
+          <h2 class="camc-panel-title"><i class="fas fa-crossed-swords"></i> Armas</h2>
+          <ol class="camc-item-list rich">
+            <li class="camc-item-row camc-unarmed">
+              <i class="fas fa-hand-fist"></i><div><b>Desarmado</b><small>Lucha · daño 1 + FUE/2</small></div>
+              <span>Daño 1</span>
+            </li>
+            {{#each itemsByType.armas as |item|}}
+            <li class="item camc-item-row {{#if item.system.equipada}}equipped{{/if}}" data-item-id="{{item.id}}" draggable="true">
+              <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.categoria_label}} · {{item.system.alcance}}</small></div>
+              <span>{{item.system.dano}}{{#if item.system.dano_fijo}} + {{item.system.dano_fijo}}{{/if}}</span>
+              <button type="button" class="item-equip camc-icon-button"><i class="fas fa-shield"></i></button>
+              <button type="button" class="item-roll-damage camc-die-button"><i class="fas fa-dice-d6"></i></button>
+              <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+            </li>
+            {{else}}<li class="camc-empty">Sin armas.</li>{{/each}}
+          </ol>
+        </section>
+        <section class="camc-panel">
+          <h2 class="camc-panel-title"><i class="fas fa-shield"></i> Protección</h2>
+          <ol class="camc-item-list rich">
+            {{#each itemsByType.protecciones as |item|}}
+            <li class="item camc-item-row {{#if item.system.equipada}}equipped{{/if}}{{#if item.system.equipado}}equipped{{/if}}" data-item-id="{{item.id}}" draggable="true">
+              <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.type}}</small></div>
+              <span>Nivel {{item.system.nivel}} · Pen. {{item.system.penalizacion}}</span>
+              <button type="button" class="item-equip camc-icon-button"><i class="fas fa-toggle-on"></i></button>
+              <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+            </li>
+            {{else}}<li class="camc-empty">Sin protección.</li>{{/each}}
+          </ol>
+        </section>
+        <section class="camc-panel">
+          <h2 class="camc-panel-title"><i class="fas fa-bolt"></i> Dones disponibles</h2>
+          <ol class="camc-item-list rich">
+            {{#each itemsByType.dones as |item|}}
+            <li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true">
+              <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.deidad}} · coste {{item.system.coste_proezas}}</small></div>
+              <span>{{item.system.virtud}}</span><button type="button" class="use-don camc-die-button" title="Usar don"><i class="fas fa-bolt"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+            </li>
+            {{else}}<li class="camc-empty">Sin dones.</li>{{/each}}
+          </ol>
+        </section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="equipo">
+      <div class="camc-grid camc-equipment-grid dense-equipment">
+        <section class="camc-panel camc-side-stack">
+          <div class="camc-panel-header"><h2 class="camc-panel-title"><i class="fas fa-bolt"></i> Dones</h2><button type="button" class="create-item camc-icon-button" data-type="don"><i class="fas fa-plus"></i></button></div>
+          <ol class="camc-item-list dense">{{#each itemsByType.dones as |item|}}<li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.deidad}} · {{item.system.coste_proezas}}</small></div><button type="button" class="use-don camc-die-button" title="Usar don"><i class="fas fa-bolt"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button></li>{{else}}<li class="camc-empty">Sin dones.</li>{{/each}}</ol>
+          <div class="camc-panel-header compact-head"><h2 class="camc-panel-title"><i class="fas fa-star"></i> Talentos</h2><button type="button" class="create-item camc-icon-button" data-type="talento"><i class="fas fa-plus"></i></button></div>
+          <ol class="camc-item-list dense">{{#each itemsByType.talentos as |item|}}<li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.cargo}}</small></div><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button></li>{{else}}<li class="camc-empty">Sin talentos.</li>{{/each}}</ol>
+          <div class="camc-panel-header compact-head"><h2 class="camc-panel-title"><i class="fas fa-suitcase"></i> Carga</h2></div>
+          <div class="camc-load-box">
+            <div class="camc-load-row {{#if carga.mochila.over}}over{{/if}}"><span>Mochila</span><b>{{carga.mochila.value}} / {{carga.mochila.max}}</b><i style="width: {{carga.mochila.pct}}%"></i></div>
+            <div class="camc-load-row {{#if carga.alforjas.over}}over{{/if}}"><span>Alforjas</span><b>{{carga.alforjas.value}} / {{carga.alforjas.max}}</b><i style="width: {{carga.alforjas.pct}}%"></i></div>
+            <label class="camc-checkline"><input name="system.carga.alforjas_extra" type="checkbox" {{checked carga.hasExtraSaddlebags}}/> Alforjas extra (+8)</label>
+            <p>{{carga.reglas}}</p>
+          </div>
+        </section>
+        <section class="camc-panel camc-inventory-panel">
+          <div class="camc-panel-header"><h2 class="camc-panel-title"><i class="fas fa-box"></i> Inventario</h2><div class="camc-create-row"><button type="button" class="create-item camc-icon-button" data-type="arma" title="Crear arma"><i class="fas fa-crosshairs"></i></button><button type="button" class="create-item camc-icon-button" data-type="armadura" title="Crear armadura"><i class="fas fa-vest"></i></button><button type="button" class="create-item camc-icon-button" data-type="escudo" title="Crear escudo"><i class="fas fa-shield"></i></button><button type="button" class="create-item camc-icon-button" data-type="objeto" title="Crear objeto"><i class="fas fa-plus"></i></button></div></div>
+          <ol class="camc-item-list rich inventory">
+            {{#each itemsByType.armas as |item|}}<li class="item camc-item-row {{#if item.system.equipada}}equipped{{/if}}" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>Arma · {{item.system.categoria_label}}</small></div><span>{{item.system.dano}}{{#if item.system.dano_fijo}}+{{item.system.dano_fijo}}{{/if}}</span><select class="item-carry-location" title="Ubicación de carga">{{#select item.system.carga.ubicacion}}{{#each ../carga.ubicaciones as |label key|}}<option value="{{key}}">{{label}}</option>{{/each}}{{/select}}</select><button type="button" class="item-equip camc-icon-button"><i class="fas fa-toggle-on"></i></button><button type="button" class="item-roll-damage camc-die-button"><i class="fas fa-dice-d6"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button></li>{{/each}}
+            {{#each itemsByType.armaduras as |item|}}<li class="item camc-item-row {{#if item.system.equipada}}equipped{{/if}}" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>Armadura</small></div><span>N{{item.system.nivel}} · P{{item.system.penalizacion}}</span><select class="item-carry-location" title="Ubicación de carga">{{#select item.system.carga.ubicacion}}{{#each ../carga.ubicaciones as |label key|}}<option value="{{key}}">{{label}}</option>{{/each}}{{/select}}</select><button type="button" class="item-equip camc-icon-button"><i class="fas fa-toggle-on"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button></li>{{/each}}
+            {{#each itemsByType.escudos as |item|}}<li class="item camc-item-row {{#if item.system.equipado}}equipped{{/if}}" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>Escudo</small></div><span>N{{item.system.nivel}} · P{{item.system.penalizacion}}</span><select class="item-carry-location" title="Ubicación de carga">{{#select item.system.carga.ubicacion}}{{#each ../carga.ubicaciones as |label key|}}<option value="{{key}}">{{label}}</option>{{/each}}{{/select}}</select><button type="button" class="item-equip camc-icon-button"><i class="fas fa-toggle-on"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button></li>{{/each}}
+            {{#each itemsByType.objetos as |item|}}<li class="item camc-item-row {{#if item.system.equipada}}equipped{{/if}}" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>Objeto · {{item.system.tipo}}</small></div><span>x{{item.system.cantidad}}</span><select class="item-carry-location" title="Ubicación de carga">{{#select item.system.carga.ubicacion}}{{#each ../carga.ubicaciones as |label key|}}<option value="{{key}}">{{label}}</option>{{/each}}{{/select}}</select><button type="button" class="item-equip camc-icon-button" title="{{#if item.system.equipada}}Desequipar{{else}}Equipar{{/if}}"><i class="fas fa-toggle-on"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button></li>{{/each}}
+          </ol>
+        </section>
+        <section class="camc-panel camc-vehicle-panel">
+          <div class="camc-panel-header"><h2 class="camc-panel-title"><i class="fas fa-motorcycle"></i> Vehículos</h2><button type="button" class="create-item camc-icon-button" data-type="vehiculo"><i class="fas fa-plus"></i></button></div>
+          <div class="camc-vehicle-summary">
+            <span>EST {{system.vehiculo.estructura.value}}/{{system.vehiculo.estructura.max}}</span>
+            <span>{{system.vehiculo.dados_dano}}</span>
+            <span>MAN {{system.vehiculo.maniobrabilidad}}</span>
+            <span>OCU {{system.vehiculo.ocupantes}}</span>
+          </div>
+          {{#if system.vehiculo.efectos_mods.length}}<p class="camc-auto-effects">Mods activos: {{system.vehiculo.efectos_mods}}</p>{{/if}}
+          <ol class="camc-item-list dense">{{#each itemsByType.vehiculos as |item|}}<li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.tipo}} · EST {{item.system.estructura.value}}/{{item.system.estructura.max}}</small></div><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button></li>{{else}}<li class="camc-empty">Sin vehículos.</li>{{/each}}</ol>
+        </section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="chaleco">
+      <div class="camc-vest-layout">
+        <section class="camc-panel camc-vest-options">
+          <div class="camc-panel-header">
+            <h2 class="camc-panel-title"><i class="fas fa-vest"></i> Parches del chaleco</h2>
+            {{#if vestCalibrationAvailable}}<button type="button" class="vest-calibration-toggle camc-icon-button {{#if vestCalibration}}active{{/if}}" title="{{#if vestCalibration}}Bloquear calibración{{else}}Desbloquear calibración{{/if}}"><i class="fas fa-wrench"></i></button>{{/if}}
+          </div>
+          <div class="camc-vest-fixed">
+            <article><span>Cargo</span><b>{{cargoActual.label}}</b><small>{{cargoActual.nota}}</small></article>
+            <article><span>Deidad</span><b>{{deidadActual.label}}</b><small>Virtud: {{deidadActual.virtud}}</small></article>
+          </div>
+          <div class="camc-vest-selectors">
+            {{#each vestSlots as |slot|}}
+              {{#if (eq slot.source "manual")}}
+              <label>
+                <span>{{slot.label}}</span>
+                <select class="vest-patch-select" data-slot="{{slot.key}}">
+                  {{#select slot.patchKey}}
+                  <option value="">Sin parche</option>
+                  {{#each slot.options as |patch|}}<option value="{{patch.key}}">{{patch.label}}</option>{{/each}}
+                  {{/select}}
+                </select>
+              </label>
+              {{/if}}
+            {{/each}}
+          </div>
+        </section>
+
+        <section class="camc-vest-stage">
+          <div class="camc-vest-canvas">
+            <img class="camc-vest-base" src="{{vestImage}}" alt="Chaleco"/>
+            {{#each vestSlots as |slot|}}
+              {{#if slot.img}}
+              <img class="camc-vest-patch slot-{{slot.key}} {{#if ../vestCalibration}}calibrating{{/if}}" data-slot="{{slot.key}}" src="{{slot.img}}" alt="{{slot.label}}" title="{{slot.label}} · {{slot.efecto}}{{#if ../vestCalibration}} · Arrastra para mover, rueda para ajustar tamaño{{/if}}" style="left:{{slot.x}}%;top:{{slot.y}}%;width:{{slot.w}}%;height:{{slot.h}}%;"/>
+              {{/if}}
+            {{/each}}
+            {{#if vestCalibration}}
+              {{#each vestSlots as |slot|}}
+              <div class="camc-vest-slot-guide slot-{{slot.key}} calibrating" data-slot="{{slot.key}}" title="{{slot.label}} · Arrastra para mover, rueda para ajustar tamaño" style="left:{{slot.x}}%;top:{{slot.y}}%;width:{{slot.w}}%;height:{{slot.h}}%;"><span>{{slot.label}}</span></div>
+              {{/each}}
+            {{/if}}
+          </div>
+        </section>
+
+        <section class="camc-panel camc-vest-effects">
+          <h2 class="camc-panel-title"><i class="fas fa-scroll"></i> Beneficios</h2>
+          <ol class="camc-patch-effect-list">
+            {{#each vestSlots as |slot|}}
+              {{#if slot.patch}}
+              <li><img src="{{slot.img}}" alt=""/><div><b>{{slot.label}}</b><span>{{slot.efecto}}</span></div></li>
+              {{/if}}
+            {{/each}}
+          </ol>
+        </section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="biografia">
+      <div class="camc-grid camc-bio-grid">
+        <section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.biografia.descripcion">{{system.biografia.descripcion}}</textarea></section>
+        <section class="camc-panel"><h2 class="camc-panel-title">Historia</h2><textarea name="system.biografia.historia">{{system.biografia.historia}}</textarea></section>
+        <section class="camc-panel"><h2 class="camc-panel-title">Cita</h2><textarea name="system.biografia.cita">{{system.biografia.cita}}</textarea></section>
+        <section class="camc-panel"><h2 class="camc-panel-title">Origen y defectos</h2>
+          <label><span>Entorno de nacimiento</span><textarea name="system.biografia.entorno_nacimiento">{{system.biografia.entorno_nacimiento}}</textarea></label>
+          <div class="camc-form-grid"><label><span>Defecto grave</span><input name="system.biografia.defecto_grave" type="text" value="{{system.biografia.defecto_grave}}"/></label><label><span>Defecto leve</span><input name="system.biografia.defecto_leve" type="text" value="{{system.biografia.defecto_leve}}"/></label></div>
+        </section>
+        <section class="camc-panel"><h2 class="camc-panel-title">Notas</h2><textarea name="system.notas">{{system.notas}}</textarea></section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="camc-sheet-footer">
+    <label><span>Reputación</span><input name="system.reputacion.value" type="number" value="{{system.reputacion.value}}"/></label>
+    <label><span>Faltas</span><input name="system.faltas.value" type="number" value="{{system.faltas.value}}"/></label>
+    <label><span>Máx.</span><input name="system.faltas.max" type="number" value="{{system.faltas.max}}"/></label>
+    <label><span>PX</span><input name="system.experiencia.total" type="number" value="{{system.experiencia.total}}"/></label>
+    <button type="button" class="camc-action-button roll-initiative"><i class="fas fa-crossed-swords"></i> Iniciativa</button>
+    <button type="button" class="camc-action-button roll-resistance"><i class="fas fa-shield-heart"></i> Resistencia</button>
+  </footer>
+</form>

@@ -1,0 +1,44 @@
+<div class="camc-chat-card {{tipo}} {{#if critico}}critico{{/if}} {{#if pifia}}pifia{{/if}} {{#if exito}}exito{{/if}} {{#if dificultad}}{{#unless exito}}fallo{{/unless}}{{/if}}">
+  <header><strong>{{actor.name}}</strong><span>{{tipo}}</span></header>
+  {{#if (eq tipo "tirada")}}
+    <h3>{{skillLabel habilidad}}</h3>
+    <div class="camc-roll-main">
+      <div class="camc-roll-total"><span>Total</span><b>{{roll.total}}</b></div>
+      {{#if dificultad}}<div class="camc-roll-state {{#if exito}}success{{else}}fail{{/if}}"><span>DF {{dificultad}}</span><b>{{#if exito}}Éxito{{else}}Fallo{{/if}}</b></div>{{/if}}
+    </div>
+    <div class="camc-dice-faces">{{#each dice}}<span>{{this}}</span>{{/each}}</div>
+    <div class="mods">{{attrShort data.atributo}} {{data.bonificador}} {{#if data.favorecida}}· favorecida +3{{/if}} {{#if data.equipoBonus}}· equipo {{data.equipoBonus}}{{/if}} {{#if data.modificadorManual}}· mod {{data.modificadorManual}}{{/if}}</div>
+    {{#if opciones.mount}}<div class="mods mount">Moto: <strong>{{opciones.mount.name}}</strong>{{#if opciones.mount.maniobrabilidad}} · Maniobrabilidad {{opciones.mount.maniobrabilidad}}{{/if}}{{#if opciones.mount.contextual}} · Tuneado {{opciones.mount.contextual}}{{#if opciones.mount.contextualLabel}} ({{opciones.mount.contextualLabel}}){{/if}}{{/if}}{{#if opciones.mount.penalizadorDano}} · Dañada +{{opciones.mount.penalizadorDano}} DF{{/if}}</div>{{/if}}
+    <div class="mods">Base {{data.baseDados}}D{{#if data.proezaDados}} · proezas +{{data.proezaDados}}D{{/if}}{{#if data.dadosExtra}} · ajuste {{data.dadosExtra}}D{{/if}}{{#if data.saludPenalty}} · Salud {{data.saludPenalty}}D{{/if}}{{#if data.desenfundar}} · desenfundar/cambiar -1D{{/if}}{{#if data.dadosSacrificados}} · sacrificados -{{data.dadosSacrificados}}D{{/if}}</div>
+    {{#if data.armaPreparada}}<div class="mods">Arma preparada: {{data.armaPreparada.label}}</div>{{/if}}
+    {{#if critico}}<div class="crit">CRÍTICO · gana 1 proeza</div>{{/if}}
+    {{#if pifia}}<div class="fumble">PIFIA</div>{{/if}}
+  {{/if}}
+  {{#if (eq tipo "dano_moto")}}
+    <h3>{{label}}</h3>
+    <div class="camc-roll-main"><div class="camc-roll-total"><span>Daño</span><b>{{roll.total}}</b></div></div>
+    <div class="mods">{{formula}}</div>
+  {{/if}}
+  {{#if (eq tipo "dano")}}
+    <h3>{{item.name}}</h3>
+    <div class="camc-roll-main"><div class="camc-roll-total"><span>Daño</span><b>{{roll.total}}</b></div></div>
+    <div class="mods">{{formula}}</div>
+    <button type="button" class="camc-chat-action" data-camc-action="apply-damage" data-damage="{{roll.total}}">Aplicar daño</button>
+  {{/if}}
+  {{#if (eq tipo "iniciativa")}}
+    <h3>Iniciativa</h3>
+    <div class="camc-roll-main"><div class="camc-roll-total"><span>Total</span><b>{{roll.total}}</b></div></div>
+    <div class="mods">{{formula}}</div>{{#if armaPreparada}}<div class="mods">Arma preparada: {{armaPreparada.label}}</div>{{/if}}
+  {{/if}}
+  {{#if (eq tipo "don")}}
+    <h3>{{item.name}}</h3>
+    <div class="dice-line">Don divino activado{{#if coste}} · coste <b>{{coste}}</b> proezas{{/if}}</div>
+    <div class="mods">{{item.system.deidad}} {{#if item.system.virtud}}· {{item.system.virtud}}{{/if}}</div>
+    {{#if item.system.efecto}}<p>{{item.system.efecto}}</p>{{/if}}
+  {{/if}}
+  {{#if (eq tipo "talento")}}
+    <h3>{{item.name}}</h3>
+    <div class="dice-line">Talento de cargo: <b>{{item.system.cargo}}</b></div>
+    {{#if item.system.efecto}}<p>{{item.system.efecto}}</p>{{/if}}
+  {{/if}}
+</div>

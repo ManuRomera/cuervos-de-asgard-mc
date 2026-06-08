@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Armadura de cuero / Ropa acolchada",
+    "type": "armadura",
+    "img": "icons/equipment/chest/breastplate-leather-brown.webp",
+    "system": {
+      "nivel": 1,
+      "penalizacion": 0,
+      "tamano": "mediano",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "compatible": false,
+      "equipada": false,
+      "descripcion": "Protección básica de cuero curtido o ropa acolchada."
+    }
+  },
+  {
+    "name": "Gabán de paño grueso",
+    "type": "armadura",
+    "img": "icons/equipment/chest/robe-layered.webp",
+    "system": {
+      "nivel": 1,
+      "penalizacion": 0,
+      "tamano": "grande",
+      "deterioro": "R",
+      "disponibilidad": "infrecuente",
+      "compatible": true,
+      "equipada": false,
+      "descripcion": "Compatible con otras protecciones."
+    }
+  },
+  {
+    "name": "Armadura de caucho",
+    "type": "armadura",
+    "img": "icons/equipment/chest/breastplate-rusted.webp",
+    "system": {
+      "nivel": 2,
+      "penalizacion": 1,
+      "tamano": "mediano",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "compatible": false,
+      "equipada": false,
+      "descripcion": "Fabricada con materiales reciclados."
+    }
+  },
+  {
+    "name": "Casco de fútbol americano",
+    "type": "armadura",
+    "img": "icons/equipment/head/helm-barbute.webp",
+    "system": {
+      "nivel": 2,
+      "penalizacion": 0,
+      "tamano": "mediano",
+      "deterioro": "R",
+      "disponibilidad": "frecuente",
+      "compatible": true,
+      "equipada": false,
+      "descripcion": "Compatible con otras protecciones."
+    }
+  },
+  {
+    "name": "Cota de malla de anilla gruesa",
+    "type": "armadura",
+    "img": "icons/equipment/chest/chainmail-grey.webp",
+    "system": {
+      "nivel": 3,
+      "penalizacion": 1,
+      "tamano": "grande",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "compatible": false,
+      "equipada": false,
+      "descripcion": "Elaborada por los enanos o herreros de los Cuervos."
+    }
+  },
+  {
+    "name": "Armadura de placas o cota de malla de anilla fina",
+    "type": "armadura",
+    "img": "icons/equipment/chest/breastplate-metal.webp",
+    "system": {
+      "nivel": 4,
+      "penalizacion": 2,
+      "tamano": "grande",
+      "deterioro": "M",
+      "disponibilidad": "infrecuente",
+      "compatible": false,
+      "equipada": false,
+      "descripcion": "Protección pesada para situaciones de alto riesgo."
+    }
+  },
+  {
+    "name": "Chaleco de kevlar",
+    "type": "armadura",
+    "img": "icons/equipment/chest/vest-leather.webp",
+    "system": {
+      "nivel": 4,
+      "penalizacion": 0,
+      "tamano": "mediano",
+      "deterioro": "R",
+      "disponibilidad": "muy_raro",
+      "compatible": false,
+      "equipada": false,
+      "descripcion": "Solo contra armas de fuego. No comporta penalización."
+    }
+  },
+  {
+    "name": "Traje antidisturbios del Viejo Mundo",
+    "type": "armadura",
+    "img": "icons/equipment/chest/breastplate-banded-blue.webp",
+    "system": {
+      "nivel": 5,
+      "penalizacion": 2,
+      "tamano": "grande",
+      "deterioro": "R",
+      "disponibilidad": "muy_raro",
+      "compatible": false,
+      "equipada": false,
+      "descripcion": "Máxima protección recuperada de las fuerzas del orden."
+    }
+  },
+  {
+    "name": "Escudo pequeño",
+    "type": "escudo",
+    "img": "icons/equipment/shield/shield-round-boss-wood.webp",
+    "system": {
+      "nivel": 1,
+      "penalizacion": 1,
+      "tamano": "mediano",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "equipado": false,
+      "descripcion": "+1 a la Agilidad del portador."
+    }
+  },
+  {
+    "name": "Escudo mediano",
+    "type": "escudo",
+    "img": "icons/equipment/shield/shield-kite-wood.webp",
+    "system": {
+      "nivel": 2,
+      "penalizacion": 2,
+      "tamano": "mediano",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "equipado": false,
+      "descripcion": "+2 a la Agilidad del portador."
+    }
+  },
+  {
+    "name": "Escudo grande",
+    "type": "escudo",
+    "img": "icons/equipment/shield/shield-heater-steel.webp",
+    "system": {
+      "nivel": 3,
+      "penalizacion": 3,
+      "tamano": "grande",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
+      "equipado": false,
+      "descripcion": "+3 a la Agilidad del portador."
+    }
+  },
+  {
+    "name": "Escudo antidisturbios del Viejo Mundo",
+    "type": "escudo",
+    "img": "icons/equipment/shield/shield-tower-iron.webp",
+    "system": {
+      "nivel": 4,
+      "penalizacion": 4,
+      "tamano": "grande",
+      "deterioro": "R",
+      "disponibilidad": "muy_raro",
+      "equipado": false,
+      "descripcion": "+4 a la Agilidad del portador. Recuperado de las fuerzas del orden."
+    }
+  }
+]

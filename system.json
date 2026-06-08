@@ -1,0 +1,150 @@
+{
+  "id": "cuervos-de-asgard-mc",
+  "title": "Cuervos de Asgard Motor Club",
+  "description": "Sistema no oficial para Cuervos de Asgard Motor Club en Foundry VTT v13, basado en Ysystem, con hojas de personaje, PNJ, comunidad y moto, automatización de tiradas, combate, daño, proezas, dones, parches, vehículos, generadores y compendios del manual importables.",
+  "version": "1.3.4",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13.351",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "Manu Romera / Asistente OpenAI",
+      "flags": {}
+    }
+  ],
+  "url": "https://github.com/ManuRomera/cuervos-de-asgard-mc",
+  "manifest": "https://raw.githubusercontent.com/ManuRomera/cuervos-de-asgard-mc/main/system.json",
+  "download": "https://github.com/ManuRomera/cuervos-de-asgard-mc/releases/download/v1.3.4/cuervos-de-asgard-mc.zip",
+  "icon": "systems/cuervos-de-asgard-mc/assets/ui/icon-camc.webp",
+  "esmodules": [
+    "module/cuervos-de-asgard.mjs"
+  ],
+  "styles": [
+    "styles/cuervos-de-asgard.css"
+  ],
+  "languages": [
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json",
+      "flags": {}
+    }
+  ],
+  "packs": [
+    {
+      "name": "armas-camc",
+      "label": "CAMC · Armas",
+      "type": "Item",
+      "path": "packs/armas-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "protecciones-camc",
+      "label": "CAMC · Armaduras y escudos",
+      "type": "Item",
+      "path": "packs/protecciones-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "dones-camc",
+      "label": "CAMC · Dones divinos",
+      "type": "Item",
+      "path": "packs/dones-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "talentos-camc",
+      "label": "CAMC · Talentos",
+      "type": "Item",
+      "path": "packs/talentos-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "objetos-camc",
+      "label": "CAMC · Objetos y equipo",
+      "type": "Item",
+      "path": "packs/objetos-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "parches-camc",
+      "label": "CAMC · Parches de chaleco",
+      "type": "Item",
+      "path": "packs/parches-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "vehiculos-camc",
+      "label": "CAMC · Vehículos y motos",
+      "type": "Item",
+      "path": "packs/vehiculos-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "motos-base",
+      "label": "CAMC · Motos base",
+      "type": "Actor",
+      "path": "packs/motos-base",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "modificaciones-moto",
+      "label": "CAMC · Modificaciones de moto",
+      "type": "Item",
+      "path": "packs/modificaciones-moto",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "tablas-generador-motos",
+      "label": "CAMC · Tablas del generador de motos",
+      "type": "JournalEntry",
+      "path": "packs/tablas-generador-motos",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "personajes-camc",
+      "label": "CAMC · Personajes pregenerados",
+      "type": "Actor",
+      "path": "packs/personajes-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "bestiario-camc",
+      "label": "CAMC · PNJ y bestiario",
+      "type": "Actor",
+      "path": "packs/bestiario-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "manual-camc",
+      "label": "CAMC · Reglas y guía",
+      "type": "JournalEntry",
+      "path": "packs/manual-camc",
+      "system": "cuervos-de-asgard-mc",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    }
+  ],
+  "socket": false,
+  "background": "systems/cuervos-de-asgard-mc/assets/ui/system-cover.png",
+  "grid": {
+    "distance": 2,
+    "units": "m"
+  },
+  "primaryTokenAttribute": "combate.salud",
+  "secondaryTokenAttribute": "combate.proezas",
+  "initiative": "1d6 + @combate.iniciativa"
+}

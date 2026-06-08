@@ -1,0 +1,227 @@
+[
+  {
+    "name": "Bandido de las Llanuras Yermas",
+    "type": "pnj",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "biografia": {
+        "nombre": "Bandido",
+        "descripcion": "Desalmado sin afiliación que sobrevive a costa de asaltar comunidades.",
+        "raza": "Mortales",
+        "reino": "Midgard",
+        "rasgos": "Amoralidad, Codicia"
+      },
+      "atributos": {
+        "car": { "value": 2 },
+        "des": { "value": 4 },
+        "fue": { "value": 3 },
+        "int": { "value": 2 },
+        "per": { "value": 2 }
+      },
+      "valores_pasivos": {
+        "agilidad": 10,
+        "evasion": 10,
+        "aplomo": 9,
+        "perspicacia": 9
+      },
+      "combate": {
+        "salud": { "value": 19, "max": 19 },
+        "iniciativa": 6,
+        "resistencia_fisica": 9
+      },
+      "habilidades_clave": {
+        "atletismo": { "value": 2, "atributo": "des" },
+        "conducir": { "value": 2, "atributo": "des" },
+        "fuerza_bruta": { "value": 2, "atributo": "fue" },
+        "lucha": { "value": 2, "atributo": "des" },
+        "punteria": { "value": 2, "atributo": "per" }
+      },
+      "proteccion": {
+        "armadura_nivel": 1,
+        "armadura_descripcion": "Ropas de cuero o acolchadas",
+        "armadura_penalizacion": 0
+      },
+      "especial": "Solo uno de cada cinco bandidos suele ir equipado con un arma de fuego corta, y solo uno de cada diez con una larga."
+    }
+  },
+  {
+    "name": "Carroñero",
+    "type": "pnj",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "biografia": {
+        "nombre": "Carroñero",
+        "descripcion": "Producto de una involución acelerada, estos seres caníbales habitan las ruinas del Viejo Mundo.",
+        "raza": "Mortales",
+        "reino": "Midgard",
+        "rasgos": "Estupidez, Ferocidad, Salvajismo"
+      },
+      "atributos": {
+        "car": { "value": 0 },
+        "des": { "value": 4 },
+        "fue": { "value": 5 },
+        "int": { "value": 1 },
+        "per": { "value": 1 }
+      },
+      "valores_pasivos": {
+        "agilidad": 10,
+        "evasion": 7,
+        "aplomo": 6,
+        "perspicacia": 7
+      },
+      "combate": {
+        "salud": { "value": 23, "max": 23 },
+        "iniciativa": 5,
+        "resistencia_fisica": 7
+      },
+      "habilidades_clave": {
+        "atletismo": { "value": 2, "atributo": "des" },
+        "conducir": { "value": 1, "atributo": "des" },
+        "fuerza_bruta": { "value": 3, "atributo": "fue" },
+        "lucha": { "value": 2, "atributo": "des" },
+        "punteria": { "value": 1, "atributo": "per" }
+      },
+      "proteccion": {
+        "armadura_nivel": 1,
+        "armadura_descripcion": "Piel gruesa",
+        "armadura_penalizacion": 0
+      },
+      "especial": "Su manjar favorito es la carne humana de niño. Evitan la luz solar."
+    }
+  },
+  {
+    "name": "Demonio de Fuego",
+    "type": "pnj",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "biografia": {
+        "nombre": "Demonio de Fuego",
+        "descripcion": "Criaturas creadas a partir de los ríos de lava de Muspelheim. Infantería de élite de Surt.",
+        "raza": "Demonios",
+        "reino": "Muspelheim",
+        "rasgos": "Ignición, Maldad, Terror"
+      },
+      "atributos": {
+        "car": { "value": 3 },
+        "des": { "value": 4 },
+        "fue": { "value": 7 },
+        "int": { "value": 4 },
+        "per": { "value": 1 }
+      },
+      "valores_pasivos": {
+        "agilidad": 10,
+        "evasion": 4,
+        "aplomo": 12,
+        "perspicacia": 10
+      },
+      "combate": {
+        "salud": { "value": 27, "max": 27 },
+        "iniciativa": 8,
+        "resistencia_fisica": 4
+      },
+      "habilidades_clave": {
+        "atletismo": { "value": 3, "atributo": "des" },
+        "conducir": { "value": 1, "atributo": "des" },
+        "fuerza_bruta": { "value": 4, "atributo": "fue" },
+        "lucha": { "value": 3, "atributo": "des" },
+        "punteria": { "value": 1, "atributo": "per" }
+      },
+      "proteccion": {
+        "armadura_nivel": 4,
+        "armadura_descripcion": "Piel pétrea",
+        "armadura_penalizacion": 0
+      },
+      "especial": "El mero hecho de estar cerca (combate cuerpo a cuerpo con armas) causa 1 punto de daño automático cada turno. Tocar al demonio sin armas causa 3 puntos de daño por turno. El agua les causa daño similar al que el fuego causa al resto."
+    }
+  },
+  {
+    "name": "Draug de Helheim",
+    "type": "pnj",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "biografia": {
+        "nombre": "Draug",
+        "descripcion": "Muertos sin honor que residen en Helheim. Tropas de élite de Hela.",
+        "raza": "Muertos sin reposo",
+        "reino": "Helheim",
+        "rasgos": "Maldición, Odio, Terror, Vileza"
+      },
+      "atributos": {
+        "car": { "value": 0 },
+        "des": { "value": 3 },
+        "fue": { "value": 5 },
+        "int": { "value": 3 },
+        "per": { "value": 4 }
+      },
+      "valores_pasivos": {
+        "agilidad": 9,
+        "evasion": 3,
+        "aplomo": 8,
+        "perspicacia": 12
+      },
+      "combate": {
+        "salud": { "value": 23, "max": 23 },
+        "iniciativa": 6,
+        "resistencia_fisica": 12
+      },
+      "habilidades_clave": {
+        "atletismo": { "value": 3, "atributo": "des" },
+        "conducir": { "value": 1, "atributo": "des" },
+        "fuerza_bruta": { "value": 3, "atributo": "fue" },
+        "lucha": { "value": 3, "atributo": "des" },
+        "punteria": { "value": 1, "atributo": "per" }
+      },
+      "proteccion": {
+        "armadura_nivel": 0,
+        "armadura_descripcion": "Los jirones de ropa no le protegen, pero las armas de fuego no le hacen daño. El resto de armas causan solo la mitad.",
+        "armadura_penalizacion": 0
+      },
+      "especial": "No sufre penalizaciones por daño ni tira por Resistencia Física. No puede ser convencido, seducido, aterrorizado o intimidado."
+    }
+  },
+  {
+    "name": "Cuervo de Asgard (Full Patch)",
+    "type": "pnj",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "biografia": {
+        "nombre": "Cuervo de Asgard",
+        "descripcion": "Miembro de pleno derecho de los Cuervos de Asgard MC.",
+        "raza": "Mortales",
+        "reino": "Midgard",
+        "rasgos": "Compasión, Deber, Honor, Lealtad"
+      },
+      "atributos": {
+        "car": { "value": 2 },
+        "des": { "value": 4 },
+        "fue": { "value": 4 },
+        "int": { "value": 2 },
+        "per": { "value": 3 }
+      },
+      "valores_pasivos": {
+        "agilidad": 10,
+        "evasion": 13,
+        "aplomo": 9,
+        "perspicacia": 10
+      },
+      "combate": {
+        "salud": { "value": 21, "max": 21 },
+        "iniciativa": 6,
+        "resistencia_fisica": 8
+      },
+      "habilidades_clave": {
+        "atletismo": { "value": 2, "atributo": "des" },
+        "conducir": { "value": 3, "atributo": "des" },
+        "fuerza_bruta": { "value": 2, "atributo": "fue" },
+        "lucha": { "value": 2, "atributo": "des" },
+        "punteria": { "value": 2, "atributo": "per" }
+      },
+      "proteccion": {
+        "armadura_nivel": 1,
+        "armadura_descripcion": "Ropas de cuero o acolchadas",
+        "armadura_penalizacion": 0
+      },
+      "especial": "Solo uno de cada diez Cuervos suele ir equipado con un arma de fuego corta o larga."
+    }
+  }
+]

@@ -1,0 +1,885 @@
+[
+  {
+    "name": "Moto normal base",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Midgard Motors",
+        "modelo": "Base reconstruida",
+        "apodo": "",
+        "tipo": "Moto normal",
+        "anio": "Viejo Mundo reconstruida",
+        "origen": "Plantilla base para crear una montura.",
+        "antiguo_dueno": "",
+        "historia": "",
+        "juramento": "",
+        "detalles_visuales": "Chasis sencillo, depósito marcado y cuero viejo."
+      },
+      "tecnica": {
+        "motor": "Bicilíndrico en V 900 cc",
+        "cilindrada": "900 cc",
+        "refrigeracion": "Aire",
+        "combustible": "Gasolina sucia",
+        "transmision": "Cadena reforzada",
+        "chasis": "Tubular soldado",
+        "suspension": "Dura",
+        "ruedas": "Mixtas",
+        "deposito": "Normal",
+        "escape": "Remendado",
+        "autonomia": "Media",
+        "ruido": "Tose antes de rugir.",
+        "particularidad": "Arranca mejor si se calienta despacio."
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": {
+          "value": 15,
+          "max": 15
+        },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": {
+          "value": 0,
+          "max": 8
+        },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "Moto con sidecar base",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Thunder Goat Garage",
+        "modelo": "Sidecar base",
+        "apodo": "",
+        "tipo": "Moto con sidecar",
+        "anio": "Reconstruida",
+        "origen": "Plantilla base para una montura con sidecar.",
+        "antiguo_dueno": "",
+        "historia": "",
+        "juramento": "",
+        "detalles_visuales": "Sidecar reforzado, guardabarros pesado y pintura gastada."
+      },
+      "tecnica": {
+        "motor": "Motor militar reconstruido",
+        "cilindrada": "",
+        "refrigeracion": "Aceite",
+        "combustible": "Mezcla recuperada",
+        "transmision": "Cadena reforzada",
+        "chasis": "Chasis con sidecar reforzado",
+        "suspension": "Dura",
+        "ruedas": "Mixtas",
+        "deposito": "Normal",
+        "escape": "Libre",
+        "autonomia": "Media",
+        "ruido": "Su escape parece un cuerno de guerra.",
+        "particularidad": "El sidecar vibra al acelerar."
+      },
+      "reglas": {
+        "dados_dano": "3D",
+        "estructura": {
+          "value": 20,
+          "max": 20
+        },
+        "maniobrabilidad": 1,
+        "sidecar": true,
+        "plazas": 2,
+        "alforjas": {
+          "value": 0,
+          "max": 12
+        },
+        "mods_funcionales_max": 3,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "Hija del Trueno",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Hrafn-Kustom Works",
+        "modelo": "Tempestad 1200",
+        "apodo": "Hija del Trueno",
+        "tipo": "Chopper de asalto",
+        "anio": "Viejo Mundo reconstruida",
+        "origen": "Ganada en una carrera ritual bajo tormenta.",
+        "antiguo_dueno": "",
+        "historia": "Nadie la oye venir despacio: siempre llega como un juicio.",
+        "juramento": "No se lava después de una victoria.",
+        "detalles_visuales": "Negro mate con runas blancas."
+      },
+      "tecnica": {
+        "motor": "Bicilíndrico en V 1200 cc",
+        "cilindrada": "1200 cc",
+        "refrigeracion": "Aire",
+        "combustible": "Gasolina sucia",
+        "transmision": "Cadena reforzada",
+        "chasis": "Chopper reforzado",
+        "suspension": "Dura",
+        "ruedas": "Asfalto gastado",
+        "deposito": "Normal",
+        "escape": "Atronador",
+        "autonomia": "Media",
+        "ruido": "Truena como una tormenta atrapada en una mina.",
+        "particularidad": "Petardea antes de embestir."
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": {
+          "value": 15,
+          "max": 15
+        },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": {
+          "value": 0,
+          "max": 8
+        },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [
+          {
+            "name": "Escape atronador",
+            "tipo": "funcional",
+            "descripcion": "Bonificador contextual para intimidar, distraer o señalar posición.",
+            "ocupaRanura": true
+          },
+          {
+            "name": "Configuración ofensiva: pinchos",
+            "tipo": "funcional",
+            "descripcion": "+1D al daño de la moto en embestidas o arrollamientos.",
+            "ocupaRanura": true
+          }
+        ],
+        "esteticas": [
+          {
+            "name": "Runas grabadas en el depósito",
+            "tipo": "estetica",
+            "descripcion": "Runas blancas sobre negro mate.",
+            "ocupaRanura": false
+          }
+        ]
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "La Última Promesa",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Midgard Motors",
+        "modelo": "Fólkvangr Nomad",
+        "apodo": "La Última Promesa",
+        "tipo": "Moto de largo recorrido",
+        "anio": "Preguerra",
+        "origen": "Fue heredada de un mentor muerto.",
+        "antiguo_dueno": "Capitana de rutas",
+        "historia": "Su depósito lleva una abolladura que nadie se atreve a reparar.",
+        "juramento": "Antes de cada viaje se toca el depósito con dos dedos.",
+        "detalles_visuales": "Gris ceniza con bolsas de cuero viejo."
+      },
+      "tecnica": {
+        "motor": "Motor bóxer de preguerra 1000 cc",
+        "cilindrada": "1000 cc",
+        "refrigeracion": "Aire",
+        "combustible": "Gasolina sucia",
+        "transmision": "Cardán recuperado",
+        "chasis": "Viejo Mundo",
+        "suspension": "De largo recorrido",
+        "ruedas": "Mixtas",
+        "deposito": "Ampliado",
+        "escape": "Remendado",
+        "autonomia": "Larga",
+        "ruido": "Ronronea bajo, como un animal grande antes de atacar.",
+        "particularidad": "Nunca consume lo mismo dos días seguidos."
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": {
+          "value": 15,
+          "max": 15
+        },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": {
+          "value": 0,
+          "max": 8
+        },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [
+          {
+            "name": "Depósito ampliado",
+            "tipo": "funcional",
+            "descripcion": "Aumenta autonomía narrativa.",
+            "ocupaRanura": true
+          },
+          {
+            "name": "Alforjas blindadas",
+            "tipo": "funcional",
+            "descripcion": "Protege carga importante.",
+            "ocupaRanura": true
+          }
+        ],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "Diente de Fenrir",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Fenris Rebuilds",
+        "modelo": "Fenris Fang",
+        "apodo": "Diente de Fenrir",
+        "tipo": "Moto de guerra",
+        "anio": "Reconstruida",
+        "origen": "Fue arrebatada a un enemigo del 1%.",
+        "antiguo_dueno": "",
+        "historia": "Los enemigos la reconocen por el ruido.",
+        "juramento": "Nadie salvo su piloto puede girar la llave.",
+        "detalles_visuales": "Rojo sangre seca con dientes pintados."
+      },
+      "tecnica": {
+        "motor": "Motor sobrealimentado inestable",
+        "cilindrada": "",
+        "refrigeracion": "Líquida remendada",
+        "combustible": "Mezcla recuperada",
+        "transmision": "Cadena reforzada",
+        "chasis": "Rat-bike reforzado",
+        "suspension": "Dura",
+        "ruedas": "Garra",
+        "deposito": "Normal",
+        "escape": "Libre",
+        "autonomia": "Corta",
+        "ruido": "Aúlla cuando pasa de tercera.",
+        "particularidad": "Tiembla si se la mantiene quieta."
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": {
+          "value": 15,
+          "max": 15
+        },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": {
+          "value": 0,
+          "max": 8
+        },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [
+          {
+            "name": "Configuración ofensiva: pinchos",
+            "tipo": "funcional",
+            "descripcion": "+1D al daño en embestidas.",
+            "ocupaRanura": true
+          },
+          {
+            "name": "Neumáticos de garra",
+            "tipo": "funcional",
+            "descripcion": "Mejora conducción fuera de carretera.",
+            "ocupaRanura": true
+          }
+        ],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "Sombra de Hugin",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Sleipnir Road Machines",
+        "modelo": "Hugin Scout",
+        "apodo": "Sombra de Hugin",
+        "tipo": "Moto exploradora",
+        "anio": "Reconstruida",
+        "origen": "Fue la moto de una exploradora que nunca regresó.",
+        "antiguo_dueno": "",
+        "historia": "Su faro ha guiado más caravanas que cualquier mapa.",
+        "juramento": "Si una pluma negra cae sobre el asiento, ese día no se viaja.",
+        "detalles_visuales": "Azul noche con plumas negras."
+      },
+      "tecnica": {
+        "motor": "Motor silencioso de patrulla",
+        "cilindrada": "",
+        "refrigeracion": "Aceite",
+        "combustible": "Etanol",
+        "transmision": "Correa vieja",
+        "chasis": "Tubular soldado",
+        "suspension": "De largo recorrido",
+        "ruedas": "Mixtas",
+        "deposito": "Normal",
+        "escape": "Silenciado",
+        "autonomia": "Media",
+        "ruido": "Suena limpia y afilada, casi demasiado bien para el Yermo.",
+        "particularidad": "El faro parpadea cerca de ruinas."
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": {
+          "value": 15,
+          "max": 15
+        },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": {
+          "value": 0,
+          "max": 8
+        },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [
+          {
+            "name": "Silenciador de patrulla",
+            "tipo": "funcional",
+            "descripcion": "Reduce ruido.",
+            "ocupaRanura": true
+          },
+          {
+            "name": "Faros de largo alcance",
+            "tipo": "funcional",
+            "descripcion": "Mejora conducción nocturna.",
+            "ocupaRanura": true
+          }
+        ],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "Santa Chatarra",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Nornir Scrapworks",
+        "modelo": "Wasteland Saint",
+        "apodo": "Santa Chatarra",
+        "tipo": "Rat-bike",
+        "anio": "Montada pieza a pieza",
+        "origen": "Se montó durante un invierno entero.",
+        "antiguo_dueno": "",
+        "historia": "Tiene piezas que nadie sabe fabricar ya.",
+        "juramento": "El primer trago de gasolina recuperada siempre es para su depósito.",
+        "detalles_visuales": "Metal desnudo con cicatrices."
+      },
+      "tecnica": {
+        "motor": "Motor injertado de una máquina industrial",
+        "cilindrada": "",
+        "refrigeracion": "Improvisada",
+        "combustible": "Biodiésel",
+        "transmision": "Transmisión remendada",
+        "chasis": "Rat-bike reforzado",
+        "suspension": "Remendada",
+        "ruedas": "Barro y hielo",
+        "deposito": "Abollado",
+        "escape": "Remendado",
+        "autonomia": "Caprichosa",
+        "ruido": "Vibra como si quisiera desmontarse y seguir sola.",
+        "particularidad": "Pierde aceite pero nunca se rinde."
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": {
+          "value": 15,
+          "max": 15
+        },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": {
+          "value": 0,
+          "max": 8
+        },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [
+          {
+            "name": "Blindaje improvisado",
+            "tipo": "funcional",
+            "descripcion": "+5 Estructura máxima; -1 Maniobrabilidad.",
+            "ocupaRanura": true
+          },
+          {
+            "name": "Sistema de arranque redundante",
+            "tipo": "funcional",
+            "descripcion": "Mejora arranque o reparación de emergencia.",
+            "ocupaRanura": true
+          }
+        ],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "Rompedientes",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Thunder Goat Garage",
+        "modelo": "Thunder Goat Puller",
+        "apodo": "Rompedientes",
+        "tipo": "Moto con sidecar",
+        "anio": "Reconstruida militar",
+        "origen": "Fue reconstruida para una misión suicida.",
+        "antiguo_dueno": "",
+        "historia": "El sidecar ha vuelto con heridos que nadie esperaba recuperar.",
+        "juramento": "No cruza agua sin una runa pintada en el guardabarros.",
+        "detalles_visuales": "Verde militar envejecido."
+      },
+      "tecnica": {
+        "motor": "Motor militar reconstruido",
+        "cilindrada": "",
+        "refrigeracion": "Aceite",
+        "combustible": "Gasolina sucia",
+        "transmision": "Cadena reforzada",
+        "chasis": "Chasis con sidecar reforzado",
+        "suspension": "Dura",
+        "ruedas": "Mixtas",
+        "deposito": "Normal",
+        "escape": "Libre",
+        "autonomia": "Media",
+        "ruido": "Su escape parece un cuerno de guerra.",
+        "particularidad": "El sidecar chirría antes de cada choque."
+      },
+      "reglas": {
+        "dados_dano": "3D",
+        "estructura": {
+          "value": 20,
+          "max": 20
+        },
+        "maniobrabilidad": 1,
+        "sidecar": true,
+        "plazas": 2,
+        "alforjas": {
+          "value": 0,
+          "max": 12
+        },
+        "mods_funcionales_max": 3,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [
+          {
+            "name": "Sidecar reforzado",
+            "tipo": "funcional",
+            "descripcion": "Aumenta capacidad de carga o transporte seguro.",
+            "ocupaRanura": true
+          },
+          {
+            "name": "Torreta de sidecar",
+            "tipo": "funcional",
+            "descripcion": "Permite montar un arma compatible.",
+            "ocupaRanura": true
+          },
+          {
+            "name": "Anclajes de remolque",
+            "tipo": "funcional",
+            "descripcion": "Permite remolcar carga ligera.",
+            "ocupaRanura": true
+          }
+        ],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "La Desenterrada",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Old World Remnants",
+        "modelo": "Last Oath",
+        "apodo": "La Desenterrada",
+        "tipo": "Moto reliquia del Viejo Mundo",
+        "anio": "Viejo Mundo",
+        "origen": "Fue rescatada de una autopista sepultada bajo ceniza.",
+        "antiguo_dueno": "",
+        "historia": "Su nombre anterior nadie lo pronuncia.",
+        "juramento": "Lleva bajo el asiento una carta que nadie debe leer.",
+        "detalles_visuales": "Negro aceite con marcas de excavación."
+      },
+      "tecnica": {
+        "motor": "Motor viejo con alma de bestia",
+        "cilindrada": "",
+        "refrigeracion": "Aire",
+        "combustible": "Gasolina sucia",
+        "transmision": "Cardán recuperado",
+        "chasis": "Viejo Mundo",
+        "suspension": "De largo recorrido",
+        "ruedas": "Mixtas",
+        "deposito": "Ampliado",
+        "escape": "Remendado",
+        "autonomia": "Larga",
+        "ruido": "Tiene un traqueteo metálico que nunca desaparece.",
+        "particularidad": "El motor arrancó solo durante una tormenta."
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": {
+          "value": 15,
+          "max": 15
+        },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": {
+          "value": 0,
+          "max": 8
+        },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [
+          {
+            "name": "Depósito ampliado",
+            "tipo": "funcional",
+            "descripcion": "Aumenta autonomía narrativa.",
+            "ocupaRanura": true
+          },
+          {
+            "name": "Suspensión de salto",
+            "tipo": "funcional",
+            "descripcion": "Mejora terreno difícil y saltos.",
+            "ocupaRanura": true
+          }
+        ],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "Juramento de Cuero",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "system": {
+      "identidad": {
+        "marca": "Valkyria Roadworks",
+        "modelo": "Valknut 900",
+        "apodo": "Juramento de Cuero",
+        "tipo": "Moto ceremonial",
+        "anio": "Reconstruida",
+        "origen": "La comunidad la considera de buena suerte.",
+        "antiguo_dueno": "",
+        "historia": "Cada cicatriz del asiento tiene nombre.",
+        "juramento": "El piloto nunca duerme lejos de ella.",
+        "detalles_visuales": "Blanco hueso con detalles negros."
+      },
+      "tecnica": {
+        "motor": "Bicilíndrico en V 900 cc",
+        "cilindrada": "900 cc",
+        "refrigeracion": "Aire",
+        "combustible": "Etanol",
+        "transmision": "Cadena reforzada",
+        "chasis": "Tubular soldado",
+        "suspension": "Rebajada",
+        "ruedas": "Asfalto gastado",
+        "deposito": "Normal",
+        "escape": "Libre",
+        "autonomia": "Media",
+        "ruido": "Petardea al reducir.",
+        "particularidad": "El cuero del asiento nunca termina de secarse."
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": {
+          "value": 15,
+          "max": 15
+        },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": {
+          "value": 0,
+          "max": 8
+        },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa"
+      },
+      "mods": {
+        "funcionales": [
+          {
+            "name": "Faros de largo alcance",
+            "tipo": "funcional",
+            "descripcion": "Mejora conducción nocturna.",
+            "ocupaRanura": true
+          },
+          {
+            "name": "Alforjas blindadas",
+            "tipo": "funcional",
+            "descripcion": "Protege carga importante.",
+            "ocupaRanura": true
+          }
+        ],
+        "esteticas": [
+          {
+            "name": "Parche viejo cosido al asiento",
+            "tipo": "estetica",
+            "descripcion": "Un juramento visible solo para el piloto.",
+            "ocupaRanura": false
+          }
+        ]
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    }
+  },
+  {
+    "name": "Cuervo de Hierro",
+    "type": "moto",
+    "img": "systems/cuervos-de-asgard-mc/assets/vehicles/cuervo-de-hierro.webp",
+    "system": {
+      "identidad": {
+        "marca": "Thunder Goat Garage",
+        "modelo": "Wasteland Saint",
+        "apodo": "Cuervo de Hierro",
+        "tipo": "Moto de largo recorrido",
+        "anio": "Viejo Mundo reconstruida",
+        "origen": "Tiene una pieza que nadie sabe fabricar ya.",
+        "antiguo_dueno": "",
+        "historia": "Se reconstruyó con piezas de tres motos distintas.",
+        "juramento": "El primer trago de gasolina recuperada siempre es para su depósito.",
+        "detalles_visuales": "Negro aceite; Plumas negras de cuervo."
+      },
+      "tecnica": {
+        "motor": "Motor dvergar de compresión brutal",
+        "cilindrada": "",
+        "refrigeracion": "Líquida remendada",
+        "combustible": "Etanol",
+        "transmision": "Correa vieja",
+        "chasis": "Rat-bike reforzado",
+        "suspension": "De largo recorrido",
+        "ruedas": "Barro y hielo",
+        "deposito": "Doble depósito",
+        "escape": "Atronador",
+        "autonomia": "Corta",
+        "ruido": "Tiene un traqueteo metálico que nunca desaparece.",
+        "particularidad": "Arranca a la tercera."
+      },
+      "reglas": {
+        "dados_dano": "2D",
+        "estructura": {
+          "value": 15,
+          "max": 15
+        },
+        "maniobrabilidad": 2,
+        "sidecar": false,
+        "plazas": 1,
+        "alforjas": {
+          "value": 0,
+          "max": 8
+        },
+        "mods_funcionales_max": 2,
+        "penalizador_dano_grave": 3,
+        "mantenimiento": "Operativa",
+        "base_dados_dano": "2D",
+        "base_estructura": 15,
+        "base_maniobrabilidad": 2,
+        "base_alforjas": 8,
+        "efectos_mods": [],
+        "mods_funcionales_usadas": 0,
+        "dano_grave": false,
+        "inutilizada": false,
+        "estado": "Operativa"
+      },
+      "mods": {
+        "funcionales": [],
+        "esteticas": []
+      },
+      "carga": {
+        "items": [],
+        "notas": ""
+      },
+      "vinculo": {
+        "ownerUuid": "",
+        "ownerName": ""
+      },
+      "notas": ""
+    },
+    "items": [
+      {
+        "name": "Espejo roto",
+        "type": "objeto",
+        "img": "icons/sundries/scrolls/scroll-runed-brown.webp",
+        "system": {
+          "tipo": "modificacion_estetica_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "Detalle estético. No ocupa ranura funcional.",
+          "descripcion": "Espejo roto",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "ocupaRanura": false
+        },
+        "effects": [],
+        "flags": {}
+      },
+      {
+        "name": "Símbolo del capítulo",
+        "type": "objeto",
+        "img": "icons/sundries/scrolls/scroll-runed-brown.webp",
+        "system": {
+          "tipo": "modificacion_estetica_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "Detalle estético. No ocupa ranura funcional.",
+          "descripcion": "Símbolo del capítulo",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "ocupaRanura": false
+        },
+        "effects": [],
+        "flags": {}
+      }
+    ]
+  }
+]

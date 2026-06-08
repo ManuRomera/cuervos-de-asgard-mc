@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360">
+  <rect width="240" height="360" fill="#151b22"/>
+  <path d="M24 18h192v324H24z" fill="#e8dfcb" opacity=".13" stroke="#d9a83f" stroke-width="5"/>
+  <path d="M120 48v214M76 92l44-44 44 44M76 164h88" fill="none" stroke="#e8dfcb" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M52 278h136" stroke="#9a3a24" stroke-width="8"/>
+  <text x="120" y="327" text-anchor="middle" font-family="serif" font-size="30" font-weight="700" fill="#e8dfcb">TYR</text>
+</svg>

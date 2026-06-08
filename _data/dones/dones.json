@@ -1,0 +1,236 @@
+[
+  {
+    "name": "Furia de la Tormenta",
+    "type": "don",
+    "img": "icons/magic/lightning/bolt-strike-blue.webp",
+    "system": {
+      "deidad": "Thor",
+      "coste_proezas": 2,
+      "coste_descripcion": "2 proezas por uso y combate",
+      "virtud": "Valor",
+      "efecto": "Los ataques del Cuervo impactan automáticamente y causan el doble de daño durante todo un combate. Los impactos adicionales no pueden ser críticos.",
+      "descripcion": "Thor te bendice con la furia de la tormenta."
+    }
+  },
+  {
+    "name": "Azote del Enemigo",
+    "type": "don",
+    "img": "icons/magic/fire/dagger-rune-enchant-flame-orange.webp",
+    "system": {
+      "deidad": "Thor",
+      "coste_proezas": 2,
+      "coste_descripcion": "2 proezas por combate",
+      "virtud": "Valor",
+      "efecto": "Escoge uno de los atributos del enemigo (FUE, DES, PER, INT o CAR) y redúcelo a 0 durante todo el combate.",
+      "descripcion": "El dios del trueno te otorga el poder de debilitar a tus enemigos."
+    }
+  },
+  {
+    "name": "Guerrero Legendario",
+    "type": "don",
+    "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
+    "system": {
+      "deidad": "Thor",
+      "coste_proezas": 1,
+      "coste_descripcion": "1 proeza por contraataque",
+      "virtud": "Valor",
+      "efecto": "Cada vez que un enemigo falle un ataque contra ti, puedes gastar 1 proeza para contraatacar automáticamente con tu arma cuerpo a cuerpo equipada.",
+      "descripcion": "Como los grandes guerreros de antaño, aprovechas cada oportunidad para golpear."
+    }
+  },
+  {
+    "name": "Lazos de Skuld",
+    "type": "don",
+    "img": "icons/magic/nature/root-vines-grow-brown.webp",
+    "system": {
+      "deidad": "Freya",
+      "coste_proezas": 2,
+      "coste_descripcion": "2 proezas por uso",
+      "virtud": "Liderazgo",
+      "efecto": "Puedes obligar a un enemigo a rehacer una tirada que haya tenido éxito, quedándose con el peor resultado.",
+      "descripcion": "Como las nornas tejen el destino, tú puedes alterar el curso de los eventos."
+    }
+  },
+  {
+    "name": "Valquiria",
+    "type": "don",
+    "img": "icons/magic/light/projectile-smoke-trail-pink.webp",
+    "system": {
+      "deidad": "Freya",
+      "coste_proezas": 2,
+      "coste_descripcion": "2 proezas por uso",
+      "virtud": "Liderazgo",
+      "efecto": "Durante un combate completo, todas tus tiradas de habilidad ganan +3 al resultado.",
+      "descripcion": "Las Valquirias de Freya te acompañan en batalla."
+    }
+  },
+  {
+    "name": "Espíritu de Freya",
+    "type": "don",
+    "img": "icons/magic/life/heart-cross-pink.webp",
+    "system": {
+      "deidad": "Freya",
+      "coste_proezas": 2,
+      "coste_descripcion": "2 proezas por uso",
+      "virtud": "Liderazgo",
+      "efecto": "Recuperas 1D6 puntos de Salud instantáneamente.",
+      "descripcion": "La diosa Freya te otorga su bendición sanadora."
+    }
+  },
+  {
+    "name": "Sacrificio de Tyr",
+    "type": "don",
+    "img": "icons/magic/holy/barrier-shield-winged-cross.webp",
+    "system": {
+      "deidad": "Tyr",
+      "coste_proezas": 1,
+      "coste_descripcion": "1 proeza por uso",
+      "virtud": "Honor",
+      "efecto": "Puedes interponerte entre un aliado y un ataque enemigo, recibiendo todo el daño en su lugar. Tu armadura se considera de 2 niveles superior para este ataque.",
+      "descripcion": "Como Tyr perdió su mano por el bien de todos, tú te sacrificas por tus camaradas."
+    }
+  },
+  {
+    "name": "Inquebrantable",
+    "type": "don",
+    "img": "icons/equipment/shield/shield-kite-iron-brown.webp",
+    "system": {
+      "deidad": "Tyr",
+      "coste_proezas": 2,
+      "coste_descripcion": "2 proezas por combate",
+      "virtud": "Honor",
+      "efecto": "Durante un combate completo, eres inmune a los efectos de estado (aturdido, envenenado, etc.) y no sufres penalizadores por perdida de Salud.",
+      "descripcion": "Tu honor te mantiene firme donde otros caerían."
+    }
+  },
+  {
+    "name": "Justicia",
+    "type": "don",
+    "img": "icons/magic/control/buff-strength-muscle-damage-orange.webp",
+    "system": {
+      "deidad": "Tyr",
+      "coste_proezas": 2,
+      "coste_descripcion": "2 proezas por uso",
+      "virtud": "Honor",
+      "efecto": "Tu próximo ataque causará daño igual a la Salud máxima del enemigo menos su Salud actual (daño por justicia).",
+      "descripcion": "El dios de la guerra te guía para castigar a los malhechores."
+    }
+  },
+  {
+    "name": "Ojo de Heimdall",
+    "type": "don",
+    "img": "icons/magic/perception/eye-slit-orange.webp",
+    "system": {
+      "deidad": "Heimdall",
+      "coste_proezas": 1,
+      "coste_descripcion": "1 proeza por uso",
+      "virtud": "Vigilancia",
+      "efecto": "Detectas automáticamente todas las criaturas hostiles en un radio de 100 metros, incluyendo sus puntos de Salud aproximados y su intención inmediata.",
+      "descripcion": "El ojo omnisciente de Heimdall te permite ver lo invisible."
+    }
+  },
+  {
+    "name": "Gjallarhorn",
+    "type": "don",
+    "img": "icons/magic/sonic/projectile-sound-wave.webp",
+    "system": {
+      "deidad": "Heimdall",
+      "coste_proezas": 3,
+      "coste_descripcion": "3 proezas por uso (1 por aliado alertado)",
+      "virtud": "Vigilancia",
+      "efecto": "Todos los aliados en un radio de 1 kilómetro son alertados de tu situación y conocen tu posición exacta. Pueden responder moviéndose hacia ti a máxima velocidad.",
+      "descripcion": "El cuerno del guardián resuena a través de las Llanuras Yermas."
+    }
+  },
+  {
+    "name": "Guardian",
+    "type": "don",
+    "img": "icons/magic/defensive/shield-barrier-flaming-diamond.webp",
+    "system": {
+      "deidad": "Heimdall",
+      "coste_proezas": 1,
+      "coste_descripcion": "1 proeza por ronda",
+      "virtud": "Vigilancia",
+      "efecto": "Mientras estés en guardia, ningún enemigo puede tomar por sorpresa a tu grupo. Además, los enemigos que intenten acercarse sigilosamente deben superar tu Perspicacia con Sigilo.",
+      "descripcion": "El guardián del Bifrost te otorga su vigilancia eterna."
+    }
+  },
+  {
+    "name": "Visión de Frigg",
+    "type": "don",
+    "img": "icons/magic/perception/eye-ringed-glow-angry-small-teal.webp",
+    "system": {
+      "deidad": "Frigg",
+      "coste_proezas": 2,
+      "coste_descripcion": "2 proezas por pregunta",
+      "virtud": "Sabiduría",
+      "efecto": "Puedes hacer una pregunta sobre el futuro inmediato (lo que ocurrirá en las próximas 24 horas). La DJ debe responder con una pista críptica pero verdadera.",
+      "descripcion": "La reina de los dioses te concede un vislumbre del destino."
+    }
+  },
+  {
+    "name": "Tejido del Destino",
+    "type": "don",
+    "img": "icons/magic/control/fear-fright-mask.webp",
+    "system": {
+      "deidad": "Frigg",
+      "coste_proezas": 3,
+      "coste_descripcion": "3 proezas por uso",
+      "virtud": "Sabiduría",
+      "efecto": "Puedes alterar un resultado de dado recién tirado por cualquier personaje (PJ o PNJ) cambiándolo por el valor que desees.",
+      "descripcion": "Como las nornas tejen y destejen el hilo del destino, tú puedes alterar el curso de los eventos."
+    }
+  },
+  {
+    "name": "Consejo de Frigg",
+    "type": "don",
+    "img": "icons/magic/light/explosion-star-teal.webp",
+    "system": {
+      "deidad": "Frigg",
+      "coste_proezas": 1,
+      "coste_descripcion": "1 proeza por uso",
+      "virtud": "Sabiduría",
+      "efecto": "Un aliado puede repetir una tirada fallida con +2D adicionales.",
+      "descripcion": "La sabiduría de Frigg guía a través de las palabras adecuadas."
+    }
+  },
+  {
+    "name": "Cota de Draupnir",
+    "type": "don",
+    "img": "icons/equipment/chest/breastplate-collared-steel.webp",
+    "system": {
+      "deidad": "Idunn",
+      "coste_proezas": 1,
+      "coste_descripcion": "1 proeza por activación",
+      "virtud": "Perseverancia",
+      "efecto": "Te ves beneficiado con una protección de nivel 3 sin penalización. El artefacto es personal e intransferible. Se repliega mágicamente al final de cada combate adoptando el tamaño de un anillo. Requiere una acción de turno completo para equiparla.",
+      "descripcion": "Manufacturada por Idunn a partir del anillo mágico Draupnir."
+    }
+  },
+  {
+    "name": "Manzanas de Idunn",
+    "type": "don",
+    "img": "icons/consumables/fruit/apple-red.webp",
+    "system": {
+      "deidad": "Idunn",
+      "coste_proezas": 2,
+      "coste_descripcion": "2 proezas por uso",
+      "virtud": "Perseverancia",
+      "efecto": "Recuperas todos tus puntos de Salud perdidos y eliminas cualquier estado negativo.",
+      "descripcion": "Las mágicas manzanas de Idunn restauran la vitalidad perdida."
+    }
+  },
+  {
+    "name": "Juventud Eterna",
+    "type": "don",
+    "img": "icons/magic/life/heart-pink.webp",
+    "system": {
+      "deidad": "Idunn",
+      "coste_proezas": 1,
+      "coste_descripcion": "1 proeza por ronda",
+      "virtud": "Perseverancia",
+      "efecto": "Durante una ronda completa, eres inmune a todo daño. Sin embargo, al final de la ronda pierdes 1D6 puntos de Salud por el coste de mantener la juventud.",
+      "descripcion": "Idunn te concede un momento de perfección eterna."
+    }
+  }
+]

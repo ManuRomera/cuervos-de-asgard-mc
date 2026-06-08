@@ -1,0 +1,70 @@
+<form class="{{cssClass}} camc-sheet camc-npc camc-npc-compact" autocomplete="off">
+  <header class="camc-npc-topbar">
+    <img class="camc-npc-avatar profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+    <section class="camc-npc-id">
+      <input class="camc-name char-name" name="name" type="text" value="{{actor.name}}"/>
+      <div class="camc-npc-fields">
+        <label><span>Raza</span><input name="system.biografia.raza" type="text" value="{{system.biografia.raza}}"/></label>
+        <label><span>Reino</span><input name="system.biografia.reino" type="text" value="{{system.biografia.reino}}"/></label>
+        <label><span>Rasgos</span><input name="system.biografia.rasgos" type="text" value="{{system.biografia.rasgos}}"/></label>
+      </div>
+    </section>
+    <aside class="camc-npc-kpis">
+      <div class="health {{saludTone}}"><span>Salud</span><b>{{system.combate.salud.value}}/{{system.combate.salud.max}}</b><i style="width: {{saludPct}}%"></i><div><button type="button" class="camc-adjust" data-path="system.combate.salud.value" data-delta="-1">-</button><input name="system.combate.salud.value" type="number" value="{{system.combate.salud.value}}"/><button type="button" class="camc-adjust" data-path="system.combate.salud.value" data-delta="1">+</button></div></div>
+      <article><span>Armadura</span><b>{{armaduraTotal}}</b></article>
+      <article><span>RF</span><b>{{system.combate.resistencia_fisica}}</b></article>
+      <article><span>Iniciativa</span><b>{{system.combate.iniciativa}}</b></article>
+    </aside>
+  </header>
+
+  <nav class="camc-tabs tabs" data-group="primary">
+    <a class="item active" data-tab="resumen"><i class="fas fa-gauge-high"></i> Resumen</a>
+    <a class="item" data-tab="combate"><i class="fas fa-crossed-swords"></i> Combate</a>
+    <a class="item" data-tab="notas"><i class="fas fa-note-sticky"></i> Notas</a>
+  </nav>
+
+  <main class="camc-body">
+    <section class="tab active" data-group="primary" data-tab="resumen">
+      <div class="camc-npc-dashboard">
+        <section class="camc-panel camc-npc-statline">
+          <h2 class="camc-panel-title"><i class="fas fa-skull"></i> Atributos</h2>
+          <div class="camc-npc-stat-grid">
+            {{#each attrCards as |attr|}}<label><span>{{attr.short}}</span><input name="system.atributos.{{attr.key}}.value" type="number" value="{{attr.value}}"/><small>{{attr.label}}</small></label>{{/each}}
+          </div>
+        </section>
+        <section class="camc-panel camc-npc-statline">
+          <h2 class="camc-panel-title"><i class="fas fa-chart-simple"></i> Derivados</h2>
+          <div class="camc-npc-derived">
+            {{#each derivedCards as |d|}}<article><i class="fas {{d.icon}}"></i><span>{{d.label}}</span><b>{{d.value}}</b></article>{{/each}}
+          </div>
+        </section>
+        <section class="camc-panel">
+          <h2 class="camc-panel-title"><i class="fas fa-dice-d6"></i> Habilidades clave</h2>
+          <div class="camc-npc-skill-grid">
+            {{#each habilidadesClave as |skill|}}<div class="camc-npc-skill" data-skill="{{skill.key}}"><button type="button" class="roll-skill" data-skill="{{skill.key}}">{{skill.label}}</button><span>{{skill.atributoShort}}</span><input name="system.habilidades_clave.{{skill.key}}.value" type="number" value="{{skill.value}}"/></div>{{/each}}
+          </div>
+        </section>
+        <section class="camc-panel">
+          <h2 class="camc-panel-title"><i class="fas fa-bolt"></i> Acción especial</h2>
+          <textarea name="system.especial">{{system.especial}}</textarea>
+        </section>
+        <section class="camc-panel wide">
+          <h2 class="camc-panel-title"><i class="fas fa-gauge"></i> Acciones rápidas</h2>
+          <div class="camc-quick-actions"><button type="button" class="camc-action-button roll-initiative"><i class="fas fa-crossed-swords"></i> Iniciativa</button><button type="button" class="camc-action-button roll-resistance"><i class="fas fa-shield-heart"></i> Resistencia</button></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="combate">
+      <div class="camc-grid camc-combat-grid">
+        <section class="camc-panel"><h2 class="camc-panel-title">Armas</h2><ol class="camc-item-list rich">{{#each itemsByType.armas as |item|}}<li class="item camc-item-row {{#if item.system.equipada}}equipped{{/if}}" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.categoria_label}}</small></div><span>{{item.system.dano}}{{#if item.system.dano_fijo}}+{{item.system.dano_fijo}}{{/if}}</span><button type="button" class="item-roll-damage camc-die-button"><i class="fas fa-dice-d6"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button></li>{{else}}<li class="camc-empty">Sin armas.</li>{{/each}}</ol></section>
+        <section class="camc-panel"><h2 class="camc-panel-title">Protección</h2><ol class="camc-item-list rich">{{#each itemsByType.protecciones as |item|}}<li class="item camc-item-row {{#if item.system.equipada}}equipped{{/if}}{{#if item.system.equipado}}equipped{{/if}}" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.type}}</small></div><span>Nivel {{item.system.nivel}}</span><button type="button" class="item-equip camc-icon-button"><i class="fas fa-toggle-on"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button></li>{{else}}<li class="camc-empty">Sin protección.</li>{{/each}}</ol></section>
+        <section class="camc-panel"><h2 class="camc-panel-title">Dones / rasgos</h2><ol class="camc-item-list rich">{{#each itemsByType.dones as |item|}}<li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.efecto}}</small></div><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button></li>{{else}}<li class="camc-empty">Sin dones.</li>{{/each}}</ol></section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="notas">
+      <section class="camc-panel camc-npc-notes"><h2 class="camc-panel-title">Notas de dirección</h2><textarea name="system.biografia.descripcion">{{system.biografia.descripcion}}</textarea></section>
+    </section>
+  </main>
+</form>

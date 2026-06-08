@@ -1,0 +1,96 @@
+name: Crear Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publicar Release en GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Leer versión desde system.json
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(jq -r '.version' system.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Verificar que el tag coincide con la versión
+        shell: bash
+        run: |
+          TAG="${GITHUB_REF#refs/tags/v}"
+          VERSION="${{ steps.version.outputs.version }}"
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "ERROR: El tag (v$TAG) no coincide con system.json ($VERSION)"
+            exit 1
+          fi
+
+      - name: Validar manifest
+        shell: bash
+        run: |
+          jq empty system.json
+          test "$(jq -r '.id' system.json)" = "cuervos-de-asgard-mc"
+          test "$(jq -r '.download' system.json)" = "https://github.com/ManuRomera/cuervos-de-asgard-mc/releases/download/v${{ steps.version.outputs.version }}/cuervos-de-asgard-mc.zip"
+
+      - name: Crear ZIP del sistema
+        shell: bash
+        run: |
+          mkdir -p dist/cuervos-de-asgard-mc
+          rsync -av ./ dist/cuervos-de-asgard-mc/ \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'dist' \
+            --exclude '.DS_Store' \
+            --exclude '._*' \
+            --exclude '__MACOSX'
+          cd dist
+          zip -r "cuervos-de-asgard-mc.zip" cuervos-de-asgard-mc
+          cd ..
+          ls -lh dist/cuervos-de-asgard-mc.zip
+
+      - name: Extraer notas desde CHANGELOG.md
+        id: changelog
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          NOTES=$(awk "/^## \[$VERSION\]/,/^## \[/{if(/^## \[/ && !/^## \[$VERSION\]/) exit; print}" CHANGELOG.md | tail -n +2)
+          if [ -z "$NOTES" ]; then
+            NOTES="Release de la versión $VERSION."
+          fi
+          echo "notes<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$NOTES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Crear Release en GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ steps.version.outputs.version }}"
+          name: "Cuervos de Asgard Motor Club v${{ steps.version.outputs.version }}"
+          body: |
+            ## Cuervos de Asgard Motor Club para Foundry VTT — v${{ steps.version.outputs.version }}
+
+            ### Instalación
+
+            Pega esta URL en Foundry VTT → Sistemas → Instalar sistema → URL del Manifiesto:
+
+            ```text
+            https://raw.githubusercontent.com/ManuRomera/cuervos-de-asgard-mc/main/system.json
+            ```
+
+            ### Notas
+
+            ${{ steps.changelog.outputs.notes }}
+          files: dist/cuervos-de-asgard-mc.zip
+          draft: false
+          prerelease: false
+          make_latest: true

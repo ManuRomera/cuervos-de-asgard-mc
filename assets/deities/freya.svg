@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360">
+  <rect width="240" height="360" fill="#2a1522"/>
+  <path d="M26 18h188v324H26z" fill="#e8dfcb" opacity=".12" stroke="#d9a83f" stroke-width="5"/>
+  <path d="M120 58c38 38 56 75 56 110 0 36-24 65-56 65s-56-29-56-65c0-35 18-72 56-110z" fill="#c83f88" opacity=".88" stroke="#e8dfcb" stroke-width="4"/>
+  <path d="M78 238h84M120 232v58" stroke="#e8dfcb" stroke-width="8" stroke-linecap="round"/>
+  <text x="120" y="327" text-anchor="middle" font-family="serif" font-size="30" font-weight="700" fill="#e8dfcb">FREYA</text>
+</svg>

@@ -1,0 +1,140 @@
+[
+  {
+    "name": "Leon «Viejo Cráneo» Cremscy",
+    "type": "personaje",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "habilidades_favorecidas": [],
+      "biografia": {
+        "cargo": "presidente",
+        "talento": "Autoridad de carretera",
+        "concepto": "Presidente de los Cuervos de Asgard MC",
+        "motivacion": "Morir luchando por el MC y por la gente que depende de el.",
+        "cita": "Mientras tenga sangre en las venas, nadie tocará a los míos.",
+        "entorno_nacimiento": "Rock Springs",
+        "descripcion": "Veterano endurecido, superviviente del Viejo Mundo y figura central del capítulo.",
+        "historia": "Leon fue un fuera de la ley violento antes del Ragnarök. Sobrevivió al derrumbe del mundo junto a sus hermanos Francis y Thomas, formó parte de los Seven Originals y terminó convirtiéndose en una leyenda viva del club. Carga con el peso de los muertos, con la responsabilidad de proteger a su comunidad y con la sombra de los errores que dejaron a Francis apartado de la carretera."
+      },
+      "notas": "Personaje pregenerado del capítulo 10 del manual."
+    }
+  },
+  {
+    "name": "Thomas «Halcón» Cremscy",
+    "type": "personaje",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "habilidades_favorecidas": [],
+      "biografia": {
+        "cargo": "vicepresidente",
+        "talento": "Mano derecha",
+        "deidad": "tyr",
+        "virtud": "Honor",
+        "concepto": "Vicepresidente marcado por la culpa",
+        "motivacion": "Superar tu dolor y demostrar que aún eres digno de la confianza del MC.",
+        "cita": "El dolor te enseña, si tienes el coraje de escucharlo.",
+        "entorno_nacimiento": "Rock Springs",
+        "descripcion": "Antiguo brazo fuerte de los Cremscy, curtido por la carretera y por la guerra.",
+        "historia": "Thomas admiró a Leon y Francis desde joven y siguió sus pasos en la vida criminal antes del fin del mundo. Se ganó el respeto del club con violencia, lealtad y presencia, pero un error dejó a Francis gravemente marcado. Desde entonces sostiene a Leon como vicepresidente y busca una forma de pagar lo que debe."
+      },
+      "notas": "Personaje pregenerado del capítulo 10 del manual."
+    }
+  },
+  {
+    "name": "Absenta",
+    "type": "personaje",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "habilidades_favorecidas": ["cultura", "idioma_mitico", "informacion", "memoria"],
+      "biografia": {
+        "cargo": "secretario",
+        "talento": "Inspirar",
+        "concepto": "Secretaria, cronista y memoria viva del capítulo",
+        "motivacion": "Ser protagonista de una historia que merezca ser contada.",
+        "cita": "Seguidme y beberemos cuando esto acabe.",
+        "entorno_nacimiento": "Caravana de supervivientes",
+        "descripcion": "Joven brillante, ferozmente inteligente y dotada para recordar nombres, rutas e historias.",
+        "historia": "Absenta es hija de Francis Cremscy y de una mujer marcada por la absenta y la carretera. Creció rodeada de relatos, secretos y cuentas pendientes. Su memoria excepcional y su talento para convertir los hechos en historia la llevaron a ocupar el cargo de secretaria del MC."
+      },
+      "notas": "Personaje pregenerado del capítulo 10 del manual."
+    }
+  },
+  {
+    "name": "Benzina",
+    "type": "personaje",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "habilidades_favorecidas": ["auxilio", "ocultacion", "oido", "supervivencia"],
+      "biografia": {
+        "cargo": "tesorero",
+        "talento": "Cuentas claras",
+        "concepto": "Tesorera, sanadora y mecánica de necesidad",
+        "motivacion": "Saber más sobre el mundo antiguo y preservar lo útil para los que sobreviven.",
+        "cita": "¡Fuego a tope!",
+        "entorno_nacimiento": "Detroit",
+        "descripcion": "Superviviente práctica, curiosa y capaz de entender máquinas, heridas y recursos.",
+        "historia": "Benzina aprendió a leer el mundo a través de motores, piezas rotas, partos y heridas. Tras dejar el Yunque, encontró un lugar en el capítulo de Leon, donde su capacidad para mantener vivo lo que otros dan por perdido la convirtió en tesorera."
+      },
+      "notas": "Personaje pregenerado del capítulo 10 del manual."
+    }
+  },
+  {
+    "name": "Munin",
+    "type": "personaje",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "habilidades_favorecidas": ["atletismo", "intimidacion", "lucha", "punteria"],
+      "biografia": {
+        "cargo": "sargento_armas",
+        "talento": "Nadie pasa",
+        "deidad": "freya",
+        "virtud": "Liderazgo",
+        "don_principal": "Azote del Enemigo",
+        "concepto": "Sargento de armas y muro del capítulo",
+        "motivacion": "Proteger a los débiles y asegurar que nadie atraviese la línea.",
+        "cita": "Mi moto se compone de acero y mi carretera de sangre.",
+        "entorno_nacimiento": "Tennessee",
+        "descripcion": "Gigantesco, musculoso y directo, hecho para detener amenazas antes de que alcancen a los suyos.",
+        "historia": "Nacido como Carl en los Apalaches, Munin perdió a su familia cuando los draugar arrasaron su vida. Los Cuervos lo rescataron y le dieron una carretera, un propósito y una familia nueva. Desde entonces protege el capítulo con escopeta, bate, cota de malla, casco y escudo."
+      },
+      "notas": "Personaje pregenerado del capítulo 10 del manual."
+    }
+  },
+  {
+    "name": "Bomani",
+    "type": "personaje",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "habilidades_favorecidas": ["conducir", "conversacion", "fuerza_bruta", "mecanica"],
+      "biografia": {
+        "cargo": "mecanico_jefe",
+        "talento": "Arreglo de emergencia",
+        "concepto": "Mecánico jefe con ambición de presidencia",
+        "motivacion": "Ser merecedor de presidir el MC algún día.",
+        "cita": "Solo yo sé arreglar eso. Anda, trae acá.",
+        "entorno_nacimiento": "Llanuras Yermas",
+        "descripcion": "Mecánico paciente, fuerte y orgulloso de sus raíces, capaz de devolver una moto a la carretera con casi nada.",
+        "historia": "Bomani aprendió mecánica de su padre y creció sabiendo que una máquina viva puede salvar a toda una comunidad. Su linaje keniano, su habilidad con herramientas y su relación con Absenta lo atan al capítulo tanto como su deseo de demostrar que puede liderarlo."
+      },
+      "notas": "Personaje pregenerado del capítulo 10 del manual."
+    }
+  },
+  {
+    "name": "Managarm «La loba de hierro»",
+    "type": "personaje",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "habilidades_favorecidas": ["entorno", "observacion", "rastreo", "sigilo"],
+      "biografia": {
+        "cargo": "capitan_rutas",
+        "talento": "Ruta segura",
+        "concepto": "Capitana de ruta criada por la supervivencia",
+        "motivacion": "Cazar, comer, copular y vivir la vida al día.",
+        "cita": "Comer o ser comido; no hay más opción.",
+        "entorno_nacimiento": "Desconocido",
+        "descripcion": "Joven, salvaje y precisa, con instinto para leer rastros, viento y amenazas.",
+        "historia": "Managarm fue encontrada o criada cerca de una guarida de huargos y aprendió antes a sobrevivir que a convivir. Su adaptación al club fue difícil, pero su talento para rastrear, cazar y abrir camino terminó convirtiéndola en capitana de ruta."
+      },
+      "notas": "Personaje pregenerado del capítulo 10 del manual."
+    }
+  }
+]
