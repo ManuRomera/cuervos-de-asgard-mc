@@ -2,6 +2,12 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.6] — 2026-07-20
+
+### Añadido
+- Asistente paso a paso para generar PJ desde la hoja: identidad, cargo, deidad, enfoque de atributos, cuatro habilidades favorecidas, tirada de Salud inicial y opción de moto inicial.
+- Marcado WIP / Work in Progress en README y manifest para dejar claro que el sistema está en desarrollo activo.
+
 ## [1.3.5] — 2026-07-20
 
 ### Corregido

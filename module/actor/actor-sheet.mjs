@@ -2,7 +2,7 @@ import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
 import { generateRandomMount } from "../mount/mount-generator.mjs";
 import { CAMCMountRolls } from "../mount/mount-rolls.mjs";
-import { generateRandomCharacter } from "../generator/camc-generators.mjs";
+import { CAMCCharacterArchetypes, generateRandomCharacter } from "../generator/camc-generators.mjs";
 
 const get = foundry.utils.getProperty;
 const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
@@ -613,20 +613,234 @@ export class CAMCActorSheet extends ActorSheetV1 {
   }
 
   async #generateCharacter() {
-    const ok = window.confirm("Esto reemplazará los datos principales de este personaje. ¿Continuar?");
-    if (!ok) return;
     try {
-      const data = generateRandomCharacter({ seed: `${this.actor.id}-${Date.now()}` });
+      const state = {
+        seed: `${this.actor.id}-${Date.now()}`,
+        name: this.actor.name,
+        jugador: this.actor.system.biografia?.jugador ?? "",
+        edad: this.actor.system.biografia?.edad ?? "",
+        cargo: this.actor.system.biografia?.cargo || "capitan_rutas",
+        deidad: this.actor.system.biografia?.deidad || "odin",
+        archetype: this.#defaultArchetypeForCargo(this.actor.system.biografia?.cargo),
+        favored: []
+      };
+      const identity = await this.#characterWizardIdentity(state);
+      if (!identity) return;
+      Object.assign(state, identity);
+      const favored = await this.#characterWizardFavored(state);
+      if (!favored) return;
+      state.favored = favored;
+      const finalOptions = await this.#characterWizardFinish(state);
+      if (!finalOptions) return;
+
+      let healthRoll = null;
+      if (finalOptions.rollHealth) {
+        healthRoll = await (new Roll("1d6")).evaluate({ async: true });
+      }
+      const data = generateRandomCharacter({
+        seed: state.seed,
+        name: state.name,
+        jugador: state.jugador,
+        edad: state.edad,
+        cargo: state.cargo,
+        deidad: state.deidad,
+        archetype: state.archetype,
+        favored: state.favored,
+        saludRoll: healthRoll ? Number(healthRoll.total ?? 1) : 1
+      });
       data.img = this.actor.img || data.img;
       delete data.type;
       delete data.items;
       await this.actor.update(data);
+      if (healthRoll) {
+        const fue = Number(this.actor.system.atributos?.fue?.value ?? 0);
+        const total = 10 + (fue * 2) + Number(healthRoll.total ?? 0);
+        await healthRoll.toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: `${this.actor.name}: Salud inicial generada = FUE x 2 + 10 + 1D = ${total}`
+        });
+      }
+      if (finalOptions.createMount) await this.#createGeneratedMountForActor();
       ui.notifications.info(`${this.actor.name} generado.`);
       this.render(false);
     } catch (err) {
       console.error("CAMC | Error generando personaje", err);
       ui.notifications.error("No se pudo generar el personaje. Revisa la consola.");
     }
+  }
+
+  async #characterWizardIdentity(state) {
+    const cargoOptions = Object.entries(CAMC.cargos)
+      .filter(([key]) => key !== "full_patch")
+      .map(([key, cargo]) => `<option value="${key}" ${state.cargo === key ? "selected" : ""}>${cargo.label}</option>`)
+      .join("");
+    const deityOptions = Object.entries(CAMC.dioses)
+      .map(([key, dios]) => `<option value="${key}" ${state.deidad === key ? "selected" : ""}>${dios.label} · ${dios.virtud}</option>`)
+      .join("");
+    const archetypeOptions = this.#archetypeOptions(state.archetype);
+    const content = `
+      <form class="camc-dialog camc-character-wizard">
+        <p><strong>Paso 1 de 3: identidad y enfoque.</strong> El asistente reemplazará los datos principales de este PJ manteniendo su imagen actual.</p>
+        <div class="camc-dialog-grid">
+          <label><span>Nombre</span><input name="name" type="text" value="${this.#escapeHtml(state.name)}"/></label>
+          <label><span>Jugador</span><input name="jugador" type="text" value="${this.#escapeHtml(state.jugador)}"/></label>
+          <label><span>Edad</span><input name="edad" type="text" value="${this.#escapeHtml(state.edad)}"/></label>
+          <label><span>Cargo</span><select name="cargo">${cargoOptions}</select></label>
+          <label><span>Deidad</span><select name="deidad">${deityOptions}</select></label>
+          <label><span>Enfoque de atributos</span><select name="archetype">${archetypeOptions}</select></label>
+        </div>
+        <p class="notes">Los atributos se asignan como 6, 4, 2, 1 y 0 según el enfoque elegido. En el siguiente paso se fijan exactamente cuatro habilidades favorecidas.</p>
+      </form>`;
+    return this.#dialogPromise({
+      title: "Generador de PJ · Identidad",
+      content,
+      okLabel: "Siguiente",
+      read: html => ({
+        name: String(html.find('[name="name"]').val() || this.actor.name).trim(),
+        jugador: String(html.find('[name="jugador"]').val() || "").trim(),
+        edad: String(html.find('[name="edad"]').val() || "").trim(),
+        cargo: String(html.find('[name="cargo"]').val() || "capitan_rutas"),
+        deidad: String(html.find('[name="deidad"]').val() || "odin"),
+        archetype: String(html.find('[name="archetype"]').val() || "ruta")
+      })
+    });
+  }
+
+  async #characterWizardFavored(state) {
+    const cargoSkills = CAMC.cargos[state.cargo]?.habilidades ?? [];
+    const defaults = cargoSkills.length ? cargoSkills : this.#defaultFavoredForArchetype(state.archetype);
+    const rows = Object.entries(CAMC.habilidades).map(([key, skill]) => `
+      <label class="camc-checkline">
+        <input name="favored" type="checkbox" value="${key}" ${defaults.includes(key) ? "checked" : ""}/>
+        ${skill.label} <small>${CAMC.atributos[skill.atributo]?.short ?? skill.atributo.toUpperCase()}</small>
+      </label>`).join("");
+    const cargoLabel = CAMC.cargos[state.cargo]?.label ?? "Cargo";
+    const content = `
+      <form class="camc-dialog camc-character-wizard">
+        <p><strong>Paso 2 de 3: habilidades favorecidas.</strong> ${cargoLabel} ${cargoSkills.length ? "propone sus cuatro habilidades del cargo." : "permite escoger cuatro habilidades."}</p>
+        <div class="camc-wizard-skill-grid">${rows}</div>
+        <p class="notes">Debes dejar marcadas exactamente cuatro. En la ficha aparecerán como Habilidades favorecidas.</p>
+      </form>`;
+    return this.#dialogPromise({
+      title: "Generador de PJ · Habilidades favorecidas",
+      content,
+      okLabel: "Siguiente",
+      read: html => {
+        const selected = html.find('[name="favored"]:checked').map((_, input) => input.value).get();
+        if (selected.length !== 4) {
+          ui.notifications.warn("El PJ debe tener exactamente 4 habilidades favorecidas.");
+          return null;
+        }
+        return selected;
+      }
+    });
+  }
+
+  async #characterWizardFinish(state) {
+    const attrOrder = CAMCCharacterArchetypes[state.archetype] ?? CAMCCharacterArchetypes.ruta;
+    const attrs = attrOrder.map((key, index) => `${CAMC.atributos[key]?.short ?? key.toUpperCase()} ${[6, 4, 2, 1, 0][index]}`).join(" · ");
+    const skills = state.favored.map(key => CAMC.habilidades[key]?.label ?? key).join(", ");
+    const content = `
+      <form class="camc-dialog camc-character-wizard">
+        <p><strong>Paso 3 de 3: revisar y crear.</strong></p>
+        <dl class="camc-wizard-summary">
+          <dt>Cargo</dt><dd>${this.#escapeHtml(CAMC.cargos[state.cargo]?.label ?? state.cargo)}</dd>
+          <dt>Deidad</dt><dd>${this.#escapeHtml(CAMC.dioses[state.deidad]?.label ?? state.deidad)} · ${this.#escapeHtml(CAMC.dioses[state.deidad]?.virtud ?? "")}</dd>
+          <dt>Atributos</dt><dd>${attrs}</dd>
+          <dt>Habilidades favorecidas</dt><dd>${this.#escapeHtml(skills)}</dd>
+        </dl>
+        <label class="camc-checkline"><input name="rollHealth" type="checkbox" checked/> Tirar Salud inicial en el chat (FUE x 2 + 10 + 1D)</label>
+        <label class="camc-checkline"><input name="createMount" type="checkbox"/> Generar y vincular una moto inicial</label>
+      </form>`;
+    return this.#dialogPromise({
+      title: "Generador de PJ · Confirmar",
+      content,
+      okLabel: "Crear PJ",
+      read: html => ({
+        rollHealth: html.find('[name="rollHealth"]').is(":checked"),
+        createMount: html.find('[name="createMount"]').is(":checked")
+      })
+    });
+  }
+
+  async #createGeneratedMountForActor() {
+    const data = generateRandomMount({
+      seed: `${this.actor.id}-${Date.now()}-wizard-mount`,
+      ownerRole: CAMC.cargos[this.actor.system.biografia?.cargo]?.label ?? "",
+      chapter: "Cuervos de Asgard"
+    });
+    data.system.vinculo = { ownerUuid: this.actor.uuid, ownerName: this.actor.name };
+    data.system.mods = { funcionales: [], esteticas: [] };
+    const items = data.items ?? [];
+    delete data.items;
+    const moto = await Actor.create(data);
+    if (items.length) await moto.createEmbeddedDocuments("Item", items);
+    await this.#linkMount(moto);
+  }
+
+  #dialogPromise({ title, content, okLabel = "Aceptar", read }) {
+    return new Promise(resolve => new Dialog({
+      title,
+      content,
+      buttons: {
+        ok: {
+          label: okLabel,
+          callback: html => resolve(read(html))
+        },
+        cancel: { label: "Cancelar", callback: () => resolve(null) }
+      },
+      default: "ok",
+      close: () => resolve(null)
+    }).render(true));
+  }
+
+  #archetypeOptions(selected = "ruta") {
+    const labels = {
+      lider: "Liderazgo (CAR, INT, PER, DES, FUE)",
+      ruta: "Ruta (DES, PER, INT, CAR, FUE)",
+      combate: "Combate (DES, FUE, PER, CAR, INT)",
+      mecanica: "Mecánica (INT, DES, PER, FUE, CAR)",
+      supervivencia: "Supervivencia (PER, FUE, DES, INT, CAR)",
+      social: "Social (CAR, PER, INT, DES, FUE)"
+    };
+    return Object.keys(CAMCCharacterArchetypes)
+      .map(key => `<option value="${key}" ${selected === key ? "selected" : ""}>${labels[key] ?? key}</option>`)
+      .join("");
+  }
+
+  #defaultArchetypeForCargo(cargo) {
+    const map = {
+      presidente: "lider",
+      vicepresidente: "social",
+      secretario: "mecanica",
+      tesorero: "supervivencia",
+      sargento_armas: "combate",
+      capitan_rutas: "ruta",
+      mecanico_jefe: "mecanica"
+    };
+    return map[cargo] ?? "ruta";
+  }
+
+  #defaultFavoredForArchetype(archetype) {
+    const map = {
+      lider: ["conversacion", "intimidacion", "informacion", "psicologia"],
+      ruta: ["conducir", "entorno", "observacion", "rastreo"],
+      combate: ["atletismo", "lucha", "punteria", "intimidacion"],
+      mecanica: ["conducir", "mecanica", "informacion", "fuerza_bruta"],
+      supervivencia: ["auxilio", "oido", "supervivencia", "ocultacion"],
+      social: ["conversacion", "seduccion", "subterfugio", "psicologia"]
+    };
+    return map[archetype] ?? map.ruta;
+  }
+
+  #escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#39;"
+    }[char]));
   }
 
   async #getLinkedMount() {

@@ -1,5 +1,7 @@
 # Cuervos de Asgard Motor Club para Foundry VTT
 
+> **WIP / Work in Progress.** Este sistema está en desarrollo activo. Ya es usable en mesa, pero las hojas, automatizaciones, generadores y compendios pueden cambiar entre versiones mientras se completa y se revisa contra el manual.
+
 Sistema no oficial para jugar **Cuervos de Asgard Motor Club** en Foundry VTT v13. Implementa hojas nativas, tiradas y automatizaciones sobre una base Ysystem adaptada a carretera postapocalíptica, comunidad, motos, dones divinos y parches de chaleco.
 
 ## Instalación directa
@@ -67,7 +69,7 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
-| 1.3.4 | v13 | v13.351 |
+| 1.3.6 WIP | v13 | v13.351 |
 
 ## Repositorio y releases
 

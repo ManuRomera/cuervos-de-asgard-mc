@@ -128,7 +128,7 @@ export const CAMCGeneratorTables = {
   }
 };
 
-const archetypes = {
+export const CAMCCharacterArchetypes = {
   lider: ["car", "int", "per", "des", "fue"],
   ruta: ["des", "per", "int", "car", "fue"],
   combate: ["des", "fue", "per", "car", "int"],
@@ -173,12 +173,14 @@ function derivedFor(attributes, skills) {
   };
 }
 
-function combatFor(attributes, skills, npc = false) {
+function combatFor(attributes, skills, npc = false, options = {}) {
   const attr = key => Number(attributes[key]?.value ?? 0);
-  const health = 14 + (attr("fue") * 2) + (npc ? 0 : 0);
+  const healthRoll = npc ? 0 : Number(options.saludRoll ?? 1);
+  const health = npc ? 14 + (attr("fue") * 2) : 10 + (attr("fue") * 2) + healthRoll;
+  const proezasMax = Math.max(3, Math.floor((attr("fue") + attr("int")) / 2) + 3);
   return {
-    salud: { value: health, max: health },
-    proezas: npc ? { value: 0, max: 0 } : { value: 3, max: 3 },
+    salud: { value: health, max: health, roll_inicial: healthRoll },
+    proezas: npc ? { value: 0, max: 0 } : { value: proezasMax, max: proezasMax },
     resistencia_fisica: attr("fue") + attr("des") + 5,
     iniciativa: attr("des") + Number(skills.conducir?.value ?? 1),
     dano_bonus: 0
@@ -191,10 +193,13 @@ export function generateRandomCharacter(options = {}) {
   const cargo = options.cargo || pick(cargos, rng);
   const deidad = options.deidad || pick(Object.keys(CAMC.dioses), rng);
   const cargoData = CAMC.cargos[cargo] ?? CAMC.cargos.full_patch;
-  const favored = cargoData.habilidades?.length ? [...cargoData.habilidades] : uniquePicks(Object.keys(CAMC.habilidades), 4, rng);
-  const attributes = buildAttributes(archetypes[cargoArchetype[cargo] ?? "ruta"]);
+  const favored = Array.isArray(options.favored) && options.favored.length
+    ? options.favored.slice(0, 4)
+    : (cargoData.habilidades?.length ? [...cargoData.habilidades] : uniquePicks(Object.keys(CAMC.habilidades), 4, rng));
+  const archetype = options.archetype || cargoArchetype[cargo] || "ruta";
+  const attributes = buildAttributes(CAMCCharacterArchetypes[archetype] ?? CAMCCharacterArchetypes.ruta);
   const skills = buildSkills(favored, rng);
-  const name = `${pick(CAMCGeneratorTables.nombres, rng)} «${pick(CAMCGeneratorTables.apodos, rng)}»`;
+  const name = options.name || `${pick(CAMCGeneratorTables.nombres, rng)} «${pick(CAMCGeneratorTables.apodos, rng)}»`;
 
   return {
     name,
@@ -203,13 +208,14 @@ export function generateRandomCharacter(options = {}) {
     system: {
       atributos: attributes,
       valores_pasivos: derivedFor(attributes, skills),
-      combate: combatFor(attributes, skills),
+      combate: combatFor(attributes, skills, false, { saludRoll: options.saludRoll }),
       proteccion: { armadura_nivel: 0, armadura_penalizacion: 0, escudo_nivel: 0, escudo_penalizacion: 0 },
       habilidades: skills,
       habilidades_favorecidas: favored,
       biografia: {
-        jugador: "",
-        concepto: `${title(cargoData.label)}; ${pick(CAMCGeneratorTables.conceptos, rng)}`,
+        jugador: options.jugador ?? "",
+        concepto: "",
+        edad: options.edad ?? "",
         cargo,
         talento: cargoData.talento ?? "",
         deidad,
@@ -245,7 +251,7 @@ export function generateRandomNpc(options = {}) {
     duro: [5, 4, 3, 2, 2],
     elite: [6, 5, 4, 3, 2]
   };
-  const order = pick(Object.values(archetypes), rng);
+  const order = pick(Object.values(CAMCCharacterArchetypes), rng);
   const attributes = Object.fromEntries(order.map((key, index) => [key, { value: arrays[difficulty][index] ?? 1 }]));
   const keySkills = uniquePicks(Object.keys(CAMC.habilidades), difficulty === "elite" ? 8 : 6, rng);
   const habilidadesClave = {};

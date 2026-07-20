@@ -4971,6 +4971,55 @@ body.camc-compact .camc-sheet{font-size:12px;}
   min-width:0!important;
 }
 
+.camc-character-wizard{
+  min-width:min(680px,80vw);
+}
+
+.camc-character-wizard .camc-wizard-skill-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(220px,1fr));
+  gap:6px 10px;
+  margin:8px 0;
+}
+
+.camc-character-wizard .camc-wizard-skill-grid .camc-checkline{
+  border:1px solid rgba(20,16,12,.35);
+  background:rgba(248,242,229,.78);
+  padding:6px 8px;
+  color:#15110d!important;
+}
+
+.camc-character-wizard .camc-wizard-skill-grid small{
+  color:#8c2f1f;
+  font-weight:900;
+  margin-left:5px;
+}
+
+.camc-character-wizard .camc-wizard-summary{
+  display:grid;
+  grid-template-columns:130px minmax(0,1fr);
+  gap:6px 10px;
+  margin:8px 0 12px;
+}
+
+.camc-character-wizard .camc-wizard-summary dt{
+  font-weight:900;
+  text-transform:uppercase;
+  color:#302821;
+}
+
+.camc-character-wizard .camc-wizard-summary dd{
+  margin:0;
+  color:#111;
+  font-weight:800;
+}
+
+@media(max-width:720px){
+  .camc-character-wizard .camc-wizard-skill-grid{
+    grid-template-columns:1fr;
+  }
+}
+
 @media(max-width:1080px){
   .camc-community-infographic .camc-community-title,
   .camc-moto-infographic .camc-moto-title{
