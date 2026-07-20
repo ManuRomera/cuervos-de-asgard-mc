@@ -19,7 +19,7 @@ Foundry descargará el sistema desde la última release y avisará cuando haya a
 - Hoja de `personaje` con cabecera temática, retrato o figura exterior, deidad, cargo, parches, recursos, atributos, valores derivados, habilidades, combate, equipo, dones, moto vinculada y biografía.
 - Hoja de `pnj` rápida para mesa, con atributos, valores derivados, habilidades relevantes, ataque, acción especial, salud y notas.
 - Hoja de `comunidad` para población, reputación, recursos, defensas, aliados, amenazas, acontecimientos y situación del asentamiento.
-- Hoja de `moto` con estructura, daño, maniobrabilidad, carga, modificaciones, persecuciones y acciones de conducción.
+- Hoja de `moto` con estructura, daño, maniobrabilidad, carga, modificaciones, rastro visual de persecución y acciones de conducción.
 - Hoja de `item` para armas, armaduras, escudos, dones, objetos, vehículos, talentos y reglas.
 - Chat cards temáticas para tiradas, daño, iniciativa, dones, armas y acciones de vehículo.
 - Diseño compacto opcional y calibración visual de parches sobre el chaleco.
@@ -32,7 +32,7 @@ Foundry descargará el sistema desde la última release y avisará cuando haya a
 - Control de munición, daño de armas, daño de vehículos, salud de personajes y estructura de motos.
 - Consumo y recuperación de proezas.
 - Habilidades favorecidas por cargo, con límite y edición controlada.
-- Generadores de personaje, PNJ, comunidad y montura.
+- Generadores de personaje, PNJ, comunidad y montura; el aleatorio completo de PJ crea también talento, don, equipo inicial y moto vinculada.
 - Importador automático de contenido al mundo, configurable desde ajustes.
 - Reglas ampliadas de motos opcionales para usar automatismos extra fuera del núcleo estricto del manual.
 

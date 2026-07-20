@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.10] — 2026-07-20
+
+### Añadido
+- Rastro visual de persecución en la ficha de moto con 10 franjas, perseguidor, objetivo, punto de huida y controles +/−.
+- La generación aleatoria completa de PJ crea equipo inicial: talento de cargo, don de deidad cuando existe en datos, armas, armadura, objetos y moto vinculada.
+
+### Corregido
+- El parche grande de espalda ya puede escalarse con sus controles +/−; se eliminó el bloqueo de tamaño por CSS.
+
 ## [1.3.9] — 2026-07-20
 
 ### Cambiado

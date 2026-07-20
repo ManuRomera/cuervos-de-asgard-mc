@@ -3376,16 +3376,6 @@ body.camc-compact .camc-sheet{font-size:12px;}
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
 }
-.camc-character .camc-vest-patch.slot-merito_izq_1,
-.camc-character .camc-vest-slot-guide.slot-merito_izq_1{
-  width:13.2%!important;
-  height:4%!important;
-}
-.camc-character .camc-vest-patch.slot-parche_espalda,
-.camc-character .camc-vest-slot-guide.slot-parche_espalda{
-  width:39.5%!important;
-  height:9%!important;
-}
 .camc-character .camc-vest-patch.slot-parche_espalda{
   object-fit:contain!important;
 }
@@ -5018,6 +5008,78 @@ body.camc-compact .camc-sheet{font-size:12px;}
 
 .camc-chase-grid .camc-form-grid{
   grid-template-columns:repeat(2,minmax(140px,1fr));
+}
+
+.camc-chase-track{
+  display:grid;
+  grid-template-columns:repeat(10,minmax(32px,1fr));
+  gap:4px;
+  margin:10px 0 12px;
+}
+
+.camc-chase-band{
+  position:relative;
+  min-height:54px;
+  border:2px solid rgba(38,34,28,.72);
+  background:rgba(248,241,223,.55);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:4px 2px;
+  color:#111;
+  box-shadow:inset 0 0 10px rgba(0,0,0,.12);
+}
+
+.camc-chase-band b{
+  font-size:12px;
+  line-height:1;
+}
+
+.camc-chase-band.pursuer{
+  border-color:#0b7782;
+  background:rgba(11,119,130,.22);
+}
+
+.camc-chase-band.target{
+  border-color:#b3442d;
+  background:rgba(179,68,45,.2);
+}
+
+.camc-chase-band.escape{
+  box-shadow:inset 0 -4px 0 rgba(225,177,43,.82), inset 0 0 10px rgba(0,0,0,.12);
+}
+
+.camc-chase-markers{
+  min-height:24px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  font-size:16px;
+}
+
+.camc-chase-markers .pursuer{color:#0b7782;}
+.camc-chase-markers .target{color:#b3442d;}
+.camc-chase-markers .escape{
+  width:100%;
+  color:#6b4c08;
+  font-size:9px;
+  line-height:1;
+  text-transform:uppercase;
+}
+
+.camc-chase-stepper{
+  display:grid;
+  grid-template-columns:32px minmax(0,1fr) 32px;
+  gap:4px;
+  align-items:center;
+}
+
+.camc-chase-stepper button{
+  min-height:32px!important;
+  padding:0!important;
 }
 
 .camc-chase-actions{

@@ -160,7 +160,11 @@ export class CAMCActor extends Actor {
     s.persecucion.terreno = Number(s.persecucion.terreno ?? 10);
     s.persecucion.visibilidad = Number(s.persecucion.visibilidad ?? 0);
     s.persecucion.evasion_objetivo = Number(s.persecucion.evasion_objetivo ?? 10);
-    s.persecucion.franja = Number(s.persecucion.franja ?? 1);
+    const clampBand = value => Math.max(1, Math.min(10, Number(value) || 1));
+    s.persecucion.perseguidor = clampBand(s.persecucion.perseguidor ?? s.persecucion.franja ?? 1);
+    s.persecucion.objetivo = clampBand(s.persecucion.objetivo ?? Math.min(10, s.persecucion.perseguidor + 4));
+    s.persecucion.huida = clampBand(s.persecucion.huida ?? 10);
+    s.persecucion.franja = s.persecucion.perseguidor;
     const itemMods = this.items?.filter(item => item.type === "objeto" && item.system?.tipo === "modificacion_moto" && item.system?.equipada) ?? [];
     const legacyMods = s.mods.funcionales ?? [];
     const modEffects = this.#getMotoModEffects([...legacyMods, ...itemMods]);

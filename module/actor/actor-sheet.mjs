@@ -684,9 +684,12 @@ export class CAMCActorSheet extends ActorSheetV1 {
           saludRoll: Number(healthRoll.total ?? 1)
         });
         data.img = this.actor.img || data.img;
+        const generatedItems = data.items ?? [];
         delete data.type;
         delete data.items;
         await this.actor.update(data);
+        await this.#applyGeneratedStarterItems(generatedItems);
+        await this.#createGeneratedMountForActor();
         const fue = Number(this.actor.system.atributos?.fue?.value ?? 0);
         const total = 10 + (fue * 2) + Number(healthRoll.total ?? 0);
         await healthRoll.toMessage({
@@ -719,9 +722,11 @@ export class CAMCActorSheet extends ActorSheetV1 {
         saludRoll: healthRoll ? Number(healthRoll.total ?? 1) : 1
       });
       data.img = this.actor.img || data.img;
+      const generatedItems = data.items ?? [];
       delete data.type;
       delete data.items;
       await this.actor.update(data);
+      await this.#applyGeneratedStarterItems(generatedItems);
       if (healthRoll) {
         const fue = Number(this.actor.system.atributos?.fue?.value ?? 0);
         const total = 10 + (fue * 2) + Number(healthRoll.total ?? 0);
@@ -737,6 +742,25 @@ export class CAMCActorSheet extends ActorSheetV1 {
       console.error("CAMC | Error generando personaje", err);
       ui.notifications.error("No se pudo generar el personaje. Revisa la consola.");
     }
+  }
+
+  async #applyGeneratedStarterItems(items = []) {
+    const current = this.actor.items
+      .filter(item => item.getFlag(CAMC.systemId, "generatedStarter"))
+      .map(item => item.id);
+    if (current.length) await this.actor.deleteEmbeddedDocuments("Item", current);
+    if (!items.length) return;
+    const docs = items.map(item => {
+      const data = foundry.utils.deepClone(item);
+      delete data._id;
+      data.flags ??= {};
+      data.flags[CAMC.systemId] = {
+        ...(data.flags[CAMC.systemId] ?? {}),
+        generatedStarter: true
+      };
+      return data;
+    });
+    await this.actor.createEmbeddedDocuments("Item", docs);
   }
 
   async #characterWizardIdentity(state) {

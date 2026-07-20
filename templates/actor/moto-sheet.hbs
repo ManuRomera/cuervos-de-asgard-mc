@@ -188,9 +188,45 @@
               </select>
             </label>
             <label><span>Evasión rival</span><input name="system.persecucion.evasion_objetivo" type="number" value="{{system.persecucion.evasion_objetivo}}"/></label>
-            <label><span>Franja actual</span><input name="system.persecucion.franja" type="number" min="1" max="10" value="{{system.persecucion.franja}}"/></label>
+          </div>
+          <div class="camc-chase-track" aria-label="Rastro visual de persecución">
+            {{#each chase.bands as |band|}}
+            <div class="camc-chase-band {{#if band.pursuer}}pursuer{{/if}} {{#if band.target}}target{{/if}} {{#if band.escape}}escape{{/if}}">
+              <b>{{band.value}}</b>
+              <span class="camc-chase-markers">
+                {{#if band.pursuer}}<i class="fas fa-motorcycle pursuer" title="Perseguidor"></i>{{/if}}
+                {{#if band.target}}<i class="fas fa-flag target" title="Objetivo"></i>{{/if}}
+                {{#if band.escape}}<small class="escape">Huida</small>{{/if}}
+              </span>
+            </div>
+            {{/each}}
+          </div>
+          <div class="camc-form-grid">
+            <label><span>Perseguidor</span>
+              <div class="camc-chase-stepper">
+                <button type="button" class="moto-chase-step" data-path="system.persecucion.perseguidor" data-delta="-1">-</button>
+                <input name="system.persecucion.perseguidor" type="number" min="1" max="10" value="{{system.persecucion.perseguidor}}"/>
+                <button type="button" class="moto-chase-step" data-path="system.persecucion.perseguidor" data-delta="1">+</button>
+              </div>
+            </label>
+            <label><span>Objetivo</span>
+              <div class="camc-chase-stepper">
+                <button type="button" class="moto-chase-step" data-path="system.persecucion.objetivo" data-delta="-1">-</button>
+                <input name="system.persecucion.objetivo" type="number" min="1" max="10" value="{{system.persecucion.objetivo}}"/>
+                <button type="button" class="moto-chase-step" data-path="system.persecucion.objetivo" data-delta="1">+</button>
+              </div>
+            </label>
+            <label><span>Franja de huida</span>
+              <div class="camc-chase-stepper">
+                <button type="button" class="moto-chase-step" data-path="system.persecucion.huida" data-delta="-1">-</button>
+                <input name="system.persecucion.huida" type="number" min="1" max="10" value="{{system.persecucion.huida}}"/>
+                <button type="button" class="moto-chase-step" data-path="system.persecucion.huida" data-delta="1">+</button>
+              </div>
+            </label>
           </div>
           <p class="camc-rules-note">Hay 10 franjas. Si perseguidor y objetivo acaban en la misma franja, el perseguido queda alcanzado. Si el objetivo llega a la franja de huida, escapa.</p>
+          {{#if chase.caught}}<p class="camc-rules-note danger"><strong>Alcanzado:</strong> perseguidor y objetivo están en la misma franja.</p>{{/if}}
+          {{#if chase.escaped}}<p class="camc-rules-note"><strong>Huida:</strong> el objetivo ha llegado a la franja de escape.</p>{{/if}}
         </section>
         <section class="camc-panel">
           <h2 class="camc-panel-title"><i class="fas fa-gauge-high"></i> Acciones de movimiento</h2>

@@ -1,6 +1,7 @@
 import { CAMC } from "../config.mjs";
 
 const pick = (list, rng) => list[Math.floor(rng() * list.length)];
+const clone = value => JSON.parse(JSON.stringify(value));
 
 function mulberry32(seed) {
   let t = Number(seed) || Date.now();
@@ -34,6 +35,7 @@ const uniquePicks = (list, count, rng) => {
 };
 
 const title = value => String(value ?? "").replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+const normalized = value => String(value ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 export const CAMCGeneratorTables = {
   nombres: [
@@ -261,6 +263,152 @@ function combatFor(attributes, skills, npc = false, options = {}) {
   };
 }
 
+const starterFlag = () => ({ [CAMC.systemId]: { generatedStarter: true } });
+
+const starterTalents = [
+  { name: "Autoridad de carretera", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/presidente.webp`, system: { cargo: "Presidente", efecto: "Cuando el capítulo actúa unido bajo tus órdenes, puedes declarar una prioridad clara de la escena. El DJ puede conceder +1D a la primera tirada que siga esa orden si el grupo acepta el riesgo.", descripcion: "Talento de liderazgo para marcar rumbo, asumir responsabilidad y mantener unido al capítulo." } },
+  { name: "Mano derecha", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/vicepresidente.webp`, system: { cargo: "Vicepresidente", efecto: "Una vez por escena puedes cubrir a otro Cuervo que esté actuando por el capítulo. Describe cómo le apoyas y dale +1D o reduce en 1D una penalización circunstancial.", descripcion: "Talento de apoyo para sostener la mesa presidencial y reemplazar al Presidente cuando haga falta." } },
+  { name: "Inspirar", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/secretario.webp`, system: { cargo: "Secretario", efecto: "Cuando recuerdas una gesta, pronuncias un juramento o conviertes una escena en leyenda del club, el DJ puede conceder proezas al grupo por la interpretación memorable.", descripcion: "Talento del Secretario: conserva memoria, relato y sentido mítico del capítulo." } },
+  { name: "Cuentas claras", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/tesorero.webp`, system: { cargo: "Tesorero", efecto: "Una vez por sesión puedes localizar, conservar o reasignar un recurso menor del capítulo si explicas dónde estaba guardado y qué coste social o material implica.", descripcion: "Talento de administración de recursos, favores, deuda y supervivencia logística." } },
+  { name: "Nadie pasa", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/sargento_armas.webp`, system: { cargo: "Sargento de armas", efecto: "Cuando proteges a otro Cuervo o mantienes una línea de defensa, puedes recibir tú una consecuencia física menor para darle +1D a su siguiente tirada de resistencia, lucha o huida.", descripcion: "Talento de seguridad, pelea y presencia intimidante." } },
+  { name: "Ruta segura", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/capitan_rutas.webp`, system: { cargo: "Capitán de rutas", efecto: "Antes de un viaje o persecución puedes declarar una ruta preparada. Si el grupo la sigue, la primera complicación de terreno, clima o orientación se afronta con +1D.", descripcion: "Talento de exploración, navegación, vigilancia de ruta y conocimiento del asfalto." } },
+  { name: "Arreglo de emergencia", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/mecanico_jefe.webp`, system: { cargo: "Mecánico jefe", efecto: "Una vez por escena puedes improvisar una reparación suficiente para que una moto, arma o pieza de equipo funcione hasta el final de la escena. Después deberá repararse con tiempo y recursos.", descripcion: "Talento de mecánica práctica, apaños de carretera y soluciones con lo que haya a mano." } },
+  { name: "Full Patch", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/full_patch.svg`, system: { cargo: "Full Patch", efecto: "Cuando actúas en nombre del club y pones en juego tu reputación, puedes pedir al DJ una ventaja narrativa razonable ligada al parche. Si abusas de ello, el club también paga el precio.", descripcion: "Talento genérico de pertenencia plena al capítulo." } }
+];
+
+const starterDones = [
+  { name: "Furia de la Tormenta", type: "don", img: "icons/magic/lightning/bolt-strike-blue.webp", system: { deidad: "Thor", coste_proezas: 2, coste_descripcion: "2 proezas por uso y combate", virtud: "Valor", efecto: "Los ataques del Cuervo impactan automáticamente y causan el doble de daño durante todo un combate. Los impactos adicionales no pueden ser críticos.", descripcion: "Thor te bendice con la furia de la tormenta." } },
+  { name: "Azote del Enemigo", type: "don", img: "icons/magic/fire/dagger-rune-enchant-flame-orange.webp", system: { deidad: "Thor", coste_proezas: 2, coste_descripcion: "2 proezas por combate", virtud: "Valor", efecto: "Escoge uno de los atributos del enemigo (FUE, DES, PER, INT o CAR) y redúcelo a 0 durante todo el combate.", descripcion: "El dios del trueno te otorga el poder de debilitar a tus enemigos." } },
+  { name: "Guerrero Legendario", type: "don", img: "icons/skills/melee/weapons-crossed-swords-yellow.webp", system: { deidad: "Thor", coste_proezas: 1, coste_descripcion: "1 proeza por contraataque", virtud: "Valor", efecto: "Cada vez que un enemigo falle un ataque contra ti, puedes gastar 1 proeza para contraatacar automáticamente con tu arma cuerpo a cuerpo equipada.", descripcion: "Como los grandes guerreros de antaño, aprovechas cada oportunidad para golpear." } },
+  { name: "Lazos de Skuld", type: "don", img: "icons/magic/nature/root-vines-grow-brown.webp", system: { deidad: "Freya", coste_proezas: 2, coste_descripcion: "2 proezas por uso", virtud: "Liderazgo", efecto: "Puedes obligar a un enemigo a rehacer una tirada que haya tenido éxito, quedándose con el peor resultado.", descripcion: "Como las nornas tejen el destino, tú puedes alterar el curso de los eventos." } },
+  { name: "Valquiria", type: "don", img: "icons/magic/light/projectile-smoke-trail-pink.webp", system: { deidad: "Freya", coste_proezas: 2, coste_descripcion: "2 proezas por uso", virtud: "Liderazgo", efecto: "Durante un combate completo, todas tus tiradas de habilidad ganan +3 al resultado.", descripcion: "Las Valquirias de Freya te acompañan en batalla." } },
+  { name: "Espíritu de Freya", type: "don", img: "icons/magic/life/heart-cross-pink.webp", system: { deidad: "Freya", coste_proezas: 2, coste_descripcion: "2 proezas por uso", virtud: "Liderazgo", efecto: "Recuperas 1D6 puntos de Salud instantáneamente.", descripcion: "La diosa Freya te otorga su bendición sanadora." } },
+  { name: "Sacrificio de Tyr", type: "don", img: "icons/magic/holy/barrier-shield-winged-cross.webp", system: { deidad: "Tyr", coste_proezas: 1, coste_descripcion: "1 proeza por uso", virtud: "Honor", efecto: "Puedes interponerte entre un aliado y un ataque enemigo, recibiendo todo el daño en su lugar. Tu armadura se considera de 2 niveles superior para este ataque.", descripcion: "Como Tyr perdió su mano por el bien de todos, tú te sacrificas por tus camaradas." } },
+  { name: "Inquebrantable", type: "don", img: "icons/equipment/shield/shield-kite-iron-brown.webp", system: { deidad: "Tyr", coste_proezas: 2, coste_descripcion: "2 proezas por combate", virtud: "Honor", efecto: "Durante un combate completo, eres inmune a los efectos de estado (aturdido, envenenado, etc.) y no sufres penalizadores por perdida de Salud.", descripcion: "Tu honor te mantiene firme donde otros caerían." } },
+  { name: "Justicia", type: "don", img: "icons/magic/control/buff-strength-muscle-damage-orange.webp", system: { deidad: "Tyr", coste_proezas: 2, coste_descripcion: "2 proezas por uso", virtud: "Honor", efecto: "Tu próximo ataque causará daño igual a la Salud máxima del enemigo menos su Salud actual (daño por justicia).", descripcion: "El dios de la guerra te guía para castigar a los malhechores." } },
+  { name: "Ojo de Heimdall", type: "don", img: "icons/magic/perception/eye-slit-orange.webp", system: { deidad: "Heimdall", coste_proezas: 1, coste_descripcion: "1 proeza por uso", virtud: "Vigilancia", efecto: "Detectas automáticamente todas las criaturas hostiles en un radio de 100 metros, incluyendo sus puntos de Salud aproximados y su intención inmediata.", descripcion: "El ojo omnisciente de Heimdall te permite ver lo invisible." } },
+  { name: "Gjallarhorn", type: "don", img: "icons/magic/sonic/projectile-sound-wave.webp", system: { deidad: "Heimdall", coste_proezas: 3, coste_descripcion: "3 proezas por uso (1 por aliado alertado)", virtud: "Vigilancia", efecto: "Todos los aliados en un radio de 1 kilómetro son alertados de tu situación y conocen tu posición exacta. Pueden responder moviéndose hacia ti a máxima velocidad.", descripcion: "El cuerno del guardián resuena a través de las Llanuras Yermas." } },
+  { name: "Guardian", type: "don", img: "icons/magic/defensive/shield-barrier-flaming-diamond.webp", system: { deidad: "Heimdall", coste_proezas: 1, coste_descripcion: "1 proeza por ronda", virtud: "Vigilancia", efecto: "Mientras estés en guardia, ningún enemigo puede tomar por sorpresa a tu grupo. Además, los enemigos que intenten acercarse sigilosamente deben superar tu Perspicacia con Sigilo.", descripcion: "El guardián del Bifrost te otorga su vigilancia eterna." } },
+  { name: "Visión de Frigg", type: "don", img: "icons/magic/perception/eye-ringed-glow-angry-small-teal.webp", system: { deidad: "Frigg", coste_proezas: 2, coste_descripcion: "2 proezas por pregunta", virtud: "Sabiduría", efecto: "Puedes hacer una pregunta sobre el futuro inmediato (lo que ocurrirá en las próximas 24 horas). La DJ debe responder con una pista críptica pero verdadera.", descripcion: "La reina de los dioses te concede un vislumbre del destino." } },
+  { name: "Tejido del Destino", type: "don", img: "icons/magic/control/fear-fright-mask.webp", system: { deidad: "Frigg", coste_proezas: 3, coste_descripcion: "3 proezas por uso", virtud: "Sabiduría", efecto: "Puedes alterar un resultado de dado recién tirado por cualquier personaje (PJ o PNJ) cambiándolo por el valor que desees.", descripcion: "Como las nornas tejen y destejen el hilo del destino, tú puedes alterar el curso de los eventos." } },
+  { name: "Consejo de Frigg", type: "don", img: "icons/magic/light/explosion-star-teal.webp", system: { deidad: "Frigg", coste_proezas: 1, coste_descripcion: "1 proeza por uso", virtud: "Sabiduría", efecto: "Un aliado puede repetir una tirada fallida con +2D adicionales.", descripcion: "La sabiduría de Frigg guía a través de las palabras adecuadas." } },
+  { name: "Cota de Draupnir", type: "don", img: "icons/equipment/chest/breastplate-collared-steel.webp", system: { deidad: "Idunn", coste_proezas: 1, coste_descripcion: "1 proeza por activación", virtud: "Perseverancia", efecto: "Te ves beneficiado con una protección de nivel 3 sin penalización. El artefacto es personal e intransferible. Se repliega mágicamente al final de cada combate adoptando el tamaño de un anillo. Requiere una acción de turno completo para equiparla.", descripcion: "Manufacturada por Idunn a partir del anillo mágico Draupnir." } },
+  { name: "Manzanas de Idunn", type: "don", img: "icons/consumables/fruit/apple-red.webp", system: { deidad: "Idunn", coste_proezas: 2, coste_descripcion: "2 proezas por uso", virtud: "Perseverancia", efecto: "Recuperas todos tus puntos de Salud perdidos y eliminas cualquier estado negativo.", descripcion: "Las mágicas manzanas de Idunn restauran la vitalidad perdida." } },
+  { name: "Juventud Eterna", type: "don", img: "icons/magic/life/heart-pink.webp", system: { deidad: "Idunn", coste_proezas: 1, coste_descripcion: "1 proeza por ronda", virtud: "Perseverancia", efecto: "Durante una ronda completa, eres inmune a todo daño. Sin embargo, al final de la ronda pierdes 1D6 puntos de Salud por el coste de mantener la juventud.", descripcion: "Idunn te concede un momento de perfección eterna." } }
+];
+
+function starterEquipmentFor({ cargo, deidad, favored = [], rng = Math.random } = {}) {
+  const cargoData = CAMC.cargos[cargo] ?? CAMC.cargos.full_patch;
+  const dios = CAMC.dioses[deidad] ?? {};
+  const melee = [
+    {
+      name: "Cuchillo de carretera",
+      img: "icons/weapons/daggers/dagger-simple.webp",
+      system: { tipo: "cuerpo_a_cuerpo", categoria: "Arma blanca", alcance: "cuerpo_a_cuerpo", dano: "1D", dano_fijo: 1, especial: "Herramienta de supervivencia y arma discreta.", descripcion: "Hoja corta útil para trabajo de campamento, intimidación y combate cercano.", equipada: true, carga: { ubicacion: "mochila", espacios: 0.5 } }
+    },
+    {
+      name: "Llave pesada",
+      img: "icons/tools/hand/wrench-steel-grey.webp",
+      system: { tipo: "cuerpo_a_cuerpo", categoria: "Improvisada", alcance: "cuerpo_a_cuerpo", dano: "1D", dano_fijo: 2, especial: "Cuenta también como herramienta de mecánica.", descripcion: "Llave de taller grande, marcada con hollín y runas de uso.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
+    },
+    {
+      name: "Cadena de arrastre",
+      img: "icons/tools/fasteners/chain-steel.webp",
+      system: { tipo: "cuerpo_a_cuerpo", categoria: "Contundente", alcance: "cuerpo_a_cuerpo", dano: "1D", dano_fijo: 2, especial: "Puede servir para bloquear, atar o remolcar.", descripcion: "Cadena de acero recuperada de un portón de carretera.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
+    }
+  ];
+  const ranged = [
+    {
+      name: "Arpón",
+      img: "icons/weapons/polearms/spear-hooked-brown.webp",
+      system: { tipo: "distancia", categoria: "Armas a distancia no de fuego", alcance: "distancia", dano: "1D", dano_fijo: 7, municion: { value: 1, max: 1 }, especial: "Recuperable si la escena permite recogerlo.", descripcion: "Arpón pesado usado para cazar, intimidar y detener objetivos a corta distancia.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
+    },
+    {
+      name: "Pistola reciclada",
+      img: "icons/weapons/guns/gun-pistol-brass.webp",
+      system: { tipo: "distancia", categoria: "Arma de fuego", alcance: "distancia", dano: "2D", dano_fijo: 0, municion: { value: 6, max: 6 }, especial: "Munición escasa; declarar recarga cuando se agote.", descripcion: "Arma corta reconstruida con piezas no coincidentes.", equipada: false, carga: { ubicacion: "mochila", espacios: 1 } }
+    },
+    {
+      name: "Ballesta de taller",
+      img: "icons/weapons/crossbows/crossbow-simple-brown.webp",
+      system: { tipo: "distancia", categoria: "Armas a distancia no de fuego", alcance: "distancia", dano: "1D", dano_fijo: 5, municion: { value: 1, max: 1 }, especial: "Silenciosa y fácil de reparar con piezas comunes.", descripcion: "Ballesta sencilla fabricada con acero de suspensión.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
+    }
+  ];
+  const useful = [
+    { name: "Kit de herramientas", img: "icons/tools/hand/hammer-and-wrench.webp", tipo: "herramienta", especial: "Permite justificar reparaciones y trabajos de Mecánica.", descripcion: "Llaves, bridas, cable, cinta, grasa y recambios pequeños.", espacios: 1 },
+    { name: "Botiquín de ruta", img: "icons/containers/bags/pack-leather-white.webp", tipo: "suministro", especial: "Apoyo narrativo para Auxilio y curas improvisadas.", descripcion: "Vendas limpias, alcohol, aguja, hilo y analgésicos de dudosa fecha.", espacios: 1 },
+    { name: "Raciones y cantimplora", img: "icons/consumables/food/bowl-stew-tofu-potato-red.webp", tipo: "suministro", especial: "Comida y agua para una salida corta.", descripcion: "Lo justo para sobrevivir a una ruta sin depender de nadie.", espacios: 1 },
+    { name: "Mapa plastificado", img: "icons/sundries/documents/document-map-yellow.webp", tipo: "general", especial: "Ayuda a justificar rutas, atajos y memoria del territorio.", descripcion: "Mapa del Viejo Mundo lleno de marcas nuevas del capítulo.", espacios: 0 }
+  ];
+  const cargoLabel = cargoData.label ?? "Cuervo";
+  const deityLabel = dios.label ?? title(deidad || "deidad");
+  const virtud = dios.virtud ?? "";
+  const talent = clone(starterTalents.find(item => normalized(item.system.cargo) === normalized(cargoLabel)) ?? starterTalents.at(-1));
+  const deityDones = starterDones.filter(item => normalized(item.system.deidad) === normalized(deityLabel));
+  const don = deityDones.length
+    ? clone(pick(deityDones, rng))
+    : {
+      name: `Don de ${deityLabel}`,
+      type: "don",
+      img: "icons/magic/symbols/runes-star-pentagon-blue.webp",
+      system: {
+        deidad: deityLabel,
+        coste_proezas: 2,
+        coste_descripcion: "Coste base sugerido; ajusta si el don concreto lo requiere.",
+        virtud,
+        efecto: `Manifestación de ${virtud || "la virtud"} de ${deityLabel}.`,
+        descripcion: "Don inicial generado como punto de partida. Edita nombre, coste y efecto para ajustarlo al don concreto elegido en mesa."
+      }
+    };
+  talent.flags = starterFlag();
+  don.flags = starterFlag();
+  const selectedMelee = clone(pick(melee, rng));
+  const selectedRanged = clone(pick(ranged, rng));
+  const selectedTools = uniquePicks(useful, 2, rng).map(item => ({
+    name: item.name,
+    type: "objeto",
+    img: item.img,
+    flags: starterFlag(),
+    system: {
+      tipo: item.tipo,
+      tamano: item.espacios >= 2 ? "grande" : item.espacios <= 0 ? "no_equipable" : "mediano",
+      deterioro: "M",
+      disponibilidad: "frecuente",
+      cantidad: 1,
+      especial: item.especial,
+      descripcion: item.descripcion,
+      equipada: false,
+      carga: { ubicacion: "mochila", espacios: item.espacios }
+    }
+  }));
+
+  return [
+    talent,
+    don,
+    { ...selectedMelee, type: "arma", flags: starterFlag() },
+    { ...selectedRanged, type: "arma", flags: starterFlag() },
+    {
+      name: "Armadura de cuero",
+      type: "armadura",
+      img: "icons/equipment/chest/breastplate-banded-leather-brown.webp",
+      flags: starterFlag(),
+      system: {
+        nivel: 1,
+        penalizacion: 0,
+        tipo: "armadura",
+        tamano: "mediano",
+        deterioro: "M",
+        disponibilidad: "frecuente",
+        compatible: true,
+        descripcion: "Protección básica de carretera, reforzada con placas recicladas.",
+        equipada: true,
+        carga: { ubicacion: "mochila", espacios: 1 }
+      }
+    },
+    ...selectedTools
+  ];
+}
+
 export function generateRandomCharacter(options = {}) {
   const rng = mulberry32(hashSeed(options.seed));
   const cargos = Object.keys(CAMC.cargos).filter(key => key !== "full_patch");
@@ -312,7 +460,8 @@ export function generateRandomCharacter(options = {}) {
       chaleco: {},
       nivel: 1,
       notas: "Generado automáticamente siguiendo el reparto base de creación: atributos 6/4/2/1/0, habilidades base 1D y habilidades favorecidas del cargo a 4D."
-    }
+    },
+    items: starterEquipmentFor({ cargo, deidad, favored, rng })
   };
 }
 

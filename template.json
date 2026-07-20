@@ -206,7 +206,10 @@
         "terreno": 10,
         "visibilidad": 0,
         "evasion_objetivo": 10,
-        "franja": 1
+        "franja": 1,
+        "perseguidor": 1,
+        "objetivo": 5,
+        "huida": 10
       },
       "vinculo": {
         "ownerUuid": "",
