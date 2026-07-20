@@ -21,7 +21,8 @@
           "proezas": { "value": 3, "max": 3 },
           "resistencia_fisica": 12,
           "iniciativa": 0,
-          "dano_bonus": 0
+          "dano_bonus": 0,
+          "tiradas_iniciales_hechas": false
         },
         "proteccion": {
           "armadura_nivel": 0,
@@ -200,6 +201,12 @@
       "carga": {
         "items": [],
         "notas": ""
+      },
+      "persecucion": {
+        "terreno": 10,
+        "visibilidad": 0,
+        "evasion_objetivo": 10,
+        "franja": 1
       },
       "vinculo": {
         "ownerUuid": "",

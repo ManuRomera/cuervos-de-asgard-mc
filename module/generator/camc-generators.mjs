@@ -181,9 +181,10 @@ function combatFor(attributes, skills, npc = false, options = {}) {
   return {
     salud: { value: health, max: health, roll_inicial: healthRoll },
     proezas: npc ? { value: 0, max: 0 } : { value: proezasMax, max: proezasMax },
-    resistencia_fisica: attr("fue") + attr("des") + 5,
-    iniciativa: attr("des") + Number(skills.conducir?.value ?? 1),
-    dano_bonus: 0
+    resistencia_fisica: Math.max(0, 12 - attr("fue")),
+    iniciativa: attr("des") + attr("int"),
+    dano_bonus: 0,
+    tiradas_iniciales_hechas: !npc && healthRoll > 0
   };
 }
 

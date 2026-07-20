@@ -48,7 +48,7 @@
           <input name="system.combate.salud.max" type="number" value="{{system.combate.salud.max}}"/>
           <button type="button" class="health-plus"><i class="fas fa-plus"></i></button>
         </div>
-        <button type="button" class="camc-mini-action roll-initial-health" title="Tirar Salud inicial: FUE x 2 + 10 + 1D"><i class="fas fa-dice-d6"></i> Salud inicial</button>
+        <button type="button" class="camc-mini-action roll-initial-values" title="Tiradas iniciales: Salud y Proezas"><i class="fas fa-dice-d6"></i> Tiradas iniciales</button>
       </div>
       <div class="camc-resource-card major">
         <div class="camc-resource-head"><i class="fas fa-bolt"></i><span>Proezas</span><strong>{{system.combate.proezas.value}} / {{system.combate.proezas.max}}</strong></div>
@@ -357,6 +357,10 @@
             {{#if vestCalibration}}
               {{#each vestSlots as |slot|}}
               <div class="camc-vest-slot-guide slot-{{slot.key}} calibrating" data-slot="{{slot.key}}" title="{{slot.label}} · Arrastra para mover, rueda para ajustar tamaño" style="left:{{slot.x}}%;top:{{slot.y}}%;width:{{slot.w}}%;height:{{slot.h}}%;"><span>{{slot.label}}</span></div>
+              <div class="camc-vest-size-tools" style="left:calc({{slot.x}}% + {{slot.w}}% + 0.4%);top:{{slot.y}}%;">
+                <button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="1" title="Aumentar parche"><i class="fas fa-plus"></i></button>
+                <button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="-1" title="Reducir parche"><i class="fas fa-minus"></i></button>
+              </div>
               {{/each}}
             {{/if}}
           </div>

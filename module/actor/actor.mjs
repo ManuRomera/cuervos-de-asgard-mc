@@ -59,6 +59,7 @@ export class CAMCActor extends Actor {
     s.vehiculo.modificaciones_max = vehicleMods.sidecar ? 3 : 2;
 
     s.combate.iniciativa = des + int + vehicleMods.iniciativa;
+    s.combate.tiradas_iniciales_hechas ??= false;
     s.combate.arma_preparada = this.getArmaPreparada();
     s.combate.penalizador_salud = this.getPenalizadorSalud();
     s.combate.resistencia_fisica = Math.max(0, 12 - fue);
@@ -155,6 +156,11 @@ export class CAMCActor extends Actor {
     s.mods.funcionales ??= [];
     s.mods.esteticas ??= [];
     s.carga ??= { items: [], notas: "" };
+    s.persecucion ??= {};
+    s.persecucion.terreno = Number(s.persecucion.terreno ?? 10);
+    s.persecucion.visibilidad = Number(s.persecucion.visibilidad ?? 0);
+    s.persecucion.evasion_objetivo = Number(s.persecucion.evasion_objetivo ?? 10);
+    s.persecucion.franja = Number(s.persecucion.franja ?? 1);
     const itemMods = this.items?.filter(item => item.type === "objeto" && item.system?.tipo === "modificacion_moto" && item.system?.equipada) ?? [];
     const legacyMods = s.mods.funcionales ?? [];
     const modEffects = this.#getMotoModEffects([...legacyMods, ...itemMods]);

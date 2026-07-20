@@ -1,7 +1,7 @@
 export const CAMC = {};
 
 CAMC.systemId = "cuervos-de-asgard-mc";
-CAMC.contentVersion = "1.6.5";
+CAMC.contentVersion = "1.6.6";
 
 CAMC.atributos = {
   car: { label: "Carisma", short: "CAR" },
@@ -184,6 +184,33 @@ CAMC.modificacionesMoto = {
   sidecar: { label: "Sidecar", resumen: "+1 ocupante; -1 Maniobrabilidad; permite tres modificaciones funcionales." },
   suspension_mejorada: { label: "Suspensión mejorada", resumen: "+1 Maniobrabilidad y +3 a Evadirse." },
   escape_tuneado: { label: "Tubo de escape tuneado", resumen: "+3 a Intimidación si el personaje llega montado en su moto." }
+};
+
+CAMC.persecucion = {
+  terrenos: [
+    { key: "facil", label: "Fácil", dificultad: 8 },
+    { key: "media", label: "Media", dificultad: 10 },
+    { key: "desafiante", label: "Desafiante", dificultad: 13 },
+    { key: "dificil", label: "Difícil", dificultad: 16 },
+    { key: "muy_dificil", label: "Muy difícil", dificultad: 20 }
+  ],
+  visibilidad: [
+    { key: "normal", label: "Normal", mod: 0, signed: "+0" },
+    { key: "mala", label: "Mala", mod: 2, signed: "+2" },
+    { key: "pesima", label: "Pésima", mod: 4, signed: "+4" }
+  ],
+  movimiento: [
+    { key: "cambiar_posicion", label: "Cambiar de posición", mod: 0, summary: "Avanza 1 franja; 2 con crítico." },
+    { key: "mantener_posicion", label: "Mantener posición", mod: null, summary: "No requiere tirada; conserva la franja." },
+    { key: "obstaculizar", label: "Obstaculizar", mod: 2, summary: "Si vas 1 franja por delante, dificulta al perseguidor." },
+    { key: "quemar_rueda", label: "Quemar rueda", mod: 4, summary: "Avanza 2 franjas; 3 con crítico." }
+  ],
+  maniobras: [
+    { key: "embestir", label: "Embestir", mod: 0, summary: "Tirada enfrentada contra Evasión; causa daño de moto." },
+    { key: "arrollar", label: "Arrollar", mod: 0, summary: "Contra objetivo a pie; usa daño de moto." },
+    { key: "sacar_carretera", label: "Sacar de la carretera", mod: 3, summary: "Fuerza al rival a perder control o abandonar." },
+    { key: "evadirse", label: "Evadirse", mod: 0, summary: "Usa Conducir para ganar espacio o cortar persecución." }
+  ]
 };
 
 CAMC.deterioro = {

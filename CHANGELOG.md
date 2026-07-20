@@ -2,6 +2,20 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.7] — 2026-07-20
+
+### Añadido
+- Botón de Tiradas iniciales en la hoja de PJ: tira Salud, recalcula Proezas y deja constancia en chat de valores anteriores y nuevos si se repite.
+- Pestaña Persecución en la hoja de moto con terreno, visibilidad, Evasión rival, franja y acciones de movimiento/maniobras.
+- Controles +/− para escalar parches durante la calibración del chaleco.
+
+### Corregido
+- El parche de deidad ya no se muestra en el hueco interior del cuello del chaleco.
+- La vinculación de moto con PJ refresca ambas hojas y usa una ruta de respaldo para resolver el UUID.
+- El interruptor Alforjas extra suma capacidad aunque haya moto vinculada.
+- El asistente de PJ ya no se corta horizontalmente al abrirlo.
+- Mejorado el contraste de campos de Marca, Modelo, Tipo y Apodo en la hoja de moto.
+
 ## [1.3.6] — 2026-07-20
 
 ### Añadido

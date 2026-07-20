@@ -57,6 +57,7 @@
     <a class="item" data-tab="mecanica"><i class="fas fa-gears"></i> Mecánica</a>
     <a class="item" data-tab="tuneado"><i class="fas fa-wrench"></i> Tuneado</a>
     <a class="item" data-tab="carga"><i class="fas fa-suitcase"></i> Alforjas</a>
+    <a class="item" data-tab="persecucion"><i class="fas fa-flag-checkered"></i> Persecución</a>
     <a class="item" data-tab="generador"><i class="fas fa-dice"></i> Generador</a>
   </nav>
 
@@ -164,6 +165,53 @@
           </ol>
         </section>
         <section class="camc-panel"><h2 class="camc-panel-title">Carga narrativa</h2><textarea name="system.carga.notas">{{system.carga.notas}}</textarea></section>
+      </div>
+    </section>
+
+    <section class="tab" data-group="primary" data-tab="persecucion">
+      <div class="camc-grid camc-two-grid camc-chase-grid">
+        <section class="camc-panel">
+          <h2 class="camc-panel-title"><i class="fas fa-road"></i> Persecución</h2>
+          <div class="camc-form-grid">
+            <label><span>Terreno</span>
+              <select name="system.persecucion.terreno">
+                {{#select system.persecucion.terreno}}
+                {{#each chase.terrains as |terrain|}}<option value="{{terrain.dificultad}}">{{terrain.label}} · DF {{terrain.dificultad}}</option>{{/each}}
+                {{/select}}
+              </select>
+            </label>
+            <label><span>Visibilidad</span>
+              <select name="system.persecucion.visibilidad">
+                {{#select system.persecucion.visibilidad}}
+                {{#each chase.visibility as |visibility|}}<option value="{{visibility.mod}}">{{visibility.label}} {{visibility.signed}}</option>{{/each}}
+                {{/select}}
+              </select>
+            </label>
+            <label><span>Evasión rival</span><input name="system.persecucion.evasion_objetivo" type="number" value="{{system.persecucion.evasion_objetivo}}"/></label>
+            <label><span>Franja actual</span><input name="system.persecucion.franja" type="number" min="1" max="10" value="{{system.persecucion.franja}}"/></label>
+          </div>
+          <p class="camc-rules-note">Hay 10 franjas. Si perseguidor y objetivo acaban en la misma franja, el perseguido queda alcanzado. Si el objetivo llega a la franja de huida, escapa.</p>
+        </section>
+        <section class="camc-panel">
+          <h2 class="camc-panel-title"><i class="fas fa-gauge-high"></i> Acciones de movimiento</h2>
+          <div class="camc-chase-actions">
+            {{#each chase.movement as |action|}}
+            <button type="button" class="camc-action-button moto-chase-roll" data-kind="movement" data-key="{{action.key}}" data-label="{{action.label}}" data-mod="{{action.mod}}">
+              <span>{{action.label}}</span><small>{{action.summary}}</small>
+            </button>
+            {{/each}}
+          </div>
+        </section>
+        <section class="camc-panel camc-wide">
+          <h2 class="camc-panel-title"><i class="fas fa-crosshairs"></i> Maniobras</h2>
+          <div class="camc-chase-actions compact">
+            {{#each chase.maneuvers as |action|}}
+            <button type="button" class="camc-action-button moto-chase-roll" data-kind="maneuver" data-key="{{action.key}}" data-label="{{action.label}}" data-mod="{{action.mod}}">
+              <span>{{action.label}}</span><small>{{action.summary}}</small>
+            </button>
+            {{/each}}
+          </div>
+        </section>
       </div>
     </section>
 

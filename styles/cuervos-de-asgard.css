@@ -4931,6 +4931,16 @@ body.camc-compact .camc-sheet{font-size:12px;}
   min-height:24px!important;
   font-size:12px!important;
   padding:2px 6px!important;
+  color:#080705!important;
+  background:rgba(252,247,235,.96)!important;
+  -webkit-text-fill-color:#080705!important;
+}
+
+.camc-moto-infographic .camc-moto-title > div input::placeholder,
+.camc-moto-infographic input::placeholder,
+.camc-moto-infographic textarea::placeholder{
+  color:rgba(20,16,12,.65)!important;
+  -webkit-text-fill-color:rgba(20,16,12,.65)!important;
 }
 
 .camc-moto-infographic .camc-moto-actions{
@@ -4942,6 +4952,106 @@ body.camc-compact .camc-sheet{font-size:12px;}
   white-space:normal!important;
   overflow:visible!important;
   text-overflow:clip!important;
+}
+
+.camc-vest-size-tools{
+  position:absolute;
+  z-index:16;
+  display:flex;
+  gap:3px;
+  transform:translateY(-2px);
+}
+
+.camc-vest-size-tools button{
+  width:20px;
+  height:20px;
+  min-height:20px!important;
+  padding:0!important;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#f8f1df!important;
+  background:rgba(12,11,10,.9)!important;
+  border:1px solid rgba(229,183,50,.9)!important;
+  box-shadow:0 1px 4px rgba(0,0,0,.45);
+}
+
+.camc-chase-grid .camc-form-grid{
+  grid-template-columns:repeat(2,minmax(140px,1fr));
+}
+
+.camc-chase-actions{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:8px;
+}
+
+.camc-chase-actions.compact{
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+}
+
+.camc-chase-actions .camc-action-button{
+  min-height:58px!important;
+  padding:8px 10px!important;
+  text-align:left!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:2px!important;
+}
+
+.camc-chase-actions .camc-action-button span{
+  display:block;
+  color:#f8f1df!important;
+  font-size:15px!important;
+}
+
+.camc-chase-actions .camc-action-button small{
+  display:block;
+  color:rgba(248,241,223,.82)!important;
+  font-size:11px!important;
+  line-height:1.15;
+  white-space:normal;
+}
+
+.dialog .camc-character-wizard,
+.camc-character-wizard{
+  width:min(760px,calc(100vw - 96px));
+  max-width:100%;
+  min-width:0!important;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+
+.camc-character-wizard .camc-dialog-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+}
+
+.camc-character-wizard label,
+.camc-character-wizard input,
+.camc-character-wizard select,
+.camc-character-wizard textarea{
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box;
+}
+
+.camc-character-wizard input,
+.camc-character-wizard select,
+.camc-character-wizard textarea{
+  color:#100d09!important;
+  -webkit-text-fill-color:#100d09!important;
+  background:rgba(252,247,235,.96)!important;
+}
+
+.window-app.dialog .window-content:has(.camc-character-wizard){
+  overflow:auto!important;
+}
+
+@media(max-width:760px){
+  .camc-character-wizard .camc-dialog-grid,
+  .camc-chase-grid .camc-form-grid{
+    grid-template-columns:1fr!important;
+  }
 }
 
 .camc-moto-infographic .camc-moto-stat span,

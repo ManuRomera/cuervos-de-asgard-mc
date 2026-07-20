@@ -271,11 +271,11 @@ export class CAMCContentImporter {
   static #coverageContent() {
     const rows = [
       ["Creación de personaje", "Cargo, deidad, virtud, talento, habilidades favorecidas, atributos y valores derivados se calculan en hoja."],
-      ["Tiradas Ysystem", "Dificultad, dados extra, sacrificios, proezas, penalizador de Salud, tirada rápida con Alt y tarjetas de chat con resultado destacado."],
+      ["Tiradas Ysystem", "Tiradas iniciales, dificultad, dados extra, sacrificios, proezas, penalizador de Salud, tirada rápida con Alt y tarjetas de chat con resultado destacado."],
       ["Combate y daño", "Ataques con arma equipada, daño con atributo correcto por categoría, munición, aplicar daño desde chat y protección automática."],
       ["Equipo y carga", "Ubicación mochila/alforjas/comunidad, conteo de espacios, aviso de sobrecarga y requisito de alforjas equipadas."],
-      ["Motos y modificaciones", "La moto puede ser Actor propio vinculado por UUID al PJ. Su hoja gestiona estructura, maniobrabilidad, daño, sidecar, alforjas, tuneado, generación y tiradas de Conducir/Mecánica."],
-      ["Chaleco y parches", "Parches de cargo/deidad automáticos, parches manuales por hueco, bloqueo de duplicados y calibración desde la propia ficha."],
+      ["Motos y modificaciones", "La moto puede ser Actor propio vinculado por UUID al PJ. Su hoja gestiona estructura, maniobrabilidad, daño, sidecar, alforjas, persecuciones, tuneado, generación y tiradas de Conducir/Mecánica."],
+      ["Chaleco y parches", "Parche de cargo automático, parches manuales por hueco, bloqueo de duplicados y calibración de posición/tamaño desde la propia ficha."],
       ["Contenido estructurado", "Armas, protecciones, objetos, dones, talentos, parches, vehículos, personajes pregenerados y PNJ base están en compendios separados."],
       ["Pendiente de ampliar", "El manual contiene contexto narrativo, regiones, comunidades, elenco y amenazas que no deben volcarse como manual completo; cuando se conviertan en reglas jugables deben añadirse como datos estructurados, no como texto bruto."]
     ];
@@ -321,13 +321,17 @@ export class CAMCContentImporter {
       <h2>Imagen de personaje</h2>
       <p>En Ajustes del sistema puedes elegir <strong>Retrato integrado</strong> o <strong>Figura exterior</strong>. La figura exterior mantiene tamaño fijo por porcentaje de sistema y usa la bandera de la deidad como fondo; el retrato integrado usa solo la imagen del actor dentro de la hoja.</p>
       <h2>Parches</h2>
-      <p>El cargo y la deidad colocan automáticamente sus parches. Los huecos manuales aceptan parches compatibles y no permiten repetir el mismo parche en más de un hueco. En la pestaña Chaleco, el botón de llave inglesa desbloquea la calibración para ajustar posiciones y tamaños.</p>
+      <p>El cargo coloca automáticamente su parche. La deidad cambia colores y bandera de la ficha, pero no ocupa el hueco interior del cuello del chaleco. Los huecos manuales aceptan parches compatibles y no permiten repetir el mismo parche en más de un hueco. En la pestaña Chaleco, el botón de llave inglesa desbloquea la calibración para ajustar posiciones y tamaños con arrastre, rueda o botones +/−.</p>
+      <h2>Tiradas iniciales</h2>
+      <p>El botón <strong>Tiradas iniciales</strong> tira 1D para Salud, calcula Salud como FUE x 2 + 10 + 1D y recalcula Proezas como piso((FUE + INT) / 2) + 3. La primera vez se aplica directamente; si se repite, pide confirmación y deja un mensaje de chat con valores anteriores y nuevos.</p>
       <h2>Tiradas</h2>
       <p>Pulsa una habilidad para abrir opciones de tirada. Alt + clic hace una tirada rápida. El panel permite dificultad, modificador fijo, dados extra, sacrificios, uso de proezas y penalizador de Salud. Las armas solo aparecen en chat cuando la tirada usa arma.</p>
       <h2>Equipo y carga</h2>
       <p>La mochila permite 6 espacios. Si el PJ tiene una moto vinculada, la ubicación Alforjas usa la capacidad real de esa moto y bloquea cualquier cambio que la supere. Sin moto vinculada se conserva la compatibilidad con el campo antiguo de alforjas del personaje.</p>
       <h2>Motos y modificaciones</h2>
-      <p>Cada PJ puede tener una montura propia vinculada por UUID. En la tarjeta <strong>Mi montura</strong> puedes crear, generar, abrir, reparar, dañar o desvincular la moto. La hoja de moto gestiona identidad, mecánica, estructura, sidecar, alforjas, tuneado funcional/estético y generador. Arrastra equipo a la hoja de moto para guardarlo en sus alforjas; si no cabe, el sistema avisa y bloquea el movimiento. La Maniobrabilidad se aplica a tiradas de Conducir y el daño grave muestra su penalizador visible.</p>
+      <p>Cada PJ puede tener una montura propia vinculada por UUID. En la tarjeta <strong>Mi montura</strong> puedes crear, generar, abrir, reparar, dañar o desvincular la moto. La hoja de moto gestiona identidad, mecánica, estructura, sidecar, alforjas, persecuciones, tuneado funcional/estético y generador. Arrastra equipo a la hoja de moto para guardarlo en sus alforjas; si no cabe, el sistema avisa y bloquea el movimiento. La Maniobrabilidad se aplica a tiradas de Conducir y el daño grave muestra su penalizador visible.</p>
+      <h2>Persecuciones</h2>
+      <p>La pestaña Persecución de la moto ofrece dificultad de terreno, modificador por visibilidad, Evasión rival, franja actual y botones para acciones de movimiento y maniobras. Las tiradas usan Conducir del piloto vinculado y aplican la Maniobrabilidad y el daño grave de la moto.</p>
       <h2>Menú contextual</h2>
       <p>Botón derecho sobre campos, botones, filas, habilidades, objetos y paneles muestra ayuda contextual tomada de los datos del sistema: descripción de habilidades, reglas de objeto, tipo, coste, cargo, deidad, daño o acción disponible.</p>`;
     return [

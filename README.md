@@ -19,14 +19,14 @@ Foundry descargará el sistema desde la última release y avisará cuando haya a
 - Hoja de `personaje` con cabecera temática, retrato o figura exterior, deidad, cargo, parches, recursos, atributos, valores derivados, habilidades, combate, equipo, dones, moto vinculada y biografía.
 - Hoja de `pnj` rápida para mesa, con atributos, valores derivados, habilidades relevantes, ataque, acción especial, salud y notas.
 - Hoja de `comunidad` para población, reputación, recursos, defensas, aliados, amenazas, acontecimientos y situación del asentamiento.
-- Hoja de `moto` con estructura, daño, maniobrabilidad, velocidad, carga, modificaciones y acciones de conducción.
+- Hoja de `moto` con estructura, daño, maniobrabilidad, carga, modificaciones, persecuciones y acciones de conducción.
 - Hoja de `item` para armas, armaduras, escudos, dones, objetos, vehículos, talentos y reglas.
 - Chat cards temáticas para tiradas, daño, iniciativa, dones, armas y acciones de vehículo.
 - Diseño compacto opcional y calibración visual de parches sobre el chaleco.
 
 ## Automatizaciones
 
-- Tiradas de habilidad, iniciativa, resistencia, daño, dones y acciones rápidas de moto.
+- Tiradas iniciales, habilidad, iniciativa, resistencia, daño, dones, persecuciones y acciones rápidas de moto.
 - Cálculo de Agilidad, Aplomo, Perspicacia, Salud, Resistencia física, protección, carga y efectos de equipo.
 - Equipar y desequipar armas, armaduras, escudos, objetos, parches, dones y modificaciones.
 - Control de munición, daño de armas, daño de vehículos, salud de personajes y estructura de motos.
@@ -63,13 +63,13 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 - `Modo de imagen de personaje`: retrato integrado o figura exterior con fondo de deidad.
 - `Tamaño de figura exterior`: escala de la figura exterior.
 - `Reglas ampliadas de motos`: activa automatizaciones extra de persecución, tuneo y conducción.
-- `Calibrar posiciones del chaleco`: herramienta de DJ para ajustar coordenadas de parches.
+- `Calibrar posiciones del chaleco`: herramienta de DJ para ajustar coordenadas y tamaño de parches.
 
 ## Compatibilidad
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
-| 1.3.6 WIP | v13 | v13.351 |
+| 1.3.7 WIP | v13 | v13.351 |
 
 ## Repositorio y releases
 

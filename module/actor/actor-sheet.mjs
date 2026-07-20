@@ -154,6 +154,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     html.find(".vest-calibration-toggle").on("click", ev => this.#toggleVestCalibration(ev));
     html.find(".camc-vest-patch.calibrating, .camc-vest-slot-guide.calibrating").on("pointerdown", ev => this.#dragVestPatch(ev));
     html.find(".camc-vest-patch.calibrating, .camc-vest-slot-guide.calibrating").on("wheel", ev => this.#resizeVestPatch(ev));
+    html.find(".vest-size-adjust").on("click", ev => this.#adjustVestPatchSize(ev));
     html.find(".item-roll-damage").on("click", ev => this.#rollDamage(ev));
     html.find(".use-don").on("click", ev => this.#useDon(ev));
     html.find(".use-cargo-talent").on("click", ev => this.#useCargoTalent(ev));
@@ -168,7 +169,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     html.find(".gain-proeza").on("click", () => this.actor.ganarProezas(1));
     html.find(".health-plus").on("click", () => this.actor.modificarSalud(1));
     html.find(".health-minus").on("click", () => this.actor.modificarSalud(-1));
-    html.find(".roll-initial-health").on("click", ev => this.#rollInitialHealth(ev));
+    html.find(".roll-initial-health, .roll-initial-values").on("click", ev => this.#rollInitialValues(ev));
     html.find(".mount-create").on("click", ev => this.#createMount(ev));
     html.find(".mount-generate").on("click", ev => this.#generateMount(ev));
     html.find(".mount-open").on("click", ev => this.#openMount(ev));
@@ -383,10 +384,32 @@ export class CAMCActorSheet extends ActorSheetV1 {
     const slot = patch.dataset.slot;
     if (!slot) return;
     const delta = event.deltaY < 0 ? 0.5 : -0.5;
-    const currentW = Number.parseFloat(patch.style.width) || 10;
-    const currentH = Number.parseFloat(patch.style.height) || 5;
-    patch.style.width = `${Math.max(1, Math.min(60, currentW + delta)).toFixed(2)}%`;
-    patch.style.height = `${Math.max(1, Math.min(60, currentH + delta * 0.45)).toFixed(2)}%`;
+    await this.#applyVestPatchSize(slot, delta);
+  }
+
+  async #adjustVestPatchSize(event) {
+    if (!game.user.isGM) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const slot = event.currentTarget.dataset.slot;
+    const delta = Number(event.currentTarget.dataset.delta ?? 0) * 1.4;
+    if (!slot || !delta) return;
+    await this.#applyVestPatchSize(slot, delta);
+  }
+
+  async #applyVestPatchSize(slot, delta) {
+    const nodes = this.element[0]?.querySelectorAll(`.camc-vest-patch[data-slot="${slot}"], .camc-vest-slot-guide[data-slot="${slot}"]`) ?? [];
+    const patch = nodes[0];
+    if (!patch) return;
+    const currentW = Number.parseFloat(patch.style.width) || Number(CAMC.patchSlots[slot]?.w ?? 10);
+    const currentH = Number.parseFloat(patch.style.height) || Number(CAMC.patchSlots[slot]?.h ?? 5);
+    const ratio = currentW > 0 ? currentH / currentW : 0.45;
+    const nextW = Math.max(1, Math.min(85, currentW + delta));
+    const nextH = Math.max(1, Math.min(65, currentH + (delta * ratio)));
+    for (const node of nodes) {
+      node.style.width = `${nextW.toFixed(2)}%`;
+      node.style.height = `${nextH.toFixed(2)}%`;
+    }
     await this.#saveVestPatchPosition(slot, patch);
   }
 
@@ -517,29 +540,47 @@ export class CAMCActorSheet extends ActorSheetV1 {
     item?.sheet?.render(true);
   }
 
-  async #rollInitialHealth(event) {
+  async #rollInitialValues(event) {
     event.preventDefault();
+    if (this.actor.system.combate?.tiradas_iniciales_hechas) {
+      const confirm = await Dialog.confirm({
+        title: "Repetir tiradas iniciales",
+        content: "<p>Las tiradas iniciales ya se realizaron. ¿Seguro que quieres repetirlas? Se publicará en el chat el valor anterior y el nuevo resultado.</p>"
+      });
+      if (!confirm) return;
+    }
     const fue = Number(this.actor.system.atributos?.fue?.value ?? 0);
+    const int = Number(this.actor.system.atributos?.int?.value ?? 0);
+    const previousHealth = foundry.utils.deepClone(this.actor.system.combate?.salud ?? {});
+    const previousProezas = foundry.utils.deepClone(this.actor.system.combate?.proezas ?? {});
     const roll = await (new Roll("1d6")).evaluate({ async: true });
-    const total = 10 + (fue * 2) + Number(roll.total ?? 0);
-    await roll.toMessage({
+    const saludTotal = 10 + (fue * 2) + Number(roll.total ?? 0);
+    const proezasTotal = Math.max(3, Math.floor((fue + int) / 2) + 3);
+    await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: `${this.actor.name}: Salud inicial = FUE x 2 + 10 + 1D = ${total}`
+      rolls: [roll],
+      content: `
+        <div class="camc-chat-card camc-initial-rolls">
+          <header><h3><i class="fas fa-dice-d6"></i> Tiradas iniciales</h3><strong>${this.#escapeHtml(this.actor.name)}</strong></header>
+          <p><b>Salud anterior:</b> ${Number(previousHealth.value ?? 0)} / ${Number(previousHealth.max ?? 0)}${previousHealth.roll_inicial ? ` (1D anterior: ${previousHealth.roll_inicial})` : ""}</p>
+          <p><b>Salud nueva:</b> FUE ${fue} x 2 + 10 + 1D (${Number(roll.total ?? 0)}) = <strong>${saludTotal}</strong></p>
+          <p><b>Proezas anteriores:</b> ${Number(previousProezas.value ?? 0)} / ${Number(previousProezas.max ?? 0)}</p>
+          <p><b>Proezas nuevas:</b> piso((FUE ${fue} + INT ${int}) / 2) + 3 = <strong>${proezasTotal}</strong></p>
+        </div>`
     });
     await this.actor.update({
       "system.combate.salud.roll_inicial": Number(roll.total ?? 0),
-      "system.combate.salud.max": total,
-      "system.combate.salud.value": total
+      "system.combate.salud.max": saludTotal,
+      "system.combate.salud.value": saludTotal,
+      "system.combate.proezas.max": proezasTotal,
+      "system.combate.proezas.value": proezasTotal,
+      "system.combate.tiradas_iniciales_hechas": true
     });
   }
 
   async #buildMountCard(system) {
     const ref = system.mount ?? {};
-    let moto = null;
-    if (ref.uuid) {
-      try { moto = await fromUuid(ref.uuid); }
-      catch (_err) { moto = null; }
-    }
+    let moto = await this.#resolveActorUuid(ref.uuid);
     if (!moto) {
       return {
         linked: false,
@@ -573,9 +614,12 @@ export class CAMCActorSheet extends ActorSheetV1 {
   }
 
   async #linkMount(moto) {
-    await this.actor.update({ "system.mount": { uuid: moto.uuid, name: moto.name, img: moto.img } });
+    const uuid = moto.uuid || (moto.id ? `Actor.${moto.id}` : "");
+    await this.actor.update({ "system.mount": { uuid, name: moto.name, img: moto.img } });
     await moto.update({ "system.vinculo.ownerUuid": this.actor.uuid, "system.vinculo.ownerName": this.actor.name });
     ui.notifications.info(`${moto.name} vinculada a ${this.actor.name}.`);
+    for (const app of Object.values(moto.apps ?? {})) app.render(false);
+    this.render(false);
   }
 
   async #createMount(event) {
@@ -791,7 +835,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
       },
       default: "ok",
       close: () => resolve(null)
-    }).render(true));
+    }, { width: 820, resizable: true }).render(true));
   }
 
   #archetypeOptions(selected = "ruta") {
@@ -846,8 +890,19 @@ export class CAMCActorSheet extends ActorSheetV1 {
   async #getLinkedMount() {
     const uuid = this.actor.system.mount?.uuid;
     if (!uuid) return null;
-    try { return await fromUuid(uuid); }
-    catch (_err) { return null; }
+    return this.#resolveActorUuid(uuid);
+  }
+
+  async #resolveActorUuid(uuid) {
+    if (!uuid) return null;
+    try {
+      const doc = await fromUuid(uuid);
+      if (doc) return doc;
+    } catch (_err) {
+      /* fallback below */
+    }
+    const match = String(uuid).match(/^Actor\.([^\.]+)$/);
+    return match ? game.actors.get(match[1]) ?? null : null;
   }
 
   async #openMount(event) {
@@ -992,9 +1047,8 @@ export class CAMCActorSheet extends ActorSheetV1 {
       || vehicleMods.includes("alforjas extra")
       || items.some(i => i.type === "objeto" && i.system?.equipada && String(i.name).toLowerCase().includes("alforjas extra"));
     const motoAlforjas = moto?.type === "moto" ? Number(moto.system?.reglas?.alforjas?.max ?? 0) : null;
-    const alforjasMax = Number.isFinite(motoAlforjas)
-      ? motoAlforjas
-      : Number(system.carga?.alforjas_base ?? 8) + (hasExtraSaddlebags ? 8 : 0);
+    const baseAlforjas = Number(system.carga?.alforjas_base ?? 8);
+    const alforjasMax = Math.max(baseAlforjas, Number.isFinite(motoAlforjas) ? motoAlforjas : 0) + (hasExtraSaddlebags ? 8 : 0);
     const rows = portable.map(item => {
       const spaces = this.#itemSpaces(item);
       const quantity = item.type === "objeto" ? Math.max(1, Number(item.system.cantidad ?? 1)) : 1;
@@ -1107,12 +1161,10 @@ export class CAMCActorSheet extends ActorSheetV1 {
       .filter(([patchKey]) => patchKey === currentPatchKey || !usedByOtherSlot(slotKey, patchKey))
       .map(([key, patch]) => ({ key, ...patch }))
       .sort((a, b) => a.label.localeCompare(b.label));
-    const forceSlotSize = new Set(["merito_izq_1", "parche_espalda"]);
     for (const [key, slot] of Object.entries(CAMC.patchSlots)) {
+      if (key === "deidad") continue;
       const calibrated = overrides[key] ?? {};
-      const position = forceSlotSize.has(key)
-        ? { ...slot, x: calibrated.x ?? slot.x, y: calibrated.y ?? slot.y }
-        : { ...slot, ...calibrated };
+      const position = { ...slot, ...calibrated };
       let patchKey = "";
       if (position.source === "cargo") patchKey = this.#assetKey(system.biografia?.cargo, "");
       else if (position.source === "deidad") patchKey = this.#assetKey(system.biografia?.deidad, "");

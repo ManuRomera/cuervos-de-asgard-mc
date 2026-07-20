@@ -45,6 +45,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     context.cargoOver = cargo.over;
     context.tables = CAMCMountTables;
     context.extendedMotoRules = this.#extendedRules();
+    context.chase = this.#buildChaseContext();
     return context;
   }
 
@@ -58,6 +59,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     html.find(".moto-repair").on("click", ev => this.#repair(ev));
     html.find(".moto-roll-drive").on("click", ev => this.#rollDrive(ev));
     html.find(".moto-roll-damage").on("click", ev => this.#rollDamage(ev));
+    html.find(".moto-chase-roll").on("click", ev => this.#rollChase(ev));
     html.find(".moto-roll-mechanic").on("click", ev => this.#rollMechanic(ev));
     html.find(".moto-generate").on("click", ev => this.#generate(ev));
     html.find(".moto-add-mod").on("click", ev => this.#addMod(ev));
@@ -84,8 +86,19 @@ export class CAMCMotoSheet extends ActorSheetV1 {
   async #getOwner() {
     const uuid = this.actor.system?.vinculo?.ownerUuid;
     if (!uuid) return null;
-    try { return await fromUuid(uuid); }
-    catch (_err) { return null; }
+    return this.#resolveActorUuid(uuid);
+  }
+
+  async #resolveActorUuid(uuid) {
+    if (!uuid) return null;
+    try {
+      const doc = await fromUuid(uuid);
+      if (doc) return doc;
+    } catch (_err) {
+      /* fallback below */
+    }
+    const match = String(uuid).match(/^Actor\.([^\.]+)$/);
+    return match ? game.actors.get(match[1]) ?? null : null;
   }
 
   async #changeImage(event) {
@@ -135,6 +148,28 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     event.preventDefault();
     const action = event.currentTarget.dataset.action ?? "Daño de moto";
     return CAMCMountRolls.rollMountDamage(this.actor, { label: action });
+  }
+
+  async #rollChase(event) {
+    event.preventDefault();
+    const owner = await this.#getOwner();
+    const label = event.currentTarget.dataset.label ?? "Persecución";
+    const kind = event.currentTarget.dataset.kind ?? "movement";
+    const mod = Number(event.currentTarget.dataset.mod ?? 0);
+    if (kind === "movement" && event.currentTarget.dataset.key === "mantener_posicion") {
+      return ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        content: `<div class="camc-chat-card"><header><h3><i class="fas fa-flag-checkered"></i> Persecución</h3><strong>${this.actor.name}</strong></header><p><b>Mantener posición:</b> no requiere tirada y conserva la franja actual.</p></div>`
+      });
+    }
+    const terrain = Number(this.actor.system.persecucion?.terreno ?? 10);
+    const visibility = Number(this.actor.system.persecucion?.visibilidad ?? 0);
+    const target = Number(this.actor.system.persecucion?.evasion_objetivo ?? 10);
+    const difficulty = kind === "maneuver" ? target + visibility + mod : terrain + visibility + mod;
+    return CAMCMountRolls.rollDrive(owner, this.actor, {
+      label: `Persecución: ${label}`,
+      difficulty
+    });
   }
 
   async #rollMechanic(event) {
@@ -267,8 +302,12 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     event.preventDefault();
     const owner = await this.#getOwner();
     if (!owner) return ui.notifications.warn("Esta moto no tiene PJ vinculado.");
-    await owner.update({ "system.mount": { uuid: this.actor.uuid, name: this.actor.name, img: this.actor.img } });
+    const uuid = this.actor.uuid || (this.actor.id ? `Actor.${this.actor.id}` : "");
+    await owner.update({ "system.mount": { uuid, name: this.actor.name, img: this.actor.img } });
+    await this.actor.update({ "system.vinculo.ownerUuid": owner.uuid, "system.vinculo.ownerName": owner.name });
     ui.notifications.info(`${this.actor.name} aplicada como montura de ${owner.name}.`);
+    for (const app of Object.values(owner.apps ?? {})) app.render(false);
+    this.render(false);
   }
 
   async #toggleSidecar(event) {
@@ -513,5 +552,14 @@ export class CAMCMotoSheet extends ActorSheetV1 {
       textarea.style.height = "auto";
       textarea.style.height = `${Math.max(34, textarea.scrollHeight)}px`;
     }
+  }
+
+  #buildChaseContext() {
+    return {
+      terrains: CAMC.persecucion?.terrenos ?? [],
+      visibility: CAMC.persecucion?.visibilidad ?? [],
+      movement: CAMC.persecucion?.movimiento ?? [],
+      maneuvers: CAMC.persecucion?.maniobras ?? []
+    };
   }
 }

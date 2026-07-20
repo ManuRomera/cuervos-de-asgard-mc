@@ -531,9 +531,9 @@ function computeCamcCarryLoad(system, items) {
     || vehicleMods.includes("alforjas extra")
     || items.some(entry => entry.type === "objeto" && entry.system?.equipada && String(entry.name).toLowerCase().includes("alforjas extra"));
   const linkedMount = getCamcLinkedMountSync(system);
-  const alforjasMax = linkedMount
-    ? Number(linkedMount.system?.reglas?.alforjas?.max ?? 0)
-    : Number(system.carga?.alforjas_base ?? 8) + (hasExtraSaddlebags ? 8 : 0);
+  const baseAlforjas = Number(system.carga?.alforjas_base ?? 8);
+  const mountAlforjas = linkedMount ? Number(linkedMount.system?.reglas?.alforjas?.max ?? 0) : 0;
+  const alforjasMax = Math.max(baseAlforjas, Number.isFinite(mountAlforjas) ? mountAlforjas : 0) + (hasExtraSaddlebags ? 8 : 0);
   const totals = { mochila: 0, alforjas: 0 };
   for (const entry of portable) {
     const location = entry.system?.carga?.ubicacion || "mochila";
