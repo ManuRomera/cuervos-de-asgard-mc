@@ -536,6 +536,9 @@ export class CAMCActorSheet extends ActorSheetV1 {
   async #createItem(event) {
     event.preventDefault();
     const type = event.currentTarget.dataset.type || "objeto";
+    if (type === "vehiculo") {
+      return ui.notifications.warn("Las motos son Actores de tipo Moto. Créala fuera de la ficha y vincúlala arrastrándola sobre el PJ o desde la hoja de moto.");
+    }
     const [item] = await this.actor.createEmbeddedDocuments("Item", [{ name: `Nuevo ${type}`, type }]);
     item?.sheet?.render(true);
   }
@@ -604,6 +607,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
       estructura,
       estructuraPct: this.#pct(estructura.value, estructura.max),
       maniobrabilidad: s.reglas?.maniobrabilidad ?? 0,
+      plazas: s.reglas?.plazas ?? 1,
       dano: s.reglas?.dados_dano ?? "2D",
       modsUsed: s.reglas?.mods_funcionales_usadas ?? 0,
       modsMax: s.reglas?.mods_funcionales_max ?? 2,
@@ -671,6 +675,28 @@ export class CAMCActorSheet extends ActorSheetV1 {
       const identity = await this.#characterWizardIdentity(state);
       if (!identity) return;
       Object.assign(state, identity);
+      if (state.randomComplete) {
+        const healthRoll = await (new Roll("1d6")).evaluate({ async: true });
+        const data = generateRandomCharacter({
+          seed: `${this.actor.id}-${Date.now()}-random-full`,
+          jugador: state.jugador,
+          edad: state.edad,
+          saludRoll: Number(healthRoll.total ?? 1)
+        });
+        data.img = this.actor.img || data.img;
+        delete data.type;
+        delete data.items;
+        await this.actor.update(data);
+        const fue = Number(this.actor.system.atributos?.fue?.value ?? 0);
+        const total = 10 + (fue * 2) + Number(healthRoll.total ?? 0);
+        await healthRoll.toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: `${this.actor.name}: PJ aleatorio completo. Salud inicial = FUE x 2 + 10 + 1D = ${total}`
+        });
+        ui.notifications.info(`${this.actor.name} generado aleatoriamente.`);
+        this.render(false);
+        return;
+      }
       const favored = await this.#characterWizardFavored(state);
       if (!favored) return;
       state.favored = favored;
@@ -733,37 +759,37 @@ export class CAMCActorSheet extends ActorSheetV1 {
           <label><span>Deidad</span><select name="deidad">${deityOptions}</select></label>
           <label><span>Enfoque de atributos</span><select name="archetype">${archetypeOptions}</select></label>
         </div>
-        <label class="camc-checkline"><input name="randomizeAll" type="checkbox"/> Aleatorio completo: nombre, edad, cargo, deidad y enfoque</label>
         <p class="notes">Los atributos se asignan como 6, 4, 2, 1 y 0 según el enfoque elegido. En el siguiente paso se fijan exactamente cuatro habilidades favorecidas.</p>
       </form>`;
-    return this.#dialogPromise({
+    return new Promise(resolve => new Dialog({
       title: "Generador de PJ · Identidad",
       content,
-      okLabel: "Siguiente",
-      read: html => {
-        const randomizeAll = html.find('[name="randomizeAll"]').is(":checked");
-        if (randomizeAll) {
-          return {
-            name: "",
+      buttons: {
+        random: {
+          label: "Aleatorio",
+          callback: html => resolve({
             jugador: String(html.find('[name="jugador"]').val() || "").trim(),
             edad: String(this.#randomInt(18, 68)),
-            cargo: this.#pickRandom(Object.keys(CAMC.cargos).filter(key => key !== "full_patch"), "capitan_rutas"),
-            deidad: this.#pickRandom(Object.keys(CAMC.dioses), "odin"),
-            archetype: this.#pickRandom(Object.keys(CAMCCharacterArchetypes), "ruta"),
-            randomizeAll: true
-          };
-        }
-        return {
-          name: String(html.find('[name="name"]').val() || this.actor.name).trim(),
-          jugador: String(html.find('[name="jugador"]').val() || "").trim(),
-          edad: String(html.find('[name="edad"]').val() || "").trim(),
-          cargo: String(html.find('[name="cargo"]').val() || "capitan_rutas"),
-          deidad: String(html.find('[name="deidad"]').val() || "odin"),
-          archetype: String(html.find('[name="archetype"]').val() || "ruta"),
-          randomizeAll: false
-        };
-      }
-    });
+            randomComplete: true
+          })
+        },
+        ok: {
+          label: "Siguiente",
+          callback: html => resolve({
+            name: String(html.find('[name="name"]').val() || this.actor.name).trim(),
+            jugador: String(html.find('[name="jugador"]').val() || "").trim(),
+            edad: String(html.find('[name="edad"]').val() || "").trim(),
+            cargo: String(html.find('[name="cargo"]').val() || "capitan_rutas"),
+            deidad: String(html.find('[name="deidad"]').val() || "odin"),
+            archetype: String(html.find('[name="archetype"]').val() || "ruta"),
+            randomComplete: false
+          })
+        },
+        cancel: { label: "Cancelar", callback: () => resolve(null) }
+      },
+      default: "ok",
+      close: () => resolve(null)
+    }, { width: 820, resizable: true }).render(true));
   }
 
   async #characterWizardFavored(state) {
@@ -1197,11 +1223,9 @@ export class CAMCActorSheet extends ActorSheetV1 {
       else patchKey = this.#assetKey(system.chaleco?.[key], "");
       const patch = CAMC.patches[patchKey];
       const options = position.source === "manual" ? groupsByAllowedGroup(position.allowedGroup, key, patchKey) : [];
-      const toolY = Number(position.y ?? 0) + (Number(position.h ?? 0) / 2);
       slots.push({
         key,
         ...position,
-        toolY: Number.isFinite(toolY) ? toolY.toFixed(2) : position.y,
         patchKey,
         patch,
         options,

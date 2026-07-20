@@ -2,6 +2,13 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.9] — 2026-07-20
+
+### Cambiado
+- El generador de PJ tiene botón directo <strong>Aleatorio</strong> en el primer paso y aplica el personaje completo sin pasos intermedios.
+- Los controles +/− de tamaño de parches pasan al panel izquierdo, junto a las etiquetas de cada parche.
+- La sección Vehículos de la ficha de PJ muestra la moto vinculada como Actor y ya no permite crear vehículos como Item.
+
 ## [1.3.8] — 2026-07-20
 
 ### Añadido

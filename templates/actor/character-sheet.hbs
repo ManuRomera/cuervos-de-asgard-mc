@@ -305,15 +305,32 @@
           </ol>
         </section>
         <section class="camc-panel camc-vehicle-panel">
-          <div class="camc-panel-header"><h2 class="camc-panel-title"><i class="fas fa-motorcycle"></i> Vehículos</h2><button type="button" class="create-item camc-icon-button" data-type="vehiculo"><i class="fas fa-plus"></i></button></div>
+          <div class="camc-panel-header"><h2 class="camc-panel-title"><i class="fas fa-motorcycle"></i> Vehículos</h2></div>
           <div class="camc-vehicle-summary">
-            <span>EST {{system.vehiculo.estructura.value}}/{{system.vehiculo.estructura.max}}</span>
-            <span>{{system.vehiculo.dados_dano}}</span>
-            <span>MAN {{system.vehiculo.maniobrabilidad}}</span>
-            <span>OCU {{system.vehiculo.ocupantes}}</span>
+            {{#if mount.linked}}
+            <span>EST {{mount.estructura.value}}/{{mount.estructura.max}}</span>
+            <span>{{mount.dano}}</span>
+            <span>MAN {{mount.maniobrabilidad}}</span>
+            <span>OCU {{mount.plazas}}</span>
+            {{else}}
+            <span>EST --</span>
+            <span>--</span>
+            <span>MAN --</span>
+            <span>OCU --</span>
+            {{/if}}
           </div>
-          {{#if system.vehiculo.efectos_mods.length}}<p class="camc-auto-effects">Mods activos: {{system.vehiculo.efectos_mods}}</p>{{/if}}
-          <ol class="camc-item-list dense">{{#each itemsByType.vehiculos as |item|}}<li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.tipo}} · EST {{item.system.estructura.value}}/{{item.system.estructura.max}}</small></div><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button></li>{{else}}<li class="camc-empty">Sin vehículos.</li>{{/each}}</ol>
+          {{#if mount.linked}}
+          <ol class="camc-item-list dense">
+            <li class="camc-item-row camc-linked-mount-row">
+              <img src="{{mount.img}}"/>
+              <div><button type="button" class="mount-open camc-row-name">{{mount.name}}</button><small>{{mount.marca}} {{mount.modelo}} · {{mount.tipo}}</small></div>
+              <button type="button" class="mount-open camc-icon-button" title="Abrir moto"><i class="fas fa-up-right-from-square"></i></button>
+              <button type="button" class="mount-unlink camc-icon-button danger" title="Desvincular moto"><i class="fas fa-link-slash"></i></button>
+            </li>
+          </ol>
+          {{else}}
+          <div class="camc-empty">Sin moto vinculada. Crea un Actor de tipo Moto y arrástralo sobre esta ficha.</div>
+          {{/if}}
         </section>
       </div>
     </section>
@@ -326,14 +343,23 @@
             {{#if vestCalibrationAvailable}}<button type="button" class="vest-calibration-toggle camc-icon-button {{#if vestCalibration}}active{{/if}}" title="{{#if vestCalibration}}Bloquear calibración{{else}}Desbloquear calibración{{/if}}"><i class="fas fa-wrench"></i></button>{{/if}}
           </div>
           <div class="camc-vest-fixed">
-            <article><span>Cargo</span><b>{{cargoActual.label}}</b><small>{{cargoActual.nota}}</small></article>
-            <article><span>Deidad</span><b>{{deidadActual.label}}</b><small>Virtud: {{deidadActual.virtud}}</small></article>
+            <article>
+              <div class="camc-vest-selector-head"><span>Cargo</span>{{#if vestCalibration}}{{#each vestSlots as |slot|}}{{#if (eq slot.key "cargo")}}<span class="camc-vest-size-inline"><button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="1" title="Aumentar parche"><i class="fas fa-plus"></i></button><button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="-1" title="Reducir parche"><i class="fas fa-minus"></i></button></span>{{/if}}{{/each}}{{/if}}</div>
+              <b>{{cargoActual.label}}</b><small>{{cargoActual.nota}}</small>
+            </article>
+            <article>
+              <div class="camc-vest-selector-head"><span>Deidad</span>{{#if vestCalibration}}{{#each vestSlots as |slot|}}{{#if (eq slot.key "deidad")}}<span class="camc-vest-size-inline"><button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="1" title="Aumentar parche"><i class="fas fa-plus"></i></button><button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="-1" title="Reducir parche"><i class="fas fa-minus"></i></button></span>{{/if}}{{/each}}{{/if}}</div>
+              <b>{{deidadActual.label}}</b><small>Virtud: {{deidadActual.virtud}}</small>
+            </article>
           </div>
           <div class="camc-vest-selectors">
             {{#each vestSlots as |slot|}}
               {{#if (eq slot.source "manual")}}
               <label>
-                <span>{{slot.label}}</span>
+                <div class="camc-vest-selector-head">
+                  <span>{{slot.label}}</span>
+                  {{#if ../vestCalibration}}<span class="camc-vest-size-inline"><button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="1" title="Aumentar parche"><i class="fas fa-plus"></i></button><button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="-1" title="Reducir parche"><i class="fas fa-minus"></i></button></span>{{/if}}
+                </div>
                 <select class="vest-patch-select" data-slot="{{slot.key}}">
                   {{#select slot.patchKey}}
                   <option value="">Sin parche</option>
@@ -357,10 +383,6 @@
             {{#if vestCalibration}}
               {{#each vestSlots as |slot|}}
               <div class="camc-vest-slot-guide slot-{{slot.key}} calibrating" data-slot="{{slot.key}}" title="{{slot.label}} · Arrastra para mover, rueda para ajustar tamaño" style="left:{{slot.x}}%;top:{{slot.y}}%;width:{{slot.w}}%;height:{{slot.h}}%;"><span>{{slot.label}}</span></div>
-              <div class="camc-vest-size-tools" style="left:{{slot.x}}%;top:{{slot.toolY}}%;">
-                <button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="1" title="Aumentar parche"><i class="fas fa-plus"></i></button>
-                <button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="-1" title="Reducir parche"><i class="fas fa-minus"></i></button>
-              </div>
               {{/each}}
             {{/if}}
           </div>
