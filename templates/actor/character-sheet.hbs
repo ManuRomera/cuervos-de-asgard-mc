@@ -357,7 +357,7 @@
             {{#if vestCalibration}}
               {{#each vestSlots as |slot|}}
               <div class="camc-vest-slot-guide slot-{{slot.key}} calibrating" data-slot="{{slot.key}}" title="{{slot.label}} · Arrastra para mover, rueda para ajustar tamaño" style="left:{{slot.x}}%;top:{{slot.y}}%;width:{{slot.w}}%;height:{{slot.h}}%;"><span>{{slot.label}}</span></div>
-              <div class="camc-vest-size-tools" style="left:calc({{slot.x}}% + {{slot.w}}% + 0.4%);top:{{slot.y}}%;">
+              <div class="camc-vest-size-tools" style="left:{{slot.x}}%;top:{{slot.toolY}}%;">
                 <button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="1" title="Aumentar parche"><i class="fas fa-plus"></i></button>
                 <button type="button" class="vest-size-adjust" data-slot="{{slot.key}}" data-delta="-1" title="Reducir parche"><i class="fas fa-minus"></i></button>
               </div>

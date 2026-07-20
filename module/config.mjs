@@ -1,7 +1,7 @@
 export const CAMC = {};
 
 CAMC.systemId = "cuervos-de-asgard-mc";
-CAMC.contentVersion = "1.6.6";
+CAMC.contentVersion = "1.6.7";
 
 CAMC.atributos = {
   car: { label: "Carisma", short: "CAR" },

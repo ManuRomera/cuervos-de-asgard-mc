@@ -321,7 +321,7 @@ export class CAMCContentImporter {
       <h2>Imagen de personaje</h2>
       <p>En Ajustes del sistema puedes elegir <strong>Retrato integrado</strong> o <strong>Figura exterior</strong>. La figura exterior mantiene tamaño fijo por porcentaje de sistema y usa la bandera de la deidad como fondo; el retrato integrado usa solo la imagen del actor dentro de la hoja.</p>
       <h2>Parches</h2>
-      <p>El cargo coloca automáticamente su parche. La deidad cambia colores y bandera de la ficha, pero no ocupa el hueco interior del cuello del chaleco. Los huecos manuales aceptan parches compatibles y no permiten repetir el mismo parche en más de un hueco. En la pestaña Chaleco, el botón de llave inglesa desbloquea la calibración para ajustar posiciones y tamaños con arrastre, rueda o botones +/−.</p>
+      <p>El cargo y la deidad colocan automáticamente sus parches. Los huecos manuales aceptan parches compatibles y no permiten repetir el mismo parche en más de un hueco. En la pestaña Chaleco, el botón de llave inglesa desbloquea la calibración para ajustar posiciones y tamaños con arrastre, rueda o botones +/− situados a la izquierda de cada hueco.</p>
       <h2>Tiradas iniciales</h2>
       <p>El botón <strong>Tiradas iniciales</strong> tira 1D para Salud, calcula Salud como FUE x 2 + 10 + 1D y recalcula Proezas como piso((FUE + INT) / 2) + 3. La primera vez se aplica directamente; si se repite, pide confirmación y deja un mensaje de chat con valores anteriores y nuevos.</p>
       <h2>Tiradas</h2>

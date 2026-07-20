@@ -2,6 +2,18 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.8] — 2026-07-20
+
+### Añadido
+- Opción de aleatorio completo en el asistente de PJ: nombre, edad, cargo, deidad y enfoque.
+- Tablas ampliadas de nombres, apodos, conceptos, motivaciones, citas, orígenes y defectos para reducir repeticiones.
+
+### Cambiado
+- Los botones +/− de tamaño de parches aparecen a la izquierda de cada hueco del chaleco.
+
+### Corregido
+- Restaurado el parche de deidad en el chaleco.
+
 ## [1.3.7] — 2026-07-20
 
 ### Añadido
