@@ -71,12 +71,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
       };
     });
 
-    const cargoSkills = CAMC.cargos[system.biografia?.cargo]?.habilidades ?? [];
-    const destacadas = habilidades
-      .filter(h => h.favorecida || cargoSkills.includes(h.key))
-      .concat(habilidades.filter(h => ["conducir", "mecanica", "intimidacion", "supervivencia", "punteria", "auxilio"].includes(h.key)))
-      .filter((h, idx, arr) => arr.findIndex(x => x.key === h.key) === idx)
-      .slice(0, 6);
+    const destacadas = habilidades.filter(h => h.favorecida);
 
     const salud = system.combate?.salud ?? { value: 0, max: 1 };
     const proezas = system.combate?.proezas ?? { value: 0, max: 1 };
@@ -173,6 +168,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     html.find(".gain-proeza").on("click", () => this.actor.ganarProezas(1));
     html.find(".health-plus").on("click", () => this.actor.modificarSalud(1));
     html.find(".health-minus").on("click", () => this.actor.modificarSalud(-1));
+    html.find(".roll-initial-health").on("click", ev => this.#rollInitialHealth(ev));
     html.find(".mount-create").on("click", ev => this.#createMount(ev));
     html.find(".mount-generate").on("click", ev => this.#generateMount(ev));
     html.find(".mount-open").on("click", ev => this.#openMount(ev));
@@ -197,13 +193,14 @@ export class CAMCActorSheet extends ActorSheetV1 {
   async #rollSkill(event) {
     event.preventDefault();
     const habilidad = event.currentTarget.dataset.skill;
-    const options = event.altKey ? { dificultad: null } : await this.#askRollOptions(habilidad);
+    const options = event.altKey ? { dificultad: null, aplicaSalud: false } : await this.#askRollOptions(habilidad);
     if (options === null) return;
     const proezaDados = Number(options.proezaDados ?? 0);
     if (proezaDados > 0) {
       const ok = await this.actor.gastarProezas(proezaDados);
       if (!ok) return ui.notifications.warn("No hay proezas suficientes para añadir dados.");
     }
+    if (options.recuerdoCuando) await this.actor.update({ "system.biografia.recuerdo_cuando_usado": true });
     await YsystemDice.rollSkill(this.actor, habilidad, options);
   }
 
@@ -228,6 +225,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     const opts = [`<option value="">Sin dificultad</option>`].concat(CAMC.dificultades.map(d => `<option value="${d.value}">${d.value} · ${d.label}</option>`)).join("");
     const penalty = this.actor.getPenalizadorSalud();
     const weaponInfo = weapon ? { label: weapon.name } : null;
+    const recuerdoUsado = Boolean(this.actor.system.biografia?.recuerdo_cuando_usado);
     const content = `
       <form class="camc-dialog camc-roll-options">
         <p><strong>${skillLabel}</strong></p>
@@ -239,7 +237,8 @@ export class CAMCActorSheet extends ActorSheetV1 {
           <label><span>Proezas para +D</span>${this.#numberStepper("proezaDados", 0, 0, 3)}</label>
           <label><span>Dados sacrificados</span>${this.#numberStepper("dadosSacrificados", 0, 0, 3)}</label>
         </div>
-        <label class="camc-checkline"><input name="aplicaSalud" type="checkbox" checked/> Aplicar penalizador de Salud (${penalty.label})</label>
+        <label class="camc-checkline"><input name="aplicaSalud" type="checkbox"/> Aplicar penalizador de Salud (${penalty.label})</label>
+        <label class="camc-checkline"><input name="recuerdoCuando" type="checkbox" ${recuerdoUsado ? "disabled" : ""}/> Recuerdo cuando (+2D, no compatible con gastar proezas)${recuerdoUsado ? " · ya usado" : ""}</label>
         ${weaponInfo ? `<label class="camc-checkline"><input name="desenfundar" type="checkbox"/> Desenfundar o cambiar de arma este turno (-1D)</label>` : ""}
         <p class="notes">${weaponInfo ? `Arma usada: <strong>${weaponInfo.label}</strong>. ` : ""}Los dados sacrificados sirven para apuntar o afinar una accion cuando la regla lo permita. Alt + clic tira rapido sin abrir este panel.</p>
       </form>`;
@@ -252,13 +251,15 @@ export class CAMCActorSheet extends ActorSheetV1 {
           callback: html => {
             const dificultad = html.find('[name="dificultad"]').val();
             const dificultadManual = Number(html.find('[name="dificultadManual"]').val());
+            const recuerdoCuando = html.find('[name="recuerdoCuando"]').is(":checked");
             resolve({
               dificultad: Number.isFinite(dificultadManual) && dificultadManual > 0 ? dificultadManual : (dificultad === "" ? null : Number(dificultad)),
               modificador: Number(html.find('[name="modificador"]').val() ?? 0),
               dadosExtra: Number(html.find('[name="dadosExtra"]').val() ?? 0),
-              proezaDados: Math.max(0, Number(html.find('[name="proezaDados"]').val() ?? 0)),
+              proezaDados: recuerdoCuando ? 0 : Math.max(0, Number(html.find('[name="proezaDados"]').val() ?? 0)),
               dadosSacrificados: Math.max(0, Number(html.find('[name="dadosSacrificados"]').val() ?? 0)),
               aplicaSalud: html.find('[name="aplicaSalud"]').is(":checked"),
+              recuerdoCuando,
               desenfundar: html.find('[name="desenfundar"]').is(":checked")
             });
           }
@@ -426,13 +427,14 @@ export class CAMCActorSheet extends ActorSheetV1 {
     const item = this.#getItem(event);
     if (!item || item.type !== "arma") return;
     const habilidad = this.#weaponSkill(item);
-    const options = event.altKey ? { dificultad: null } : await this.#askRollOptions(habilidad, { weapon: item });
+    const options = event.altKey ? { dificultad: null, aplicaSalud: false } : await this.#askRollOptions(habilidad, { weapon: item });
     if (options === null) return;
     const proezaDados = Number(options.proezaDados ?? 0);
     if (proezaDados > 0) {
       const ok = await this.actor.gastarProezas(proezaDados);
       if (!ok) return ui.notifications.warn("No hay proezas suficientes para añadir dados.");
     }
+    if (options.recuerdoCuando) await this.actor.update({ "system.biografia.recuerdo_cuando_usado": true });
     options.armaPreparada = { id: item.id, name: item.name, label: item.name };
     await YsystemDice.rollSkill(this.actor, habilidad, options);
   }
@@ -511,7 +513,24 @@ export class CAMCActorSheet extends ActorSheetV1 {
   async #createItem(event) {
     event.preventDefault();
     const type = event.currentTarget.dataset.type || "objeto";
-    await this.actor.createEmbeddedDocuments("Item", [{ name: `Nuevo ${type}`, type }]);
+    const [item] = await this.actor.createEmbeddedDocuments("Item", [{ name: `Nuevo ${type}`, type }]);
+    item?.sheet?.render(true);
+  }
+
+  async #rollInitialHealth(event) {
+    event.preventDefault();
+    const fue = Number(this.actor.system.atributos?.fue?.value ?? 0);
+    const roll = await (new Roll("1d6")).evaluate({ async: true });
+    const total = 10 + (fue * 2) + Number(roll.total ?? 0);
+    await roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: `${this.actor.name}: Salud inicial = FUE x 2 + 10 + 1D = ${total}`
+    });
+    await this.actor.update({
+      "system.combate.salud.roll_inicial": Number(roll.total ?? 0),
+      "system.combate.salud.max": total,
+      "system.combate.salud.value": total
+    });
   }
 
   async #buildMountCard(system) {

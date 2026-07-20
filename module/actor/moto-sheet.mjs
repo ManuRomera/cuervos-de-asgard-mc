@@ -50,6 +50,8 @@ export class CAMCMotoSheet extends ActorSheetV1 {
 
   activateListeners(html) {
     super.activateListeners(html);
+    this.#autosizeTextareas(html);
+    html.find(".camc-auto-textarea").on("input", ev => this.#autosizeTextareas($(ev.currentTarget)));
     html.find(".moto-img-button").on("click", ev => this.#changeImage(ev));
     html.find(".moto-adjust").on("click", ev => this.#adjustNumber(ev));
     html.find(".moto-apply-damage").on("click", ev => this.#applyDamage(ev));
@@ -502,6 +504,14 @@ export class CAMCMotoSheet extends ActorSheetV1 {
       return Boolean(game.settings.get(CAMC.systemId, "motoExtendedRules"));
     } catch (_err) {
       return false;
+    }
+  }
+
+  #autosizeTextareas(html) {
+    const nodes = html instanceof jQuery ? html.find("textarea.camc-auto-textarea").addBack("textarea.camc-auto-textarea") : [];
+    for (const textarea of nodes) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${Math.max(34, textarea.scrollHeight)}px`;
     }
   }
 }

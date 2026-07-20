@@ -4958,6 +4958,19 @@ body.camc-compact .camc-sheet{font-size:12px;}
   font-weight:700;
 }
 
+.camc-moto-infographic textarea.camc-auto-textarea{
+  min-height:34px!important;
+  height:auto;
+  resize:vertical;
+  overflow:hidden;
+  line-height:1.18!important;
+  white-space:pre-wrap;
+}
+
+.camc-moto-infographic .camc-form-grid label:has(textarea.camc-auto-textarea){
+  min-width:0!important;
+}
+
 @media(max-width:1080px){
   .camc-community-infographic .camc-community-title,
   .camc-moto-infographic .camc-moto-title{

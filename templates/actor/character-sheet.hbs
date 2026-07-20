@@ -33,7 +33,7 @@
         <label><span>Virtud</span><input type="text" value="{{deidadActual.virtud}}" readonly/></label>
         <label><span>Talento</span><input type="text" value="{{cargoTalent.name}}" readonly/></label>
         <label><span>Jugador</span><input name="system.biografia.jugador" type="text" value="{{system.biografia.jugador}}"/></label>
-        <label><span>Concepto</span><input name="system.biografia.concepto" type="text" value="{{system.biografia.concepto}}"/></label>
+        <label><span>Edad</span><input name="system.biografia.edad" type="text" value="{{system.biografia.edad}}"/></label>
         <label class="camc-wide camc-motivation"><span>Motivación</span><input name="system.biografia.motivacion" type="text" value="{{system.biografia.motivacion}}"/></label>
       </div>
     </section>
@@ -48,6 +48,7 @@
           <input name="system.combate.salud.max" type="number" value="{{system.combate.salud.max}}"/>
           <button type="button" class="health-plus"><i class="fas fa-plus"></i></button>
         </div>
+        <button type="button" class="camc-mini-action roll-initial-health" title="Tirar Salud inicial: FUE x 2 + 10 + 1D"><i class="fas fa-dice-d6"></i> Salud inicial</button>
       </div>
       <div class="camc-resource-card major">
         <div class="camc-resource-head"><i class="fas fa-bolt"></i><span>Proezas</span><strong>{{system.combate.proezas.value}} / {{system.combate.proezas.max}}</strong></div>
@@ -104,7 +105,7 @@
 
         <section class="camc-panel">
           <div class="camc-panel-header camc-skill-tools compact">
-            <h2 class="camc-panel-title"><i class="fas fa-star"></i> Habilidades destacadas</h2>
+            <h2 class="camc-panel-title"><i class="fas fa-star"></i> Habilidades favorecidas</h2>
             <button type="button" class="skill-edit-toggle camc-icon-button {{#if skillEditUnlocked}}active{{/if}}" title="{{#if skillEditUnlocked}}Bloquear edición de dados{{else}}Desbloquear edición de dados{{/if}}"><i class="fas fa-wrench"></i></button>
           </div>
           <div class="camc-skill-list compact">
@@ -118,6 +119,7 @@
               </span>
               <span class="camc-bonus">{{skill.bonificador}}</span>
             </div>
+            {{else}}<div class="camc-empty">Marca habilidades como favorecidas con la estrella de la pestaña Habilidades.</div>
             {{/each}}
           </div>
           <button type="button" class="camc-action-button auto-role-skills" title="Usar habilidades del cargo"><i class="fas fa-list-check"></i> Usar habilidades del cargo</button>
@@ -147,19 +149,21 @@
             </li>
             {{else}}<li class="camc-empty">No hay armadura ni escudo equipados.</li>{{/each}}
           </ol>
-          <h3><i class="fas fa-bolt"></i> Dones y talentos</h3>
+          <div class="camc-inline-section-head"><h3><i class="fas fa-bolt"></i> Dones y talentos</h3><span><button type="button" class="create-item camc-icon-button" data-type="don" title="Nuevo don"><i class="fas fa-plus"></i></button><button type="button" class="create-item camc-icon-button" data-type="talento" title="Nuevo talento"><i class="fas fa-star"></i></button></span></div>
           <ol class="camc-item-list dense">
             {{#each itemsByType.dones as |item|}}
             <li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true">
               <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.deidad}} · coste {{item.system.coste_proezas}}</small></div>
               <button type="button" class="use-don camc-die-button" title="Usar don"><i class="fas fa-bolt"></i></button>
               <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+              <button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button>
             </li>
             {{/each}}
             {{#each itemsByType.talentos as |item|}}
             <li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true">
               <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.cargo}}</small></div>
               <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+              <button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button>
             </li>
             {{else}}
             <li class="camc-item-row">
@@ -263,12 +267,12 @@
           </ol>
         </section>
         <section class="camc-panel">
-          <h2 class="camc-panel-title"><i class="fas fa-bolt"></i> Dones disponibles</h2>
+          <div class="camc-panel-header"><h2 class="camc-panel-title"><i class="fas fa-bolt"></i> Dones disponibles</h2><button type="button" class="create-item camc-icon-button" data-type="don" title="Nuevo don"><i class="fas fa-plus"></i></button></div>
           <ol class="camc-item-list rich">
             {{#each itemsByType.dones as |item|}}
             <li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true">
               <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.deidad}} · coste {{item.system.coste_proezas}}</small></div>
-              <span>{{item.system.virtud}}</span><button type="button" class="use-don camc-die-button" title="Usar don"><i class="fas fa-bolt"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+              <span>{{item.system.virtud}}</span><button type="button" class="use-don camc-die-button" title="Usar don"><i class="fas fa-bolt"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button>
             </li>
             {{else}}<li class="camc-empty">Sin dones.</li>{{/each}}
           </ol>
@@ -280,7 +284,7 @@
       <div class="camc-grid camc-equipment-grid dense-equipment">
         <section class="camc-panel camc-side-stack">
           <div class="camc-panel-header"><h2 class="camc-panel-title"><i class="fas fa-bolt"></i> Dones</h2><button type="button" class="create-item camc-icon-button" data-type="don"><i class="fas fa-plus"></i></button></div>
-          <ol class="camc-item-list dense">{{#each itemsByType.dones as |item|}}<li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.deidad}} · {{item.system.coste_proezas}}</small></div><button type="button" class="use-don camc-die-button" title="Usar don"><i class="fas fa-bolt"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button></li>{{else}}<li class="camc-empty">Sin dones.</li>{{/each}}</ol>
+          <ol class="camc-item-list dense">{{#each itemsByType.dones as |item|}}<li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.deidad}} · {{item.system.coste_proezas}}</small></div><button type="button" class="use-don camc-die-button" title="Usar don"><i class="fas fa-bolt"></i></button><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button></li>{{else}}<li class="camc-empty">Sin dones.</li>{{/each}}</ol>
           <div class="camc-panel-header compact-head"><h2 class="camc-panel-title"><i class="fas fa-star"></i> Talentos</h2><button type="button" class="create-item camc-icon-button" data-type="talento"><i class="fas fa-plus"></i></button></div>
           <ol class="camc-item-list dense">{{#each itemsByType.talentos as |item|}}<li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true"><img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.cargo}}</small></div><button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button><button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button></li>{{else}}<li class="camc-empty">Sin talentos.</li>{{/each}}</ol>
           <div class="camc-panel-header compact-head"><h2 class="camc-panel-title"><i class="fas fa-suitcase"></i> Carga</h2></div>
@@ -377,6 +381,7 @@
         <section class="camc-panel"><h2 class="camc-panel-title">Historia</h2><textarea name="system.biografia.historia">{{system.biografia.historia}}</textarea></section>
         <section class="camc-panel"><h2 class="camc-panel-title">Cita</h2><textarea name="system.biografia.cita">{{system.biografia.cita}}</textarea></section>
         <section class="camc-panel"><h2 class="camc-panel-title">Origen y defectos</h2>
+          <label class="camc-checkline"><input name="system.biografia.recuerdo_cuando_usado" type="checkbox" {{checked system.biografia.recuerdo_cuando_usado}}/> Recuerdo cuando usado</label>
           <label><span>Entorno de nacimiento</span><textarea name="system.biografia.entorno_nacimiento">{{system.biografia.entorno_nacimiento}}</textarea></label>
           <div class="camc-form-grid"><label><span>Defecto grave</span><input name="system.biografia.defecto_grave" type="text" value="{{system.biografia.defecto_grave}}"/></label><label><span>Defecto leve</span><input name="system.biografia.defecto_leve" type="text" value="{{system.biografia.defecto_leve}}"/></label></div>
         </section>

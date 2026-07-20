@@ -37,6 +37,8 @@ export class CAMCActor extends Actor {
     s.vehiculo.base_maniobrabilidad ??= Number(s.vehiculo.maniobrabilidad ?? 2);
     s.vehiculo.base_ocupantes ??= Number(s.vehiculo.ocupantes ?? 1);
     s.biografia ??= {};
+    s.biografia.edad ??= "";
+    s.biografia.recuerdo_cuando_usado ??= false;
     const cargo = CAMC.cargos[s.biografia.cargo] ?? CAMC.cargos.full_patch;
     const deidad = CAMC.dioses[s.biografia.deidad] ?? {};
     s.biografia.virtud = deidad.virtud ?? "";
@@ -60,10 +62,18 @@ export class CAMCActor extends Actor {
     s.combate.arma_preparada = this.getArmaPreparada();
     s.combate.penalizador_salud = this.getPenalizadorSalud();
     s.combate.resistencia_fisica = Math.max(0, 12 - fue);
-    s.combate.salud.max ||= 10 + (fue * 2) + 4;
+    const saludRoll = Number(s.combate.salud.roll_inicial ?? 0);
+    if (saludRoll > 0) s.combate.salud.max = 10 + (fue * 2) + saludRoll;
+    else s.combate.salud.max ||= 10 + (fue * 2) + 1;
     s.combate.salud.value = Math.min(s.combate.salud.value ?? s.combate.salud.max, s.combate.salud.max);
-    s.combate.proezas.max ||= Math.max(1, Math.floor((fue + int) / 2) + 3);
-    s.combate.proezas.value = Math.min(s.combate.proezas.value ?? s.combate.proezas.max, s.combate.proezas.max);
+    const previousProezasMax = Number(s.combate.proezas.max ?? 3);
+    const previousProezasValue = Number(s.combate.proezas.value ?? previousProezasMax);
+    s.combate.proezas.max = Math.max(3, Math.floor((fue + int) / 2) + 3);
+    if (!Number.isFinite(previousProezasValue) || previousProezasValue === previousProezasMax) {
+      s.combate.proezas.value = s.combate.proezas.max;
+    } else {
+      s.combate.proezas.value = Math.max(0, previousProezasValue);
+    }
     this.#calcularProteccion();
   }
 
@@ -134,7 +144,8 @@ export class CAMCActor extends Actor {
     s.reglas.base_dados_dano ??= s.reglas.dados_dano;
     s.reglas.base_estructura ??= Number(s.reglas.estructura.max ?? (s.reglas.sidecar ? 20 : 15));
     s.reglas.base_maniobrabilidad ??= Number(s.reglas.maniobrabilidad ?? (s.reglas.sidecar ? 1 : 2));
-    s.reglas.base_alforjas ??= Number(s.reglas.alforjas?.max ?? (s.reglas.sidecar ? 12 : 8));
+    s.reglas.base_alforjas = Number(s.reglas.base_alforjas ?? s.reglas.alforjas?.max);
+    if (!Number.isFinite(s.reglas.base_alforjas) || s.reglas.base_alforjas <= 0) s.reglas.base_alforjas = s.reglas.sidecar ? 12 : 8;
     s.reglas.maniobrabilidad = Number(s.reglas.maniobrabilidad ?? (s.reglas.sidecar ? 1 : 2));
     s.reglas.plazas = Number(s.reglas.plazas ?? (s.reglas.sidecar ? 2 : 1));
     s.reglas.mods_funcionales_max = Number(s.reglas.mods_funcionales_max ?? (s.reglas.sidecar ? 3 : 2));
@@ -178,6 +189,7 @@ export class CAMCActor extends Actor {
       effects.alforjasMax += Number(efecto.alforjasMax ?? 0);
       if (name.includes("blindaje improvisado") && !efecto.estructura) { effects.estructura += 5; effects.maniobrabilidad -= 1; }
       if (name.includes("configuracion ofensiva") && !efecto.dadosDano) effects.dadosDano += 1;
+      if (name.includes("alforjas extra") && !efecto.alforjasMax) effects.alforjasMax += 8;
       if (name.includes("sidecar reforzado") && !efecto.alforjasMax) effects.alforjasMax += 4;
     }
     return effects;
@@ -257,7 +269,9 @@ export class CAMCActor extends Actor {
   getDatosTirada(habilidad, options = {}) {
     const baseDados = Number(options.dadosBase ?? options.dados ?? this.getHabilidad(habilidad));
     const proezaDados = Number(options.proezaDados ?? 0);
-    const dadosExtra = Number(options.dadosExtra ?? 0);
+    const dadosExtraManual = Number(options.dadosExtra ?? 0);
+    const recuerdoCuandoDados = options.recuerdoCuando ? 2 : 0;
+    const dadosExtra = dadosExtraManual + recuerdoCuandoDados;
     const dadosSacrificados = Number(options.dadosSacrificados ?? 0);
     const desenfundar = options.desenfundar ? -1 : 0;
     const saludPenalty = options.aplicaSalud === false ? 0 : Number(this.getPenalizadorSalud().dados ?? 0);
@@ -280,10 +294,12 @@ export class CAMCActor extends Actor {
       modificadorManual,
       equipoBonus,
       proezaDados,
-      dadosExtra,
+      dadosExtra: dadosExtraManual,
+      recuerdoCuandoDados,
       dadosSacrificados,
       desenfundar,
       saludPenalty,
+      recuerdoCuando: Boolean(options.recuerdoCuando),
       armaPreparada: options.armaPreparada ?? this.getArmaPreparada()
     };
   }
@@ -340,7 +356,6 @@ export class CAMCActor extends Actor {
 
   async ganarProezas(cantidad = 1) {
     const actual = Number(this.system.combate?.proezas?.value ?? 0);
-    const max = Number(this.system.combate?.proezas?.max ?? actual + cantidad);
-    await this.update({ "system.combate.proezas.value": Math.min(max, actual + Number(cantidad)) });
+    await this.update({ "system.combate.proezas.value": Math.max(0, actual + Number(cantidad)) });
   }
 }
