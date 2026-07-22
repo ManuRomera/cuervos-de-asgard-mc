@@ -4,6 +4,14 @@
 
 Sistema no oficial para jugar **Cuervos de Asgard Motor Club** en Foundry VTT v13. Implementa hojas nativas, tiradas y automatizaciones sobre una base Ysystem adaptada a carretera postapocalíptica, comunidad, motos, dones divinos y parches de chaleco.
 
+## Vista rápida
+
+![Hojas de personaje, moto, comunidad y compendios del sistema](docs/screenshots/overview.png)
+
+![Compendios incluidos con armas, armaduras, dones, motos, objetos y parches](docs/screenshots/compendiums.png)
+
+![Ajustes del sistema y modo de figura exterior de personaje](docs/screenshots/settings.png)
+
 ## Juego premiado
 
 **Cuervos de Asgard Motor Club** fue galardonado como **Mejor juego de rol original en castellano en los Premios HazRol 2025**, según anunció Walhalla Ediciones: https://walhallaediciones.com/cuervos-de-asgard-premios-hazrol-2025
