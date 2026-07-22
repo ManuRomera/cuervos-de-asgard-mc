@@ -2,7 +2,7 @@
   {
     "name": "Armadura de cuero / Ropa acolchada",
     "type": "armadura",
-    "img": "icons/equipment/chest/breastplate-leather-brown.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 1,
       "penalizacion": 0,
@@ -17,7 +17,7 @@
   {
     "name": "Gabán de paño grueso",
     "type": "armadura",
-    "img": "icons/equipment/chest/robe-layered.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 1,
       "penalizacion": 0,
@@ -32,7 +32,7 @@
   {
     "name": "Armadura de caucho",
     "type": "armadura",
-    "img": "icons/equipment/chest/breastplate-rusted.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 2,
       "penalizacion": 1,
@@ -47,7 +47,7 @@
   {
     "name": "Casco de fútbol americano",
     "type": "armadura",
-    "img": "icons/equipment/head/helm-barbute.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 2,
       "penalizacion": 0,
@@ -62,7 +62,7 @@
   {
     "name": "Cota de malla de anilla gruesa",
     "type": "armadura",
-    "img": "icons/equipment/chest/chainmail-grey.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 3,
       "penalizacion": 1,
@@ -77,7 +77,7 @@
   {
     "name": "Armadura de placas o cota de malla de anilla fina",
     "type": "armadura",
-    "img": "icons/equipment/chest/breastplate-metal.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 4,
       "penalizacion": 2,
@@ -92,7 +92,7 @@
   {
     "name": "Chaleco de kevlar",
     "type": "armadura",
-    "img": "icons/equipment/chest/vest-leather.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 4,
       "penalizacion": 0,
@@ -107,7 +107,7 @@
   {
     "name": "Traje antidisturbios del Viejo Mundo",
     "type": "armadura",
-    "img": "icons/equipment/chest/breastplate-banded-blue.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 5,
       "penalizacion": 2,
@@ -122,7 +122,7 @@
   {
     "name": "Escudo pequeño",
     "type": "escudo",
-    "img": "icons/equipment/shield/shield-round-boss-wood.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 1,
       "penalizacion": 1,
@@ -136,7 +136,7 @@
   {
     "name": "Escudo mediano",
     "type": "escudo",
-    "img": "icons/equipment/shield/shield-kite-wood.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 2,
       "penalizacion": 2,
@@ -150,7 +150,7 @@
   {
     "name": "Escudo grande",
     "type": "escudo",
-    "img": "icons/equipment/shield/shield-heater-steel.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 3,
       "penalizacion": 3,
@@ -164,7 +164,7 @@
   {
     "name": "Escudo antidisturbios del Viejo Mundo",
     "type": "escudo",
-    "img": "icons/equipment/shield/shield-tower-iron.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 4,
       "penalizacion": 4,

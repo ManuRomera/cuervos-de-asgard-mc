@@ -1,7 +1,7 @@
 export const CAMC = {};
 
 CAMC.systemId = "cuervos-de-asgard-mc";
-CAMC.contentVersion = "1.6.9";
+CAMC.contentVersion = "1.7.0";
 
 CAMC.atributos = {
   car: { label: "Carisma", short: "CAR" },
@@ -10,6 +10,19 @@ CAMC.atributos = {
   int: { label: "Inteligencia", short: "INT" },
   per: { label: "Percepción", short: "PER" }
 };
+
+CAMC.idiomasMiticos = [
+  "Asgardiano",
+  "Dvergar",
+  "Élfico de la luz",
+  "Élfico oscuro",
+  "Jotun",
+  "Lengua de Muspelheim",
+  "Lengua de Niflheim",
+  "Lengua de Helheim",
+  "Vanir",
+  "Runas antiguas"
+];
 
 CAMC.habilidades = {
   atletismo: { label: "Atletismo", atributo: "des", descripcion: "Acciones fisicas de movimiento: correr, saltar, trepar, nadar, mantener equilibrio o atravesar terreno dificil. En competiciones fisicas suele enfrentarse a Agilidad." },
@@ -66,6 +79,28 @@ CAMC.assets = {
   vest: `systems/${CAMC.systemId}/assets/ui/chaleco.webp`,
   deityFallback: `systems/${CAMC.systemId}/assets/deities/none.svg`,
   patchFallback: `systems/${CAMC.systemId}/assets/patches/none.svg`
+};
+
+CAMC.itemIcons = {
+  arma: `systems/${CAMC.systemId}/assets/icons/items/armas.webp`,
+  armadura: `systems/${CAMC.systemId}/assets/icons/items/armaduras-escudos.webp`,
+  escudo: `systems/${CAMC.systemId}/assets/icons/items/armaduras-escudos.webp`,
+  donFallback: `systems/${CAMC.systemId}/assets/icons/items/dones-odin.webp`,
+  talento: `systems/${CAMC.systemId}/assets/icons/items/objetos-equipo.webp`,
+  objeto: `systems/${CAMC.systemId}/assets/icons/items/objetos-equipo.webp`,
+  vehiculo: `systems/${CAMC.systemId}/assets/icons/items/motos-vehiculos.webp`,
+  moto: `systems/${CAMC.systemId}/assets/icons/items/motos-vehiculos.webp`,
+  modificacionMoto: `systems/${CAMC.systemId}/assets/icons/items/modificaciones-moto.webp`,
+  dones: {
+    odin: `systems/${CAMC.systemId}/assets/icons/items/dones-odin.webp`,
+    freya: `systems/${CAMC.systemId}/assets/icons/items/dones-freya.webp`,
+    thor: `systems/${CAMC.systemId}/assets/icons/items/dones-thor.webp`,
+    tyr: `systems/${CAMC.systemId}/assets/icons/items/dones-tyr.webp`,
+    heimdall: `systems/${CAMC.systemId}/assets/icons/items/dones-heimdall.webp`,
+    balder: `systems/${CAMC.systemId}/assets/icons/items/dones-balder.webp`,
+    frigg: `systems/${CAMC.systemId}/assets/icons/items/dones-frigg.webp`,
+    idunn: `systems/${CAMC.systemId}/assets/icons/items/dones-idunn.webp`
+  }
 };
 
 CAMC.deityBanners = {

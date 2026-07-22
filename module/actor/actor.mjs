@@ -151,6 +151,7 @@ export class CAMCActor extends Actor {
     s.reglas.plazas = Number(s.reglas.plazas ?? (s.reglas.sidecar ? 2 : 1));
     s.reglas.mods_funcionales_max = Number(s.reglas.mods_funcionales_max ?? (s.reglas.sidecar ? 3 : 2));
     s.reglas.alforjas ??= { value: 0, max: 8 };
+    s.reglas.alforjas_extra = Boolean(s.reglas.alforjas_extra);
     s.reglas.penalizador_dano_grave = Number(s.reglas.penalizador_dano_grave ?? 3);
     s.mods ??= {};
     s.mods.funcionales ??= [];
@@ -160,17 +161,13 @@ export class CAMCActor extends Actor {
     s.persecucion.terreno = Number(s.persecucion.terreno ?? 10);
     s.persecucion.visibilidad = Number(s.persecucion.visibilidad ?? 0);
     s.persecucion.evasion_objetivo = Number(s.persecucion.evasion_objetivo ?? 10);
-    const clampBand = value => Math.max(1, Math.min(10, Number(value) || 1));
-    s.persecucion.perseguidor = clampBand(s.persecucion.perseguidor ?? s.persecucion.franja ?? 1);
-    s.persecucion.objetivo = clampBand(s.persecucion.objetivo ?? Math.min(10, s.persecucion.perseguidor + 4));
-    s.persecucion.huida = clampBand(s.persecucion.huida ?? 10);
-    s.persecucion.franja = s.persecucion.perseguidor;
+    s.persecucion.franja = Number(s.persecucion.franja ?? 1);
     const itemMods = this.items?.filter(item => item.type === "objeto" && item.system?.tipo === "modificacion_moto" && item.system?.equipada) ?? [];
     const legacyMods = s.mods.funcionales ?? [];
     const modEffects = this.#getMotoModEffects([...legacyMods, ...itemMods]);
     s.reglas.estructura.max = Number(s.reglas.base_estructura ?? 15) + modEffects.estructura;
     s.reglas.maniobrabilidad = Number(s.reglas.base_maniobrabilidad ?? 2) + modEffects.maniobrabilidad;
-    s.reglas.alforjas.max = Number(s.reglas.base_alforjas ?? 8) + modEffects.alforjasMax;
+    s.reglas.alforjas.max = Number(s.reglas.base_alforjas ?? 8) + modEffects.alforjasMax + (s.reglas.alforjas_extra ? 8 : 0);
     s.reglas.dados_dano = this.#addVehicleDamageDice(s.reglas.base_dados_dano ?? "2D", modEffects.dadosDano);
     s.reglas.efectos_mods = modEffects.labels;
     const estructura = s.reglas.estructura;
@@ -251,6 +248,8 @@ export class CAMCActor extends Actor {
   }
 
   esHabilidadFavorecida(habilidad) {
+    const cargo = CAMC.cargos[this.system.biografia?.cargo];
+    if (cargo?.habilidades?.includes(habilidad)) return true;
     return Array.isArray(this.system.habilidades_favorecidas) && this.system.habilidades_favorecidas.includes(habilidad);
   }
 

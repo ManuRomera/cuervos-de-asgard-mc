@@ -190,6 +190,7 @@
         "sidecar": false,
         "plazas": 1,
         "alforjas": { "value": 0, "max": 8 },
+        "alforjas_extra": false,
         "mods_funcionales_max": 2,
         "penalizador_dano_grave": 3,
         "mantenimiento": "Operativa"
@@ -206,10 +207,7 @@
         "terreno": 10,
         "visibilidad": 0,
         "evasion_objetivo": 10,
-        "franja": 1,
-        "perseguidor": 1,
-        "objetivo": 5,
-        "huida": 10
+        "franja": 1
       },
       "vinculo": {
         "ownerUuid": "",

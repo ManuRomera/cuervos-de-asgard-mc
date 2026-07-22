@@ -200,6 +200,7 @@ for (const hook of ["renderActorSheet", "renderItemSheet", "renderDialog"]) {
 
 Hooks.on("preUpdateItem", (item, changes, _options, userId) => validateCamcCarryUpdate(item, changes, userId));
 Hooks.on("updateItem", (item, changes) => syncCamcLinkedMountLoad(item, changes));
+Hooks.on("updateActor", (actor, changes) => syncCamcLinkedMountExtraSaddlebags(actor, changes));
 
 function registerHandlebarsHelpers() {
   Handlebars.registerHelper("camcLabel", (collection, key) => CAMC[collection]?.[key]?.label ?? key);
@@ -533,7 +534,7 @@ function computeCamcCarryLoad(system, items) {
   const linkedMount = getCamcLinkedMountSync(system);
   const baseAlforjas = Number(system.carga?.alforjas_base ?? 8);
   const mountAlforjas = linkedMount ? Number(linkedMount.system?.reglas?.alforjas?.max ?? 0) : 0;
-  const alforjasMax = Math.max(baseAlforjas, Number.isFinite(mountAlforjas) ? mountAlforjas : 0) + (hasExtraSaddlebags ? 8 : 0);
+  const alforjasMax = Math.max(baseAlforjas, Number.isFinite(mountAlforjas) ? mountAlforjas : 0) + (hasExtraSaddlebags && !linkedMount ? 8 : 0);
   const totals = { mochila: 0, alforjas: 0 };
   for (const entry of portable) {
     const location = entry.system?.carga?.ubicacion || "mochila";
@@ -581,5 +582,17 @@ async function syncCamcLinkedMountLoad(item, changes) {
   const value = load.alforjas.value;
   if (Number(mount.system?.reglas?.alforjas?.value ?? 0) !== value) {
     await mount.update({ "system.reglas.alforjas.value": value });
+  }
+}
+
+async function syncCamcLinkedMountExtraSaddlebags(actor, changes) {
+  if (actor?.type !== "personaje") return;
+  const flat = foundry.utils.flattenObject(changes ?? {});
+  if (!Object.prototype.hasOwnProperty.call(flat, "system.carga.alforjas_extra")) return;
+  const mount = getCamcLinkedMountSync(actor.system);
+  if (!mount) return;
+  const active = Boolean(flat["system.carga.alforjas_extra"]);
+  if (Boolean(mount.system?.reglas?.alforjas_extra) !== active) {
+    await mount.update({ "system.reglas.alforjas_extra": active });
   }
 }

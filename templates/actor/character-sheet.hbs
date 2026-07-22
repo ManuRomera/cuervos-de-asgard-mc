@@ -215,7 +215,7 @@
         </div>
         <div class="camc-skill-list full">
           {{#each habilidades as |skill|}}
-          <div class="camc-skill-row {{#if skill.favorecida}}fav{{/if}}" data-skill="{{skill.key}}">
+          <div class="camc-skill-row {{#if skill.favorecida}}fav{{/if}} {{#if skill.isIdiomaMitico}}has-specialization{{/if}}" data-skill="{{skill.key}}">
             <button type="button" class="fav-toggle camc-icon-button" data-skill="{{skill.key}}"><i class="{{#if skill.favorecida}}fas{{else}}far{{/if}} fa-star"></i></button>
             <button type="button" class="roll-skill camc-skill-name" data-skill="{{skill.key}}">{{skill.label}}</button>
             <select name="system.habilidades.{{skill.key}}.atributo">
@@ -223,6 +223,9 @@
               {{#each ../config.atributos as |attr key|}}<option value="{{key}}">{{attr.short}}</option>{{/each}}
               {{/select}}
             </select>
+            {{#if skill.isIdiomaMitico}}
+            <input class="camc-skill-specialization" name="system.habilidades.idioma_mitico.especializacion" type="text" value="{{skill.especializacion}}" list="camc-idiomas-miticos" placeholder="Idioma mítico"/>
+            {{/if}}
             <span class="camc-skill-dice" title="{{skill.value}} dados">
               {{#each skill.dice as |die|}}<button type="button" class="skill-die {{#if die.active}}active{{/if}}" data-skill="{{die.skill}}" data-value="{{die.rank}}"><i class="fas fa-dice-six"></i></button>{{/each}}
             </span>
@@ -424,4 +427,7 @@
     <button type="button" class="camc-action-button roll-initiative"><i class="fas fa-crossed-swords"></i> Iniciativa</button>
     <button type="button" class="camc-action-button roll-resistance"><i class="fas fa-shield-heart"></i> Resistencia</button>
   </footer>
+  <datalist id="camc-idiomas-miticos">
+    {{#each config.idiomasMiticos as |idioma|}}<option value="{{idioma}}"></option>{{/each}}
+  </datalist>
 </form>

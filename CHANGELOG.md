@@ -2,6 +2,20 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.11] — 2026-07-22
+
+### Añadido
+- Iconografía propia para armas, armaduras, equipo, vehículos, modificaciones de moto y dones por deidad.
+- Especialización editable para Idioma mítico.
+
+### Cambiado
+- Los compendios base, objetos nuevos y generadores usan los iconos del sistema en lugar de iconos genéricos de Foundry.
+- Las habilidades favorecidas de cargos con lista fija se marcan automáticamente al elegir cargo.
+
+### Corregido
+- Alforjas extra sincroniza su capacidad con la moto vinculada y evita doble conteo.
+- Retirado el seguimiento visual de persecución de la ficha de moto.
+
 ## [1.3.10] — 2026-07-20
 
 ### Añadido

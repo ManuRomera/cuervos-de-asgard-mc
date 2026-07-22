@@ -2,7 +2,7 @@
   {
     "name": "Moto normal base",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Midgard Motors",
@@ -66,7 +66,7 @@
   {
     "name": "Moto con sidecar base",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Thunder Goat Garage",
@@ -130,7 +130,7 @@
   {
     "name": "Hija del Trueno",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Hrafn-Kustom Works",
@@ -214,7 +214,7 @@
   {
     "name": "La Última Promesa",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Midgard Motors",
@@ -291,7 +291,7 @@
   {
     "name": "Diente de Fenrir",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Fenris Rebuilds",
@@ -368,7 +368,7 @@
   {
     "name": "Sombra de Hugin",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Sleipnir Road Machines",
@@ -445,7 +445,7 @@
   {
     "name": "Santa Chatarra",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Nornir Scrapworks",
@@ -522,7 +522,7 @@
   {
     "name": "Rompedientes",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Thunder Goat Garage",
@@ -605,7 +605,7 @@
   {
     "name": "La Desenterrada",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Old World Remnants",
@@ -682,7 +682,7 @@
   {
     "name": "Juramento de Cuero",
     "type": "moto",
-    "img": "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/motos-vehiculos.webp",
     "system": {
       "identidad": {
         "marca": "Valkyria Roadworks",
@@ -839,7 +839,7 @@
       {
         "name": "Espejo roto",
         "type": "objeto",
-        "img": "icons/sundries/scrolls/scroll-runed-brown.webp",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
         "system": {
           "tipo": "modificacion_estetica_moto",
           "tamano": "no_equipable",
@@ -861,7 +861,7 @@
       {
         "name": "Símbolo del capítulo",
         "type": "objeto",
-        "img": "icons/sundries/scrolls/scroll-runed-brown.webp",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
         "system": {
           "tipo": "modificacion_estetica_moto",
           "tamano": "no_equipable",

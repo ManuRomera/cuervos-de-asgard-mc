@@ -2,7 +2,7 @@
   {
     "name": "Antorcha",
     "type": "objeto",
-    "img": "icons/sundries/lights/torch-brown-lit.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "consumible",
       "tamano": "pequeno",
@@ -16,7 +16,7 @@
   {
     "name": "Baterías",
     "type": "objeto",
-    "img": "icons/tech/battery.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "consumible",
       "tamano": "mediano",
@@ -30,7 +30,7 @@
   {
     "name": "Bombona de gas",
     "type": "objeto",
-    "img": "icons/tech/gas-tank.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "consumible",
       "tamano": "grande",
@@ -44,7 +44,7 @@
   {
     "name": "Botiquín de primeros auxilios",
     "type": "objeto",
-    "img": "icons/consumables/potions/potion-bottle-corked-blue.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "pequeno",
@@ -58,7 +58,7 @@
   {
     "name": "Brújula",
     "type": "objeto",
-    "img": "icons/tools/navigation/compass-brass.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "pequeno",
@@ -72,7 +72,7 @@
   {
     "name": "Combustible",
     "type": "objeto",
-    "img": "icons/tech/gas-canister.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "consumible",
       "tamano": "mediano",
@@ -86,7 +86,7 @@
   {
     "name": "Cordel y cuerdas",
     "type": "objeto",
-    "img": "icons/sundries/survival/rope-coiled-tan.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "pequeno",
@@ -100,7 +100,7 @@
   {
     "name": "Cubiertos de supervivencia",
     "type": "objeto",
-    "img": "icons/sundries/survival/blanket-sleeping.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "pequeno",
@@ -114,7 +114,7 @@
   {
     "name": "Equipo de acampada",
     "type": "objeto",
-    "img": "icons/sundries/survival/campfire.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "grande",
@@ -128,7 +128,7 @@
   {
     "name": "Equipo de herramientas",
     "type": "objeto",
-    "img": "icons/tools/hand/hammer-and-nails.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "mediano",
@@ -142,7 +142,7 @@
   {
     "name": "Ganzúas",
     "type": "objeto",
-    "img": "icons/tools/hand/lockpicks-steel.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "pequeno",
@@ -156,7 +156,7 @@
   {
     "name": "Instrumentos médicos",
     "type": "objeto",
-    "img": "icons/tools/cooking/knife-butcher-steel.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "pequeno",
@@ -170,7 +170,7 @@
   {
     "name": "Linterna",
     "type": "objeto",
-    "img": "icons/sundries/lights/lantern-iron.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "pequeno",
@@ -184,7 +184,7 @@
   {
     "name": "Mapas",
     "type": "objeto",
-    "img": "icons/sundries/documents/document-letter.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "general",
       "tamano": "pequeno",
@@ -198,7 +198,7 @@
   {
     "name": "Piezas de recambio",
     "type": "objeto",
-    "img": "icons/tech/motor.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "recambio",
       "tamano": "mediano",
@@ -212,7 +212,7 @@
   {
     "name": "Raciones de comida",
     "type": "objeto",
-    "img": "icons/consumables/food/fruit-date.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "consumible",
       "tamano": "mediano",
@@ -226,7 +226,7 @@
   {
     "name": "Ropa de invierno",
     "type": "objeto",
-    "img": "icons/equipment/chest/shirt-simple-grey.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "ropa",
       "tamano": "mediano",
@@ -240,7 +240,7 @@
   {
     "name": "Ropa de verano",
     "type": "objeto",
-    "img": "icons/equipment/chest/shirt-simple-brown.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "ropa",
       "tamano": "mediano",
@@ -254,7 +254,7 @@
   {
     "name": "Cantimplora / Agua",
     "type": "objeto",
-    "img": "icons/consumables/potions/potion-bottle-corked-brown.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "consumible",
       "tamano": "mediano",
@@ -268,7 +268,7 @@
   {
     "name": "Kit de reparación de vehículos",
     "type": "objeto",
-    "img": "icons/tools/smithing/tongs-steel.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "grande",
@@ -282,7 +282,7 @@
   {
     "name": "Mochila",
     "type": "objeto",
-    "img": "icons/containers/bags/pack-leather-brown.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "contenedor",
       "tamano": "mediano",
@@ -291,13 +291,16 @@
       "cantidad": 1,
       "especial": "Referencia de carga a pie: la hoja limita la mochila/equipo encima a 6 espacios.",
       "descripcion": "Bolsa resistente para cargar el equipo que el Cuervo lleva encima.",
-      "carga": { "ubicacion": "mochila", "espacios": 0 }
+      "carga": {
+        "ubicacion": "mochila",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Alforjas extra",
     "type": "objeto",
-    "img": "icons/containers/bags/satchel-leather-brown.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "mediano",
@@ -306,13 +309,16 @@
       "cantidad": 1,
       "especial": "Modificación de moto: aumenta en 8 espacios la capacidad de alforjas. No aumenta los 6 espacios máximos a pie.",
       "descripcion": "Conjunto adicional de alforjas laterales y superiores para transportar más equipo en la moto.",
-      "carga": { "ubicacion": "alforjas", "espacios": 0 }
+      "carga": {
+        "ubicacion": "alforjas",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Acelerador trucado",
     "type": "objeto",
-    "img": "icons/tools/hand/wrench-steel-grey.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -321,13 +327,16 @@
       "cantidad": 1,
       "especial": "Modificación funcional de moto: +5 a la tirada de iniciativa.",
       "descripcion": "Mejora de mezcla de aire y combustible para conseguir picos de velocidad.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Chasis reforzado",
     "type": "objeto",
-    "img": "icons/tools/smithing/anvil.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -336,13 +345,16 @@
       "cantidad": 1,
       "especial": "Modificación funcional de moto: +5 puntos de Estructura.",
       "descripcion": "Refuerzo del bastidor para que la moto aguante más daño antes de quedar inutilizada.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Chasis ultrarreforzado",
     "type": "objeto",
-    "img": "icons/tools/smithing/hammer-maul-steel-grey.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -351,13 +363,16 @@
       "cantidad": 1,
       "especial": "Requiere Chasis reforzado. +5 Estructura adicional, permite Embestir y Sacar de la carretera contra cualquier vehículo, pero -1 Maniobrabilidad.",
       "descripcion": "Refuerzo extremo del chasis para maniobras ofensivas contra vehículos más pesados.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Configuración ofensiva",
     "type": "objeto",
-    "img": "icons/commodities/metal/spike-steel.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -366,13 +381,16 @@
       "cantidad": 1,
       "especial": "Modificación funcional de moto: +1D a los Dados de daño de la moto.",
       "descripcion": "Pinchos, barras, tachuelas o cadenas añadidas al chasis para hacer más peligrosas las embestidas.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Dispensador de aceite",
     "type": "objeto",
-    "img": "icons/consumables/potions/bottle-bulb-empty-glass.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -381,13 +399,16 @@
       "cantidad": 1,
       "especial": "Hasta dos veces por persecución: +3 a la dificultad de los perseguidores durante este turno y el siguiente. Activarlo no cuenta como acción.",
       "descripcion": "Depósito que deja un reguero de aceite para dificultar el avance de quienes persiguen la moto.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Estribos de combate",
     "type": "objeto",
-    "img": "icons/equipment/feet/boots-plate-grey.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -396,13 +417,16 @@
       "cantidad": 1,
       "especial": "Modificación funcional de moto: +3 a Embestir y Sacar de la carretera frente a otras motos.",
       "descripcion": "Estribos más grandes, afilados y resistentes pensados para combate entre motos.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Manillar adaptado",
     "type": "objeto",
-    "img": "icons/tools/hand/pliers-steel-grey.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -411,13 +435,16 @@
       "cantidad": 1,
       "especial": "Modificación funcional de moto: +1 a iniciativa y +1 a Maniobrabilidad.",
       "descripcion": "Diseño de manillar más cómodo y preciso, compatible con otras mejoras similares.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Mejora del sistema de transmisión",
     "type": "objeto",
-    "img": "icons/commodities/tech/cog-brass.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -426,13 +453,16 @@
       "cantidad": 1,
       "especial": "Una vez por persecución puede cambiar un fallo de Conducir por un éxito normal, incluso si hubo pifia.",
       "descripcion": "Reemplazo y ajuste de la transmisión para obtener un control más fiable de la moto.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Motor potenciado",
     "type": "objeto",
-    "img": "icons/commodities/tech/tube-chamber-lightning.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -441,13 +471,16 @@
       "cantidad": 1,
       "especial": "Una vez por persecución permite cambiar la posición de la moto en una franja.",
       "descripcion": "Turboinyección y modificaciones del bloque motor para ganar potencia explosiva.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Obra maestra",
     "type": "objeto",
-    "img": "icons/tools/hand/brush-paint-brown.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -456,13 +489,16 @@
       "cantidad": 1,
       "especial": "+3 a Conversación en escenas en las que el personaje haya llegado montado en su moto. No exige Mecánica; requiere arte o Cultura a dificultad 15 si lo hace un PJ.",
       "descripcion": "Trabajo artístico de gran impacto visual sobre el chasis de la moto.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Ruedas reforzadas",
     "type": "objeto",
-    "img": "icons/commodities/tech/wheel.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -471,13 +507,16 @@
       "cantidad": 1,
       "especial": "Modificación funcional de moto: +1 Estructura y +1 Maniobrabilidad.",
       "descripcion": "Gomas más gruesas y radios reforzados para ganar adherencia y resistencia.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Sidecar",
     "type": "objeto",
-    "img": "icons/environment/settlement/wagon-black.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -486,13 +525,16 @@
       "cantidad": 1,
       "especial": "+1 ocupante, -1 Maniobrabilidad y permite una tercera modificación funcional en la moto.",
       "descripcion": "Añadido lateral para transportar a un pasajero en mejores condiciones.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Suspensión mejorada",
     "type": "objeto",
-    "img": "icons/tools/smithing/spring-steel.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -501,13 +543,16 @@
       "cantidad": 1,
       "especial": "+1 Maniobrabilidad y +3 a la maniobra Evadirse.",
       "descripcion": "Amortiguadores robustos para absorber mejor las irregularidades del terreno.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   },
   {
     "name": "Tubo de escape tuneado",
     "type": "objeto",
-    "img": "icons/commodities/tech/pipe-metal.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
     "system": {
       "tipo": "modificacion_moto",
       "tamano": "no_equipable",
@@ -516,7 +561,10 @@
       "cantidad": 1,
       "especial": "+3 a Intimidación en escenas en las que el personaje haya llegado montado en su moto.",
       "descripcion": "Escape sin reductores de ruido y con tubos añadidos para producir un sonido atronador.",
-      "carga": { "ubicacion": "comunidad", "espacios": 0 }
+      "carga": {
+        "ubicacion": "comunidad",
+        "espacios": 0
+      }
     }
   }
 ]

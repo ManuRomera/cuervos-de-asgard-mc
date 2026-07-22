@@ -264,6 +264,7 @@ function combatFor(attributes, skills, npc = false, options = {}) {
 }
 
 const starterFlag = () => ({ [CAMC.systemId]: { generatedStarter: true } });
+const deityIcon = deity => CAMC.itemIcons.dones[normalized(deity)] ?? CAMC.itemIcons.donFallback;
 
 const starterTalents = [
   { name: "Autoridad de carretera", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/presidente.webp`, system: { cargo: "Presidente", efecto: "Cuando el capítulo actúa unido bajo tus órdenes, puedes declarar una prioridad clara de la escena. El DJ puede conceder +1D a la primera tirada que siga esa orden si el grupo acepta el riesgo.", descripcion: "Talento de liderazgo para marcar rumbo, asumir responsabilidad y mantener unido al capítulo." } },
@@ -350,7 +351,7 @@ function starterEquipmentFor({ cargo, deidad, favored = [], rng = Math.random } 
     : {
       name: `Don de ${deityLabel}`,
       type: "don",
-      img: "icons/magic/symbols/runes-star-pentagon-blue.webp",
+      img: deityIcon(deityLabel),
       system: {
         deidad: deityLabel,
         coste_proezas: 2,
@@ -362,12 +363,16 @@ function starterEquipmentFor({ cargo, deidad, favored = [], rng = Math.random } 
     };
   talent.flags = starterFlag();
   don.flags = starterFlag();
+  talent.img = CAMC.itemIcons.talento;
+  don.img = deityIcon(don.system?.deidad ?? deityLabel);
   const selectedMelee = clone(pick(melee, rng));
   const selectedRanged = clone(pick(ranged, rng));
+  selectedMelee.img = CAMC.itemIcons.arma;
+  selectedRanged.img = CAMC.itemIcons.arma;
   const selectedTools = uniquePicks(useful, 2, rng).map(item => ({
     name: item.name,
     type: "objeto",
-    img: item.img,
+    img: CAMC.itemIcons.objeto,
     flags: starterFlag(),
     system: {
       tipo: item.tipo,
@@ -390,7 +395,7 @@ function starterEquipmentFor({ cargo, deidad, favored = [], rng = Math.random } 
     {
       name: "Armadura de cuero",
       type: "armadura",
-      img: "icons/equipment/chest/breastplate-banded-leather-brown.webp",
+      img: CAMC.itemIcons.armadura,
       flags: starterFlag(),
       system: {
         nivel: 1,

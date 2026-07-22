@@ -1,3 +1,5 @@
+import { CAMC } from "../config.mjs";
+
 const pick = (list, rng) => list[Math.floor(rng() * list.length)];
 
 function mulberry32(seed) {
@@ -148,7 +150,7 @@ export function generateRandomMount(options = {}) {
     ...functionalMods.map(mod => ({
       name: mod.name,
       type: "objeto",
-      img: "icons/tools/smithing/anvil.webp",
+      img: CAMC.itemIcons.modificacionMoto,
       system: {
         tipo: "modificacion_moto",
         tamano: "no_equipable",
@@ -167,7 +169,7 @@ export function generateRandomMount(options = {}) {
     ...cosmeticMods.map(mod => ({
       name: mod.name,
       type: "objeto",
-      img: "icons/sundries/scrolls/scroll-runed-brown.webp",
+      img: CAMC.itemIcons.modificacionMoto,
       system: {
         tipo: "modificacion_estetica_moto",
         tamano: "no_equipable",
@@ -184,7 +186,7 @@ export function generateRandomMount(options = {}) {
   return {
     name,
     type: "moto",
-    img: "systems/cuervos-de-asgard-mc/assets/ui/motorcycle.svg",
+    img: CAMC.itemIcons.moto,
     items,
     system: {
       identidad: {

@@ -60,7 +60,6 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     html.find(".moto-roll-drive").on("click", ev => this.#rollDrive(ev));
     html.find(".moto-roll-damage").on("click", ev => this.#rollDamage(ev));
     html.find(".moto-chase-roll").on("click", ev => this.#rollChase(ev));
-    html.find(".moto-chase-step").on("click", ev => this.#adjustChasePosition(ev));
     html.find(".moto-roll-mechanic").on("click", ev => this.#rollMechanic(ev));
     html.find(".moto-generate").on("click", ev => this.#generate(ev));
     html.find(".moto-add-mod").on("click", ev => this.#addMod(ev));
@@ -119,18 +118,6 @@ export class CAMCMotoSheet extends ActorSheetV1 {
       if (Number.isFinite(max)) next = Math.min(max, next);
     }
     await this.actor.update({ [path]: Math.max(0, next) });
-  }
-
-  async #adjustChasePosition(event) {
-    event.preventDefault();
-    const path = event.currentTarget.dataset.path;
-    const delta = Number(event.currentTarget.dataset.delta ?? 0);
-    if (!path || !delta) return;
-    const current = Number(get(this.actor, path) ?? 1);
-    const next = Math.max(1, Math.min(10, current + delta));
-    const update = { [path]: next };
-    if (path === "system.persecucion.perseguidor") update["system.persecucion.franja"] = next;
-    await this.actor.update(update);
   }
 
   async #applyDamage(event) {
@@ -365,7 +352,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     const legacy = (this.actor.system.mods?.funcionales ?? []).map((mod, index) => ({
       id: `legacy-func-${index}`,
       name: mod.name,
-      img: "icons/tools/smithing/anvil.webp",
+      img: CAMC.itemIcons.modificacionMoto,
       system: {
         tipo: "modificacion_moto",
         equipada: true,
@@ -383,7 +370,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     const legacy = (this.actor.system.mods?.esteticas ?? []).map((mod, index) => ({
       id: `legacy-est-${index}`,
       name: mod.name,
-      img: "icons/sundries/scrolls/scroll-runed-brown.webp",
+      img: CAMC.itemIcons.modificacionMoto,
       system: { tipo: "modificacion_estetica_moto", equipada: true, descripcion: mod.descripcion }
     }));
     return [...items, ...legacy];
@@ -398,7 +385,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     return {
       name,
       type: "objeto",
-      img: tipo === "modificacion_moto" ? "icons/tools/smithing/anvil.webp" : "icons/sundries/scrolls/scroll-runed-brown.webp",
+      img: CAMC.itemIcons.modificacionMoto,
       system: {
         tipo,
         tamano: "no_equipable",
@@ -568,30 +555,11 @@ export class CAMCMotoSheet extends ActorSheetV1 {
   }
 
   #buildChaseContext() {
-    const p = this.actor.system.persecucion ?? {};
-    const clamp = value => Math.max(1, Math.min(10, Number(value) || 1));
-    const pursuer = clamp(p.perseguidor ?? p.franja ?? 1);
-    const target = clamp(p.objetivo ?? 5);
-    const escape = clamp(p.huida ?? 10);
     return {
       terrains: CAMC.persecucion?.terrenos ?? [],
       visibility: CAMC.persecucion?.visibilidad ?? [],
       movement: CAMC.persecucion?.movimiento ?? [],
-      maneuvers: CAMC.persecucion?.maniobras ?? [],
-      pursuer,
-      target,
-      escape,
-      caught: pursuer === target,
-      escaped: target >= escape,
-      bands: Array.from({ length: 10 }, (_, index) => {
-        const value = index + 1;
-        return {
-          value,
-          pursuer: value === pursuer,
-          target: value === target,
-          escape: value === escape
-        };
-      })
+      maneuvers: CAMC.persecucion?.maniobras ?? []
     };
   }
 }

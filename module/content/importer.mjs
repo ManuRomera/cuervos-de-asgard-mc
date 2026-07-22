@@ -204,7 +204,7 @@ export class CAMCContentImporter {
     return {
       name: mod.name,
       type: "objeto",
-      img: funcional ? "icons/tools/smithing/anvil.webp" : "icons/sundries/scrolls/scroll-runed-brown.webp",
+      img: CAMC.itemIcons.modificacionMoto,
       system: {
         tipo,
         tamano: "no_equipable",

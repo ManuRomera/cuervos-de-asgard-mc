@@ -2,7 +2,7 @@
   {
     "name": "Cuchillo / Daga / Machete / Puñal",
     "type": "arma",
-    "img": "icons/weapons/daggers/dagger-simple.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "cuerpo_a_cuerpo",
       "categoria": "cuerpo_a_cuerpo",
@@ -11,8 +11,10 @@
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
       "alcance": "cuerpo_a_cuerpo",
-      "municion": { "value": 0, "max": 0 },
-      "especial": "",
+      "municion": {
+        "value": 0,
+        "max": 0
+      },
       "especial": "Ataque con Lucha. Daño 5 + FUE/2. Por su tamaño pequeño puede ocultarse y transportarse con facilidad.",
       "descripcion": "Armas blancas pequeñas de uso cotidiano. Sirven como herramienta y como último recurso en combate cerrado. En Ysystem el daño del arma se suma al bonificador físico correspondiente."
     }
@@ -20,7 +22,7 @@
   {
     "name": "Espada / Falcata / Garrote / Hacha / Mayal / Maza a una mano",
     "type": "arma",
-    "img": "icons/weapons/swords/sword-simple.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "cuerpo_a_cuerpo",
       "categoria": "cuerpo_a_cuerpo",
@@ -29,8 +31,10 @@
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
       "alcance": "cuerpo_a_cuerpo",
-      "municion": { "value": 0, "max": 0 },
-      "especial": "",
+      "municion": {
+        "value": 0,
+        "max": 0
+      },
       "especial": "Ataque con Lucha. Daño 7 + FUE/2.",
       "descripcion": "Armas cuerpo a cuerpo habituales entre supervivientes y Cuervos. Son fiables, manufacturadas y no requieren tiradas de caducidad."
     }
@@ -38,7 +42,7 @@
   {
     "name": "Espadón / Hacha de combate / Maza a dos manos",
     "type": "arma",
-    "img": "icons/weapons/swords/sword-great.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "cuerpo_a_cuerpo_dos_manos",
       "categoria": "cuerpo_a_cuerpo_dos_manos",
@@ -47,7 +51,10 @@
       "deterioro": "M",
       "disponibilidad": "frecuente",
       "alcance": "cuerpo_a_cuerpo",
-      "municion": { "value": 0, "max": 0 },
+      "municion": {
+        "value": 0,
+        "max": 0
+      },
       "especial": "Requiere ambas manos. Ataque con Lucha. Daño 10 + FUE/2.",
       "descripcion": "Armas pesadas de gran impacto. Sacrifican comodidad y discreción a cambio de un daño base muy alto en cuerpo a cuerpo."
     }
@@ -55,7 +62,7 @@
   {
     "name": "Cadena / Mangual",
     "type": "arma",
-    "img": "icons/weapons/maces/mace-simple.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "cuerpo_a_cuerpo",
       "categoria": "cuerpo_a_cuerpo",
@@ -64,8 +71,10 @@
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
       "alcance": "cuerpo_a_cuerpo",
-      "municion": { "value": 0, "max": 0 },
-      "especial": "",
+      "municion": {
+        "value": 0,
+        "max": 0
+      },
       "especial": "Ataque con Lucha. Daño 7 + FUE/2.",
       "descripcion": "Armas contundentes o flexibles, útiles para pelear a corta distancia con materiales fáciles de conseguir o fabricar."
     }
@@ -73,7 +82,7 @@
   {
     "name": "Lanza",
     "type": "arma",
-    "img": "icons/weapons/polearms/spear-simple.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "cuerpo_a_cuerpo",
       "categoria": "distancia_no_fuego",
@@ -82,7 +91,10 @@
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
       "alcance": "cuerpo_a_cuerpo",
-      "municion": { "value": 0, "max": 0 },
+      "municion": {
+        "value": 0,
+        "max": 0
+      },
       "especial": "Puede usarse cuerpo a cuerpo con Lucha o arrojada con Puntería. Daño 7 + FUE/2 en melé o 7 + PER a distancia.",
       "descripcion": "Arma versátil para combate cercano o lanzamiento. En la hoja se clasifica como distancia no de fuego para que use Puntería por defecto."
     }
@@ -90,7 +102,7 @@
   {
     "name": "Arco y aljaba con 20 flechas",
     "type": "arma",
-    "img": "icons/weapons/bows/bow-simple.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "distancia_no_fuego",
       "categoria": "distancia_no_fuego",
@@ -99,7 +111,10 @@
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
       "alcance": "distancia",
-      "municion": { "value": 20, "max": 20 },
+      "municion": {
+        "value": 20,
+        "max": 20
+      },
       "especial": "Ataque con Puntería. Daño 5 + PER. Consume una flecha por disparo.",
       "descripcion": "Arma silenciosa y fácil de mantener, útil para cazar y atacar sin delatar la posición con ruido de disparos."
     }
@@ -107,7 +122,7 @@
   {
     "name": "Ballesta y aljaba con 15 virotes",
     "type": "arma",
-    "img": "icons/weapons/crossbows/crossbow-simple.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "distancia_no_fuego",
       "categoria": "distancia_no_fuego",
@@ -116,7 +131,10 @@
       "deterioro": "M",
       "disponibilidad": "infrecuente",
       "alcance": "distancia",
-      "municion": { "value": 15, "max": 15 },
+      "municion": {
+        "value": 15,
+        "max": 15
+      },
       "especial": "Ataque con Puntería. Daño 7 + PER. Consume un virote por disparo.",
       "descripcion": "Arma de proyectiles con mayor pegada que el arco. Es menos común, pero mantiene la ventaja de no depender de munición de fuego."
     }
@@ -124,7 +142,7 @@
   {
     "name": "Arpón",
     "type": "arma",
-    "img": "icons/weapons/polearms/trident-simple.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "distancia_no_fuego",
       "categoria": "distancia_no_fuego",
@@ -133,7 +151,10 @@
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
       "alcance": "distancia",
-      "municion": { "value": 0, "max": 0 },
+      "municion": {
+        "value": 0,
+        "max": 0
+      },
       "especial": "Ataque con Puntería. Daño 7 + PER.",
       "descripcion": "Herramienta de pesca adaptada al combate. Funciona como arma a distancia no de fuego y no depende de cartuchos."
     }
@@ -141,7 +162,7 @@
   {
     "name": "Pistola / Revólver",
     "type": "arma",
-    "img": "icons/weapons/guns/gun-pistol.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "fuego_cortas",
       "categoria": "fuego_cortas",
@@ -150,7 +171,10 @@
       "deterioro": "R",
       "disponibilidad": "infrecuente",
       "alcance": "distancia",
-      "municion": { "value": 6, "max": 6 },
+      "municion": {
+        "value": 6,
+        "max": 6
+      },
       "especial": "Ataque con Puntería. Daño 8 + PER. Consume una bala por disparo y exige tirada de caducidad si se ha usado durante la aventura.",
       "descripcion": "Arma de fuego corta del Viejo Mundo. Potente y fácil de portar, pero dependiente de munición y poco fiable por su deterioro reciclado."
     }
@@ -158,7 +182,7 @@
   {
     "name": "Escopeta / Rifle",
     "type": "arma",
-    "img": "icons/weapons/guns/rifle-simple.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "fuego_largas",
       "categoria": "fuego_largas",
@@ -167,7 +191,10 @@
       "deterioro": "R",
       "disponibilidad": "infrecuente",
       "alcance": "distancia",
-      "municion": { "value": 5, "max": 5 },
+      "municion": {
+        "value": 5,
+        "max": 5
+      },
       "especial": "Ataque con Puntería. Daño 12 + PER. Consume una bala o cartucho por disparo y exige tirada de caducidad si se ha usado durante la aventura.",
       "descripcion": "Escopetas y rifles recuperados del Viejo Mundo. Son armas de fuego largas, no armas cuerpo a cuerpo: tienen alcance a distancia, munición limitada y mucho valor en las Llanuras Yermas."
     }
@@ -175,7 +202,7 @@
   {
     "name": "Fusil / Fusil de asalto",
     "type": "arma",
-    "img": "icons/weapons/guns/rifle-assault.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "fuego_mortiferas",
       "categoria": "fuego_mortiferas",
@@ -184,7 +211,10 @@
       "deterioro": "R",
       "disponibilidad": "raro",
       "alcance": "distancia",
-      "municion": { "value": 30, "max": 30 },
+      "municion": {
+        "value": 30,
+        "max": 30
+      },
       "especial": "Ataque con Puntería. Daño 15 + PER. Consume munición. Las ráfagas permiten atacar a múltiples blancos según las reglas de armas de fuego mortíferas.",
       "descripcion": "Armas automáticas o de alto poder de fuego del Viejo Mundo. Son raras, valiosas y peligrosas, con reglas especiales para ráfagas."
     }
@@ -192,7 +222,7 @@
   {
     "name": "Granada",
     "type": "arma",
-    "img": "icons/weapons/thrown/bomb-simple.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "explosivo",
       "categoria": "explosivo",
@@ -201,7 +231,10 @@
       "deterioro": "C",
       "disponibilidad": "muy_raro",
       "alcance": "distancia",
-      "municion": { "value": 1, "max": 1 },
+      "municion": {
+        "value": 1,
+        "max": 1
+      },
       "especial": "Daño de 20 puntos, reduce 2 puntos por metro de distancia.",
       "descripcion": "Explosivo de mano extremadamente raro. Causa daño fijo y el daño se reduce con la distancia al punto de explosión."
     }
@@ -209,7 +242,7 @@
   {
     "name": "Lanzallamas",
     "type": "arma",
-    "img": "icons/weapons/guns/flamethrower.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
     "system": {
       "tipo": "fuego_mortiferas",
       "categoria": "fuego_mortiferas",
@@ -218,7 +251,10 @@
       "deterioro": "R",
       "disponibilidad": "muy_raro",
       "alcance": "distancia",
-      "municion": { "value": 5, "max": 5 },
+      "municion": {
+        "value": 5,
+        "max": 5
+      },
       "especial": "Ataque con Puntería. Daño 15 + PER. Consume combustible/munición. Causa daño de fuego y exige caducidad si se ha usado.",
       "descripcion": "Arma de fuego mortífera, muy rara y devastadora contra grupos o enemigos vulnerables al fuego."
     }
