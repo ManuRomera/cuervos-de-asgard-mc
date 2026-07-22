@@ -168,7 +168,6 @@ export class CAMCActorSheet extends ActorSheetV1 {
     html.find(".skill-die").on("click", ev => this.#setSkillDice(ev));
     html.find(".camc-attr-select").on("change", ev => this.#setAttributeValue(ev));
     html.find(".camc-adjust").on("click", ev => this.#adjustNumber(ev));
-    html.find('[name="system.carga.alforjas_extra"]').on("change", ev => this.#toggleExtraSaddlebags(ev));
     html.find(".spend-proeza").on("click", () => this.actor.gastarProezas(1));
     html.find(".gain-proeza").on("click", () => this.actor.ganarProezas(1));
     html.find(".health-plus").on("click", () => this.actor.modificarSalud(1));
@@ -1034,25 +1033,6 @@ export class CAMCActorSheet extends ActorSheetV1 {
     return CAMCMountRolls.rollDrive(this.actor, moto, { label: event.currentTarget.dataset.action ?? "Conducir" });
   }
 
-  async #toggleExtraSaddlebags(event) {
-    const active = event.currentTarget.checked;
-    const update = { "system.carga.alforjas_extra": active };
-    const moto = await this.#getLinkedMount();
-    if (moto) {
-      const used = Number(moto.system.reglas?.alforjas?.value ?? 0);
-      const baseMax = Number(moto.system.reglas?.alforjas?.max ?? 0);
-      const nextMax = baseMax + (active ? 8 : -8);
-      if (!active && used > nextMax) {
-        event.currentTarget.checked = true;
-        return ui.notifications.warn(`No puedes quitar Alforjas extra: la moto lleva ${this.#formatSlots(used)} / ${this.#formatSlots(nextMax)} espacios.`);
-      }
-      await moto.update({ "system.reglas.alforjas_extra": active });
-      for (const app of Object.values(moto.apps ?? {})) app.render(false);
-    }
-    await this.actor.update(update);
-    this.render(false);
-  }
-
   async #deleteItem(event) {
     event.preventDefault();
     const item = this.#getItem(event);
@@ -1173,11 +1153,13 @@ export class CAMCActorSheet extends ActorSheetV1 {
   #buildCarga(items, system, moto = null) {
     const portable = items.filter(i => ["arma", "armadura", "escudo", "objeto"].includes(i.type));
     const mochilaMax = Number(system.carga?.mochila_max ?? 6);
-    const vehicleMods = String(system.vehiculo?.modificaciones ?? "").toLowerCase();
-    const hasExtraSaddlebags = Boolean(system.carga?.alforjas_extra)
-      || vehicleMods.includes("alforjas extra")
-      || items.some(i => i.type === "objeto" && i.system?.equipada && String(i.name).toLowerCase().includes("alforjas extra"));
     const motoAlforjas = moto?.type === "moto" ? Number(moto.system?.reglas?.alforjas?.max ?? 0) : null;
+    const vehicleMods = String(system.vehiculo?.modificaciones ?? "").toLowerCase();
+    const hasExtraSaddlebags = moto?.type === "moto"
+      ? Boolean(moto.system?.reglas?.alforjas_extra)
+      : Boolean(system.carga?.alforjas_extra)
+        || vehicleMods.includes("alforjas extra")
+        || items.some(i => i.type === "objeto" && i.system?.equipada && String(i.name).toLowerCase().includes("alforjas extra"));
     const baseAlforjas = Number(system.carga?.alforjas_base ?? 8);
     const alforjasMax = Math.max(baseAlforjas, Number.isFinite(motoAlforjas) ? motoAlforjas : 0) + (hasExtraSaddlebags && !moto ? 8 : 0);
     const rows = portable.map(item => {
@@ -1206,7 +1188,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
       hasExtraSaddlebags,
       ubicaciones: CAMC.ubicacionesCarga,
       reglas: moto
-        ? `A pie: máximo 6 espacios. Alforjas activas: ${moto.name} (${this.#formatSlots(alforjasMax)} espacios). Pequeño 0,5; mediano 1; grande 2.`
+        ? `A pie: máximo 6 espacios. Alforjas de ${moto.name}: ${this.#formatSlots(alforjasMax)} espacios${hasExtraSaddlebags ? " (extra activa)" : ""}. Pequeño 0,5; mediano 1; grande 2.`
         : "A pie: máximo 6 espacios. Pequeño 0,5; mediano 1; grande 2. Alforjas: 8 espacios de la moto; alforjas extra: +8 adicionales."
     };
   }

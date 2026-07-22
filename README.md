@@ -4,6 +4,10 @@
 
 Sistema no oficial para jugar **Cuervos de Asgard Motor Club** en Foundry VTT v13. Implementa hojas nativas, tiradas y automatizaciones sobre una base Ysystem adaptada a carretera postapocalíptica, comunidad, motos, dones divinos y parches de chaleco.
 
+## Juego premiado
+
+**Cuervos de Asgard Motor Club** fue galardonado como **Mejor juego de rol original en castellano en los Premios HazRol 2025**, según anunció Walhalla Ediciones: https://walhallaediciones.com/cuervos-de-asgard-premios-hazrol-2025
+
 ## Instalación directa
 
 En Foundry VTT ve a **Configuración → Sistemas de juego → Instalar sistema** y pega esta URL en **URL del Manifiesto**:
@@ -19,7 +23,7 @@ Foundry descargará el sistema desde la última release y avisará cuando haya a
 - Hoja de `personaje` con cabecera temática, retrato o figura exterior, deidad, cargo, parches, recursos, atributos, valores derivados, habilidades, combate, equipo, dones, moto vinculada y biografía.
 - Hoja de `pnj` rápida para mesa, con atributos, valores derivados, habilidades relevantes, ataque, acción especial, salud y notas.
 - Hoja de `comunidad` para población, reputación, recursos, defensas, aliados, amenazas, acontecimientos y situación del asentamiento.
-- Hoja de `moto` con estructura, daño, maniobrabilidad, carga, modificaciones, rastro visual de persecución y acciones de conducción.
+- Hoja de `moto` con estructura, daño, maniobrabilidad, carga, modificaciones, acciones de conducción, tuneado y generador.
 - Hoja de `item` para armas, armaduras, escudos, dones, objetos, vehículos, talentos y reglas.
 - Chat cards temáticas para tiradas, daño, iniciativa, dones, armas y acciones de vehículo.
 - Diseño compacto opcional y calibración visual de parches sobre el chaleco.
@@ -69,7 +73,7 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
-| 1.3.9 WIP | v13 | v13.351 |
+| 1.3.12 WIP | v13 | v13.351 |
 
 ## Repositorio y releases
 

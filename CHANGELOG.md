@@ -2,6 +2,17 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.12] — 2026-07-22
+
+### Cambiado
+- El control de Alforjas extra pasa a la hoja de moto, en la pestaña Alforjas, porque la capacidad pertenece a la montura vinculada.
+- El resumen de carga del PJ lee la capacidad real de la moto vinculada y deja de mezclar el flag antiguo del personaje con la capacidad de la moto.
+- README actualizado con la mención al galardón HazRol 2025 y limpieza de texto obsoleto sobre persecuciones.
+
+### Corregido
+- Al desactivar Alforjas extra desde la moto se bloquea el cambio si la carga actual supera la nueva capacidad.
+- Los cambios de sidecar o Alforjas extra refrescan también la ficha del propietario vinculado.
+
 ## [1.3.11] — 2026-07-22
 
 ### Añadido

@@ -425,8 +425,8 @@ function buildCamcFieldHelp(input) {
     if (!deity) return [];
     return [`Deidad: ${escapeHtml(deity.label)}`, `Virtud: ${escapeHtml(deity.virtud)}`];
   }
-  if (name === "system.carga.alforjas_extra") {
-    return ["Alforjas extra: anaden 8 espacios a las alforjas de la moto. No aumentan la carga que el personaje lleva a pie."];
+  if (name === "system.reglas.alforjas_extra") {
+    return ["Alforjas extra: añaden 8 espacios a esta moto. No aumentan la carga que el personaje lleva a pie."];
   }
   if (name === "dificultad") {
     return ["Dificultad: objetivo numerico de la tirada. Si se deja sin dificultad, el chat muestra solo el total."];
@@ -527,11 +527,13 @@ function validateCamcMotoModEquip(actor, item) {
 function computeCamcCarryLoad(system, items) {
   const portable = items.filter(entry => ["arma", "armadura", "escudo", "objeto"].includes(entry.type));
   const mochilaMax = Number(system.carga?.mochila_max ?? 6);
-  const vehicleMods = String(system.vehiculo?.modificaciones ?? "").toLowerCase();
-  const hasExtraSaddlebags = Boolean(system.carga?.alforjas_extra)
-    || vehicleMods.includes("alforjas extra")
-    || items.some(entry => entry.type === "objeto" && entry.system?.equipada && String(entry.name).toLowerCase().includes("alforjas extra"));
   const linkedMount = getCamcLinkedMountSync(system);
+  const vehicleMods = String(system.vehiculo?.modificaciones ?? "").toLowerCase();
+  const hasExtraSaddlebags = linkedMount?.type === "moto"
+    ? Boolean(linkedMount.system?.reglas?.alforjas_extra)
+    : Boolean(system.carga?.alforjas_extra)
+      || vehicleMods.includes("alforjas extra")
+      || items.some(entry => entry.type === "objeto" && entry.system?.equipada && String(entry.name).toLowerCase().includes("alforjas extra"));
   const baseAlforjas = Number(system.carga?.alforjas_base ?? 8);
   const mountAlforjas = linkedMount ? Number(linkedMount.system?.reglas?.alforjas?.max ?? 0) : 0;
   const alforjasMax = Math.max(baseAlforjas, Number.isFinite(mountAlforjas) ? mountAlforjas : 0) + (hasExtraSaddlebags && !linkedMount ? 8 : 0);

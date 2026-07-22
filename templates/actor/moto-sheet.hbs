@@ -151,6 +151,7 @@
           <div class="camc-form-grid">
             <label><span>Usado</span><input type="text" value="{{cargoUsed}}" readonly/></label>
             <label><span>Capacidad base</span><input name="system.reglas.base_alforjas" type="number" value="{{system.reglas.base_alforjas}}"/></label>
+            <label class="camc-checkline camc-moto-extra-saddlebags"><input name="system.reglas.alforjas_extra" type="checkbox" {{checked system.reglas.alforjas_extra}}/> Alforjas extra (+8)</label>
           </div>
           <div class="camc-progress {{#if cargoOver}}danger{{else}}good{{/if}}"><i style="width: {{cargoPct}}%"></i></div>
           <ol class="camc-item-list dense camc-moto-cargo-list">

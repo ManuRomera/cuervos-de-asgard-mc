@@ -69,6 +69,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     html.find(".moto-cargo-remove").on("click", ev => this.#removeCargo(ev));
     html.find(".moto-apply-owner").on("click", ev => this.#applyOwner(ev));
     html.find('[name="system.reglas.sidecar"]').on("change", ev => this.#toggleSidecar(ev));
+    html.find('[name="system.reglas.alforjas_extra"]').on("change", ev => this.#toggleExtraSaddlebags(ev));
   }
 
   async _onDrop(event) {
@@ -330,6 +331,24 @@ export class CAMCMotoSheet extends ActorSheetV1 {
       update["system.reglas.mods_funcionales_max"] = Math.min(2, Number(this.actor.system.reglas?.mods_funcionales_max ?? 2));
     }
     await this.actor.update(update);
+    const owner = await this.#getOwner();
+    if (owner) for (const app of Object.values(owner.apps ?? {})) app.render(false);
+  }
+
+  async #toggleExtraSaddlebags(event) {
+    const active = event.currentTarget.checked;
+    const owner = await this.#getOwner();
+    const cargo = this.#buildCargo(owner);
+    const currentMax = Number(this.actor.system.reglas?.alforjas?.max ?? 0);
+    const nextMax = currentMax + (active ? 8 : -8);
+    if (!active && cargo.used > nextMax) {
+      event.currentTarget.checked = true;
+      return ui.notifications.warn(`No puedes quitar Alforjas extra: la moto lleva ${this.#formatSlots(cargo.used)} / ${this.#formatSlots(nextMax)} espacios.`);
+    }
+    await this.actor.update({ "system.reglas.alforjas_extra": active });
+    await this.#syncAlforjasValue(owner);
+    if (owner) for (const app of Object.values(owner.apps ?? {})) app.render(false);
+    this.render(false);
   }
 
   #canAddFunctional(item = null) {
