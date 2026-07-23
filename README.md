@@ -83,6 +83,12 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 |---|---|---|
 | 1.3.12 WIP | v13 | v13.351 |
 
+## Autoría y comunidad
+
+Sistema desarrollado por **Manu Romera**, miembro de **Bruma's Rol**.
+
+Bruma's Rol es un grupo de personas que vive el rol con auténtica pasión: cada historia, cada partida, cada campaña y cada sesión se comparte, se discute y se transforma en nuevas ideas. Muchas de las propuestas que nacen en esa mesa acaban convirtiéndose en aventuras, campañas, sistemas, automatizaciones o pequeños arreglos pensados para que jugar sea más ágil, más bonito y más emocionante.
+
 ## Repositorio y releases
 
 - Repositorio: https://github.com/ManuRomera/cuervos-de-asgard-mc
