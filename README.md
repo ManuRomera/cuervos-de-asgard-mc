@@ -89,6 +89,8 @@ Sistema desarrollado por **Manu Romera**, miembro de **Bruma's Rol**.
 
 Bruma's Rol es un grupo de personas que vive el rol con auténtica pasión: cada historia, cada partida, cada campaña y cada sesión se comparte, se discute y se transforma en nuevas ideas. Muchas de las propuestas que nacen en esa mesa acaban convirtiéndose en aventuras, campañas, sistemas, automatizaciones o pequeños arreglos pensados para que jugar sea más ágil, más bonito y más emocionante.
 
+Reconocimiento especial a **Jubilados de Arkham**, colaborador inestimable del proyecto. Aunque no forma parte de Bruma's Rol, ha probado cada variante del sistema hasta llegar al estado actual, revisando reglas, detectando huecos y empujando muchas de las mejoras que han terminado incorporándose. Su trabajo de testeo y su cariño por **Cuervos de Asgard Motor Club** se notan en cada ajuste.
+
 ## Repositorio y releases
 
 - Repositorio: https://github.com/ManuRomera/cuervos-de-asgard-mc
