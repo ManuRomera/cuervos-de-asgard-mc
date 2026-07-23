@@ -24,13 +24,13 @@ Hooks.once("init", async () => {
   const ItemSheetV1 = foundry.appv1.sheets.ItemSheet;
 
   ActorSheets.unregisterSheet("core", ActorSheetV1);
-  ActorSheets.registerSheet(CAMC.systemId, CAMCActorSheet, { types: ["personaje"], makeDefault: true, label: "CAMC · Personaje" });
-  ActorSheets.registerSheet(CAMC.systemId, CAMCNpcSheet, { types: ["pnj"], makeDefault: true, label: "CAMC · PNJ" });
-  ActorSheets.registerSheet(CAMC.systemId, CAMCCommunitySheet, { types: ["comunidad"], makeDefault: true, label: "CAMC · Comunidad" });
-  ActorSheets.registerSheet(CAMC.systemId, CAMCMotoSheet, { types: ["moto"], makeDefault: true, label: "CAMC · Moto" });
+  ActorSheets.registerSheet(CAMC.systemId, CAMCActorSheet, { types: ["personaje"], makeDefault: true, label: "CAMC.Personaje" });
+  ActorSheets.registerSheet(CAMC.systemId, CAMCNpcSheet, { types: ["pnj"], makeDefault: true, label: "CAMC.PNJ" });
+  ActorSheets.registerSheet(CAMC.systemId, CAMCCommunitySheet, { types: ["comunidad"], makeDefault: true, label: "CAMC.Comunidad" });
+  ActorSheets.registerSheet(CAMC.systemId, CAMCMotoSheet, { types: ["moto"], makeDefault: true, label: "CAMC.Moto" });
 
   ItemSheets.unregisterSheet("core", ItemSheetV1);
-  ItemSheets.registerSheet(CAMC.systemId, CAMCItemSheet, { makeDefault: true, label: "CAMC · Item" });
+  ItemSheets.registerSheet(CAMC.systemId, CAMCItemSheet, { makeDefault: true, label: "CAMC.Item" });
 
   registerHandlebarsHelpers();
 
@@ -46,7 +46,7 @@ Hooks.once("init", async () => {
 
 Hooks.once("setup", () => {
   game.settings.register(CAMC.systemId, "contentVersion", {
-    name: "Versión de contenido CAMC importada",
+    name: "CAMC.Settings.ContentVersion.Name",
     scope: "world",
     config: false,
     type: String,
@@ -54,8 +54,8 @@ Hooks.once("setup", () => {
   });
 
   game.settings.register(CAMC.systemId, "autoImportContent", {
-    name: "Importar contenido automáticamente",
-    hint: "Crea en el mundo los ítems, PNJ y entradas de diario extraídas del manual la primera vez que se abre el sistema.",
+    name: "CAMC.Settings.AutoImportContent.Name",
+    hint: "CAMC.Settings.AutoImportContent.Hint",
     scope: "world",
     config: true,
     type: Boolean,
@@ -63,7 +63,7 @@ Hooks.once("setup", () => {
   });
 
   game.settings.register(CAMC.systemId, "systemGuideShown", {
-    name: "Guía inicial CAMC mostrada",
+    name: "CAMC.Settings.SystemGuideShown.Name",
     scope: "world",
     config: false,
     type: Boolean,
@@ -71,8 +71,8 @@ Hooks.once("setup", () => {
   });
 
   game.settings.register(CAMC.systemId, "compactSheets", {
-    name: "Hojas compactas",
-    hint: "Activa un diseño más denso para reducir el espacio de pantalla ocupado por las hojas.",
+    name: "CAMC.Settings.CompactSheets.Name",
+    hint: "CAMC.Settings.CompactSheets.Hint",
     scope: "client",
     config: true,
     type: Boolean,
@@ -81,14 +81,14 @@ Hooks.once("setup", () => {
   });
 
   game.settings.register(CAMC.systemId, "characterPortraitMode", {
-    name: "Modo de imagen de personaje",
-    hint: "Control de sesión del DJ: retrato integrado o figura exterior con fondo de deidad.",
+    name: "CAMC.Settings.CharacterPortraitMode.Name",
+    hint: "CAMC.Settings.CharacterPortraitMode.Hint",
     scope: "world",
     config: true,
     type: String,
     choices: {
-      framed: "Retrato integrado en la ficha",
-      standee: "Figura exterior a la ficha"
+      framed: "CAMC.Settings.CharacterPortraitMode.Framed",
+      standee: "CAMC.Settings.CharacterPortraitMode.Standee"
     },
     default: "framed",
     onChange: () => Object.values(ui.windows).forEach(app => {
@@ -97,8 +97,8 @@ Hooks.once("setup", () => {
   });
 
   game.settings.register(CAMC.systemId, "characterPortraitScale", {
-    name: "Tamaño de figura exterior",
-    hint: "Porcentaje de tamaño de la figura exterior de personaje y su bandera de deidad.",
+    name: "CAMC.Settings.CharacterPortraitScale.Name",
+    hint: "CAMC.Settings.CharacterPortraitScale.Hint",
     scope: "world",
     config: true,
     type: String,
@@ -126,8 +126,8 @@ Hooks.once("setup", () => {
   });
 
   game.settings.register(CAMC.systemId, "vestCalibration", {
-    name: "Calibrar posiciones del chaleco",
-    hint: "Solo para el DJ. Permite arrastrar parches sobre el chaleco para guardar coordenadas exactas por hueco.",
+    name: "CAMC.Settings.VestCalibration.Name",
+    hint: "CAMC.Settings.VestCalibration.Hint",
     scope: "world",
     config: false,
     type: Boolean,
@@ -138,7 +138,7 @@ Hooks.once("setup", () => {
   });
 
   game.settings.register(CAMC.systemId, "vestSlotOverridesV2", {
-    name: "Coordenadas calibradas del chaleco",
+    name: "CAMC.Settings.VestSlotOverrides.Name",
     scope: "world",
     config: false,
     type: Object,
@@ -146,8 +146,8 @@ Hooks.once("setup", () => {
   });
 
   game.settings.register(CAMC.systemId, "skillEditUnlocked", {
-    name: "Edición de dados de habilidades desbloqueada",
-    hint: "Estado local del botón de llave inglesa de la hoja.",
+    name: "CAMC.Settings.SkillEditUnlocked.Name",
+    hint: "CAMC.Settings.SkillEditUnlocked.Hint",
     scope: "client",
     config: false,
     type: Boolean,
@@ -155,8 +155,8 @@ Hooks.once("setup", () => {
   });
 
   game.settings.register(CAMC.systemId, "motoExtendedRules", {
-    name: "Reglas ampliadas de motos",
-    hint: "Activa automatizaciones y opciones que no forman parte estricta del manual: tuneos generados con efectos propios, modificadores contextuales por piezas no oficiales y acciones de conducción ampliadas como Forzar motor. Desactívalo para usar solo datos y efectos declarados por el manual y por los objetos oficiales del sistema.",
+    name: "CAMC.Settings.ExtendedMotoRules.Name",
+    hint: "CAMC.Settings.ExtendedMotoRules.Hint",
     scope: "world",
     config: true,
     type: Boolean,

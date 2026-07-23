@@ -2,6 +2,13 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.13] — 2026-07-23
+
+### Añadido
+- Fallback de idioma inglés (`lang/en.json`) y declaración del idioma en el manifest para evitar problemas cuando Foundry no está en español.
+- Claves localizadas para etiquetas de hojas y ajustes principales del sistema.
+- Aviso legal indicando que código, imágenes y textos de apoyo han sido creados o asistidos mediante IA con revisión humana.
+
 ## [1.3.12] — 2026-07-22
 
 ### Cambiado

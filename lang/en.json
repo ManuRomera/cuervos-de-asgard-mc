@@ -1,0 +1,50 @@
+{
+  "CAMC": {
+    "Personaje": "Character",
+    "PNJ": "NPC",
+    "Comunidad": "Community",
+    "Moto": "Motorcycle",
+    "Item": "Item",
+    "Settings": {
+      "ContentVersion": {
+        "Name": "Imported CAMC content version"
+      },
+      "AutoImportContent": {
+        "Name": "Automatically import content",
+        "Hint": "Creates world items, NPCs and journal entries extracted from the manual the first time the system is opened."
+      },
+      "SystemGuideShown": {
+        "Name": "Initial CAMC guide shown"
+      },
+      "CompactSheets": {
+        "Name": "Compact sheets",
+        "Hint": "Enables a denser layout to reduce the screen space used by sheets."
+      },
+      "CharacterPortraitMode": {
+        "Name": "Character image mode",
+        "Hint": "GM session control: framed portrait or exterior standee with deity background.",
+        "Framed": "Framed portrait inside the sheet",
+        "Standee": "Exterior figure outside the sheet"
+      },
+      "CharacterPortraitScale": {
+        "Name": "Exterior figure size",
+        "Hint": "Size percentage for the exterior character figure and deity banner."
+      },
+      "VestCalibration": {
+        "Name": "Calibrate vest patch positions",
+        "Hint": "GM only. Allows patches to be dragged over the vest to save exact coordinates per slot."
+      },
+      "VestSlotOverrides": {
+        "Name": "Calibrated vest coordinates"
+      },
+      "SkillEditUnlocked": {
+        "Name": "Skill dice editing unlocked",
+        "Hint": "Local state for the wrench button on the sheet."
+      },
+      "ExtendedMotoRules": {
+        "Name": "Expanded motorcycle rules",
+        "Hint": "Enables automations and options that are not part of the strict manual core: generated tune-ups with custom effects, contextual modifiers for unofficial parts and expanded riding actions such as pushing the engine. Disable it to use only declared effects from the manual and official system items."
+      }
+    }
+  }
+}

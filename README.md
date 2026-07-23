@@ -81,7 +81,7 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
-| 1.3.12 WIP | v13 | v13.351 |
+| 1.3.13 WIP | v13 | v13.351 |
 
 ## Autoría y comunidad
 
@@ -100,3 +100,5 @@ Reconocimiento especial a **Jubilados de Arkham**, colaborador inestimable del p
 ## Aviso
 
 Este paquete es una implementación no oficial para uso en Foundry VTT. Las reglas, nombres y elementos propios de la obra pertenecen a sus titulares correspondientes. El repositorio contiene código, hojas, datos estructurados y automatizaciones para facilitar el juego en mesa virtual.
+
+El código, las imágenes y parte de los textos de apoyo de este repositorio han sido creados o asistidos mediante herramientas de inteligencia artificial, con revisión humana posterior antes de su publicación.
