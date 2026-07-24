@@ -1,7 +1,7 @@
 export const CAMC = {};
 
 CAMC.systemId = "cuervos-de-asgard-mc";
-CAMC.contentVersion = "1.7.2";
+CAMC.contentVersion = "1.7.3";
 
 CAMC.atributos = {
   car: { label: "Carisma", short: "CAR" },
@@ -76,6 +76,7 @@ CAMC.dioses = {
 CAMC.assets = {
   logo: `systems/${CAMC.systemId}/assets/ui/icon-camc.webp`,
   background: `systems/${CAMC.systemId}/assets/ui/sheet-background.webp`,
+  sceneBackground: `systems/${CAMC.systemId}/assets/scenes/cuervos-de-asgard-mc-fondo.webp`,
   vest: `systems/${CAMC.systemId}/assets/ui/chaleco.webp`,
   deityFallback: `systems/${CAMC.systemId}/assets/deities/pj-none.png`,
   npcBanner: `systems/${CAMC.systemId}/assets/deities/pnj-default.png`,

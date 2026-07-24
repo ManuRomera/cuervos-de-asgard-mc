@@ -65,7 +65,7 @@ El sistema incluye compendios para:
 - PNJ y bestiario.
 - Reglas y guía.
 
-Además conserva datos fuente estructurados en `_data/` para regenerar o importar contenido: armas, armaduras, bestiario, dones, manual, motos, objetos, parches, personajes, talentos y vehículos.
+Además conserva datos fuente estructurados en `_data/` para regenerar o importar contenido: armas, armaduras, bestiario, dones, manual, motos, objetos, parches, personajes, talentos, vehículos y escenas.
 
 ## Ajustes del sistema
 
@@ -83,7 +83,7 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
-| 1.3.18 WIP | v13 | v13.351 |
+| 1.3.19 WIP | v13 | v13.351 |
 
 ## Autoría y comunidad
 

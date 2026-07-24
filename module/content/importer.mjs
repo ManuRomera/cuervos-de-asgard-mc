@@ -50,6 +50,7 @@ export class CAMCContentImporter {
     await this.#importActors("_data/motos/motos.json", CAMC.itemFolders.motos.label, { force: updateExisting });
     await this.#importActors("_data/personajes/pregenerados.json", CAMC.itemFolders.personajes.label, { force: updateExisting });
     await this.#importActors("_data/bestiario/enemigos.json", CAMC.itemFolders.bestiario.label, { force: updateExisting });
+    await this.#importScenes("_data/scenes/scenes.json", "CAMC · Escenas", { force: updateExisting });
     await this.#importManual();
     await this.#createReimportMacro();
 
@@ -181,6 +182,21 @@ export class CAMCContentImporter {
       created.push(mark({ ...raw, folder: folder.id }));
     }
     if (created.length) await Actor.createDocuments(created);
+  }
+
+  static async #importScenes(path, folderName, { force = false } = {}) {
+    const folder = await getFolder(folderName, "Scene");
+    const data = await json(path);
+    const created = [];
+    for (const raw of data) {
+      const existing = game.scenes.find(s => s.name === raw.name && s.folder?.id === folder.id);
+      if (existing) {
+        if (force) await existing.update(mark(foundry.utils.deepClone(raw)));
+        continue;
+      }
+      created.push(mark({ ...raw, folder: folder.id }));
+    }
+    if (created.length) await Scene.createDocuments(created);
   }
 
   static #normalizeActorData(raw) {

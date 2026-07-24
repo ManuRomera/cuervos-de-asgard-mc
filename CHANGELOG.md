@@ -2,6 +2,12 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.19] — 2026-07-24
+
+### Añadido
+- Escena base `Cuervos de Asgard MC` con fondo 16:9 a 1920x1080, sin rejilla, sin visión de ficha y sin exploración de niebla.
+- Importación automática de escenas al mundo desde los datos integrados.
+
 ## [1.3.18] — 2026-07-24
 
 ### Añadido
