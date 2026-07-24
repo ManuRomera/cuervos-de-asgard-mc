@@ -2,7 +2,7 @@
   {
     "name": "Bandido de las Llanuras Yermas",
     "type": "pnj",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/bandido-de-las-llanuras-yermas.webp",
     "system": {
       "biografia": {
         "nombre": "Bandido",
@@ -12,11 +12,21 @@
         "rasgos": "Amoralidad, Codicia"
       },
       "atributos": {
-        "car": { "value": 2 },
-        "des": { "value": 4 },
-        "fue": { "value": 3 },
-        "int": { "value": 2 },
-        "per": { "value": 2 }
+        "car": {
+          "value": 2
+        },
+        "des": {
+          "value": 4
+        },
+        "fue": {
+          "value": 3
+        },
+        "int": {
+          "value": 2
+        },
+        "per": {
+          "value": 2
+        }
       },
       "valores_pasivos": {
         "agilidad": 10,
@@ -25,16 +35,34 @@
         "perspicacia": 9
       },
       "combate": {
-        "salud": { "value": 19, "max": 19 },
+        "salud": {
+          "value": 19,
+          "max": 19
+        },
         "iniciativa": 6,
         "resistencia_fisica": 9
       },
       "habilidades_clave": {
-        "atletismo": { "value": 2, "atributo": "des" },
-        "conducir": { "value": 2, "atributo": "des" },
-        "fuerza_bruta": { "value": 2, "atributo": "fue" },
-        "lucha": { "value": 2, "atributo": "des" },
-        "punteria": { "value": 2, "atributo": "per" }
+        "atletismo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 2,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        }
       },
       "proteccion": {
         "armadura_nivel": 1,
@@ -47,7 +75,7 @@
   {
     "name": "Carroñero",
     "type": "pnj",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/carronero.webp",
     "system": {
       "biografia": {
         "nombre": "Carroñero",
@@ -57,11 +85,21 @@
         "rasgos": "Estupidez, Ferocidad, Salvajismo"
       },
       "atributos": {
-        "car": { "value": 0 },
-        "des": { "value": 4 },
-        "fue": { "value": 5 },
-        "int": { "value": 1 },
-        "per": { "value": 1 }
+        "car": {
+          "value": 0
+        },
+        "des": {
+          "value": 4
+        },
+        "fue": {
+          "value": 5
+        },
+        "int": {
+          "value": 1
+        },
+        "per": {
+          "value": 1
+        }
       },
       "valores_pasivos": {
         "agilidad": 10,
@@ -70,16 +108,34 @@
         "perspicacia": 7
       },
       "combate": {
-        "salud": { "value": 23, "max": 23 },
+        "salud": {
+          "value": 23,
+          "max": 23
+        },
         "iniciativa": 5,
         "resistencia_fisica": 7
       },
       "habilidades_clave": {
-        "atletismo": { "value": 2, "atributo": "des" },
-        "conducir": { "value": 1, "atributo": "des" },
-        "fuerza_bruta": { "value": 3, "atributo": "fue" },
-        "lucha": { "value": 2, "atributo": "des" },
-        "punteria": { "value": 1, "atributo": "per" }
+        "atletismo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 3,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 1,
+          "atributo": "per"
+        }
       },
       "proteccion": {
         "armadura_nivel": 1,
@@ -92,7 +148,7 @@
   {
     "name": "Demonio de Fuego",
     "type": "pnj",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/demonio-de-fuego.webp",
     "system": {
       "biografia": {
         "nombre": "Demonio de Fuego",
@@ -102,11 +158,21 @@
         "rasgos": "Ignición, Maldad, Terror"
       },
       "atributos": {
-        "car": { "value": 3 },
-        "des": { "value": 4 },
-        "fue": { "value": 7 },
-        "int": { "value": 4 },
-        "per": { "value": 1 }
+        "car": {
+          "value": 3
+        },
+        "des": {
+          "value": 4
+        },
+        "fue": {
+          "value": 7
+        },
+        "int": {
+          "value": 4
+        },
+        "per": {
+          "value": 1
+        }
       },
       "valores_pasivos": {
         "agilidad": 10,
@@ -115,16 +181,34 @@
         "perspicacia": 10
       },
       "combate": {
-        "salud": { "value": 27, "max": 27 },
+        "salud": {
+          "value": 27,
+          "max": 27
+        },
         "iniciativa": 8,
         "resistencia_fisica": 4
       },
       "habilidades_clave": {
-        "atletismo": { "value": 3, "atributo": "des" },
-        "conducir": { "value": 1, "atributo": "des" },
-        "fuerza_bruta": { "value": 4, "atributo": "fue" },
-        "lucha": { "value": 3, "atributo": "des" },
-        "punteria": { "value": 1, "atributo": "per" }
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 4,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 1,
+          "atributo": "per"
+        }
       },
       "proteccion": {
         "armadura_nivel": 4,
@@ -137,7 +221,7 @@
   {
     "name": "Draug de Helheim",
     "type": "pnj",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/draug-de-helheim.webp",
     "system": {
       "biografia": {
         "nombre": "Draug",
@@ -147,11 +231,21 @@
         "rasgos": "Maldición, Odio, Terror, Vileza"
       },
       "atributos": {
-        "car": { "value": 0 },
-        "des": { "value": 3 },
-        "fue": { "value": 5 },
-        "int": { "value": 3 },
-        "per": { "value": 4 }
+        "car": {
+          "value": 0
+        },
+        "des": {
+          "value": 3
+        },
+        "fue": {
+          "value": 5
+        },
+        "int": {
+          "value": 3
+        },
+        "per": {
+          "value": 4
+        }
       },
       "valores_pasivos": {
         "agilidad": 9,
@@ -160,16 +254,34 @@
         "perspicacia": 12
       },
       "combate": {
-        "salud": { "value": 23, "max": 23 },
+        "salud": {
+          "value": 23,
+          "max": 23
+        },
         "iniciativa": 6,
         "resistencia_fisica": 12
       },
       "habilidades_clave": {
-        "atletismo": { "value": 3, "atributo": "des" },
-        "conducir": { "value": 1, "atributo": "des" },
-        "fuerza_bruta": { "value": 3, "atributo": "fue" },
-        "lucha": { "value": 3, "atributo": "des" },
-        "punteria": { "value": 1, "atributo": "per" }
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 3,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 1,
+          "atributo": "per"
+        }
       },
       "proteccion": {
         "armadura_nivel": 0,
@@ -182,7 +294,7 @@
   {
     "name": "Cuervo de Asgard (Full Patch)",
     "type": "pnj",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/cuervo-de-asgard-full-patch.webp",
     "system": {
       "biografia": {
         "nombre": "Cuervo de Asgard",
@@ -192,11 +304,21 @@
         "rasgos": "Compasión, Deber, Honor, Lealtad"
       },
       "atributos": {
-        "car": { "value": 2 },
-        "des": { "value": 4 },
-        "fue": { "value": 4 },
-        "int": { "value": 2 },
-        "per": { "value": 3 }
+        "car": {
+          "value": 2
+        },
+        "des": {
+          "value": 4
+        },
+        "fue": {
+          "value": 4
+        },
+        "int": {
+          "value": 2
+        },
+        "per": {
+          "value": 3
+        }
       },
       "valores_pasivos": {
         "agilidad": 10,
@@ -205,16 +327,34 @@
         "perspicacia": 10
       },
       "combate": {
-        "salud": { "value": 21, "max": 21 },
+        "salud": {
+          "value": 21,
+          "max": 21
+        },
         "iniciativa": 6,
         "resistencia_fisica": 8
       },
       "habilidades_clave": {
-        "atletismo": { "value": 2, "atributo": "des" },
-        "conducir": { "value": 3, "atributo": "des" },
-        "fuerza_bruta": { "value": 2, "atributo": "fue" },
-        "lucha": { "value": 2, "atributo": "des" },
-        "punteria": { "value": 2, "atributo": "per" }
+        "atletismo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 2,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        }
       },
       "proteccion": {
         "armadura_nivel": 1,

@@ -2,7 +2,7 @@
   {
     "name": "Leon «Viejo Cráneo» Cremscy",
     "type": "personaje",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/leon-viejo-craneo-cremscy.webp",
     "system": {
       "habilidades_favorecidas": [],
       "biografia": {
@@ -21,7 +21,7 @@
   {
     "name": "Thomas «Halcón» Cremscy",
     "type": "personaje",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/thomas-halcon-cremscy.webp",
     "system": {
       "habilidades_favorecidas": [],
       "biografia": {
@@ -42,9 +42,14 @@
   {
     "name": "Absenta",
     "type": "personaje",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/absenta.webp",
     "system": {
-      "habilidades_favorecidas": ["cultura", "idioma_mitico", "informacion", "memoria"],
+      "habilidades_favorecidas": [
+        "cultura",
+        "idioma_mitico",
+        "informacion",
+        "memoria"
+      ],
       "biografia": {
         "cargo": "secretario",
         "talento": "Inspirar",
@@ -61,9 +66,14 @@
   {
     "name": "Benzina",
     "type": "personaje",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/benzina.webp",
     "system": {
-      "habilidades_favorecidas": ["auxilio", "ocultacion", "oido", "supervivencia"],
+      "habilidades_favorecidas": [
+        "auxilio",
+        "ocultacion",
+        "oido",
+        "supervivencia"
+      ],
       "biografia": {
         "cargo": "tesorero",
         "talento": "Cuentas claras",
@@ -80,9 +90,14 @@
   {
     "name": "Munin",
     "type": "personaje",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/munin.webp",
     "system": {
-      "habilidades_favorecidas": ["atletismo", "intimidacion", "lucha", "punteria"],
+      "habilidades_favorecidas": [
+        "atletismo",
+        "intimidacion",
+        "lucha",
+        "punteria"
+      ],
       "biografia": {
         "cargo": "sargento_armas",
         "talento": "Nadie pasa",
@@ -102,9 +117,14 @@
   {
     "name": "Bomani",
     "type": "personaje",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/bomani.webp",
     "system": {
-      "habilidades_favorecidas": ["conducir", "conversacion", "fuerza_bruta", "mecanica"],
+      "habilidades_favorecidas": [
+        "conducir",
+        "conversacion",
+        "fuerza_bruta",
+        "mecanica"
+      ],
       "biografia": {
         "cargo": "mecanico_jefe",
         "talento": "Arreglo de emergencia",
@@ -121,9 +141,14 @@
   {
     "name": "Managarm «La loba de hierro»",
     "type": "personaje",
-    "img": "icons/svg/mystery-man.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/managarm-la-loba-de-hierro.webp",
     "system": {
-      "habilidades_favorecidas": ["entorno", "observacion", "rastreo", "sigilo"],
+      "habilidades_favorecidas": [
+        "entorno",
+        "observacion",
+        "rastreo",
+        "sigilo"
+      ],
       "biografia": {
         "cargo": "capitan_rutas",
         "talento": "Ruta segura",

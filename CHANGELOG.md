@@ -2,6 +2,17 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.14] — 2026-07-24
+
+### Añadido
+- Imágenes específicas para los personajes pregenerados y PNJ/enemigos incluidos en los compendios base.
+- Imágenes preparadas del bestiario ampliado del manual en `assets/actors/manual-bestiario/`.
+- Documento de prompts para regenerar o ampliar imágenes de personajes y bestiario.
+
+### Cambiado
+- Los datos fuente de personajes y bestiario apuntan ahora a las nuevas imágenes incluidas en el sistema.
+- Versión de contenido actualizada a `1.7.1` para forzar la actualización de compendios en mundos existentes.
+
 ## [1.3.13] — 2026-07-23
 
 ### Añadido
