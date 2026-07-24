@@ -125,6 +125,105 @@ Hooks.once("setup", () => {
     })
   });
 
+  game.settings.register(CAMC.systemId, "characterBannerScale", {
+    name: "CAMC.Settings.CharacterBannerScale.Name",
+    hint: "CAMC.Settings.CharacterBannerScale.Hint",
+    scope: "world",
+    config: true,
+    type: String,
+    choices: {
+      "50": "50%",
+      "75": "75%",
+      "90": "90%",
+      "100": "100%",
+      "110": "110%",
+      "125": "125%",
+      "150": "150%",
+      "175": "175%",
+      "200": "200%",
+      "250": "250%",
+      "300": "300%",
+      "350": "350%",
+      "400": "400%"
+    },
+    default: "100",
+    onChange: () => Object.values(ui.windows).forEach(app => {
+      if (app instanceof CAMCActorSheet) app.render(false);
+    })
+  });
+
+  game.settings.register(CAMC.systemId, "npcPortraitMode", {
+    name: "CAMC.Settings.NpcPortraitMode.Name",
+    hint: "CAMC.Settings.NpcPortraitMode.Hint",
+    scope: "world",
+    config: true,
+    type: String,
+    choices: {
+      framed: "CAMC.Settings.CharacterPortraitMode.Framed",
+      standee: "CAMC.Settings.CharacterPortraitMode.Standee"
+    },
+    default: "framed",
+    onChange: () => Object.values(ui.windows).forEach(app => {
+      if (app instanceof CAMCNpcSheet) app.render(false);
+    })
+  });
+
+  game.settings.register(CAMC.systemId, "npcPortraitScale", {
+    name: "CAMC.Settings.NpcPortraitScale.Name",
+    hint: "CAMC.Settings.NpcPortraitScale.Hint",
+    scope: "world",
+    config: true,
+    type: String,
+    choices: {
+      "35": "35%",
+      "45": "45%",
+      "55": "55%",
+      "65": "65%",
+      "75": "75%",
+      "90": "90%",
+      "110": "110%",
+      "130": "130%",
+      "150": "150%",
+      "175": "175%",
+      "200": "200%",
+      "250": "250%",
+      "300": "300%",
+      "350": "350%",
+      "400": "400%"
+    },
+    default: "55",
+    onChange: () => Object.values(ui.windows).forEach(app => {
+      if (app instanceof CAMCNpcSheet) app.render(false);
+    })
+  });
+
+  game.settings.register(CAMC.systemId, "npcBannerScale", {
+    name: "CAMC.Settings.NpcBannerScale.Name",
+    hint: "CAMC.Settings.NpcBannerScale.Hint",
+    scope: "world",
+    config: true,
+    type: String,
+    choices: {
+      "50": "50%",
+      "75": "75%",
+      "90": "90%",
+      "100": "100%",
+      "110": "110%",
+      "125": "125%",
+      "150": "150%",
+      "175": "175%",
+      "200": "200%",
+      "250": "250%",
+      "300": "300%",
+      "350": "350%",
+      "400": "400%"
+    },
+    default: "100",
+    onChange: () => Object.values(ui.windows).forEach(app => {
+      if (app instanceof CAMCNpcSheet) app.render(false);
+    })
+  });
+
   game.settings.register(CAMC.systemId, "vestCalibration", {
     name: "CAMC.Settings.VestCalibration.Name",
     hint: "CAMC.Settings.VestCalibration.Hint",

@@ -5408,3 +5408,76 @@ body.camc-compact .camc-sheet{font-size:12px;}
     grid-template-columns:86px minmax(340px,1fr)!important;
   }
 }
+
+/* Separate standee and banner scaling for PC and NPC sheets. */
+.camc-character.portrait-standee .camc-portrait-stack,
+.camc-npc-compact.portrait-standee .camc-portrait-stack{
+  --camc-standee-fixed-width:calc(760px * var(--camc-standee-scale, .55));
+  position:absolute!important;
+  top:0!important;
+  right:100%!important;
+  left:auto!important;
+  width:var(--camc-standee-fixed-width)!important;
+  height:calc(var(--camc-standee-fixed-width) * 1.92)!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  transform:none!important;
+  transform-origin:right top!important;
+  display:block!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+  z-index:1!important;
+}
+
+.camc-character.portrait-standee .camc-portrait-frame,
+.camc-npc-compact.portrait-standee .camc-portrait-frame{
+  position:relative!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  overflow:visible!important;
+  border:0!important;
+  background:transparent!important;
+}
+
+.camc-character .camc-deity-banner,
+.camc-npc-compact .camc-deity-banner{
+  transform:scale(var(--camc-banner-scale, 1))!important;
+  transform-origin:center top!important;
+}
+
+.camc-character.portrait-standee .camc-deity-banner,
+.camc-npc-compact.portrait-standee .camc-deity-banner{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  opacity:1!important;
+  z-index:1!important;
+  transform:scale(var(--camc-banner-scale, 1))!important;
+  transform-origin:center top!important;
+}
+
+.camc-character.portrait-standee .camc-portrait,
+.camc-npc-compact.portrait-standee .camc-portrait{
+  position:absolute!important;
+  inset:auto 0 0 0!important;
+  width:100%!important;
+  height:91.5%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  z-index:2!important;
+  transform:scale(var(--camc-portrait-local-scale, 1))!important;
+  transform-origin:center bottom!important;
+}

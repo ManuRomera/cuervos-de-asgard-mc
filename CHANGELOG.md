@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.18] — 2026-07-24
+
+### Añadido
+- Ajustes independientes para modo de imagen, tamaño de figura exterior y tamaño de bandera en PJ y PNJ.
+
+### Cambiado
+- Las figuras exteriores de PNJ usan el mismo tamaño base que las de PJ; la diferencia de escala pasa a depender de los ajustes de PNJ.
+- La escala de la bandera de fondo es independiente de la escala de la imagen del actor.
+
 ## [1.3.17] — 2026-07-24
 
 ### Añadido

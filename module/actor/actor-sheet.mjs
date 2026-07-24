@@ -84,11 +84,13 @@ export class CAMCActorSheet extends ActorSheetV1 {
     context.system = system;
     const portraitMode = game.settings.get(CAMC.systemId, "characterPortraitMode") === "standee" ? "standee" : "framed";
     const portraitScale = Number(game.settings.get(CAMC.systemId, "characterPortraitScale") ?? 45) / 100;
+    const portraitBannerScale = Number(game.settings.get(CAMC.systemId, "characterBannerScale") ?? 100) / 100;
     const portraitImageScale = this.#portraitImageScale();
     const deityKey = this.#assetKey(system.biografia?.deidad, "none");
     const cargoKey = this.#assetKey(system.biografia?.cargo, "full_patch");
     context.portraitMode = portraitMode;
     context.portraitScale = portraitScale;
+    context.portraitBannerScale = portraitBannerScale;
     context.portraitImageScale = portraitImageScale;
     context.vestCalibration = game.user.isGM && game.settings.get(CAMC.systemId, "vestCalibration");
     context.vestCalibrationAvailable = game.user.isGM;

@@ -21,14 +21,32 @@
         "Hint": "Activa un diseño más denso para reducir el espacio de pantalla ocupado por las hojas."
       },
       "CharacterPortraitMode": {
-        "Name": "Modo de imagen de PJ y PNJ",
-        "Hint": "Control de sesión del DJ: retrato integrado o figura exterior. Los PJ usan fondo de deidad o bandera genérica si no tienen deidad; los PNJ usan bandera propia.",
+        "Name": "PJ · Modo de imagen",
+        "Hint": "Control de sesión del DJ para PJ: retrato integrado o figura exterior. Usa fondo de deidad o bandera genérica si no tiene deidad.",
         "Framed": "Retrato integrado en la ficha",
         "Standee": "Figura exterior a la ficha"
       },
       "CharacterPortraitScale": {
-        "Name": "Tamaño de figura exterior",
-        "Hint": "Porcentaje de tamaño de la figura exterior y su bandera de fondo en fichas de PJ y PNJ."
+        "Name": "PJ · Tamaño de figura exterior",
+        "Hint": "Porcentaje de tamaño de la figura exterior de PJ."
+      },
+      "CharacterBannerScale": {
+        "Name": "PJ · Tamaño de bandera",
+        "Hint": "Porcentaje de tamaño de la bandera de fondo de PJ."
+      },
+      "NpcPortraitMode": {
+        "Name": "PNJ · Modo de imagen",
+        "Hint": "Control de sesión del DJ para PNJ: retrato integrado o figura exterior con bandera propia.",
+        "Framed": "Retrato integrado en la ficha",
+        "Standee": "Figura exterior a la ficha"
+      },
+      "NpcPortraitScale": {
+        "Name": "PNJ · Tamaño de figura exterior",
+        "Hint": "Porcentaje de tamaño de la figura exterior de PNJ."
+      },
+      "NpcBannerScale": {
+        "Name": "PNJ · Tamaño de bandera",
+        "Hint": "Porcentaje de tamaño de la bandera de fondo de PNJ."
       },
       "VestCalibration": {
         "Name": "Calibrar posiciones del chaleco",

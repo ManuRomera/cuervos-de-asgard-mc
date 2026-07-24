@@ -21,14 +21,32 @@
         "Hint": "Enables a denser layout to reduce the screen space used by sheets."
       },
       "CharacterPortraitMode": {
-        "Name": "PC and NPC image mode",
-        "Hint": "GM session control: framed portrait or exterior standee. PCs use their deity background or the generic PC banner if they have no deity; NPCs use their own banner.",
+        "Name": "PC · Image mode",
+        "Hint": "GM session control for PCs: framed portrait or exterior standee. Uses the deity background or the generic PC banner when no deity is selected.",
         "Framed": "Framed portrait inside the sheet",
         "Standee": "Exterior figure outside the sheet"
       },
       "CharacterPortraitScale": {
-        "Name": "Exterior figure size",
-        "Hint": "Size percentage for the exterior figure and background banner on PC and NPC sheets."
+        "Name": "PC · Exterior figure size",
+        "Hint": "Size percentage for the exterior PC figure."
+      },
+      "CharacterBannerScale": {
+        "Name": "PC · Banner size",
+        "Hint": "Size percentage for the PC background banner."
+      },
+      "NpcPortraitMode": {
+        "Name": "NPC · Image mode",
+        "Hint": "GM session control for NPCs: framed portrait or exterior standee with the NPC banner.",
+        "Framed": "Framed portrait inside the sheet",
+        "Standee": "Exterior figure outside the sheet"
+      },
+      "NpcPortraitScale": {
+        "Name": "NPC · Exterior figure size",
+        "Hint": "Size percentage for the exterior NPC figure."
+      },
+      "NpcBannerScale": {
+        "Name": "NPC · Banner size",
+        "Hint": "Size percentage for the NPC background banner."
       },
       "VestCalibration": {
         "Name": "Calibrate vest patch positions",

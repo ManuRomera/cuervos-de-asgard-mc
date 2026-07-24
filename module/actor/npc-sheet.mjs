@@ -41,8 +41,9 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     const salud = system.combate?.salud ?? { value: 0, max: 1 };
     context.config = CAMC;
     context.system = system;
-    context.portraitMode = game.settings.get(CAMC.systemId, "characterPortraitMode") === "standee" ? "standee" : "framed";
-    context.portraitScale = Number(game.settings.get(CAMC.systemId, "characterPortraitScale") ?? 45) / 100;
+    context.portraitMode = game.settings.get(CAMC.systemId, "npcPortraitMode") === "standee" ? "standee" : "framed";
+    context.portraitScale = Number(game.settings.get(CAMC.systemId, "npcPortraitScale") ?? 55) / 100;
+    context.portraitBannerScale = Number(game.settings.get(CAMC.systemId, "npcBannerScale") ?? 100) / 100;
     context.portraitImageScale = this.#portraitImageScale();
     context.npcBanner = CAMC.assets.npcBanner;
     context.attrCards = Object.entries(CAMC.atributos).map(([key, cfg]) => ({ key, short: cfg.short, label: cfg.label, value: Number(system.atributos?.[key]?.value ?? 0) }));

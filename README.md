@@ -71,15 +71,19 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 
 - `Importar contenido automáticamente`: crea contenido de mundo desde los datos integrados.
 - `Hojas compactas`: reduce espacio visual en pantalla.
-- `Modo de imagen de PJ y PNJ`: retrato integrado o figura exterior; los PJ usan fondo de deidad o bandera genérica y los PNJ su propia bandera.
-- `Tamaño de figura exterior`: escala de la figura exterior en PJ y PNJ.
+- `PJ · Modo de imagen`: retrato integrado o figura exterior con fondo de deidad o bandera genérica.
+- `PJ · Tamaño de figura exterior`: escala global de la figura exterior de PJ.
+- `PJ · Tamaño de bandera`: escala global de la bandera de fondo de PJ.
+- `PNJ · Modo de imagen`: retrato integrado o figura exterior con bandera propia.
+- `PNJ · Tamaño de figura exterior`: escala global de la figura exterior de PNJ.
+- `PNJ · Tamaño de bandera`: escala global de la bandera de fondo de PNJ.
 - `Calibrar posiciones del chaleco`: herramienta de DJ para ajustar coordenadas y tamaño de parches.
 
 ## Compatibilidad
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
-| 1.3.17 WIP | v13 | v13.351 |
+| 1.3.18 WIP | v13 | v13.351 |
 
 ## Autoría y comunidad
 
