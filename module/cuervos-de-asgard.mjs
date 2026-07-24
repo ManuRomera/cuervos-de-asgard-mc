@@ -11,48 +11,6 @@ import { CAMCContentImporter } from "./content/importer.mjs";
 import { generateRandomMount } from "./mount/mount-generator.mjs";
 import { generateRandomCharacter, generateRandomNpc, generateRandomCommunity } from "./generator/camc-generators.mjs";
 
-const FormApplicationV1 = foundry.appv1.api.FormApplication;
-
-class CAMCMotoRulesConfig extends FormApplicationV1 {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: "camc-moto-rules-config",
-      classes: ["camc", "camc-dialog", "camc-moto-rules-config"],
-      title: "Reglas ampliadas de motos",
-      template: `systems/${CAMC.systemId}/templates/apps/moto-rules-config.hbs`,
-      width: 620,
-      height: "auto"
-    });
-  }
-
-  async getData() {
-    const current = game.settings.get(CAMC.systemId, "motoExtendedRulesConfig") ?? {};
-    return {
-      enabled: game.settings.get(CAMC.systemId, "motoExtendedRules"),
-      rules: Object.entries(CAMC.motoExtendedRuleDetails).map(([key, cfg]) => ({
-        key,
-        label: cfg.label,
-        description: cfg.description,
-        enabled: Boolean(current[key] ?? CAMC.motoExtendedRuleDefaults[key])
-      }))
-    };
-  }
-
-  async _updateObject(_event, formData) {
-    const data = foundry.utils.expandObject(formData);
-    const config = {};
-    for (const key of Object.keys(CAMC.motoExtendedRuleDetails)) config[key] = Boolean(data.rules?.[key]);
-    await game.settings.set(CAMC.systemId, "motoExtendedRulesConfig", config);
-    this.#renderMotoWindows();
-  }
-
-  #renderMotoWindows() {
-    for (const app of Object.values(ui.windows)) {
-      if (app instanceof CAMCMotoSheet || app instanceof CAMCActorSheet) app.render(false);
-    }
-  }
-}
-
 Hooks.once("init", async () => {
   console.log("CAMC | Inicializando Cuervos de Asgard Motor Club v13");
 
@@ -194,36 +152,6 @@ Hooks.once("setup", () => {
     config: false,
     type: Boolean,
     default: false
-  });
-
-  game.settings.register(CAMC.systemId, "motoExtendedRules", {
-    name: "CAMC.Settings.ExtendedMotoRules.Name",
-    hint: "CAMC.Settings.ExtendedMotoRules.Hint",
-    scope: "world",
-    config: true,
-    type: Boolean,
-    default: false,
-    onChange: () => Object.values(ui.windows).forEach(app => {
-      if (app instanceof CAMCMotoSheet) app.render(false);
-    })
-  });
-
-  game.settings.register(CAMC.systemId, "motoExtendedRulesConfig", {
-    name: "CAMC.Settings.ExtendedMotoRulesConfig.Name",
-    hint: "CAMC.Settings.ExtendedMotoRulesConfig.Hint",
-    scope: "world",
-    config: false,
-    type: Object,
-    default: foundry.utils.deepClone(CAMC.motoExtendedRuleDefaults)
-  });
-
-  game.settings.registerMenu(CAMC.systemId, "motoExtendedRulesMenu", {
-    name: "CAMC.Settings.ExtendedMotoRulesMenu.Name",
-    label: "CAMC.Settings.ExtendedMotoRulesMenu.Label",
-    hint: "CAMC.Settings.ExtendedMotoRulesMenu.Hint",
-    icon: "fas fa-motorcycle",
-    type: CAMCMotoRulesConfig,
-    restricted: true
   });
 });
 

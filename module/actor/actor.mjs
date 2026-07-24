@@ -186,7 +186,7 @@ export class CAMCActor extends Actor {
     for (const mod of mods) {
       const source = mod?.system ?? mod ?? {};
       const name = String(mod?.name ?? source.name ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      if (!this.#isManualMotoMod(name) && !CAMC.motoRuleEnabled("nonManualModEffects")) continue;
+      if (!this.#isManualMotoMod(name)) continue;
       const efecto = source.efecto ?? {};
       effects.labels.push(mod.name ?? source.name ?? "Tuneado");
       effects.estructura += Number(efecto.estructura ?? 0);

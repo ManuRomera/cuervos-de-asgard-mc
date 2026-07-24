@@ -1,10 +1,14 @@
-<form class="{{cssClass}} camc-sheet camc-character portrait-{{portraitMode}} deity-{{deityKey}} cargo-{{cargoKey}} {{#if skillEditUnlocked}}skill-editing{{else}}skill-locked{{/if}} {{#if vestCalibration}}vest-calibration{{/if}}" style="--camc-standee-scale: {{portraitScale}};" autocomplete="off">
+<form class="{{cssClass}} camc-sheet camc-character portrait-{{portraitMode}} deity-{{deityKey}} cargo-{{cargoKey}} {{#if skillEditUnlocked}}skill-editing{{else}}skill-locked{{/if}} {{#if vestCalibration}}vest-calibration{{/if}}" style="--camc-standee-scale: {{portraitScale}}; --camc-portrait-local-scale: {{portraitImageScale}};" autocomplete="off">
   <header class="camc-hero camc-character-hero">
     <div class="camc-portrait-stack">
       <div class="camc-portrait-frame">
         <img class="camc-deity-banner" src="{{deityBanner}}" alt=""/>
         <img class="camc-portrait profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
         <img class="camc-cargo-patch" src="{{cargoPatch}}" alt=""/>
+        <div class="camc-portrait-scale-controls">
+          <button type="button" class="portrait-scale-adjust" data-delta="0.05" title="Aumentar imagen"><i class="fas fa-plus"></i></button>
+          <button type="button" class="portrait-scale-adjust" data-delta="-0.05" title="Reducir imagen"><i class="fas fa-minus"></i></button>
+        </div>
       </div>
     </div>
 

@@ -44,8 +44,6 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     context.cargoPct = cargo.pct;
     context.cargoOver = cargo.over;
     context.tables = CAMCMountTables;
-    context.extendedMotoRules = this.#extendedRules();
-    context.forceEngineEnabled = CAMC.motoRuleEnabled("forceEngineAction");
     context.chase = this.#buildChaseContext();
     return context;
   }
@@ -186,7 +184,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
       const mode = event.currentTarget.dataset.mode ?? "full";
       const generated = generateRandomMount({
         withSidecar: this.actor.system.reglas?.sidecar,
-        includeFunctionalMods: mode === "full" && CAMC.motoRuleEnabled("generatedFunctionalMods"),
+        includeFunctionalMods: false,
         seed: `${this.actor.id}-${Date.now()}-${mode}`
       });
       const update = {};
@@ -555,15 +553,6 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     if (s.inutilizada) return { label: "Inutilizada", tone: "danger", note: "Estructura 0. No puede usarse hasta repararla." };
     if (s.dano_grave) return { label: "Dañada", tone: "warning", note: `+${s.penalizador_dano_grave ?? 3} dificultad a las tiradas del piloto.` };
     return { label: s.mantenimiento || "Operativa", tone: "good", note: "Lista para rodar." };
-  }
-
-  #extendedRules() {
-    try {
-      if (!game?.settings?.settings?.has(`${CAMC.systemId}.motoExtendedRules`)) return false;
-      return Boolean(game.settings.get(CAMC.systemId, "motoExtendedRules"));
-    } catch (_err) {
-      return false;
-    }
   }
 
   #autosizeTextareas(html) {

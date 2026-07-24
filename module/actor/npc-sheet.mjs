@@ -43,6 +43,7 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     context.system = system;
     context.portraitMode = game.settings.get(CAMC.systemId, "characterPortraitMode") === "standee" ? "standee" : "framed";
     context.portraitScale = Number(game.settings.get(CAMC.systemId, "characterPortraitScale") ?? 45) / 100;
+    context.portraitImageScale = this.#portraitImageScale();
     context.npcBanner = CAMC.assets.npcBanner;
     context.attrCards = Object.entries(CAMC.atributos).map(([key, cfg]) => ({ key, short: cfg.short, label: cfg.label, value: Number(system.atributos?.[key]?.value ?? 0) }));
     context.derivedCards = [
@@ -77,6 +78,7 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     html.find(".item-roll-damage").on("click", ev => this.#rollDamage(ev));
     html.find(".item-equip").on("click", ev => this.#toggleEquip(ev));
     html.find(".camc-adjust").on("click", ev => this.#adjustNumber(ev));
+    html.find(".portrait-scale-adjust").on("click", ev => this.#adjustPortraitScale(ev));
   }
 
   #getItem(event) {
@@ -133,6 +135,19 @@ export class CAMCNpcSheet extends ActorSheetV1 {
       if (Number.isFinite(max)) next = Math.min(max, next);
     }
     await this.actor.update({ [path]: Math.max(0, next) });
+  }
+
+  #portraitImageScale() {
+    const value = Number(this.actor.getFlag(CAMC.systemId, "portraitImageScale") ?? 1);
+    return Number.isFinite(value) && value > 0 ? value : 1;
+  }
+
+  async #adjustPortraitScale(event) {
+    event.preventDefault();
+    const delta = Number(event.currentTarget.dataset.delta ?? 0);
+    const current = this.#portraitImageScale();
+    const next = Math.max(0.35, Math.min(2.5, Math.round((current + delta) * 100) / 100));
+    await this.actor.setFlag(CAMC.systemId, "portraitImageScale", next);
   }
 
   async #generateNpc() {

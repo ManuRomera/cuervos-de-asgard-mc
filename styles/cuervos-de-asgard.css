@@ -3148,7 +3148,7 @@ body.camc-compact .camc-sheet{font-size:12px;}
 
 .camc-npc-compact .camc-npc-topbar{
   display:grid;
-  grid-template-columns:86px minmax(260px,1fr) minmax(330px,430px);
+  grid-template-columns:86px minmax(280px,1fr);
   gap:10px;
   padding:8px 10px;
   border-bottom:3px solid #111;
@@ -3202,6 +3202,30 @@ body.camc-compact .camc-sheet{font-size:12px;}
   background:transparent!important;
   box-shadow:none!important;
   z-index:1!important;
+}
+
+.camc-portrait-scale-controls{
+  position:absolute!important;
+  left:4px!important;
+  bottom:4px!important;
+  z-index:8!important;
+  display:flex!important;
+  gap:3px!important;
+  pointer-events:auto!important;
+}
+
+.camc-portrait-scale-controls button{
+  width:24px!important;
+  height:24px!important;
+  min-width:24px!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  border:2px solid rgba(10,9,7,.85)!important;
+  background:rgba(245,238,222,.9)!important;
+  color:#090806!important;
+  font-size:11px!important;
+  line-height:1!important;
 }
 
 .window-app.camc-npc-window .window-content{
@@ -3275,42 +3299,6 @@ body.camc-compact .camc-sheet{font-size:12px;}
   z-index:2!important;
 }
 
-.camc-moto-rules-form{
-  padding:10px;
-}
-
-.camc-rule-list{
-  display:grid;
-  gap:8px;
-}
-
-.camc-rule-option{
-  display:grid;
-  grid-template-columns:22px 1fr;
-  gap:8px;
-  align-items:start;
-  padding:8px;
-  border:1px solid rgba(20,18,14,.55);
-  background:rgba(255,252,244,.72);
-}
-
-.camc-rule-option input{
-  margin-top:4px;
-}
-
-.camc-rule-option b{
-  display:block;
-  font-family:var(--camc-font-display);
-  font-size:17px;
-  color:#090806;
-}
-
-.camc-rule-option small{
-  display:block;
-  color:#2a251e;
-  line-height:1.25;
-}
-
 .camc-npc-id{
   display:grid;
   gap:5px;
@@ -3340,9 +3328,30 @@ body.camc-compact .camc-sheet{font-size:12px;}
 }
 
 .camc-npc-kpis{
+  grid-column:1/-1;
   display:grid;
   grid-template-columns:minmax(150px,1.4fr) repeat(3,minmax(70px,.7fr));
   gap:6px;
+}
+
+.camc-character .camc-portrait,
+.camc-npc-compact .camc-portrait{
+  transform:scale(var(--camc-portrait-local-scale, 1))!important;
+  transform-origin:center bottom!important;
+}
+
+.camc-character.portrait-standee .camc-portrait,
+.camc-npc-compact.portrait-standee .camc-portrait{
+  transform:scale(var(--camc-portrait-local-scale, 1))!important;
+  transform-origin:center bottom!important;
+}
+
+.camc-character.portrait-standee .camc-portrait-scale-controls,
+.camc-npc-compact.portrait-standee .camc-portrait-scale-controls{
+  left:auto!important;
+  right:4px!important;
+  bottom:4px!important;
+  pointer-events:auto!important;
 }
 
 .camc-npc-kpis article,
@@ -5339,5 +5348,63 @@ body.camc-compact .camc-sheet{font-size:12px;}
   }
   .camc-community-infographic .camc-community-summary{
     grid-template-columns:1fr!important;
+  }
+}
+
+/* Per-actor portrait scale controls. */
+.camc-character .camc-portrait,
+.camc-npc-compact .camc-portrait,
+.camc-character.portrait-standee .camc-portrait,
+.camc-npc-compact.portrait-standee .camc-portrait{
+  transform:scale(var(--camc-portrait-local-scale, 1))!important;
+  transform-origin:center bottom!important;
+}
+
+.camc-character .camc-portrait-scale-controls,
+.camc-npc-compact .camc-portrait-scale-controls{
+  position:absolute!important;
+  left:4px!important;
+  bottom:4px!important;
+  z-index:20!important;
+  display:flex!important;
+  gap:3px!important;
+  pointer-events:auto!important;
+}
+
+.camc-character .camc-portrait-scale-controls button,
+.camc-npc-compact .camc-portrait-scale-controls button{
+  width:24px!important;
+  height:24px!important;
+  min-width:24px!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  border:2px solid rgba(10,9,7,.85)!important;
+  background:rgba(245,238,222,.92)!important;
+  color:#090806!important;
+  font-size:11px!important;
+  line-height:1!important;
+}
+
+.camc-character.portrait-standee .camc-portrait-frame,
+.camc-npc-compact.portrait-standee .camc-portrait-frame{
+  pointer-events:none!important;
+}
+
+.camc-character.portrait-standee .camc-portrait-scale-controls,
+.camc-npc-compact.portrait-standee .camc-portrait-scale-controls{
+  left:auto!important;
+  right:4px!important;
+  bottom:4px!important;
+  pointer-events:auto!important;
+}
+
+.camc-npc-compact .camc-npc-kpis{
+  grid-column:1/-1!important;
+}
+
+@media(min-width:980px){
+  .camc-npc-compact .camc-npc-topbar{
+    grid-template-columns:86px minmax(340px,1fr)!important;
   }
 }

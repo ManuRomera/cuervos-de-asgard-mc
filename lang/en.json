@@ -40,19 +40,6 @@
       "SkillEditUnlocked": {
         "Name": "Skill dice editing unlocked",
         "Hint": "Local state for the wrench button on the sheet."
-      },
-      "ExtendedMotoRules": {
-        "Name": "Expanded motorcycle rules",
-        "Hint": "Enables the optional motorcycle automation block that is not part of the strict manual core. Use Configure expanded motorcycle rules to choose exactly which parts apply."
-      },
-      "ExtendedMotoRulesConfig": {
-        "Name": "Expanded motorcycle rules configuration",
-        "Hint": "Internal detail of which expanded automations are enabled."
-      },
-      "ExtendedMotoRulesMenu": {
-        "Name": "Configure expanded motorcycle rules",
-        "Label": "Configure expanded rules",
-        "Hint": "Enable or disable generated functional tune-ups, non-manual effects, contextual modifiers and the Push engine action separately."
       }
     }
   }

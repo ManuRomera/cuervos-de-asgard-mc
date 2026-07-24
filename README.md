@@ -46,7 +46,6 @@ Foundry descargará el sistema desde la última release y avisará cuando haya a
 - Habilidades favorecidas por cargo, con límite y edición controlada.
 - Generadores de personaje, PNJ, comunidad y montura; el aleatorio completo de PJ crea también talento, don, equipo inicial y moto vinculada.
 - Importador automático de contenido al mundo, configurable desde ajustes.
-- Reglas ampliadas de motos opcionales para usar automatismos extra fuera del núcleo estricto del manual.
 
 ## Compendios y contenido
 
@@ -74,15 +73,13 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 - `Hojas compactas`: reduce espacio visual en pantalla.
 - `Modo de imagen de PJ y PNJ`: retrato integrado o figura exterior; los PJ usan fondo de deidad o bandera genérica y los PNJ su propia bandera.
 - `Tamaño de figura exterior`: escala de la figura exterior en PJ y PNJ.
-- `Reglas ampliadas de motos`: interruptor general de automatizaciones extra de tuneo y conducción.
-- `Configurar reglas ampliadas de motos`: menú para activar por separado tuneos funcionales generados, efectos no manuales, modificadores contextuales y Forzar motor.
 - `Calibrar posiciones del chaleco`: herramienta de DJ para ajustar coordenadas y tamaño de parches.
 
 ## Compatibilidad
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
-| 1.3.16 WIP | v13 | v13.351 |
+| 1.3.17 WIP | v13 | v13.351 |
 
 ## Autoría y comunidad
 

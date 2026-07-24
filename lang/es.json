@@ -40,19 +40,6 @@
       "SkillEditUnlocked": {
         "Name": "Edición de dados de habilidades desbloqueada",
         "Hint": "Estado local del botón de llave inglesa de la hoja."
-      },
-      "ExtendedMotoRules": {
-        "Name": "Reglas ampliadas de motos",
-        "Hint": "Activa el bloque de automatizaciones opcionales de motos que no forma parte estricta del manual. Usa el menú Configurar reglas ampliadas de motos para decidir exactamente cuáles se aplican."
-      },
-      "ExtendedMotoRulesConfig": {
-        "Name": "Configuración de reglas ampliadas de motos",
-        "Hint": "Detalle interno de qué automatizaciones ampliadas están activas."
-      },
-      "ExtendedMotoRulesMenu": {
-        "Name": "Configurar reglas ampliadas de motos",
-        "Label": "Configurar reglas ampliadas",
-        "Hint": "Permite activar o desactivar por separado tuneos funcionales generados, efectos no manuales, modificadores contextuales y la acción Forzar motor."
       }
     }
   }

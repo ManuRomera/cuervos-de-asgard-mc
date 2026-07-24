@@ -84,10 +84,12 @@ export class CAMCActorSheet extends ActorSheetV1 {
     context.system = system;
     const portraitMode = game.settings.get(CAMC.systemId, "characterPortraitMode") === "standee" ? "standee" : "framed";
     const portraitScale = Number(game.settings.get(CAMC.systemId, "characterPortraitScale") ?? 45) / 100;
+    const portraitImageScale = this.#portraitImageScale();
     const deityKey = this.#assetKey(system.biografia?.deidad, "none");
     const cargoKey = this.#assetKey(system.biografia?.cargo, "full_patch");
     context.portraitMode = portraitMode;
     context.portraitScale = portraitScale;
+    context.portraitImageScale = portraitImageScale;
     context.vestCalibration = game.user.isGM && game.settings.get(CAMC.systemId, "vestCalibration");
     context.vestCalibrationAvailable = game.user.isGM;
     context.skillEditUnlocked = game.settings.get(CAMC.systemId, "skillEditUnlocked");
@@ -145,6 +147,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     super.activateListeners(html);
     html.find(".roll-skill").on("click", ev => this.#rollSkill(ev));
     html.find(".camc-sheet-img-button, .camc-img-button").on("click", ev => this.#changeActorImage(ev));
+    html.find(".portrait-scale-adjust").on("click", ev => this.#adjustPortraitScale(ev));
     html.find('[name="system.biografia.cargo"]').on("change", ev => this.#setCargo(ev));
     html.find(".roll-initiative").on("click", () => YsystemDice.rollInitiative(this.actor));
     html.find(".roll-resistance").on("click", () => YsystemDice.rollResistance(this.actor));
@@ -480,6 +483,19 @@ export class CAMCActorSheet extends ActorSheetV1 {
       callback: path => this.actor.update({ img: path })
     });
     picker.render(true);
+  }
+
+  #portraitImageScale() {
+    const value = Number(this.actor.getFlag(CAMC.systemId, "portraitImageScale") ?? 1);
+    return Number.isFinite(value) && value > 0 ? value : 1;
+  }
+
+  async #adjustPortraitScale(event) {
+    event.preventDefault();
+    const delta = Number(event.currentTarget.dataset.delta ?? 0);
+    const current = this.#portraitImageScale();
+    const next = Math.max(0.35, Math.min(2.5, Math.round((current + delta) * 100) / 100));
+    await this.actor.setFlag(CAMC.systemId, "portraitImageScale", next);
   }
 
   async #useDon(event) {

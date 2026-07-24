@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.17] — 2026-07-24
+
+### Añadido
+- Controles +/− sobre el retrato de cada PJ y PNJ para ajustar el tamaño de esa imagen individual sin afectar al resto.
+
+### Cambiado
+- La cabecera de PNJ reparte sus métricas en una fila propia para evitar solapes con nombres largos.
+- El sistema vuelve al modo estricto de motos: se eliminan de ajustes el interruptor y el menú de reglas ampliadas.
+
 ## [1.3.16] — 2026-07-24
 
 ### Añadido

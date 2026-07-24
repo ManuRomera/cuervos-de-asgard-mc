@@ -141,45 +141,8 @@ export class CAMCMountRolls {
     });
   }
 
-  static contextualModifier(moto, label = "") {
-    if (!CAMC.motoRuleEnabled("contextualModEffects")) return { value: 0, label: "" };
-    const action = String(label).toLowerCase();
-    const legacyMods = moto.system?.mods?.funcionales ?? [];
-    const itemMods = moto.items?.filter(item => item.type === "objeto" && item.system?.tipo === "modificacion_moto" && item.system?.equipada)
-      .map(item => ({ name: item.name, efecto: item.system?.efecto ?? {} })) ?? [];
-    const mods = [...legacyMods, ...itemMods];
-    let value = 0;
-    const labels = [];
-    for (const mod of mods) {
-      const effect = mod?.efecto ?? {};
-      const name = mod?.name ?? "Tuneado";
-      if (action.includes("maniobra") && Number(effect.maniobrabilidadContextual)) {
-        value += Number(effect.maniobrabilidadContextual);
-        labels.push(`${name} ${this.#signed(effect.maniobrabilidadContextual)}`);
-      }
-      if ((action.includes("forzar") || action.includes("velocidad")) && Number(effect.velocidad)) {
-        value += Number(effect.velocidad);
-        labels.push(`${name} ${this.#signed(effect.velocidad)}`);
-      }
-      if ((action.includes("noche") || action.includes("explor")) && Number(effect.nocturno)) {
-        value += Number(effect.nocturno);
-        labels.push(`${name} ${this.#signed(effect.nocturno)}`);
-      }
-      if ((action.includes("barro") || action.includes("hielo") || action.includes("terreno")) && Number(effect.terrenoDificil)) {
-        value += Number(effect.terrenoDificil);
-        labels.push(`${name} ${this.#signed(effect.terrenoDificil)}`);
-      }
-      if ((action.includes("fuera") || action.includes("campo")) && Number(effect.offroad)) {
-        value += Number(effect.offroad);
-        labels.push(`${name} ${this.#signed(effect.offroad)}`);
-      }
-    }
-    return { value, label: labels.join(", ") };
-  }
-
-  static #signed(value) {
-    const n = Number(value) || 0;
-    return n >= 0 ? `+${n}` : String(n);
+  static contextualModifier(_moto, _label = "") {
+    return { value: 0, label: "" };
   }
 
 }

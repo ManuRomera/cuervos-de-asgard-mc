@@ -222,45 +222,6 @@ CAMC.modificacionesMoto = {
   escape_tuneado: { label: "Tubo de escape tuneado", resumen: "+3 a Intimidación si el personaje llega montado en su moto." }
 };
 
-CAMC.motoExtendedRuleDefaults = {
-  generatedFunctionalMods: true,
-  nonManualModEffects: true,
-  contextualModEffects: true,
-  forceEngineAction: true
-};
-
-CAMC.motoExtendedRuleDetails = {
-  generatedFunctionalMods: {
-    label: "Tuneos funcionales generados",
-    description: "Permite que el generador de monturas añada tuneos funcionales no estrictamente listados en el manual, con sus objetos y efectos automáticos."
-  },
-  nonManualModEffects: {
-    label: "Efectos de piezas no manuales",
-    description: "Permite aplicar automáticamente bonificadores de piezas/tuneos que no pertenecen a la lista estricta del manual, siempre que declaren efectos en sus datos."
-  },
-  contextualModEffects: {
-    label: "Modificadores contextuales de conducción",
-    description: "Activa bonificadores situacionales por piezas como neumáticos de garra, faros, suspensión de salto o motor sobrealimentado cuando la acción lo justifica."
-  },
-  forceEngineAction: {
-    label: "Acción Forzar motor",
-    description: "Muestra la acción rápida Forzar motor en la hoja de moto y permite resolverla como tirada de Conducir de la montura vinculada."
-  }
-};
-
-CAMC.motoRuleEnabled = function motoRuleEnabled(ruleKey) {
-  try {
-    if (!game?.settings?.settings?.has(`${CAMC.systemId}.motoExtendedRules`)) return false;
-    if (!game.settings.get(CAMC.systemId, "motoExtendedRules")) return false;
-    const config = game.settings.settings.has(`${CAMC.systemId}.motoExtendedRulesConfig`)
-      ? game.settings.get(CAMC.systemId, "motoExtendedRulesConfig")
-      : {};
-    return Boolean((config ?? {})[ruleKey] ?? CAMC.motoExtendedRuleDefaults[ruleKey]);
-  } catch (_err) {
-    return false;
-  }
-};
-
 CAMC.persecucion = {
   terrenos: [
     { key: "facil", label: "Fácil", dificultad: 8 },
