@@ -21,14 +21,14 @@
         "Hint": "Activa un diseño más denso para reducir el espacio de pantalla ocupado por las hojas."
       },
       "CharacterPortraitMode": {
-        "Name": "Modo de imagen de personaje",
-        "Hint": "Control de sesión del DJ: retrato integrado o figura exterior con fondo de deidad.",
+        "Name": "Modo de imagen de PJ y PNJ",
+        "Hint": "Control de sesión del DJ: retrato integrado o figura exterior. Los PJ usan fondo de deidad o bandera genérica si no tienen deidad; los PNJ usan bandera propia.",
         "Framed": "Retrato integrado en la ficha",
         "Standee": "Figura exterior a la ficha"
       },
       "CharacterPortraitScale": {
         "Name": "Tamaño de figura exterior",
-        "Hint": "Porcentaje de tamaño de la figura exterior de personaje y su bandera de deidad."
+        "Hint": "Porcentaje de tamaño de la figura exterior y su bandera de fondo en fichas de PJ y PNJ."
       },
       "VestCalibration": {
         "Name": "Calibrar posiciones del chaleco",
@@ -43,7 +43,16 @@
       },
       "ExtendedMotoRules": {
         "Name": "Reglas ampliadas de motos",
-        "Hint": "Activa automatizaciones y opciones que no forman parte estricta del manual: tuneos generados con efectos propios, modificadores contextuales por piezas no oficiales y acciones de conducción ampliadas como Forzar motor. Desactívalo para usar solo datos y efectos declarados por el manual y por los objetos oficiales del sistema."
+        "Hint": "Activa el bloque de automatizaciones opcionales de motos que no forma parte estricta del manual. Usa el menú Configurar reglas ampliadas de motos para decidir exactamente cuáles se aplican."
+      },
+      "ExtendedMotoRulesConfig": {
+        "Name": "Configuración de reglas ampliadas de motos",
+        "Hint": "Detalle interno de qué automatizaciones ampliadas están activas."
+      },
+      "ExtendedMotoRulesMenu": {
+        "Name": "Configurar reglas ampliadas de motos",
+        "Label": "Configurar reglas ampliadas",
+        "Hint": "Permite activar o desactivar por separado tuneos funcionales generados, efectos no manuales, modificadores contextuales y la acción Forzar motor."
       }
     }
   }

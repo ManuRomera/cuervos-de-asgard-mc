@@ -183,11 +183,10 @@ export class CAMCActor extends Actor {
 
   #getMotoModEffects(mods = []) {
     const effects = { labels: [], estructura: 0, maniobrabilidad: 0, dadosDano: 0, alforjasMax: 0 };
-    const extended = this.#motoExtendedRules();
     for (const mod of mods) {
       const source = mod?.system ?? mod ?? {};
       const name = String(mod?.name ?? source.name ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      if (!extended && !this.#isManualMotoMod(name)) continue;
+      if (!this.#isManualMotoMod(name) && !CAMC.motoRuleEnabled("nonManualModEffects")) continue;
       const efecto = source.efecto ?? {};
       effects.labels.push(mod.name ?? source.name ?? "Tuneado");
       effects.estructura += Number(efecto.estructura ?? 0);
@@ -200,15 +199,6 @@ export class CAMCActor extends Actor {
       if (name.includes("sidecar reforzado") && !efecto.alforjasMax) effects.alforjasMax += 4;
     }
     return effects;
-  }
-
-  #motoExtendedRules() {
-    try {
-      if (!game?.settings?.settings?.has(`${CAMC.systemId}.motoExtendedRules`)) return false;
-      return Boolean(game.settings.get(CAMC.systemId, "motoExtendedRules"));
-    } catch (_err) {
-      return false;
-    }
   }
 
   #isManualMotoMod(normalizedName) {

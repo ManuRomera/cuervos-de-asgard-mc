@@ -1,6 +1,11 @@
-<form class="{{cssClass}} camc-sheet camc-npc camc-npc-compact" autocomplete="off">
+<form class="{{cssClass}} camc-sheet camc-npc camc-npc-compact portrait-{{portraitMode}}" style="--camc-standee-scale: {{portraitScale}};" autocomplete="off">
   <header class="camc-npc-topbar">
-    <img class="camc-npc-avatar profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+    <div class="camc-portrait-stack">
+      <div class="camc-portrait-frame">
+        <img class="camc-deity-banner" src="{{npcBanner}}" alt=""/>
+        <img class="camc-portrait camc-npc-avatar profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+      </div>
+    </div>
     <section class="camc-npc-id">
       <input class="camc-name char-name" name="name" type="text" value="{{actor.name}}"/>
       <div class="camc-npc-fields">

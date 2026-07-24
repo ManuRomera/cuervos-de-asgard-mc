@@ -45,7 +45,7 @@
       <button type="button" class="camc-action-button moto-roll-drive" data-action="Maniobra" title="Maniobra"><i class="fas fa-route"></i><span>Maniobra</span></button>
       <button type="button" class="camc-action-button danger moto-roll-damage" data-action="Embestir" title="Embestir"><i class="fas fa-burst"></i><span>Embestir</span></button>
       <button type="button" class="camc-action-button danger moto-roll-damage" data-action="Arrollar" title="Arrollar"><i class="fas fa-truck-monster"></i><span>Arrollar</span></button>
-      {{#if extendedMotoRules}}<button type="button" class="camc-action-button moto-roll-drive" data-action="Forzar motor" title="Forzar motor"><i class="fas fa-gauge-high"></i><span>Forzar</span></button>{{/if}}
+      {{#if forceEngineEnabled}}<button type="button" class="camc-action-button moto-roll-drive" data-action="Forzar motor" title="Forzar motor"><i class="fas fa-gauge-high"></i><span>Forzar</span></button>{{/if}}
       <button type="button" class="camc-action-button moto-repair" title="Reparar +1"><i class="fas fa-screwdriver-wrench"></i><span>Reparar</span></button>
       <button type="button" class="camc-action-button danger moto-apply-damage" title="Aplicar daño"><i class="fas fa-heart-crack"></i><span>Daño</span></button>
       {{#if owner}}<button type="button" class="camc-action-button moto-apply-owner" title="Aplicar a {{owner.name}}"><i class="fas fa-user-check"></i><span>Aplicar</span></button>{{/if}}

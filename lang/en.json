@@ -21,14 +21,14 @@
         "Hint": "Enables a denser layout to reduce the screen space used by sheets."
       },
       "CharacterPortraitMode": {
-        "Name": "Character image mode",
-        "Hint": "GM session control: framed portrait or exterior standee with deity background.",
+        "Name": "PC and NPC image mode",
+        "Hint": "GM session control: framed portrait or exterior standee. PCs use their deity background or the generic PC banner if they have no deity; NPCs use their own banner.",
         "Framed": "Framed portrait inside the sheet",
         "Standee": "Exterior figure outside the sheet"
       },
       "CharacterPortraitScale": {
         "Name": "Exterior figure size",
-        "Hint": "Size percentage for the exterior character figure and deity banner."
+        "Hint": "Size percentage for the exterior figure and background banner on PC and NPC sheets."
       },
       "VestCalibration": {
         "Name": "Calibrate vest patch positions",
@@ -43,7 +43,16 @@
       },
       "ExtendedMotoRules": {
         "Name": "Expanded motorcycle rules",
-        "Hint": "Enables automations and options that are not part of the strict manual core: generated tune-ups with custom effects, contextual modifiers for unofficial parts and expanded riding actions such as pushing the engine. Disable it to use only declared effects from the manual and official system items."
+        "Hint": "Enables the optional motorcycle automation block that is not part of the strict manual core. Use Configure expanded motorcycle rules to choose exactly which parts apply."
+      },
+      "ExtendedMotoRulesConfig": {
+        "Name": "Expanded motorcycle rules configuration",
+        "Hint": "Internal detail of which expanded automations are enabled."
+      },
+      "ExtendedMotoRulesMenu": {
+        "Name": "Configure expanded motorcycle rules",
+        "Label": "Configure expanded rules",
+        "Hint": "Enable or disable generated functional tune-ups, non-manual effects, contextual modifiers and the Push engine action separately."
       }
     }
   }

@@ -142,7 +142,7 @@ export class CAMCMountRolls {
   }
 
   static contextualModifier(moto, label = "") {
-    if (!this.#extendedRules()) return { value: 0, label: "" };
+    if (!CAMC.motoRuleEnabled("contextualModEffects")) return { value: 0, label: "" };
     const action = String(label).toLowerCase();
     const legacyMods = moto.system?.mods?.funcionales ?? [];
     const itemMods = moto.items?.filter(item => item.type === "objeto" && item.system?.tipo === "modificacion_moto" && item.system?.equipada)
@@ -182,12 +182,4 @@ export class CAMCMountRolls {
     return n >= 0 ? `+${n}` : String(n);
   }
 
-  static #extendedRules() {
-    try {
-      if (!game?.settings?.settings?.has(`${CAMC.systemId}.motoExtendedRules`)) return false;
-      return Boolean(game.settings.get(CAMC.systemId, "motoExtendedRules"));
-    } catch (_err) {
-      return false;
-    }
-  }
 }

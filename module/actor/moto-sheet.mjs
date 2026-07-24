@@ -45,6 +45,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     context.cargoOver = cargo.over;
     context.tables = CAMCMountTables;
     context.extendedMotoRules = this.#extendedRules();
+    context.forceEngineEnabled = CAMC.motoRuleEnabled("forceEngineAction");
     context.chase = this.#buildChaseContext();
     return context;
   }
@@ -185,7 +186,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
       const mode = event.currentTarget.dataset.mode ?? "full";
       const generated = generateRandomMount({
         withSidecar: this.actor.system.reglas?.sidecar,
-        includeFunctionalMods: mode === "full" && this.#extendedRules(),
+        includeFunctionalMods: mode === "full" && CAMC.motoRuleEnabled("generatedFunctionalMods"),
         seed: `${this.actor.id}-${Date.now()}-${mode}`
       });
       const update = {};

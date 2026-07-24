@@ -1,0 +1,30 @@
+<form class="camc-moto-rules-form">
+  <section class="camc-panel">
+    <h2 class="camc-panel-title"><i class="fas fa-motorcycle"></i> Reglas ampliadas de motos</h2>
+    <p class="camc-rules-note">
+      <i class="fas fa-circle-info"></i>
+      Este menú solo aplica cuando el ajuste general <strong>Reglas ampliadas de motos</strong> está activado.
+      Si el ajuste general está desactivado, el sistema usa el modo manual estricto.
+    </p>
+    {{#unless enabled}}
+      <p class="camc-rules-note warning">
+        <i class="fas fa-triangle-exclamation"></i>
+        El interruptor general está desactivado. Puedes preparar esta configuración, pero no se aplicará hasta activarlo en Ajustes del sistema.
+      </p>
+    {{/unless}}
+    <div class="camc-rule-list">
+      {{#each rules as |rule|}}
+        <label class="camc-rule-option">
+          <input type="checkbox" name="rules.{{rule.key}}" {{checked rule.enabled}}/>
+          <span>
+            <b>{{rule.label}}</b>
+            <small>{{rule.description}}</small>
+          </span>
+        </label>
+      {{/each}}
+    </div>
+  </section>
+  <footer class="sheet-footer">
+    <button type="submit"><i class="fas fa-save"></i> Guardar reglas</button>
+  </footer>
+</form>

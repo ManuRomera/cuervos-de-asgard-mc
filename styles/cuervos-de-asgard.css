@@ -3163,6 +3163,154 @@ body.camc-compact .camc-sheet{font-size:12px;}
   background:#050505!important;
 }
 
+.camc-npc-compact .camc-portrait-stack{
+  position:relative;
+  width:86px!important;
+  min-height:86px!important;
+  display:block!important;
+}
+
+.camc-npc-compact .camc-portrait-frame{
+  position:relative;
+  width:86px!important;
+  height:86px!important;
+  overflow:hidden!important;
+  background:#050505!important;
+  border:2px solid rgba(18,16,12,.9)!important;
+}
+
+.camc-npc-compact .camc-deity-banner{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  opacity:.72!important;
+  border:0!important;
+  z-index:0!important;
+}
+
+.camc-npc-compact .camc-portrait{
+  position:absolute!important;
+  inset:4px!important;
+  width:calc(100% - 8px)!important;
+  height:calc(100% - 8px)!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  z-index:1!important;
+}
+
+.window-app.camc-npc-window .window-content{
+  overflow:visible!important;
+}
+
+.camc-npc-compact.portrait-standee{
+  overflow:visible!important;
+  isolation:isolate!important;
+}
+
+.camc-npc-compact.portrait-standee .camc-npc-topbar,
+.camc-npc-compact.portrait-standee .camc-tabs,
+.camc-npc-compact.portrait-standee .camc-body{
+  position:relative!important;
+  z-index:3!important;
+}
+
+.camc-npc-compact.portrait-standee .camc-portrait-stack{
+  --camc-standee-base-width:clamp(260px,32vh,400px);
+  position:absolute!important;
+  top:0!important;
+  right:100%!important;
+  left:auto!important;
+  width:var(--camc-standee-base-width)!important;
+  height:100%!important;
+  min-height:100%!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+  z-index:1!important;
+  transform:scale(var(--camc-standee-scale, .45))!important;
+  transform-origin:right top!important;
+  border:0!important;
+  background:transparent!important;
+}
+
+.camc-npc-compact.portrait-standee .camc-portrait-frame{
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  overflow:visible!important;
+  border:0!important;
+  background:transparent!important;
+}
+
+.camc-npc-compact.portrait-standee .camc-deity-banner,
+.camc-npc-compact.portrait-standee .camc-portrait{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:right top!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+.camc-npc-compact.portrait-standee .camc-deity-banner{
+  opacity:1!important;
+  z-index:1!important;
+}
+
+.camc-npc-compact.portrait-standee .camc-portrait{
+  top:auto!important;
+  bottom:0!important;
+  height:92%!important;
+  object-position:center bottom!important;
+  z-index:2!important;
+}
+
+.camc-moto-rules-form{
+  padding:10px;
+}
+
+.camc-rule-list{
+  display:grid;
+  gap:8px;
+}
+
+.camc-rule-option{
+  display:grid;
+  grid-template-columns:22px 1fr;
+  gap:8px;
+  align-items:start;
+  padding:8px;
+  border:1px solid rgba(20,18,14,.55);
+  background:rgba(255,252,244,.72);
+}
+
+.camc-rule-option input{
+  margin-top:4px;
+}
+
+.camc-rule-option b{
+  display:block;
+  font-family:var(--camc-font-display);
+  font-size:17px;
+  color:#090806;
+}
+
+.camc-rule-option small{
+  display:block;
+  color:#2a251e;
+  line-height:1.25;
+}
+
 .camc-npc-id{
   display:grid;
   gap:5px;

@@ -2,6 +2,16 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.16] — 2026-07-24
+
+### Añadido
+- Banderas de fondo específicas para PJ sin deidad y para PNJ.
+- Menú de configuración detallada para reglas ampliadas de motos.
+
+### Cambiado
+- El modo de imagen configurado en ajustes se aplica también a fichas de PNJ.
+- Las reglas ampliadas de motos pueden activarse por separado: tuneos funcionales generados, efectos de piezas no manuales, modificadores contextuales y acción Forzar motor.
+
 ## [1.3.15] — 2026-07-24
 
 ### Añadido
