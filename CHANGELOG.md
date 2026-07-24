@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.15] — 2026-07-24
+
+### Añadido
+- Actores de bestiario para todas las imágenes incluidas en `assets/actors/manual-bestiario/`.
+
+### Cambiado
+- Cada imagen de personaje, PNJ o criatura incluida en el sistema queda asignada a una ficha concreta.
+- Versión de contenido actualizada a `1.7.2` para reimportar los compendios en mundos existentes.
+
 ## [1.3.14] — 2026-07-24
 
 ### Añadido
