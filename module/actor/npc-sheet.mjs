@@ -46,6 +46,7 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     context.portraitBannerScale = Number(game.settings.get(CAMC.systemId, "npcBannerScale") ?? 100) / 100;
     context.portraitImageScale = this.#portraitImageScale();
     context.npcBanner = CAMC.assets.npcBanner;
+    context.logo = CAMC.assets.logo;
     context.attrCards = Object.entries(CAMC.atributos).map(([key, cfg]) => ({ key, short: cfg.short, label: cfg.label, value: Number(system.atributos?.[key]?.value ?? 0) }));
     context.derivedCards = [
       { key: "agilidad", label: "Agilidad", icon: "fa-person-running", value: system.valores_pasivos?.agilidad ?? 0 },

@@ -11,6 +11,7 @@
       </div>
     </div>
     <section class="camc-npc-id">
+      <img class="camc-header-logo camc-npc-logo" src="{{logo}}" alt=""/>
       <input class="camc-name char-name" name="name" type="text" value="{{actor.name}}"/>
       <div class="camc-npc-fields">
         <label><span>Raza</span><input name="system.biografia.raza" type="text" value="{{system.biografia.raza}}"/></label>
@@ -25,6 +26,8 @@
       <article><span>Iniciativa</span><b>{{system.combate.iniciativa}}</b></article>
     </aside>
   </header>
+
+  <div class="camc-rune-divider" aria-hidden="true">ᚱ ᛁ ᚾ ᛟ ᛞ</div>
 
   <nav class="camc-tabs tabs" data-group="primary">
     <a class="item active" data-tab="resumen"><i class="fas fa-gauge-high"></i> Resumen</a>

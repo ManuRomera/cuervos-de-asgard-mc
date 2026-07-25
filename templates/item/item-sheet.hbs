@@ -1,4 +1,4 @@
-<form class="{{cssClass}} camc-sheet camc-item camc-item-{{item.type}}" autocomplete="off">
+<form class="{{cssClass}} camc-sheet camc-item camc-item-{{item.type}} deity-{{lower system.deidad}}" autocomplete="off">
   <header class="camc-hero camc-item-hero {{#if (eq item.type "vehiculo")}}vehicle{{/if}}">
     <div class="camc-portrait-stack">
       <img class="camc-portrait profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
@@ -32,6 +32,8 @@
     </aside>
     {{/if}}
   </header>
+
+  <div class="camc-rune-divider" aria-hidden="true">ᚱ ᛁ ᚾ ᛟ ᛞ</div>
 
   <nav class="camc-tabs tabs" data-group="primary">
     <a class="item active" data-tab="principal"><i class="fas fa-gauge-high"></i> Principal</a>
