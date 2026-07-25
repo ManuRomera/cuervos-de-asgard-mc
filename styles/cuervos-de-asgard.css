@@ -3152,7 +3152,6 @@ body.camc-compact .camc-sheet{font-size:12px;}
   height:78px!important;
   object-fit:cover!important;
   border:3px solid #0a0a09!important;
-  outline:2px solid #d7a935!important;
   background:#050505!important;
 }
 
@@ -5496,6 +5495,7 @@ body.camc-compact .camc-sheet{font-size:12px;}
   min-height:0!important;
   overflow:visible!important;
   border:0!important;
+  box-shadow:none!important;
   background:transparent!important;
 }
 
