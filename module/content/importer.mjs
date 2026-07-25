@@ -52,7 +52,7 @@ export class CAMCContentImporter {
     await this.#importActors("_data/bestiario/enemigos.json", CAMC.itemFolders.bestiario.label, { force: updateExisting });
     await this.#importScenes("_data/scenes/scenes.json", "CAMC · Escenas", { force: updateExisting });
     await this.#importManual();
-    await this.#createReimportMacro();
+    await this.#createSystemMacros();
 
     await game.settings.set(CAMC.systemId, "contentVersion", CAMC.contentVersion);
     ui.notifications.info("CAMC | Contenido importado. Hojas, reglas, equipo, dones y manual listos.");
@@ -349,7 +349,9 @@ export class CAMCContentImporter {
       <h2>Persecuciones</h2>
       <p>La pestaña Persecución de la moto ofrece dificultad de terreno, modificador por visibilidad, Evasión rival, franja actual y botones para acciones de movimiento y maniobras. Las tiradas usan Conducir del piloto vinculado y aplican la Maniobrabilidad y el daño grave de la moto.</p>
       <h2>Menú contextual</h2>
-      <p>Botón derecho sobre campos, botones, filas, habilidades, objetos y paneles muestra ayuda contextual tomada de los datos del sistema: descripción de habilidades, reglas de objeto, tipo, coste, cargo, deidad, daño o acción disponible.</p>`;
+      <p>Botón derecho sobre campos, botones, filas, habilidades, objetos y paneles muestra ayuda contextual tomada de los datos del sistema: descripción de habilidades, reglas de objeto, tipo, coste, cargo, deidad, daño o acción disponible.</p>
+      <h2>Macros base</h2>
+      <p>La macro <strong>CAMC · Escalar token visual</strong> se coloca automáticamente en la posición 1 de la barra rápida del DJ. Ajusta el tamaño visual de los tokens seleccionados, oculta nombre y barras, bloquea la rotación y mantiene la base del token en 1x1.</p>`;
     return [
       { name: "CAMC · Resumen operativo de reglas", pages: [this.#journalPage("Reglas rápidas", summaryContent)] },
       { name: "CAMC · Guía de uso del sistema", pages: [
@@ -359,13 +361,77 @@ export class CAMCContentImporter {
     ];
   }
 
-  static async #createReimportMacro() {
-    if (game.macros.find(m => m.name === "CAMC · Reimportar contenido")) return;
-    await Macro.create({
+  static async #createSystemMacros() {
+    await this.#upsertMacro({
       name: "CAMC · Reimportar contenido",
       type: "script",
       img: "icons/svg/book.svg",
       command: `game.camc.importContent({force: true});`
     });
+    const tokenScaleMacro = await this.#upsertMacro({
+      name: "CAMC · Escalar token visual",
+      type: "script",
+      img: CAMC.assets.tokenScaleMacro,
+      command: `(async () => {
+  const selected = canvas.tokens.controlled;
+
+  if (!selected.length) {
+    ui.notifications.warn("Selecciona uno o varios tokens antes de ejecutar la macro.");
+    return;
+  }
+
+  const currentScale = selected[0]?.document?.texture?.scaleX ?? 1;
+
+  const scale = await Dialog.prompt({
+    title: "Escalar token",
+    content: '<form class="camc-macro-form"><div class="form-group"><label>Escala visual</label><input type="number" name="scale" value="' + currentScale + '" min="0.1" step="0.1"/></div><p style="font-size:12px; opacity:0.8;">Ejemplo: 1 = tamaño normal, 3 = triple, 5 = muy grande.</p></form>',
+    label: "Aplicar",
+    callback: (html) => {
+      const root = html instanceof HTMLElement ? html : html[0];
+      return Number(root.querySelector("[name='scale']").value);
+    }
+  });
+
+  if (!Number.isFinite(scale) || scale <= 0) {
+    ui.notifications.warn("Escala no válida.");
+    return;
+  }
+
+  for (const token of selected) {
+    await token.document.update({
+      width: 1,
+      height: 1,
+      displayName: CONST.TOKEN_DISPLAY_MODES.NONE,
+      displayBars: CONST.TOKEN_DISPLAY_MODES.NONE,
+      lockRotation: true,
+      "texture.scaleX": scale,
+      "texture.scaleY": scale
+    });
+  }
+
+  ui.notifications.info("Token ajustado a escala visual x" + scale + ".");
+})();`
+    });
+    await this.#assignHotbarMacro(tokenScaleMacro, 1);
+  }
+
+  static async #upsertMacro(data) {
+    const existing = game.macros.find(m => m.name === data.name && m.type === data.type);
+    if (existing) {
+      await existing.update(data);
+      return existing;
+    }
+    return Macro.create(data);
+  }
+
+  static async #assignHotbarMacro(macro, slot) {
+    if (!macro || !game.user?.isGM) return;
+    if (typeof game.user.assignHotbarMacro === "function") {
+      await game.user.assignHotbarMacro(macro, slot);
+      return;
+    }
+    const hotbar = foundry.utils.deepClone(game.user.hotbar ?? {});
+    hotbar[String(slot)] = macro.id;
+    await game.user.update({ hotbar });
   }
 }

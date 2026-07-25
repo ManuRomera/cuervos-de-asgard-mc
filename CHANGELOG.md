@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.20] — 2026-07-25
+
+### Añadido
+- Macro `CAMC · Escalar token visual` para ajustar tamaño visual, ocultar nombre/barras, bloquear rotación y normalizar la base del token.
+- Icono propio para la macro de escala de tokens.
+
+### Cambiado
+- El importador del sistema actualiza las macros base y coloca la macro de escala en la posición 1 de la barra rápida del DJ.
+
 ## [1.3.19] — 2026-07-24
 
 ### Añadido
