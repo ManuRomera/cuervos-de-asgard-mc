@@ -2,6 +2,23 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.21] — 2026-07-25
+
+### Añadido
+- Identidad visual por tipo de objeto (arma/armadura/escudo con marco de metal remachado, don con medallón del color de su deidad, vehículo con retrato panorámico).
+- Tarjeta de tirada: retrato del actor con anillo del color de su deidad, dados con relieve de cuero/hueso y sello distintivo para crítico/pifia.
+- Marco troquelado y marca de agua del emblema del club en la ficha de PNJ, a la par de la de personaje.
+- Separador rúnico reutilizable (`camc-rune-divider`), aplicado también a las fichas de objeto y PNJ.
+- Fuente `Oswald` empaquetada localmente (`styles/fonts/`) para los títulos, en vez de depender de que el sistema operativo tenga Impact instalada.
+
+### Cambiado
+- Consolidados en un único bloque los ~7 "pases finales" de la paleta de la ficha de personaje y los ~6 de la tarjeta de chat, repartidos antes por todo el CSS; los tonos de deidad ya visibles (p. ej. Thor en azul-gris) quedan fijados como la fuente de verdad.
+- Los tokens de color por deidad (`--camc-deity`) ya no dependen de `.camc-character`: los reutilizan también la tarjeta de chat y la ficha de objeto.
+- Retirado el acento cian de neón fuera de la ficha de personaje; objetos, PNJ y chat pasan a la misma paleta de cuero/pergamino/latón.
+
+### Corregido
+- Variable `--camc-paper-2` (con guion) que nunca se aplicaba por una errata de nombre; el segundo tono de pergamino usa ahora `--camc-paper2` de forma consistente.
+
 ## [1.3.20] — 2026-07-25
 
 ### Añadido
