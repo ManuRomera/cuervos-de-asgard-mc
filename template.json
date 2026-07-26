@@ -79,7 +79,8 @@
         "defecto_leve": "",
         "descripcion": "",
         "historia": "",
-        "recuerdo_cuando_usado": false
+        "recuerdo_cuando_usado": false,
+        "defecto_leve_usado": false
       },
       "faltas": { "value": 0, "max": 3 },
       "reputacion": { "value": 6 },

@@ -275,9 +275,33 @@ Hooks.once("ready", async () => {
   }
 });
 
+Hooks.once("ready", () => {
+  // Retransmite al DJ activo las peticiones de aplicar daño que llegan de jugadores sin
+  // permiso directo sobre el objetivo (p. ej. un PJ dañando a un PNJ que no controla).
+  game.socket.on(`system.${CAMC.systemId}`, async data => {
+    if (data?.action !== "apply-damage" || !game.user.isGM) return;
+    if (game.user.id !== game.users.activeGM?.id) return;
+    const actor = await fromUuid(data.actorUuid);
+    if (!actor || typeof actor.aplicarDano !== "function") return;
+    const result = await actor.aplicarDano(data.damage);
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker(),
+      content: `<div class="camc-chat-card dano-aplicado"><header><strong>Daño aplicado</strong><span>vía ${data.requestedByName ?? "jugador"}</span></header><p>${actor.name}: ${result.final} Salud (${result.bruto} - protección ${result.proteccion})</p></div>`
+    });
+  });
+});
+
 Hooks.on("renderChatMessageHTML", (message, html) => {
   const root = html?.find ? html : $(html);
   root.find("[data-camc-action='apply-damage']").on("click", ev => applyDamageFromChat(message, ev));
+  root.find("[data-camc-action='reroll-proeza']").on("click", ev => { ev.preventDefault(); YsystemDice.gastarProezaParaRepetir(message); });
+  root.find("[data-camc-action='apply-defecto']").on("click", ev => { ev.preventDefault(); YsystemDice.openDefectoDialog(message); });
+  root.find("[data-camc-action='roll-damage-from-attack']").on("click", ev => rollDamageFromAttackChat(message, ev));
+  root.find(".camc-gm-only").toggle(Boolean(game.user.isGM));
+  root.find(".camc-chat-actions-row").each((_, row) => {
+    const $row = $(row);
+    if (!$row.children(":visible").length) $row.hide();
+  });
   activateCamcContextMenu(root);
 });
 
@@ -316,6 +340,23 @@ function registerHandlebarsHelpers() {
   });
 }
 
+async function rollDamageFromAttackChat(message, event) {
+  event.preventDefault();
+  const ctx = message.getFlag(CAMC.systemId, "tirada");
+  if (!ctx) return;
+  const actor = ctx.actorUuid ? await fromUuid(ctx.actorUuid) : null;
+  if (!actor) return ui.notifications.warn("No se encuentra el personaje de esta tirada.");
+  if (!(game.user.isGM || actor.isOwner)) return ui.notifications.warn("No tienes permiso para tirar este daño.");
+  const armaId = ctx.data?.armaPreparada?.id;
+  const item = armaId ? actor.items.get(armaId) : null;
+  if (!item) return ui.notifications.warn("No se encuentra el arma usada en esta tirada.");
+  if (typeof item.tieneMunicion === "function" && item.tieneMunicion()) {
+    const ok = await item.consumirMunicion(1);
+    if (!ok) return ui.notifications.warn(`${item.name}: sin munición.`);
+  }
+  await YsystemDice.rollDamage(actor, item);
+}
+
 async function applyDamageFromChat(message, event) {
   event.preventDefault();
   const data = message.getFlag(CAMC.systemId, "chatAction") ?? {};
@@ -330,12 +371,27 @@ async function applyDamageFromChat(message, event) {
   if (!uniqueActors.length) return ui.notifications.warn("Selecciona o marca como objetivo al actor que recibirá el daño.");
 
   const results = [];
+  let relayed = 0;
   for (const actor of uniqueActors) {
     if (typeof actor.aplicarDano !== "function") continue;
-    const result = await actor.aplicarDano(damage);
-    results.push(`${actor.name}: ${result.final} Salud (${result.bruto} - protección ${result.proteccion})`);
+    if (game.user.isGM || actor.isOwner) {
+      const result = await actor.aplicarDano(damage);
+      results.push(`${actor.name}: ${result.final} Salud (${result.bruto} - protección ${result.proteccion})`);
+    } else {
+      // Sin permiso directo (p. ej. un jugador aplicando daño a un PNJ que no controla):
+      // se retransmite al DJ activo para que sea él quien haga el cambio.
+      game.socket.emit(`system.${CAMC.systemId}`, {
+        action: "apply-damage",
+        actorUuid: actor.uuid,
+        damage,
+        requestedByName: game.user.name
+      });
+      relayed++;
+    }
   }
-  if (!results.length) return ui.notifications.warn("Los objetivos seleccionados no usan las reglas de Salud de CAMC.");
+  if (relayed) ui.notifications.info(`Solicitud de daño enviada al DJ para ${relayed} objetivo(s) que no controlas.`);
+  if (!results.length && !relayed) return ui.notifications.warn("Los objetivos seleccionados no usan las reglas de Salud de CAMC.");
+  if (!results.length) return;
 
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker(),

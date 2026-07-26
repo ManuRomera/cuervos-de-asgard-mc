@@ -231,25 +231,35 @@ export class CAMCActorSheet extends ActorSheetV1 {
 
   async #askRollOptions(habilidad, { weapon = null } = {}) {
     const skillLabel = CAMC.habilidades[habilidad]?.label ?? "Tirada";
-    const opts = [`<option value="">Sin dificultad</option>`].concat(CAMC.dificultades.map(d => `<option value="${d.value}">${d.value} · ${d.label}</option>`)).join("");
+    const targetToken = weapon ? Array.from(game.user.targets ?? [])[0] : null;
+    const targetAgilidad = targetToken ? Number(targetToken.actor?.system?.valores_pasivos?.agilidad ?? NaN) : NaN;
+    const hasTargetDifficulty = weapon && Number.isFinite(targetAgilidad);
+    const opts = [`<option value="">Sin dificultad</option>`].concat(
+      CAMC.dificultades.map(d => `<option value="${d.value}" ${!hasTargetDifficulty && d.value === 9 ? "selected" : ""}>${d.value} · ${d.label}</option>`)
+    ).join("");
     const penalty = this.actor.getPenalizadorSalud();
     const weaponInfo = weapon ? { label: weapon.name } : null;
     const recuerdoUsado = Boolean(this.actor.system.biografia?.recuerdo_cuando_usado);
     const content = `
       <form class="camc-dialog camc-roll-options">
-        <p><strong>${skillLabel}</strong></p>
-        <label><span>Dificultad</span><select name="dificultad">${opts}</select></label>
-        <label><span>Dificultad personalizada</span><input name="dificultadManual" type="number" placeholder="Opcional"/></label>
+        <p class="camc-roll-heading"><strong>${skillLabel}</strong>${weaponInfo ? ` <span>· ${weaponInfo.label}</span>` : ""}</p>
+        ${hasTargetDifficulty ? `<p class="camc-target-hint"><i class="fas fa-crosshairs"></i> Objetivo: <strong>${targetToken.name}</strong> · Agilidad <strong>${targetAgilidad}</strong> (ya rellenada abajo, puedes cambiarla).</p>` : ""}
+        <div class="camc-dialog-grid">
+          <label><span>Dificultad</span><select name="dificultad">${opts}</select></label>
+          <label><span>Dificultad personalizada</span><input name="dificultadManual" type="number" placeholder="Opcional" value="${hasTargetDifficulty ? targetAgilidad : ""}"/></label>
+        </div>
         <div class="camc-dialog-grid">
           <label><span>Modificador fijo</span>${this.#numberStepper("modificador", 0, -99, 99)}</label>
           <label><span>Dados extra</span>${this.#numberStepper("dadosExtra", 0, -3, 3)}</label>
           <label><span>Proezas para +D</span>${this.#numberStepper("proezaDados", 0, 0, 3)}</label>
           <label><span>Dados sacrificados</span>${this.#numberStepper("dadosSacrificados", 0, 0, 3)}</label>
         </div>
-        <label class="camc-checkline"><input name="aplicaSalud" type="checkbox"/> Aplicar penalizador de Salud (${penalty.label})</label>
-        <label class="camc-checkline"><input name="recuerdoCuando" type="checkbox" ${recuerdoUsado ? "disabled" : ""}/> Recuerdo cuando (+2D, no compatible con gastar proezas)${recuerdoUsado ? " · ya usado" : ""}</label>
-        ${weaponInfo ? `<label class="camc-checkline"><input name="desenfundar" type="checkbox"/> Desenfundar o cambiar de arma este turno (-1D)</label>` : ""}
-        <p class="notes">${weaponInfo ? `Arma usada: <strong>${weaponInfo.label}</strong>. ` : ""}Los dados sacrificados sirven para apuntar o afinar una accion cuando la regla lo permita. Alt + clic tira rapido sin abrir este panel.</p>
+        <div class="camc-checkline-group">
+          <label class="camc-checkline"><input name="aplicaSalud" type="checkbox"/> <span>Aplicar penalizador de Salud (${penalty.label})</span></label>
+          <label class="camc-checkline"><input name="recuerdoCuando" type="checkbox" ${recuerdoUsado ? "disabled" : ""}/> <span>Recuerdo cuando (+2D, no compatible con proezas)${recuerdoUsado ? " · ya usado" : ""}</span></label>
+          ${weaponInfo ? `<label class="camc-checkline"><input name="desenfundar" type="checkbox"/> <span>Desenfundar o cambiar de arma este turno (-1D)</span></label>` : ""}
+        </div>
+        <p class="notes">Los dados sacrificados sirven para apuntar o afinar una acción cuando la regla lo permita. Alt + clic tira rápido sin abrir este panel.</p>
       </form>`;
     return new Promise(resolve => new Dialog({
       title: "Opciones de tirada",
@@ -278,7 +288,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
       default: "roll",
       render: html => this.#activateDialogSteppers(html),
       close: () => resolve(null)
-    }).render(true));
+    }, { width: 480 }).render(true));
   }
 
   #numberStepper(name, value, min, max) {

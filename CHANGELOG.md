@@ -2,6 +2,26 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.22] — 2026-07-26
+
+### Añadido
+- Botón «Gastar proeza · repetir dados» en las tarjetas de tirada falladas: abre un diálogo con los dados de la tirada (con sus pips, como un dado real) para elegir cuáles se repiten y cuáles se mantienen. Gasta 1 proeza del personaje y, como marca la regla, la tirada repetida ya no puede ser crítico.
+- Botón «DJ · aplicar defecto», visible solo para la Dirección de Juego, para forzar la repetición de una tirada por el Defecto grave (repite con 1D menos y da 1 proeza) o el Defecto leve (repite igual, sin proeza) del PJ, mostrando el texto de cada defecto para juzgar si aplica.
+- El Defecto leve queda limitado a una vez por sesión por PJ: si ya se usó, el DJ ve un aviso claro y la opción queda bloqueada en el diálogo. Se reinicia manualmente desde la ficha (como ya ocurría con Recuerdo cuando), con un nuevo checkbox «Defecto leve ya usado esta sesión».
+
+- El botón «Tirar daño» aparece directamente en la tarjeta de tirada de Lucha o Puntería que impacta, para encadenar el daño sin volver a la ficha del arma.
+
+### Cambiado
+- Las tarjetas de tirada guardan ahora el contexto necesario (dados, dificultad, modificadores) en el propio mensaje de chat, para poder recalcular el resultado tras una repetición sin perder ningún modificador aplicado en la tirada original.
+- El diálogo de opciones de tirada rellena la dificultad automáticamente: «Media» (9) por defecto en cualquier tirada, o la Agilidad del objetivo marcado si se ataca con un arma (mostrando su nombre y valor), siempre editable a mano.
+- El botón «DJ · aplicar defecto» ya no depende de que la tirada tenga dificultad asignada: la Dirección de Juego puede forzar la repetición de cualquier tirada de habilidad.
+- «Aplicar daño» ahora funciona también para quien no controla al objetivo (p. ej. un jugador dañando a un PNJ del DJ): la petición se retransmite automáticamente a la Dirección de Juego activa, que es quien aplica el cambio.
+
+### Corregido
+- El botón de gastar proeza y el de aplicar defecto no aparecían en la práctica porque casi ninguna tirada llevaba dificultad asignada (ver el cambio del diálogo de opciones más arriba).
+- La ficha de PNJ no se podía reducir en altura: el modo de figura exterior forzaba `overflow: visible` en la ventana incluso en el modo de retrato normal, impidiendo recortar o hacer scroll del contenido al redimensionar.
+- Diálogo «Opciones de tirada»: las casillas (penalizador de Salud, Recuerdo cuando, desenfundar) se veían partidas en dos líneas por una regla de estilo que trataba esas casillas como los demás campos; ahora se muestran en una sola línea, y el diálogo es más ancho y ordenado.
+
 ## [1.3.21] — 2026-07-25
 
 ### Añadido
