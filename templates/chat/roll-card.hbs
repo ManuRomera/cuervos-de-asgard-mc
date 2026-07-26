@@ -17,11 +17,24 @@
     {{#if data.armaPreparada}}<div class="mods">Arma preparada: {{data.armaPreparada.label}}</div>{{/if}}
     {{#if critico}}<div class="crit">CRÍTICO · gana 1 proeza</div>{{/if}}
     {{#if pifia}}<div class="fumble">PIFIA</div>{{/if}}
+    {{#if danoInfo}}
+    <div class="camc-impact-note"><i class="fas fa-hand-fist"></i> Impacto con <strong>{{danoInfo.itemName}}</strong></div>
+    <div class="camc-roll-main"><div class="camc-roll-total"><span>Daño</span><b>{{danoInfo.total}}</b></div></div>
+    <button type="button" class="camc-chat-action" data-camc-action="apply-damage" data-damage="{{danoInfo.total}}">Aplicar daño</button>
+    {{/if}}
+    {{#if curaInfo}}
+    <div class="camc-cura-note {{curaInfo.resultado}}">
+      {{#if (eq curaInfo.resultado "critico")}}<i class="fas fa-star"></i> ¡Crítico! {{curaInfo.targetName}} recupera <strong>4</strong> puntos de Salud.{{/if}}
+      {{#if (eq curaInfo.resultado "exito")}}<i class="fas fa-kit-medical"></i> {{curaInfo.targetName}} recupera <strong>2</strong> puntos de Salud.{{/if}}
+      {{#if (eq curaInfo.resultado "pifia")}}<i class="fas fa-triangle-exclamation"></i> Pifia: {{curaInfo.targetName}} pierde <strong>1</strong> punto de Salud adicional.{{/if}}
+      {{#if (eq curaInfo.resultado "sin_efecto")}}Sin efecto curativo esta vez.{{/if}}
+      <br/><small>Solo un intento de Auxilio por herida concreta.</small>
+    </div>
+    {{/if}}
     {{#unless repetida}}
     <div class="camc-chat-actions-row">
       {{#if dificultad}}{{#unless exito}}<button type="button" class="camc-chat-action ghost" data-camc-action="reroll-proeza"><i class="fas fa-bolt"></i> Gastar proeza · repetir dados</button>{{/unless}}{{/if}}
-      <button type="button" class="camc-chat-action ghost camc-gm-only" data-camc-action="apply-defecto"><i class="fas fa-user-shield"></i> DJ · aplicar defecto</button>
-      {{#if exito}}{{#if (or (eq habilidad "lucha") (eq habilidad "punteria"))}}{{#unless data.armaPreparada.desarmado}}<button type="button" class="camc-chat-action ghost" data-camc-action="roll-damage-from-attack"><i class="fas fa-hand-fist"></i> Tirar daño</button>{{/unless}}{{/if}}{{/if}}
+      {{#if (eq actor.type "personaje")}}<button type="button" class="camc-chat-action ghost camc-gm-only" data-camc-action="apply-defecto"><i class="fas fa-user-shield"></i> DJ · aplicar defecto</button>{{/if}}
     </div>
     {{/unless}}
   {{/if}}

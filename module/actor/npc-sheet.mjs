@@ -113,7 +113,12 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     if (!item || item.type !== "arma") return;
     const tipo = String(item.system?.tipo ?? item.system?.categoria ?? item.system?.alcance ?? "").toLowerCase();
     const habilidad = item.system?.habilidad_ataque || (tipo.includes("distancia") || tipo.includes("fuego") || tipo.includes("arroj") ? "punteria" : "lucha");
-    await YsystemDice.rollSkill(this.actor, habilidad, { armaPreparada: { id: item.id, name: item.name, label: item.name } });
+    // Sin objetivo marcado no hay forma de saber si el PNJ impacta (regla: Lucha/Puntería
+    // vs. Agilidad/Evasión del objetivo), así que se usa la Agilidad del token marcado.
+    const targetToken = Array.from(game.user.targets ?? [])[0];
+    const targetAgilidad = Number(targetToken?.actor?.system?.valores_pasivos?.agilidad ?? NaN);
+    const dificultad = Number.isFinite(targetAgilidad) ? targetAgilidad : null;
+    await YsystemDice.rollSkill(this.actor, habilidad, { dificultad, armaPreparada: { id: item.id, name: item.name, label: item.name } });
   }
 
   async #toggleEquip(event) {

@@ -14,8 +14,58 @@ export class YsystemDice {
     const dificultad = options.dificultad ? Number(options.dificultad) : null;
     const exito = critico || (dificultad !== null && roll.total >= dificultad && !pifia);
     if (critico && actor.type === "personaje") await actor.ganarProezas(1);
-    await this.#sendChat({ actor, tipo: "tirada", habilidad, roll, dice, data, critico, pifia, dificultad, exito, opciones: options });
-    return { roll, dice, critico, pifia, dificultad, exito };
+
+    let danoInfo = null;
+    if (exito && !options.auxilioCurar && (habilidad === "lucha" || habilidad === "punteria") && data.armaPreparada && !data.armaPreparada.desarmado) {
+      danoInfo = await this.#resolverDanoDeAtaque(actor, data.armaPreparada);
+    }
+
+    let curaInfo = null;
+    if (options.auxilioCurar) {
+      curaInfo = await this.#resolverCuraAuxilio(actor, options, { exito, critico, pifia });
+    }
+
+    await this.#sendChat({ actor, tipo: "tirada", habilidad, roll, dice, data, critico, pifia, dificultad, exito, opciones: options, danoInfo, curaInfo });
+    return { roll, dice, critico, pifia, dificultad, exito, danoInfo, curaInfo };
+  }
+
+  /**
+   * Reglas: el daño de un impacto con Lucha/Puntería es esencialmente fijo por arma
+   * (daño fijo + bonificador de atributo, a veces con algún dado), así que se resuelve
+   * en el mismo momento del impacto en vez de exigir una segunda tirada manual.
+   */
+  static async #resolverDanoDeAtaque(actor, armaPreparada) {
+    const item = actor.items?.get(armaPreparada.id);
+    if (!item) return null;
+    if (typeof item.tieneMunicion === "function" && item.tieneMunicion()) {
+      const ok = await item.consumirMunicion(1);
+      if (!ok) {
+        ui.notifications.warn(`${item.name}: sin munición.`);
+        return null;
+      }
+    }
+    const formula = (typeof item.getFormulaDano === "function" ? item.getFormulaDano(actor) : "") || "0";
+    const danoRoll = await (new Roll(formula)).evaluate({ async: true });
+    return { total: danoRoll.total, formula: danoRoll.formula, itemName: item.name, itemId: item.id };
+  }
+
+  /**
+   * Reglas (curación, cap. 4): Auxilio a dificultad 10 fija para primeros auxilios.
+   * Éxito: +2 Salud. Crítico: +4 Salud. Pifia: -1 Salud adicional. Un único intento
+   * por herida (esto último no se puede forzar automáticamente: no hay un registro
+   * de heridas individuales, así que queda en manos de la DJ recordarlo).
+   */
+  static async #resolverCuraAuxilio(actor, options, { exito, critico, pifia }) {
+    const targetUuid = options.curarTargetUuid || actor.uuid;
+    const target = targetUuid === actor.uuid ? actor : await fromUuid(targetUuid);
+    if (!target || typeof target.modificarSalud !== "function") return null;
+    let cantidad = 0;
+    let resultado = "sin_efecto";
+    if (critico) { cantidad = 4; resultado = "critico"; }
+    else if (pifia) { cantidad = -1; resultado = "pifia"; }
+    else if (exito) { cantidad = 2; resultado = "exito"; }
+    if (cantidad !== 0) await target.modificarSalud(cantidad);
+    return { targetName: target.name, cantidad, resultado };
   }
 
   static async rollDamage(actor, item, options = {}) {
@@ -131,6 +181,7 @@ export class YsystemDice {
 
     const actor = ctx.actorUuid ? await fromUuid(ctx.actorUuid) : null;
     if (!actor) return ui.notifications.warn("No se encuentra el personaje de esta tirada.");
+    if (actor.type !== "personaje") return ui.notifications.warn("Los defectos solo existen para los PJ; los PNJ no tienen.");
 
     const leveUsado = Boolean(actor.system.biografia?.defecto_leve_usado);
     const defectoLeve = this.#escape(actor.system.biografia?.defecto_leve || "(sin definir)");
@@ -279,6 +330,17 @@ export class YsystemDice {
           total: Number(payload.roll.total ?? 0),
           actorUuid: actor?.uuid ?? "",
           itemUuid: payload.item?.uuid ?? ""
+        }
+      };
+    }
+    if (payload.tipo === "tirada" && payload.danoInfo) {
+      flags[CAMC.systemId] = {
+        ...(flags[CAMC.systemId] ?? {}),
+        chatAction: {
+          type: "damage",
+          total: Number(payload.danoInfo.total ?? 0),
+          actorUuid: actor?.uuid ?? "",
+          itemUuid: payload.danoInfo.itemId ?? ""
         }
       };
     }

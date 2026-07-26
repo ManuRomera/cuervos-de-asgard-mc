@@ -240,11 +240,19 @@ export class CAMCActorSheet extends ActorSheetV1 {
     const penalty = this.actor.getPenalizadorSalud();
     const weaponInfo = weapon ? { label: weapon.name } : null;
     const recuerdoUsado = Boolean(this.actor.system.biografia?.recuerdo_cuando_usado);
+    const isAuxilio = habilidad === "auxilio";
+    const curaTargetToken = isAuxilio ? Array.from(game.user.targets ?? [])[0] : null;
+    const curaTargetName = curaTargetToken?.name ?? this.actor.name;
     const content = `
       <form class="camc-dialog camc-roll-options">
         <p class="camc-roll-heading"><strong>${skillLabel}</strong>${weaponInfo ? ` <span>· ${weaponInfo.label}</span>` : ""}</p>
         ${hasTargetDifficulty ? `<p class="camc-target-hint"><i class="fas fa-crosshairs"></i> Objetivo: <strong>${targetToken.name}</strong> · Agilidad <strong>${targetAgilidad}</strong> (ya rellenada abajo, puedes cambiarla).</p>` : ""}
-        <div class="camc-dialog-grid">
+        ${isAuxilio ? `
+        <div class="camc-auxilio-mode">
+          <label class="camc-defecto-option"><input type="radio" name="auxilioModo" value="normal" checked/> <span><strong>Diagnosticar / tratar</strong><br/><small>Examinar a alguien, recomendar medicamentos, etc. Dificultad normal, sin curación automática.</small></span></label>
+          <label class="camc-defecto-option"><input type="radio" name="auxilioModo" value="curar"/> <span><strong>Curar (primeros auxilios)</strong> · a ${curaTargetName}<br/><small>Dificultad fija 10. Éxito: +2 Salud. Crítico: +4. Pifia: −1. Solo un intento por herida concreta.</small></span></label>
+        </div>` : ""}
+        <div class="camc-dialog-grid camc-dificultad-row">
           <label><span>Dificultad</span><select name="dificultad">${opts}</select></label>
           <label><span>Dificultad personalizada</span><input name="dificultadManual" type="number" placeholder="Opcional" value="${hasTargetDifficulty ? targetAgilidad : ""}"/></label>
         </div>
@@ -268,27 +276,43 @@ export class CAMCActorSheet extends ActorSheetV1 {
         roll: {
           label: "Tirar",
           callback: html => {
+            const auxilioModo = isAuxilio ? html.find('input[name="auxilioModo"]:checked').val() : "normal";
+            const auxilioCurar = auxilioModo === "curar";
             const dificultad = html.find('[name="dificultad"]').val();
             const dificultadManual = Number(html.find('[name="dificultadManual"]').val());
             const recuerdoCuando = html.find('[name="recuerdoCuando"]').is(":checked");
             resolve({
-              dificultad: Number.isFinite(dificultadManual) && dificultadManual > 0 ? dificultadManual : (dificultad === "" ? null : Number(dificultad)),
+              dificultad: auxilioCurar ? 10 : (Number.isFinite(dificultadManual) && dificultadManual > 0 ? dificultadManual : (dificultad === "" ? null : Number(dificultad))),
               modificador: Number(html.find('[name="modificador"]').val() ?? 0),
               dadosExtra: Number(html.find('[name="dadosExtra"]').val() ?? 0),
               proezaDados: recuerdoCuando ? 0 : Math.max(0, Number(html.find('[name="proezaDados"]').val() ?? 0)),
               dadosSacrificados: Math.max(0, Number(html.find('[name="dadosSacrificados"]').val() ?? 0)),
               aplicaSalud: html.find('[name="aplicaSalud"]').is(":checked"),
               recuerdoCuando,
-              desenfundar: html.find('[name="desenfundar"]').is(":checked")
+              desenfundar: html.find('[name="desenfundar"]').is(":checked"),
+              auxilioCurar,
+              curarTargetUuid: auxilioCurar ? (curaTargetToken?.actor?.uuid ?? this.actor.uuid) : null
             });
           }
         },
         cancel: { label: "Cancelar", callback: () => resolve(null) }
       },
       default: "roll",
-      render: html => this.#activateDialogSteppers(html),
+      render: html => {
+        this.#activateDialogSteppers(html);
+        if (isAuxilio) this.#activateAuxilioModeToggle(html);
+      },
       close: () => resolve(null)
     }, { width: 480 }).render(true));
+  }
+
+  #activateAuxilioModeToggle(html) {
+    const update = () => {
+      const curar = html.find('input[name="auxilioModo"]:checked').val() === "curar";
+      html.find(".camc-dificultad-row").toggle(!curar);
+    };
+    html.find('input[name="auxilioModo"]').on("change", update);
+    update();
   }
 
   #numberStepper(name, value, min, max) {
