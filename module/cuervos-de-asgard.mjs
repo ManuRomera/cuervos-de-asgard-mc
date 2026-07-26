@@ -278,6 +278,13 @@ Hooks.once("ready", async () => {
 Hooks.on("renderChatMessageHTML", (message, html) => {
   const root = html?.find ? html : $(html);
   root.find("[data-camc-action='apply-damage']").on("click", ev => applyDamageFromChat(message, ev));
+  root.find("[data-camc-action='reroll-proeza']").on("click", ev => { ev.preventDefault(); YsystemDice.gastarProezaParaRepetir(message); });
+  root.find("[data-camc-action='apply-defecto']").on("click", ev => { ev.preventDefault(); YsystemDice.openDefectoDialog(message); });
+  root.find(".camc-gm-only").toggle(Boolean(game.user.isGM));
+  root.find(".camc-chat-actions-row").each((_, row) => {
+    const $row = $(row);
+    if (!$row.children(":visible").length) $row.hide();
+  });
   activateCamcContextMenu(root);
 });
 

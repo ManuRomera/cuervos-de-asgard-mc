@@ -39,6 +39,7 @@ export class CAMCActor extends Actor {
     s.biografia ??= {};
     s.biografia.edad ??= "";
     s.biografia.recuerdo_cuando_usado ??= false;
+    s.biografia.defecto_leve_usado ??= false;
     const cargo = CAMC.cargos[s.biografia.cargo] ?? CAMC.cargos.full_patch;
     const deidad = CAMC.dioses[s.biografia.deidad] ?? {};
     s.biografia.virtud = deidad.virtud ?? "";

@@ -2,6 +2,16 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.22] — 2026-07-26
+
+### Añadido
+- Botón «Gastar proeza · repetir dados» en las tarjetas de tirada falladas: abre un diálogo con los dados de la tirada (con sus pips, como un dado real) para elegir cuáles se repiten y cuáles se mantienen. Gasta 1 proeza del personaje y, como marca la regla, la tirada repetida ya no puede ser crítico.
+- Botón «DJ · aplicar defecto», visible solo para la Dirección de Juego, para forzar la repetición de una tirada por el Defecto grave (repite con 1D menos y da 1 proeza) o el Defecto leve (repite igual, sin proeza) del PJ, mostrando el texto de cada defecto para juzgar si aplica.
+- El Defecto leve queda limitado a una vez por sesión por PJ: si ya se usó, el DJ ve un aviso claro y la opción queda bloqueada en el diálogo. Se reinicia manualmente desde la ficha (como ya ocurría con Recuerdo cuando), con un nuevo checkbox «Defecto leve ya usado esta sesión».
+
+### Cambiado
+- Las tarjetas de tirada guardan ahora el contexto necesario (dados, dificultad, modificadores) en el propio mensaje de chat, para poder recalcular el resultado tras una repetición sin perder ningún modificador aplicado en la tirada original.
+
 ## [1.3.21] — 2026-07-25
 
 ### Añadido
