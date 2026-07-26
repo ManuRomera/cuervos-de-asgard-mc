@@ -2,6 +2,13 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.23] — 2026-07-26
+
+### Corregido
+- Los botones de la tarjeta de tirada (gastar proeza, DJ · aplicar defecto, tirar daño) no aparecían nunca: el script que ocultaba la fila de acciones cuando estaba vacía usaba una comprobación de visibilidad (`:visible`) que depende de que el elemento ya esté dibujado en pantalla, y en el momento en que se ejecuta el mensaje de chat aún no lo está, así que la fila se ocultaba siempre por error, tuviera botones o no. Ahora se comprueba directamente si algún botón sigue sin `display:none`, sin depender del renderizado.
+
+**Nota para quien pruebe esta versión**: tras actualizar el sistema (por git o por el instalador de Foundry), hay que recargar del todo la pestaña o reiniciar Foundry — los cambios de código y estilos no se aplican en caliente a una sesión que ya estaba abierta.
+
 ## [1.3.22] — 2026-07-26
 
 ### Añadido

@@ -300,7 +300,8 @@ Hooks.on("renderChatMessageHTML", (message, html) => {
   root.find(".camc-gm-only").toggle(Boolean(game.user.isGM));
   root.find(".camc-chat-actions-row").each((_, row) => {
     const $row = $(row);
-    if (!$row.children(":visible").length) $row.hide();
+    const remaining = $row.children().filter((_, el) => el.style.display !== "none");
+    if (!remaining.length) $row.hide();
   });
   activateCamcContextMenu(root);
 });
