@@ -78,17 +78,21 @@ export class CAMCMountRolls {
     const recuerdoUsado = Boolean(actor.system?.biografia?.recuerdo_cuando_usado);
     const content = `
       <form class="camc-dialog camc-roll-options">
-        <p><strong>${skillLabel}</strong> · ${etiqueta}</p>
-        <label><span>Dificultad</span><select name="dificultad">${opts}</select></label>
-        <label><span>Dificultad personalizada</span><input name="dificultadManual" type="number" placeholder="Opcional"/></label>
+        <p class="camc-roll-heading"><strong>${skillLabel}</strong> <span>· ${etiqueta}</span></p>
+        <div class="camc-dialog-grid">
+          <label><span>Dificultad</span><select name="dificultad">${opts}</select></label>
+          <label><span>Dificultad personalizada</span><input name="dificultadManual" type="number" placeholder="Opcional"/></label>
+        </div>
         <div class="camc-dialog-grid">
           <label><span>Modificador fijo</span>${this.#numberStepper("modificador", 0, -99, 99)}</label>
           <label><span>Dados extra</span>${this.#numberStepper("dadosExtra", 0, -3, 3)}</label>
           <label><span>Proezas para +D</span>${this.#numberStepper("proezaDados", 0, 0, 3)}</label>
           <label><span>Dados sacrificados</span>${this.#numberStepper("dadosSacrificados", 0, 0, 3)}</label>
         </div>
-        <label class="camc-checkline"><input name="aplicaSalud" type="checkbox"/> Aplicar penalizador de Salud (${penalty.label})</label>
-        <label class="camc-checkline"><input name="recuerdoCuando" type="checkbox" ${recuerdoUsado ? "disabled" : ""}/> Recuerdo cuando (+2D, no compatible con gastar proezas)${recuerdoUsado ? " · ya usado" : ""}</label>
+        <div class="camc-checkline-group">
+          <label class="camc-checkline"><input name="aplicaSalud" type="checkbox"/> <span>Aplicar penalizador de Salud (${penalty.label})</span></label>
+          <label class="camc-checkline"><input name="recuerdoCuando" type="checkbox" ${recuerdoUsado ? "disabled" : ""}/> <span>Recuerdo cuando (+2D, no compatible con proezas)${recuerdoUsado ? " · ya usado" : ""}</span></label>
+        </div>
       </form>`;
     return new Promise(resolve => new Dialog({
       title: "Opciones de tirada",
@@ -116,7 +120,7 @@ export class CAMCMountRolls {
       default: "roll",
       render: html => this.#activateDialogSteppers(html),
       close: () => resolve(null)
-    }).render(true));
+    }, { width: 480 }).render(true));
   }
 
   static #numberStepper(name, value, min, max) {

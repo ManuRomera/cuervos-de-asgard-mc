@@ -17,12 +17,13 @@
     {{#if data.armaPreparada}}<div class="mods">Arma preparada: {{data.armaPreparada.label}}</div>{{/if}}
     {{#if critico}}<div class="crit">CRÍTICO · gana 1 proeza</div>{{/if}}
     {{#if pifia}}<div class="fumble">PIFIA</div>{{/if}}
-    {{#if dificultad}}{{#unless repetida}}
+    {{#unless repetida}}
     <div class="camc-chat-actions-row">
-      {{#unless exito}}<button type="button" class="camc-chat-action ghost" data-camc-action="reroll-proeza"><i class="fas fa-bolt"></i> Gastar proeza · repetir dados</button>{{/unless}}
+      {{#if dificultad}}{{#unless exito}}<button type="button" class="camc-chat-action ghost" data-camc-action="reroll-proeza"><i class="fas fa-bolt"></i> Gastar proeza · repetir dados</button>{{/unless}}{{/if}}
       <button type="button" class="camc-chat-action ghost camc-gm-only" data-camc-action="apply-defecto"><i class="fas fa-user-shield"></i> DJ · aplicar defecto</button>
+      {{#if exito}}{{#if (or (eq habilidad "lucha") (eq habilidad "punteria"))}}{{#unless data.armaPreparada.desarmado}}<button type="button" class="camc-chat-action ghost" data-camc-action="roll-damage-from-attack"><i class="fas fa-hand-fist"></i> Tirar daño</button>{{/unless}}{{/if}}{{/if}}
     </div>
-    {{/unless}}{{/if}}
+    {{/unless}}
   {{/if}}
   {{#if (eq tipo "dano_moto")}}
     <h3>{{label}}</h3>

@@ -1186,7 +1186,7 @@ body.camc-compact .camc-sheet{font-size:12px;}
   display:grid;
   gap:9px;
 }
-.camc-dialog.camc-roll-options label{
+.camc-dialog.camc-roll-options label:not(.camc-checkline){
   display:grid;
   gap:4px;
 }
@@ -1195,6 +1195,26 @@ body.camc-compact .camc-sheet{font-size:12px;}
   grid-template-columns:1fr 1fr;
   gap:8px;
 }
+.camc-roll-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 0 2px;}
+.camc-roll-heading span{color:var(--camc-muted);font-size:12px;font-weight:400;}
+.camc-target-hint{
+  margin:0 0 2px;
+  padding:6px 9px;
+  background:rgba(224,78,45,.12);
+  border:1px solid rgba(224,78,45,.4);
+  border-radius:3px;
+  font-size:12.5px;
+}
+.camc-target-hint i{color:var(--camc-danger);margin-right:4px;}
+.camc-checkline{
+  display:flex;
+  align-items:flex-start;
+  gap:7px;
+  cursor:pointer;
+}
+.camc-checkline input{flex:0 0 auto;width:16px;height:16px;margin-top:2px;}
+.camc-checkline span{flex:1 1 auto;line-height:1.3;}
+.camc-checkline-group{display:flex;flex-direction:column;gap:6px;margin:2px 0;}
 .camc-dialog.camc-roll-options input,
 .camc-dialog.camc-roll-options select{
   color:#111!important;
@@ -3305,7 +3325,13 @@ body.camc-compact .camc-sheet{font-size:12px;}
   line-height:1!important;
 }
 
+/* Overflow visible SOLO cuando la figura exterior necesita sangrar fuera de la ficha;
+   en modo retrato normal debe poder recortarse/hacer scroll para que la ventana se
+   pueda redimensionar (si no, el contenido nunca se encoge aunque la ventana sí). */
 .window-app.camc-npc-window .window-content{
+  overflow:hidden;
+}
+.window-app.camc-npc-window .window-content:has(.portrait-standee){
   overflow:visible!important;
 }
 
@@ -3679,7 +3705,7 @@ body.camc-compact .camc-sheet{font-size:12px;}
   padding:8px;
 }
 
-.camc-dialog.camc-roll-options label{
+.camc-dialog.camc-roll-options label:not(.camc-checkline){
   margin-bottom:8px;
 }
 
