@@ -2,6 +2,18 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.24] — 2026-07-27
+
+### Corregido
+- Los PNJ solo impactaban en combate si sacaban un crítico: su tirada de ataque nunca tenía dificultad asignada (no existía diálogo de opciones para ellos). Ahora, si hay un objetivo marcado, usan su Agilidad como dificultad, igual que los PJ.
+- El botón «DJ · aplicar defecto» ya no aparece en tiradas de PNJ: los defectos son exclusivos de los PJ, los PNJ nunca los tienen.
+
+### Cambiado
+- El daño de un ataque de Lucha o Puntería que impacta se calcula ya en la propia tirada (el daño es esencialmente fijo por arma) y aparece junto al resultado con su botón «Aplicar daño», en vez de exigir una tirada de daño aparte. Se retira el botón «Tirar daño» que añadía ese paso extra.
+
+### Añadido
+- Auxilio ahora distingue entre «Diagnosticar / tratar» (tirada normal, sin efecto automático) y «Curar (primeros auxilios)», que fija la dificultad en 10, cura 2 puntos de Salud al PJ o PNJ marcado como objetivo (4 si es crítico) y resta 1 punto adicional en caso de pifia, tal y como indica el manual. Recuerda en la tarjeta de chat que solo se puede intentar una vez por herida concreta (la DJ debe llevar la cuenta, el sistema no registra heridas individuales).
+
 ## [1.3.23] — 2026-07-26
 
 ### Corregido

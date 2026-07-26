@@ -2553,6 +2553,32 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-defecto-option input{margin-top:3px;}
 .camc-defecto-option small{display:block;margin-top:3px;color:var(--camc-muted);}
 .camc-defecto-option small strong{color:var(--camc-danger);}
+.camc-auxilio-mode{margin:0 0 2px;}
+
+/* Nota de impacto/daño y de curación por Auxilio en la tarjeta de tirada. */
+.camc-impact-note{
+  margin:0 0 6px;
+  padding:6px 9px;
+  background:rgba(224,78,45,.1);
+  border:1px solid rgba(224,78,45,.35);
+  border-radius:3px;
+  font-size:12.5px;
+  color:#251f18;
+}
+.camc-impact-note i{color:var(--camc-danger);margin-right:4px;}
+.camc-cura-note{
+  margin:6px 0 0;
+  padding:6px 9px;
+  border-radius:3px;
+  font-size:12.5px;
+  color:#251f18;
+  background:rgba(255,252,244,.7);
+  border:1px solid rgba(9,8,6,.5);
+}
+.camc-cura-note.exito,.camc-cura-note.critico{background:rgba(47,157,88,.14);border-color:rgba(47,157,88,.45);}
+.camc-cura-note.pifia{background:rgba(224,78,45,.14);border-color:rgba(224,78,45,.45);}
+.camc-cura-note i{margin-right:4px;}
+.camc-cura-note small{display:block;margin-top:3px;color:var(--camc-muted);}
 .camc-defecto-option.disabled{opacity:.45;cursor:not-allowed;}
 
 /* CAMC 1.5.2: fixed standee size and adaptive sheet grids. */

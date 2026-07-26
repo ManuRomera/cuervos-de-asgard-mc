@@ -296,7 +296,6 @@ Hooks.on("renderChatMessageHTML", (message, html) => {
   root.find("[data-camc-action='apply-damage']").on("click", ev => applyDamageFromChat(message, ev));
   root.find("[data-camc-action='reroll-proeza']").on("click", ev => { ev.preventDefault(); YsystemDice.gastarProezaParaRepetir(message); });
   root.find("[data-camc-action='apply-defecto']").on("click", ev => { ev.preventDefault(); YsystemDice.openDefectoDialog(message); });
-  root.find("[data-camc-action='roll-damage-from-attack']").on("click", ev => rollDamageFromAttackChat(message, ev));
   root.find(".camc-gm-only").toggle(Boolean(game.user.isGM));
   root.find(".camc-chat-actions-row").each((_, row) => {
     const $row = $(row);
@@ -339,23 +338,6 @@ function registerHandlebarsHelpers() {
   Handlebars.registerHelper("select", function(selected, options) {
     return options.fn(this).replace(new RegExp(` value=["']${selected}["']`), `$& selected`);
   });
-}
-
-async function rollDamageFromAttackChat(message, event) {
-  event.preventDefault();
-  const ctx = message.getFlag(CAMC.systemId, "tirada");
-  if (!ctx) return;
-  const actor = ctx.actorUuid ? await fromUuid(ctx.actorUuid) : null;
-  if (!actor) return ui.notifications.warn("No se encuentra el personaje de esta tirada.");
-  if (!(game.user.isGM || actor.isOwner)) return ui.notifications.warn("No tienes permiso para tirar este daño.");
-  const armaId = ctx.data?.armaPreparada?.id;
-  const item = armaId ? actor.items.get(armaId) : null;
-  if (!item) return ui.notifications.warn("No se encuentra el arma usada en esta tirada.");
-  if (typeof item.tieneMunicion === "function" && item.tieneMunicion()) {
-    const ok = await item.consumirMunicion(1);
-    if (!ok) return ui.notifications.warn(`${item.name}: sin munición.`);
-  }
-  await YsystemDice.rollDamage(actor, item);
 }
 
 async function applyDamageFromChat(message, event) {
