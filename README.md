@@ -83,7 +83,7 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
-| 1.3.24 WIP | v13 | v13.351 |
+| 1.3.25 WIP | v13 | v13.351 |
 
 ## Autoría y comunidad
 

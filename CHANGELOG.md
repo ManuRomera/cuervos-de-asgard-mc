@@ -2,6 +2,12 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.25] — 2026-07-27
+
+### Corregido
+- La Agilidad (y Evasión, Aplomo, Perspicacia) de los PNJ del bestiario se sobrescribía siempre con la fórmula estándar de PJ (3× dados de Atletismo + DES), descartando el valor concreto importado del manual para ese monstruo en particular. El manual permite explícitamente que algunos PNJ tengan valores superiores a los que daría la fórmula (por ejemplo, la Valquiria: Agilidad 13 en el manual, pero la fórmula daba 15); ahora esos valores importados o escritos a mano se respetan, y la fórmula solo se usa como valor por defecto si la ficha no tiene ninguno definido. Esto es lo que causaba que un PNJ recién arrastrado a la escena mostrara una Agilidad distinta a la de su ficha en el directorio de Actores: no era aleatorio ni un problema de arrastrar tokens, sino que el valor "correcto" que veías dependía de qué copia de los datos se hubiera recalculado más recientemente.
+- De paso, se corrige que un escudo equipado restara puntos a la Agilidad en vez de sumarlos (el manual dice que el nivel del escudo aumenta la Agilidad) y que la penalización de la armadura se restara de la Agilidad en vez de no afectarla en absoluto (esa penalización es solo para tiradas de DES/FUE, algo que este sistema todavía no aplica en ningún otro sitio, así que no se ha tocado).
+
 ## [1.3.24] — 2026-07-27
 
 ### Corregido

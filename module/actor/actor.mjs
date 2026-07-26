@@ -45,8 +45,8 @@ export class CAMCActor extends Actor {
     s.biografia.virtud = deidad.virtud ?? "";
     s.biografia.talento = cargo.talento ?? "";
 
-    s.valores_pasivos.agilidad = (atletismo * 3) + des - this.#proteccionPenalizacion();
-    s.valores_pasivos.evasion = (conducir * 3) + des - this.#proteccionPenalizacion();
+    s.valores_pasivos.agilidad = (atletismo * 3) + des + this.#escudoAgilidadBonus();
+    s.valores_pasivos.evasion = (conducir * 3) + des;
     s.valores_pasivos.aplomo = car + int + 5;
     s.valores_pasivos.perspicacia = int + per + 5;
     const vehicleMods = this.#getVehicleMods();
@@ -125,10 +125,15 @@ export class CAMCActor extends Actor {
     const conducir = this.#num("system.habilidades_clave.conducir.value", 1);
     s.valores_pasivos ??= {};
     s.combate ??= {};
-    s.valores_pasivos.agilidad = (atletismo * 3) + des - this.#proteccionPenalizacion();
-    s.valores_pasivos.evasion = (conducir * 3) + des - this.#proteccionPenalizacion();
-    s.valores_pasivos.aplomo = car + int + 5;
-    s.valores_pasivos.perspicacia = int + per + 5;
+    // El manual permite que algunos PNJ tengan valores pasivos superiores a los que daría
+    // la fórmula estándar de PJ (p. ej. una Valquiria más ágil de lo que sugerirían sus dados
+    // de Atletismo). Por eso aquí solo se rellenan como valor por defecto si no vienen ya
+    // definidos en la ficha (importados del bestiario o escritos a mano), en vez de
+    // sobrescribirlos siempre.
+    s.valores_pasivos.agilidad ??= (atletismo * 3) + des + this.#escudoAgilidadBonus();
+    s.valores_pasivos.evasion ??= (conducir * 3) + des;
+    s.valores_pasivos.aplomo ??= car + int + 5;
+    s.valores_pasivos.perspicacia ??= int + per + 5;
     s.combate.iniciativa = des + int;
     s.combate.arma_preparada = this.getArmaPreparada();
     s.combate.penalizador_salud = this.getPenalizadorSalud();
@@ -209,10 +214,9 @@ export class CAMCActor extends Actor {
     });
   }
 
-  #proteccionPenalizacion() {
-    const arm = this.items?.find(i => i.type === "armadura" && i.system.equipada);
+  #escudoAgilidadBonus() {
     const esc = this.items?.find(i => i.type === "escudo" && i.system.equipado);
-    return Number(arm?.system?.penalizacion ?? 0) + Number(esc?.system?.penalizacion ?? 0);
+    return Number(esc?.system?.nivel ?? 0);
   }
 
   #calcularProteccion() {
