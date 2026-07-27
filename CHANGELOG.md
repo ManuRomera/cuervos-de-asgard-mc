@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.32] — 2026-07-27
+
+### Corregido
+- **Los compendios del sistema (armas, protecciones, dones, talentos, objetos, modificaciones de moto, parches, vehículos, motos y personajes pregenerados) llevaban congelados desde muy al principio del proyecto (versión de contenido 1.6.3), sin recibir ninguna de las correcciones aplicadas en las versiones 1.3.21 a 1.3.31.** Esto no dependía de nada de lo que se tocó en esa ronda de arreglos: los compendios que se guardan en el propio paquete del sistema (`packs/`) nunca se habían vuelto a generar desde entonces, así que cualquiera que instalase o actualizase el sistema recibía compendios con los dones inventados, el bestiario duplicado, el daño de armas antiguo, etc. — y, en concreto, con las imágenes e iconos de esa época, distintos a los que ya llevaba tiempo usando el resto del sistema. El sistema seguía «autocurándose» en cada partida ya abierta gracias a la sincronización en marcha del importador, pero los propios compendios base del paquete, tal cual se descargan, se habían quedado atrás.
+- Se han regenerado los 11 compendios de objetos/actores directamente a partir de los archivos `_data/*.json` actuales (con la herramienta oficial `@foundryvtt/foundryvtt-cli`), de modo que el paquete que se descarga o instala como actualización ya incluye, desde el primer arranque, todos los arreglos de esta serie de versiones: los 7 dones reales (con sus imágenes correctas), las 15 modificaciones de moto reales, el bestiario sin duplicados y con las estadísticas corregidas, el daño de armas correcto, las armaduras corregidas y las fichas completas de los 7 PJ pregenerados.
+- Se ha verificado uno por uno el contenido de los 11 compendios regenerados (nombres, número de documentos, imágenes, atributos) contra los archivos de datos actuales antes de publicar esta versión.
+
+**Nota técnica:** el proyecto no tenía ningún proceso para mantener los compendios (`packs/`) sincronizados con los datos fuente (`_data/*.json`); se generaron una vez al principio y nunca se habían vuelto a compilar. Sería recomendable añadir un script de compilación (con `@foundryvtt/foundryvtt-cli`) que se ejecute antes de cada release para que esto no se repita.
+
 ## [1.3.31] — 2026-07-27
 
 ### Añadido
