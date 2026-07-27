@@ -134,10 +134,14 @@ export class CAMCActor extends Actor {
     s.valores_pasivos.evasion ??= (conducir * 3) + des;
     s.valores_pasivos.aplomo ??= car + int + 5;
     s.valores_pasivos.perspicacia ??= int + per + 5;
-    s.combate.iniciativa = des + int;
+    // Igual que los valores pasivos, la iniciativa y la Resistencia Física del bestiario
+    // pueden estar autoradas de forma distinta a la fórmula estándar (p. ej. un Demonio de
+    // Fuego con RF 4 pese a su FUE 7), así que solo se rellenan si la ficha no trae ya un
+    // valor propio, en vez de sobrescribirlo siempre.
+    s.combate.iniciativa ??= des + int;
     s.combate.arma_preparada = this.getArmaPreparada();
     s.combate.penalizador_salud = this.getPenalizadorSalud();
-    s.combate.resistencia_fisica = Math.max(0, 12 - fue);
+    s.combate.resistencia_fisica ??= Math.max(0, 12 - fue);
     if (s.combate?.salud) s.combate.salud.value = Math.min(s.combate.salud.value ?? s.combate.salud.max, s.combate.salud.max ?? 0);
   }
 

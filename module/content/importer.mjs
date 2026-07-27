@@ -24,6 +24,14 @@ function stripFolder(doc) {
   return doc;
 }
 
+const RETIRED_BESTIARIO_NAMES = [
+  "Bandidos de las Llanuras Yermas",
+  "Carroñeros",
+  "Cuervos de Asgard",
+  "Demonios de Fuego",
+  "Draugar de Helheim"
+];
+
 export class CAMCContentImporter {
   static async importAll({ force = false } = {}) {
     if (!game.user.isGM) return;
@@ -49,6 +57,7 @@ export class CAMCContentImporter {
     await this.#importItems("_data/vehiculos/vehiculos.json", CAMC.itemFolders.vehiculos.label, { force: updateExisting });
     await this.#importActors("_data/motos/motos.json", CAMC.itemFolders.motos.label, { force: updateExisting });
     await this.#importActors("_data/personajes/pregenerados.json", CAMC.itemFolders.personajes.label, { force: updateExisting });
+    await this.#deleteWorldActors(CAMC.itemFolders.bestiario.label, RETIRED_BESTIARIO_NAMES);
     await this.#importActors("_data/bestiario/enemigos.json", CAMC.itemFolders.bestiario.label, { force: updateExisting });
     await this.#importScenes("_data/scenes/scenes.json", "CAMC · Escenas", { force: updateExisting });
     await this.#importManual();
@@ -70,6 +79,7 @@ export class CAMCContentImporter {
     count += await this.#importPackItems("vehiculos-camc", "_data/vehiculos/vehiculos.json", { force });
     count += await this.#importPackActors("motos-base", "_data/motos/motos.json", { force });
     count += await this.#importPackActors("personajes-camc", "_data/personajes/pregenerados.json", { force });
+    await this.#deletePackDocuments("bestiario-camc", Actor, RETIRED_BESTIARIO_NAMES);
     count += await this.#importPackActors("bestiario-camc", "_data/bestiario/enemigos.json", { force });
     count += await this.#importPackManual("manual-camc", { force });
     count += await this.#importPackGeneratorTables("tablas-generador-motos", { force });
@@ -167,6 +177,17 @@ export class CAMCContentImporter {
       created.push(mark({ ...raw, folder: folder.id }));
     }
     if (created.length) await Item.createDocuments(created);
+  }
+
+  static async #deleteWorldActors(folderName, names = []) {
+    if (!names.length) return 0;
+    const folder = game.folders.find(f => f.name === folderName && f.type === "Actor");
+    const targets = game.actors.filter(a => names.includes(a.name)
+      && (!folder || a.folder?.id === folder.id)
+      && a.flags?.[CAMC.systemId]?.source === "core-import");
+    if (!targets.length) return 0;
+    await Actor.deleteDocuments(targets.map(a => a.id));
+    return targets.length;
   }
 
   static async #importActors(path, folderName, { force = false } = {}) {

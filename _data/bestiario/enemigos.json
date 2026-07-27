@@ -5,7 +5,6 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/bandido-de-las-llanuras-yermas.webp",
     "system": {
       "biografia": {
-        "nombre": "Bandido",
         "descripcion": "Desalmado sin afiliación que sobrevive a costa de asaltar comunidades.",
         "raza": "Mortales",
         "reino": "Midgard",
@@ -60,7 +59,7 @@
           "atributo": "des"
         },
         "punteria": {
-          "value": 2,
+          "value": 3,
           "atributo": "per"
         }
       },
@@ -69,7 +68,7 @@
         "armadura_descripcion": "Ropas de cuero o acolchadas",
         "armadura_penalizacion": 0
       },
-      "especial": "Solo uno de cada cinco bandidos suele ir equipado con un arma de fuego corta, y solo uno de cada diez con una larga."
+      "especial": "Solo uno de cada cinco bandidos suele ir equipado con un arma de fuego corta, y solo uno de cada diez con una larga. Alguno podría contar con un fusil de asalto muy excepcionalmente."
     }
   },
   {
@@ -78,7 +77,6 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/carronero.webp",
     "system": {
       "biografia": {
-        "nombre": "Carroñero",
         "descripcion": "Producto de una involución acelerada, estos seres caníbales habitan las ruinas del Viejo Mundo.",
         "raza": "Mortales",
         "reino": "Midgard",
@@ -151,7 +149,6 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/demonio-de-fuego.webp",
     "system": {
       "biografia": {
-        "nombre": "Demonio de Fuego",
         "descripcion": "Criaturas creadas a partir de los ríos de lava de Muspelheim. Infantería de élite de Surt.",
         "raza": "Demonios",
         "reino": "Muspelheim",
@@ -224,7 +221,6 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/draug-de-helheim.webp",
     "system": {
       "biografia": {
-        "nombre": "Draug",
         "descripcion": "Muertos sin honor que residen en Helheim. Tropas de élite de Hela.",
         "raza": "Muertos sin reposo",
         "reino": "Helheim",
@@ -259,7 +255,7 @@
           "max": 23
         },
         "iniciativa": 6,
-        "resistencia_fisica": 12
+        "resistencia_fisica": 0
       },
       "habilidades_clave": {
         "atletismo": {
@@ -288,7 +284,7 @@
         "armadura_descripcion": "Los jirones de ropa no le protegen, pero las armas de fuego no le hacen daño. El resto de armas causan solo la mitad.",
         "armadura_penalizacion": 0
       },
-      "especial": "No sufre penalizaciones por daño ni tira por Resistencia Física. No puede ser convencido, seducido, aterrorizado o intimidado."
+      "especial": "No sufre penalizaciones por daño ni tira por Resistencia Física (N/A). No puede ser convencido, seducido, aterrorizado o intimidado (sí puede ser engañado)."
     }
   },
   {
@@ -297,7 +293,6 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/cuervo-de-asgard-full-patch.webp",
     "system": {
       "biografia": {
-        "nombre": "Cuervo de Asgard",
         "descripcion": "Miembro de pleno derecho de los Cuervos de Asgard MC.",
         "raza": "Mortales",
         "reino": "Midgard",
@@ -365,183 +360,19 @@
     }
   },
   {
-    "name": "Bandidos de las Llanuras Yermas",
+    "name": "Einherjar",
     "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/bandidos-de-las-llanuras-yermas.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/einherjar.webp",
     "system": {
       "biografia": {
-        "descripcion": "Grupo de saqueadores humanos de las llanuras yermas. Funcionan como amenaza colectiva para emboscadas, asaltos a convoyes y presión sobre asentamientos.",
-        "raza": "Humanos",
-        "reino": "Midgard",
-        "rasgos": "Banda hostil, emboscadas, codicia, supervivencia brutal."
+        "descripcion": "Guerreros elegidos de Asgard, caídos con honor en batalla y ganados para el Valhalla o el Fólkvangr. Clase guerrera de Nueva Asgard bajo las órdenes de Tyr.",
+        "raza": "Muertos sin reposo",
+        "reino": "Asgard",
+        "rasgos": "Belicosidad, Dignidad"
       },
       "atributos": {
         "car": {
-          "value": 2
-        },
-        "des": {
-          "value": 4
-        },
-        "fue": {
           "value": 3
-        },
-        "int": {
-          "value": 2
-        },
-        "per": {
-          "value": 3
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 9,
-        "evasion": 9,
-        "aplomo": 9,
-        "perspicacia": 10
-      },
-      "combate": {
-        "salud": {
-          "value": 22,
-          "max": 22
-        },
-        "iniciativa": 6,
-        "resistencia_fisica": 9
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 2,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 3,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 3,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 1,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Banda hostil, emboscadas, codicia, supervivencia brutal."
-    },
-    "items": []
-  },
-  {
-    "name": "Carroñeros",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/carroneros.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Manada de carroñeros. Usar cuando actúan en grupo, acosando desde ruinas, zanjas o túneles hasta aislar a su presa.",
-        "raza": "Bestias humanoides",
-        "reino": "Midgard",
-        "rasgos": "Manada salvaje, hambre, ferocidad, miedo a la luz intensa."
-      },
-      "atributos": {
-        "car": {
-          "value": 0
-        },
-        "des": {
-          "value": 4
-        },
-        "fue": {
-          "value": 5
-        },
-        "int": {
-          "value": 1
-        },
-        "per": {
-          "value": 2
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 12,
-        "evasion": 6,
-        "aplomo": 6,
-        "perspicacia": 8
-      },
-      "combate": {
-        "salud": {
-          "value": 26,
-          "max": 26
-        },
-        "iniciativa": 5,
-        "resistencia_fisica": 7
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 3,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 1,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 3,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 3,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 1,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 3,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 1,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Manada salvaje, hambre, ferocidad, miedo a la luz intensa."
-    },
-    "items": []
-  },
-  {
-    "name": "Cuervos de Asgard",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/cuervos-de-asgard.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Miembros del Motor Club usados como aliados, rivales internos o refuerzo narrativo. Ajusta cargo, dones y equipo según el papel en la escena.",
-        "raza": "Humanos",
-        "reino": "Midgard",
-        "rasgos": "Hermandad motera, honor, carretera, juramentos y parches."
-      },
-      "atributos": {
-        "car": {
-          "value": 2
         },
         "des": {
           "value": 4
@@ -557,9 +388,9 @@
         }
       },
       "valores_pasivos": {
-        "agilidad": 9,
-        "evasion": 12,
-        "aplomo": 9,
+        "agilidad": 13,
+        "evasion": 7,
+        "aplomo": 10,
         "perspicacia": 10
       },
       "combate": {
@@ -568,23 +399,23 @@
           "max": 21
         },
         "iniciativa": 6,
-        "resistencia_fisica": 8
+        "resistencia_fisica": 0
       },
       "habilidades_clave": {
         "atletismo": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "conducir": {
           "value": 3,
           "atributo": "des"
         },
-        "fuerza_bruta": {
+        "conducir": {
           "value": 2,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 3,
           "atributo": "fue"
         },
         "lucha": {
-          "value": 2,
+          "value": 3,
           "atributo": "des"
         },
         "punteria": {
@@ -601,60 +432,60 @@
         }
       },
       "proteccion": {
-        "armadura_nivel": 1,
-        "armadura_penalizacion": 0,
+        "armadura_nivel": 3,
+        "armadura_descripcion": "Cota de malla de anilla gruesa",
+        "armadura_penalizacion": 1,
         "escudo_nivel": 0,
         "escudo_penalizacion": 0
       },
-      "especial": "Hermandad motera, honor, carretera, juramentos y parches."
-    },
-    "items": []
+      "especial": "No sufre penalizaciones por daño ni tira por Resistencia Física (N/A). No puede ser aterrorizado o intimidado (sí puede ser engañado). Las armas de fuego no le hacen daño; el resto de armas (aparte de la protección de su cota de malla) causan solo la mitad."
+    }
   },
   {
-    "name": "Demonios de Fuego",
+    "name": "Elfos de la Luz (Altos Elfos)",
     "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/demonios-de-fuego.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/elfos-de-la-luz-altos-elfos.webp",
     "system": {
       "biografia": {
-        "descripcion": "Grupo de demonios de fuego. Amenaza sobrenatural de alto impacto, apropiada para clímax, incursiones de Muspelheim o zonas abrasadas.",
-        "raza": "Demonios",
-        "reino": "Muspelheim",
-        "rasgos": "Fuego, terror, destrucción, odio a los juramentos mortales."
+        "descripcion": "Elfos de extrema belleza asociados a la vida, la salud y la naturaleza. Expertos sanadores, rara vez abandonan su luminoso reino de Alfheim.",
+        "raza": "Elfos",
+        "reino": "Alfheim",
+        "rasgos": "Elegancia, Embelesamiento, Hermosura, Inteligencia, Probidad"
       },
       "atributos": {
         "car": {
-          "value": 3
-        },
-        "des": {
-          "value": 4
-        },
-        "fue": {
           "value": 7
         },
+        "des": {
+          "value": 7
+        },
+        "fue": {
+          "value": 3
+        },
         "int": {
-          "value": 4
+          "value": 8
         },
         "per": {
-          "value": 2
+          "value": 10
         }
       },
       "valores_pasivos": {
-        "agilidad": 9,
-        "evasion": 3,
-        "aplomo": 12,
-        "perspicacia": 11
+        "agilidad": 16,
+        "evasion": 13,
+        "aplomo": 20,
+        "perspicacia": 23
       },
       "combate": {
         "salud": {
-          "value": 34,
-          "max": 34
+          "value": 19,
+          "max": 19
         },
-        "iniciativa": 8,
-        "resistencia_fisica": 5
+        "iniciativa": 15,
+        "resistencia_fisica": 9
       },
       "habilidades_clave": {
         "atletismo": {
-          "value": 3,
+          "value": 2,
           "atributo": "des"
         },
         "conducir": {
@@ -662,11 +493,11 @@
           "atributo": "des"
         },
         "fuerza_bruta": {
-          "value": 4,
+          "value": 1,
           "atributo": "fue"
         },
         "lucha": {
-          "value": 4,
+          "value": 2,
           "atributo": "des"
         },
         "punteria": {
@@ -674,7 +505,7 @@
           "atributo": "per"
         },
         "observacion": {
-          "value": 2,
+          "value": 4,
           "atributo": "per"
         },
         "supervivencia": {
@@ -684,259 +515,13 @@
       },
       "proteccion": {
         "armadura_nivel": 4,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
+        "armadura_descripcion": "Cota de malla de anilla fina",
+        "armadura_penalizacion": 2,
+        "escudo_nivel": 2,
+        "escudo_penalizacion": 2
       },
-      "especial": "Fuego, terror, destrucción, odio a los juramentos mortales."
-    },
-    "items": []
-  },
-  {
-    "name": "Draugar de Helheim",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/draugar-de-helheim.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Grupo de draugar de Helheim. Ideales como amenaza de tumba, ruina sagrada o maldición que persigue al capítulo.",
-        "raza": "No muertos",
-        "reino": "Helheim",
-        "rasgos": "Maldición, frío sepulcral, odio, terror, resistencia antinatural."
-      },
-      "atributos": {
-        "car": {
-          "value": 0
-        },
-        "des": {
-          "value": 3
-        },
-        "fue": {
-          "value": 5
-        },
-        "int": {
-          "value": 3
-        },
-        "per": {
-          "value": 4
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 12,
-        "evasion": 6,
-        "aplomo": 8,
-        "perspicacia": 12
-      },
-      "combate": {
-        "salud": {
-          "value": 28,
-          "max": 28
-        },
-        "iniciativa": 6,
-        "resistencia_fisica": 7
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 3,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 1,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 3,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 3,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 1,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 3,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 2,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 0,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Maldición, frío sepulcral, odio, terror, resistencia antinatural."
-    },
-    "items": []
-  },
-  {
-    "name": "Einherjar",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/einherjar.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Guerreros elegidos de Asgard. Pueden actuar como guardianes, prueba espiritual o aliados invocados por la mitología del sistema.",
-        "raza": "Espíritus guerreros",
-        "reino": "Asgard",
-        "rasgos": "Guerreros elegidos, disciplina, valor, combate ritual."
-      },
-      "atributos": {
-        "car": {
-          "value": 3
-        },
-        "des": {
-          "value": 5
-        },
-        "fue": {
-          "value": 5
-        },
-        "int": {
-          "value": 3
-        },
-        "per": {
-          "value": 3
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 12,
-        "evasion": 9,
-        "aplomo": 11,
-        "perspicacia": 11
-      },
-      "combate": {
-        "salud": {
-          "value": 30,
-          "max": 30
-        },
-        "iniciativa": 8,
-        "resistencia_fisica": 7
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 3,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 3,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 4,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 2,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 2,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Guerreros elegidos, disciplina, valor, combate ritual."
-    },
-    "items": []
-  },
-  {
-    "name": "Elfos de la Luz (Altos Elfos)",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/elfos-de-la-luz-altos-elfos.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Altos Elfos de la Luz. Sirven como PNJ sobrenaturales, diplomáticos peligrosos o adversarios de precisión y distancia.",
-        "raza": "Elfos",
-        "reino": "Alfheim",
-        "rasgos": "Belleza inquietante, precisión, orgullo antiguo, magia luminosa."
-      },
-      "atributos": {
-        "car": {
-          "value": 5
-        },
-        "des": {
-          "value": 5
-        },
-        "fue": {
-          "value": 2
-        },
-        "int": {
-          "value": 5
-        },
-        "per": {
-          "value": 5
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 10,
-        "evasion": 7,
-        "aplomo": 15,
-        "perspicacia": 15
-      },
-      "combate": {
-        "salud": {
-          "value": 20,
-          "max": 20
-        },
-        "iniciativa": 10,
-        "resistencia_fisica": 10
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 1,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 1,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 4,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 4,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 2,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 1,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Belleza inquietante, precisión, orgullo antiguo, magia luminosa."
-    },
-    "items": []
+      "especial": "El cuchillo o espada de hoja de Alfheim y el arco largo con puntas de Alfheim causan +3 puntos extra por quemadura a cualquier criatura del Ragnarök."
+    }
   },
   {
     "name": "Elfos Oscuros (Elfos de las Cavernas)",
@@ -944,41 +529,41 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/elfos-oscuros-elfos-de-las-cavernas.webp",
     "system": {
       "biografia": {
-        "descripcion": "Elfos oscuros de las cavernas. Amenaza de infiltración, emboscada y negociación envenenada.",
-        "raza": "Elfos oscuros",
-        "reino": "Svartalfheim",
-        "rasgos": "Sigilo, rencor, veneno, pactos ocultos."
+        "descripcion": "Elfos que viven bajo tierra en Svartálfaheim, alejados de la luz. Más bajos y menos inteligentes que los altos elfos, pero atléticos y letales. Cabalgan huargos.",
+        "raza": "Elfos",
+        "reino": "Svartálfaheim",
+        "rasgos": "Crueldad, Perversión, Odio intenso (elfos de la luz), Visión nocturna"
       },
       "atributos": {
         "car": {
-          "value": 3
-        },
-        "des": {
-          "value": 5
-        },
-        "fue": {
           "value": 2
         },
-        "int": {
+        "des": {
+          "value": 6
+        },
+        "fue": {
           "value": 5
+        },
+        "int": {
+          "value": 2
         },
         "per": {
           "value": 4
         }
       },
       "valores_pasivos": {
-        "agilidad": 10,
-        "evasion": 7,
-        "aplomo": 13,
-        "perspicacia": 14
+        "agilidad": 15,
+        "evasion": 15,
+        "aplomo": 9,
+        "perspicacia": 11
       },
       "combate": {
         "salud": {
-          "value": 20,
-          "max": 20
+          "value": 23,
+          "max": 23
         },
-        "iniciativa": 10,
-        "resistencia_fisica": 10
+        "iniciativa": 8,
+        "resistencia_fisica": 7
       },
       "habilidades_clave": {
         "atletismo": {
@@ -990,6 +575,642 @@
           "atributo": "des"
         },
         "fuerza_bruta": {
+          "value": 2,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "observacion": {
+          "value": 3,
+          "atributo": "per"
+        },
+        "supervivencia": {
+          "value": 3,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 2,
+        "armadura_descripcion": "Armadura de cuero de huargo",
+        "armadura_penalizacion": 1,
+        "escudo_nivel": 2,
+        "escudo_penalizacion": 2
+      },
+      "especial": "El mordisco causa +3 puntos extra por la acidez de su saliva. El arco corto de madera de raíz causa +1 punto extra por turno durante cinco turnos por la quemadura venenosa que produce."
+    }
+  },
+  {
+    "name": "Enanos (Dvergar)",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/enanos-dvergar.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "Dvergar testarudos e irascibles, maestros de la forja y de la magia rúnica. Viven bajo tierra en Svartálfaheim, aunque hay colonias en Midgard.",
+        "raza": "Enanos",
+        "reino": "Svartálfaheim",
+        "rasgos": "Habilidad, Iracundia, Laboriosidad, Orgullo, Visión nocturna"
+      },
+      "atributos": {
+        "car": {
+          "value": 3
+        },
+        "des": {
+          "value": 8
+        },
+        "fue": {
+          "value": 6
+        },
+        "int": {
+          "value": 4
+        },
+        "per": {
+          "value": 1
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 11,
+        "evasion": 8,
+        "aplomo": 12,
+        "perspicacia": 10
+      },
+      "combate": {
+        "salud": {
+          "value": 25,
+          "max": 25
+        },
+        "iniciativa": 12,
+        "resistencia_fisica": 6
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 3,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "observacion": {
+          "value": 3,
+          "atributo": "per"
+        },
+        "supervivencia": {
+          "value": 2,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 6,
+        "armadura_descripcion": "Cota de malla de anilla fina (nivel 4) más la gruesa piel enana (nivel 2 adicional, sin penalización)",
+        "armadura_penalizacion": 2,
+        "escudo_nivel": 0,
+        "escudo_penalizacion": 0
+      },
+      "especial": "Puede fabricar e imbuir objetos con magia rúnica (runas menores o mayores) a discreción de la DJ."
+    }
+  },
+  {
+    "name": "Espectros",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/espectros.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "Espíritus atormentados sin cuerpo físico que vagan entre el mundo de los vivos y Helheim. Hela los usa como instrumentos de terror y espionaje.",
+        "raza": "Muertos sin reposo",
+        "reino": "Helheim",
+        "rasgos": "Anomalía, Extravagancia, Locura"
+      },
+      "atributos": {
+        "car": {
+          "value": 0
+        },
+        "des": {
+          "value": 2
+        },
+        "fue": {
+          "value": 0
+        },
+        "int": {
+          "value": 3
+        },
+        "per": {
+          "value": 5
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 2,
+        "evasion": 2,
+        "aplomo": 8,
+        "perspicacia": 13
+      },
+      "combate": {
+        "salud": {
+          "value": 13,
+          "max": 13
+        },
+        "iniciativa": 5,
+        "resistencia_fisica": 0
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 0,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 0,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 0,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 0,
+          "atributo": "per"
+        },
+        "observacion": {
+          "value": 4,
+          "atributo": "per"
+        },
+        "supervivencia": {
+          "value": 1,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 0,
+        "armadura_descripcion": "Sin armadura, pero solo recibe 1 punto de daño por golpe (2 en caso de crítico), venga de donde venga; regenera 1 punto de Salud por turno de combate.",
+        "armadura_penalizacion": 0
+      },
+      "especial": "No puede atacar de forma convencional: en su lugar provoca un susto con una aparición repentina (solo una vez, estando oculto), gestionado como un ataque de 3D contra el Aplomo de la víctima. Si iguala o supera el Aplomo, la víctima pierde 1 punto de Salud; si es crítico, la víctima muere por paro cardíaco. Si el espectro llega a 0 de Salud se desmaterializa para siempre. No sufre penalizaciones por daño ni tira por Resistencia Física (N/A). No puede ser convencido, seducido, aterrorizado o intimidado (sí puede ser engañado)."
+    }
+  },
+  {
+    "name": "Esqueletos",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/esqueletos.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "Osamentas animadas por la magia de Hela, carne de cañón de los ejércitos de Helheim. Su única ventaja es presentarse en gran número.",
+        "raza": "Muertos sin reposo",
+        "reino": "Helheim",
+        "rasgos": "Fragilidad, Idiotismo, Torpeza"
+      },
+      "atributos": {
+        "car": {
+          "value": 0
+        },
+        "des": {
+          "value": 0
+        },
+        "fue": {
+          "value": 0
+        },
+        "int": {
+          "value": 0
+        },
+        "per": {
+          "value": 0
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 3,
+        "evasion": 0,
+        "aplomo": 5,
+        "perspicacia": 5
+      },
+      "combate": {
+        "salud": {
+          "value": 10,
+          "max": 10
+        },
+        "iniciativa": 0,
+        "resistencia_fisica": 0
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 0,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 1,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 0,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 0,
+        "armadura_descripcion": "Ninguna, pero las armas de fuego y las punzantes solo le causan la mitad del daño (redondeando hacia abajo); las contundentes le causan 1 punto más por golpe.",
+        "armadura_penalizacion": 0
+      },
+      "especial": "No sufre penalizaciones por daño ni tira por Resistencia Física (N/A). No puede ser convencido, seducido, aterrorizado o intimidado (sí podría ser engañado)."
+    }
+  },
+  {
+    "name": "Gigantes de Fuego",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/gigantes-de-fuego.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "Gigantes descendientes de Surt, poco comunes en Midgard, envueltos en gruesas capas de llamas. Sembrarían el pánico entre sus enemigos allá donde aparecieran.",
+        "raza": "Gigantes",
+        "reino": "Muspelheim",
+        "rasgos": "Enormidad, Incandescencia, Terror"
+      },
+      "atributos": {
+        "car": {
+          "value": 4
+        },
+        "des": {
+          "value": 3
+        },
+        "fue": {
+          "value": 30
+        },
+        "int": {
+          "value": 4
+        },
+        "per": {
+          "value": 1
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 12,
+        "evasion": 3,
+        "aplomo": 13,
+        "perspicacia": 10
+      },
+      "combate": {
+        "salud": {
+          "value": 75,
+          "max": 75
+        },
+        "iniciativa": 7,
+        "resistencia_fisica": 0
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 0,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 5,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "observacion": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "supervivencia": {
+          "value": 3,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 0,
+        "armadura_descripcion": "Sin armadura; las armas de fuego no le hacen daño y el resto de armas solo aguantan tres golpes antes de fundirse. Las armas de madera arden al primer contacto con su cuerpo.",
+        "armadura_penalizacion": 0
+      },
+      "especial": "Desprende tanto calor que combatir cerca de él con armas causa 1 punto de daño automático cada turno; tocarlo sin armas causa 3 puntos por turno. No tira por Resistencia Física (N/A). No puede ser aterrorizado o intimidado (sí puede ser engañado)."
+    }
+  },
+  {
+    "name": "Gigantes de Hielo",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/gigantes-de-hielo.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "El linaje más peligroso de gigantes, con cuerpos de gruesas placas de hielo. Su fuerza es titánica; el fuego es su punto débil.",
+        "raza": "Gigantes",
+        "reino": "Jötunheim",
+        "rasgos": "Enormidad, Poder, Terror"
+      },
+      "atributos": {
+        "car": {
+          "value": 3
+        },
+        "des": {
+          "value": 2
+        },
+        "fue": {
+          "value": 50
+        },
+        "int": {
+          "value": 5
+        },
+        "per": {
+          "value": 2
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 11,
+        "evasion": 2,
+        "aplomo": 13,
+        "perspicacia": 12
+      },
+      "combate": {
+        "salud": {
+          "value": 115,
+          "max": 115
+        },
+        "iniciativa": 7,
+        "resistencia_fisica": 0
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 0,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 5,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "observacion": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "supervivencia": {
+          "value": 4,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 5,
+        "armadura_descripcion": "Gruesas placas de hielo, sin penalización",
+        "armadura_penalizacion": 0
+      },
+      "especial": "No tira por Resistencia Física (N/A). Cualquier ataque de fuego le causa el doble de daño. No puede ser aterrorizado o intimidado (sí puede ser engañado)."
+    }
+  },
+  {
+    "name": "Gigantes de las Montañas",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/gigantes-de-las-montanas.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "Los menos poderosos de los gigantes, pero igualmente peligrosos. Viven en pequeñas comunidades de dos o tres miembros, saqueando y cazando en Midgard.",
+        "raza": "Gigantes",
+        "reino": "Jötunheim",
+        "rasgos": "Enormidad, Pesadez, Terror"
+      },
+      "atributos": {
+        "car": {
+          "value": 0
+        },
+        "des": {
+          "value": 2
+        },
+        "fue": {
+          "value": 20
+        },
+        "int": {
+          "value": 0
+        },
+        "per": {
+          "value": 2
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 8,
+        "evasion": 2,
+        "aplomo": 5,
+        "perspicacia": 7
+      },
+      "combate": {
+        "salud": {
+          "value": 55,
+          "max": 55
+        },
+        "iniciativa": 2,
+        "resistencia_fisica": 0
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 0,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 5,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "observacion": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "supervivencia": {
+          "value": 4,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 5,
+        "armadura_descripcion": "Gruesas placas de roca, sin penalización; las armas de fuego solo le causan 1 punto de daño (3 en ráfaga)",
+        "armadura_penalizacion": 0
+      },
+      "especial": "Ataque de área con cualquier arma contundente cuerpo a cuerpo: impacta hasta a cinco rivales próximos entre sí con un solo golpe (Agilidad/Evasión de cada objetivo +2 por cada rival adicional ese turno; tirada de Lucha independiente por blanco; daño recibido por cada uno es el del golpe menos 10). No tira por Resistencia Física (N/A). No puede ser aterrorizado o intimidado (sí puede ser engañado)."
+    }
+  },
+  {
+    "name": "Huargos",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/huargos.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "Lobos enormes y crueles, monturas de los elfos oscuros, con velocidad equiparable a la de un vehículo a motor y mandíbulas capaces de atravesar el metal.",
+        "raza": "Huargos",
+        "reino": "Svartálfaheim",
+        "rasgos": "Hambre, Malevolencia, Visión nocturna"
+      },
+      "atributos": {
+        "car": {
+          "value": 0
+        },
+        "des": {
+          "value": 4
+        },
+        "fue": {
+          "value": 7
+        },
+        "int": {
+          "value": 5
+        },
+        "per": {
+          "value": 8
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 13,
+        "evasion": 4,
+        "aplomo": 10,
+        "perspicacia": 18
+      },
+      "combate": {
+        "salud": {
+          "value": 25,
+          "max": 25
+        },
+        "iniciativa": 9,
+        "resistencia_fisica": 5
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 4,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 0,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 2,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 0,
+          "atributo": "per"
+        },
+        "observacion": {
+          "value": 3,
+          "atributo": "per"
+        },
+        "supervivencia": {
+          "value": 4,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 2,
+        "armadura_descripcion": "Grueso pelaje, sin penalización",
+        "armadura_penalizacion": 0
+      },
+      "especial": "Dentellada furtiva y garrazo son sus únicos ataques; suelen combatir montados por elfos oscuros, reforzando la carga de sus jinetes."
+    }
+  },
+  {
+    "name": "Supervivientes de las Llanuras Yermas",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/supervivientes-de-las-llanuras-yermas.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "Superviviente adulto de las Llanuras Yermas: gente corriente cuyo único objetivo es ver el siguiente amanecer y proteger a los suyos. (El manual da también un perfil de niño, más débil, para cuando la escena lo requiera.)",
+        "raza": "Humanos",
+        "reino": "Midgard",
+        "rasgos": "Capacidad de superación, Sexto sentido"
+      },
+      "atributos": {
+        "car": {
+          "value": 2
+        },
+        "des": {
+          "value": 2
+        },
+        "fue": {
+          "value": 2
+        },
+        "int": {
+          "value": 1
+        },
+        "per": {
+          "value": 4
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 8,
+        "evasion": 5,
+        "aplomo": 8,
+        "perspicacia": 10
+      },
+      "combate": {
+        "salud": {
+          "value": 17,
+          "max": 17
+        },
+        "iniciativa": 3,
+        "resistencia_fisica": 10
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
           "value": 1,
           "atributo": "fue"
         },
@@ -998,11 +1219,11 @@
           "atributo": "des"
         },
         "punteria": {
-          "value": 3,
+          "value": 2,
           "atributo": "per"
         },
         "observacion": {
-          "value": 3,
+          "value": 2,
           "atributo": "per"
         },
         "supervivencia": {
@@ -1012,669 +1233,11 @@
       },
       "proteccion": {
         "armadura_nivel": 1,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
+        "armadura_descripcion": "Ropas de cuero",
+        "armadura_penalizacion": 0
       },
-      "especial": "Sigilo, rencor, veneno, pactos ocultos."
-    },
-    "items": []
-  },
-  {
-    "name": "Enanos (Dvergar)",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/enanos-dvergar.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Dvergar o enanos míticos. Funcionan como artesanos, comerciantes peligrosos, mecánicos imposibles o guardianes de reliquias.",
-        "raza": "Dvergar",
-        "reino": "Svartalfheim",
-        "rasgos": "Forja, resistencia, orgullo, tratos exactos, secretos mecánicos."
-      },
-      "atributos": {
-        "car": {
-          "value": 2
-        },
-        "des": {
-          "value": 2
-        },
-        "fue": {
-          "value": 4
-        },
-        "int": {
-          "value": 5
-        },
-        "per": {
-          "value": 3
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 6,
-        "evasion": 3,
-        "aplomo": 12,
-        "perspicacia": 13
-      },
-      "combate": {
-        "salud": {
-          "value": 24,
-          "max": 24
-        },
-        "iniciativa": 7,
-        "resistencia_fisica": 8
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 1,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 3,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 3,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 2,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 2,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Forja, resistencia, orgullo, tratos exactos, secretos mecánicos."
-    },
-    "items": []
-  },
-  {
-    "name": "Espectros",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/espectros.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Espectros de los muertos. Usar como amenaza espiritual, aparición de culpa o guardián de lugares malditos.",
-        "raza": "No muertos",
-        "reino": "Helheim",
-        "rasgos": "Incorpóreos, lamento, frío, memoria rota."
-      },
-      "atributos": {
-        "car": {
-          "value": 1
-        },
-        "des": {
-          "value": 4
-        },
-        "fue": {
-          "value": 0
-        },
-        "int": {
-          "value": 3
-        },
-        "per": {
-          "value": 5
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 7,
-        "evasion": 4,
-        "aplomo": 9,
-        "perspicacia": 13
-      },
-      "combate": {
-        "salud": {
-          "value": 16,
-          "max": 16
-        },
-        "iniciativa": 7,
-        "resistencia_fisica": 12
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 1,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 0,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 0,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 1,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 4,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 1,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 0,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Incorpóreos, lamento, frío, memoria rota."
-    },
-    "items": []
-  },
-  {
-    "name": "Esqueletos",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/esqueletos.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Esqueletos animados. Amenaza sencilla de grupo para tumbas, ruinas y maldiciones persistentes.",
-        "raza": "No muertos",
-        "reino": "Helheim",
-        "rasgos": "Restos animados, obediencia, números, armas oxidadas."
-      },
-      "atributos": {
-        "car": {
-          "value": 0
-        },
-        "des": {
-          "value": 3
-        },
-        "fue": {
-          "value": 3
-        },
-        "int": {
-          "value": 0
-        },
-        "per": {
-          "value": 2
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 9,
-        "evasion": 3,
-        "aplomo": 5,
-        "perspicacia": 7
-      },
-      "combate": {
-        "salud": {
-          "value": 16,
-          "max": 16
-        },
-        "iniciativa": 3,
-        "resistencia_fisica": 9
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 0,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 2,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 1,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 1,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 0,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 0,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Restos animados, obediencia, números, armas oxidadas."
-    },
-    "items": []
-  },
-  {
-    "name": "Gigantes de Fuego",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/gigantes-de-fuego.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Gigantes de Fuego. Amenaza mayor de Muspelheim, con fuerza masiva y presencia devastadora.",
-        "raza": "Gigantes",
-        "reino": "Muspelheim",
-        "rasgos": "Enormes, ígneos, destructores, orgullo elemental."
-      },
-      "atributos": {
-        "car": {
-          "value": 3
-        },
-        "des": {
-          "value": 2
-        },
-        "fue": {
-          "value": 9
-        },
-        "int": {
-          "value": 3
-        },
-        "per": {
-          "value": 3
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 6,
-        "evasion": -3,
-        "aplomo": 11,
-        "perspicacia": 11
-      },
-      "combate": {
-        "salud": {
-          "value": 42,
-          "max": 42
-        },
-        "iniciativa": 5,
-        "resistencia_fisica": 3
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 3,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 0,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 5,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 4,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 3,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 5,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Enormes, ígneos, destructores, orgullo elemental."
-    },
-    "items": []
-  },
-  {
-    "name": "Gigantes de Hielo",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/gigantes-de-hielo.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Gigantes de Hielo. Enemigos mayores asociados a frío extremo, pactos antiguos y ruinas de Jotunheim.",
-        "raza": "Gigantes",
-        "reino": "Jotunheim",
-        "rasgos": "Frío, paciencia cruel, fuerza colosal, resistencia."
-      },
-      "atributos": {
-        "car": {
-          "value": 3
-        },
-        "des": {
-          "value": 2
-        },
-        "fue": {
-          "value": 9
-        },
-        "int": {
-          "value": 3
-        },
-        "per": {
-          "value": 4
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 6,
-        "evasion": -3,
-        "aplomo": 11,
-        "perspicacia": 12
-      },
-      "combate": {
-        "salud": {
-          "value": 44,
-          "max": 44
-        },
-        "iniciativa": 5,
-        "resistencia_fisica": 3
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 3,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 0,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 5,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 4,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 3,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 4,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 5,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Frío, paciencia cruel, fuerza colosal, resistencia."
-    },
-    "items": []
-  },
-  {
-    "name": "Gigantes de las Montañas",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/gigantes-de-las-montanas.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Gigantes de las Montañas. Amenaza física enorme para pasos, minas, valles aislados y fortalezas antiguas.",
-        "raza": "Gigantes",
-        "reino": "Jotunheim",
-        "rasgos": "Piedra, montaña, fuerza lenta, territorio sagrado."
-      },
-      "atributos": {
-        "car": {
-          "value": 2
-        },
-        "des": {
-          "value": 2
-        },
-        "fue": {
-          "value": 10
-        },
-        "int": {
-          "value": 2
-        },
-        "per": {
-          "value": 3
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 5,
-        "evasion": -4,
-        "aplomo": 9,
-        "perspicacia": 10
-      },
-      "combate": {
-        "salud": {
-          "value": 46,
-          "max": 46
-        },
-        "iniciativa": 4,
-        "resistencia_fisica": 2
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 3,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 0,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 5,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 4,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 4,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 6,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Piedra, montaña, fuerza lenta, territorio sagrado."
-    },
-    "items": []
-  },
-  {
-    "name": "Huargos",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/huargos.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Huargos de las tierras salvajes. Funcionan muy bien en persecuciones, cacerías nocturnas y presión contra personajes heridos.",
-        "raza": "Bestias",
-        "reino": "Midgard",
-        "rasgos": "Manada, olfato, persecución, colmillos."
-      },
-      "atributos": {
-        "car": {
-          "value": 0
-        },
-        "des": {
-          "value": 5
-        },
-        "fue": {
-          "value": 4
-        },
-        "int": {
-          "value": 1
-        },
-        "per": {
-          "value": 4
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 17,
-        "evasion": 5,
-        "aplomo": 6,
-        "perspicacia": 10
-      },
-      "combate": {
-        "salud": {
-          "value": 22,
-          "max": 22
-        },
-        "iniciativa": 6,
-        "resistencia_fisica": 8
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 4,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 0,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 2,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 3,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 0,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 3,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 4,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 0,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Manada, olfato, persecución, colmillos."
-    },
-    "items": []
-  },
-  {
-    "name": "Supervivientes de las Llanuras Yermas",
-    "type": "pnj",
-    "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/supervivientes-de-las-llanuras-yermas.webp",
-    "system": {
-      "biografia": {
-        "descripcion": "Grupo de supervivientes humanos. Pueden ser aliados, refugiados, testigos, víctimas o amenaza desesperada.",
-        "raza": "Humanos",
-        "reino": "Midgard",
-        "rasgos": "Desconfianza, hambre, ingenio, cicatrices de la carretera."
-      },
-      "atributos": {
-        "car": {
-          "value": 2
-        },
-        "des": {
-          "value": 3
-        },
-        "fue": {
-          "value": 2
-        },
-        "int": {
-          "value": 3
-        },
-        "per": {
-          "value": 3
-        }
-      },
-      "valores_pasivos": {
-        "agilidad": 9,
-        "evasion": 9,
-        "aplomo": 10,
-        "perspicacia": 11
-      },
-      "combate": {
-        "salud": {
-          "value": 18,
-          "max": 18
-        },
-        "iniciativa": 6,
-        "resistencia_fisica": 10
-      },
-      "habilidades_clave": {
-        "atletismo": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "conducir": {
-          "value": 2,
-          "atributo": "des"
-        },
-        "fuerza_bruta": {
-          "value": 1,
-          "atributo": "fue"
-        },
-        "lucha": {
-          "value": 1,
-          "atributo": "des"
-        },
-        "punteria": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "observacion": {
-          "value": 2,
-          "atributo": "per"
-        },
-        "supervivencia": {
-          "value": 3,
-          "atributo": "per"
-        }
-      },
-      "proteccion": {
-        "armadura_nivel": 0,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
-      },
-      "especial": "Desconfianza, hambre, ingenio, cicatrices de la carretera."
-    },
-    "items": []
+      "especial": "Presa habitual de bandidos, carroñeros y criaturas del Ragnarök. Muchos hoy están amparados por los Cuervos de Asgard."
+    }
   },
   {
     "name": "Trasgos",
@@ -1682,40 +1245,40 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/trasgos.webp",
     "system": {
       "biografia": {
-        "descripcion": "Trasgos. Amenaza menor pero numerosa, adecuada para emboscadas, túneles, talleres saqueados y trampas improvisadas.",
-        "raza": "Trasgos",
-        "reino": "Midgard",
-        "rasgos": "Cobardía agresiva, chatarra, trampas, enjambre."
+        "descripcion": "Criaturas de la misma raza que los troles, pero mucho más pequeñas y débiles, con inteligencia retorcida y afición a las emboscadas en cuadrilla.",
+        "raza": "Troles",
+        "reino": "Svartálfaheim",
+        "rasgos": "Bronca, Incordio, Ruido, Taimería"
       },
       "atributos": {
         "car": {
           "value": 1
         },
         "des": {
-          "value": 4
+          "value": 5
         },
         "fue": {
           "value": 1
         },
         "int": {
-          "value": 2
+          "value": 4
         },
         "per": {
-          "value": 3
+          "value": 2
         }
       },
       "valores_pasivos": {
-        "agilidad": 10,
-        "evasion": 7,
-        "aplomo": 8,
-        "perspicacia": 10
+        "agilidad": 11,
+        "evasion": 8,
+        "aplomo": 10,
+        "perspicacia": 11
       },
       "combate": {
         "salud": {
-          "value": 14,
-          "max": 14
+          "value": 15,
+          "max": 15
         },
-        "iniciativa": 6,
+        "iniciativa": 9,
         "resistencia_fisica": 11
       },
       "habilidades_clave": {
@@ -1749,14 +1312,12 @@
         }
       },
       "proteccion": {
-        "armadura_nivel": 0,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
+        "armadura_nivel": 1,
+        "armadura_descripcion": "Ropas de cuero",
+        "armadura_penalizacion": 0
       },
-      "especial": "Cobardía agresiva, chatarra, trampas, enjambre."
-    },
-    "items": []
+      "especial": "Suelen moverse en cuadrillas, atacando en grupo y aprovechando el efecto sorpresa; expertos en emboscadas."
+    }
   },
   {
     "name": "Troles",
@@ -1764,23 +1325,23 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/troles.webp",
     "system": {
       "biografia": {
-        "descripcion": "Troles. Criaturas enormes y difíciles de tumbar, útiles como monstruos de choque o guardianes de territorios salvajes.",
+        "descripcion": "Seres brutales y gigantescos (3-5 metros) que viven en cuevas oscuras, en pequeñas comunidades de tres o cuatro miembros. Sienten predilección por la carne humana.",
         "raza": "Troles",
-        "reino": "Jotunheim",
-        "rasgos": "Regeneración, brutalidad, hambre, piel dura."
+        "reino": "Svartálfaheim",
+        "rasgos": "Bestialidad, Estupidez, Enormidad, Terror"
       },
       "atributos": {
         "car": {
           "value": 0
         },
         "des": {
-          "value": 2
+          "value": 1
         },
         "fue": {
-          "value": 8
+          "value": 16
         },
         "int": {
-          "value": 1
+          "value": 0
         },
         "per": {
           "value": 3
@@ -1788,17 +1349,17 @@
       },
       "valores_pasivos": {
         "agilidad": 4,
-        "evasion": -2,
-        "aplomo": 6,
-        "perspicacia": 9
+        "evasion": 1,
+        "aplomo": 5,
+        "perspicacia": 8
       },
       "combate": {
         "salud": {
-          "value": 38,
-          "max": 38
+          "value": 45,
+          "max": 45
         },
-        "iniciativa": 3,
-        "resistencia_fisica": 4
+        "iniciativa": 1,
+        "resistencia_fisica": 0
       },
       "habilidades_clave": {
         "atletismo": {
@@ -1814,11 +1375,11 @@
           "atributo": "fue"
         },
         "lucha": {
-          "value": 4,
+          "value": 3,
           "atributo": "des"
         },
         "punteria": {
-          "value": 1,
+          "value": 3,
           "atributo": "per"
         },
         "observacion": {
@@ -1832,13 +1393,11 @@
       },
       "proteccion": {
         "armadura_nivel": 4,
-        "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
+        "armadura_descripcion": "Piel gruesa, sin penalización",
+        "armadura_penalizacion": 0
       },
-      "especial": "Regeneración, brutalidad, hambre, piel dura."
-    },
-    "items": []
+      "especial": "Ataque de área con garrote o maza improvisada: impacta hasta a tres rivales próximos entre sí con un solo golpe (Agilidad/Evasión de cada objetivo +2 por cada rival adicional ese turno; tirada de Lucha independiente por blanco; daño recibido por cada uno es el del golpe menos 6). No tira por Resistencia Física (N/A). No puede ser convencido, seducido, aterrorizado, engañado ni intimidado."
+    }
   },
   {
     "name": "Valquirias",
@@ -1846,41 +1405,41 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/manual-bestiario/valquirias.webp",
     "system": {
       "biografia": {
-        "descripcion": "Valquirias. Figuras míticas de autoridad y combate, apropiadas como emisarias, jueces o adversarias sagradas.",
-        "raza": "Espíritus guerreros",
+        "descripcion": "Doncellas de la guerra de Asgard, guardia personal de Freya, montadas en caballos alados. Cada una recibe uno o varios poderes divinos.",
+        "raza": "Valquirias",
         "reino": "Asgard",
-        "rasgos": "Juicio, honor, alas, lanzas, destino de los caídos."
+        "rasgos": "Belicosidad, Dignidad, Hermosura, Poder"
       },
       "atributos": {
         "car": {
-          "value": 5
+          "value": 4
         },
         "des": {
-          "value": 6
+          "value": 8
         },
         "fue": {
-          "value": 4
+          "value": 12
         },
         "int": {
-          "value": 4
+          "value": 5
         },
         "per": {
-          "value": 5
+          "value": 3
         }
       },
       "valores_pasivos": {
-        "agilidad": 13,
-        "evasion": 10,
+        "agilidad": 17,
+        "evasion": 17,
         "aplomo": 14,
-        "perspicacia": 14
+        "perspicacia": 13
       },
       "combate": {
         "salud": {
-          "value": 28,
-          "max": 28
+          "value": 35,
+          "max": 35
         },
-        "iniciativa": 10,
-        "resistencia_fisica": 8
+        "iniciativa": 13,
+        "resistencia_fisica": 0
       },
       "habilidades_clave": {
         "atletismo": {
@@ -1896,7 +1455,7 @@
           "atributo": "fue"
         },
         "lucha": {
-          "value": 4,
+          "value": 3,
           "atributo": "des"
         },
         "punteria": {
@@ -1904,7 +1463,7 @@
           "atributo": "per"
         },
         "observacion": {
-          "value": 4,
+          "value": 2,
           "atributo": "per"
         },
         "supervivencia": {
@@ -1913,13 +1472,13 @@
         }
       },
       "proteccion": {
-        "armadura_nivel": 2,
+        "armadura_nivel": 5,
+        "armadura_descripcion": "Armadura mágica bendecida por Freya e Idunn, sin penalización",
         "armadura_penalizacion": 0,
-        "escudo_nivel": 0,
-        "escudo_penalizacion": 0
+        "escudo_nivel": 3,
+        "escudo_penalizacion": 3
       },
-      "especial": "Juicio, honor, alas, lanzas, destino de los caídos."
-    },
-    "items": []
+      "especial": "No tira nunca por Resistencia Física (N/A). Cada valquiria puede estar agraciada con dones divinos adicionales a discreción de la DJ (taumaturgia curativa, infundir valor, profecías, etc.)."
+    }
   }
 ]
