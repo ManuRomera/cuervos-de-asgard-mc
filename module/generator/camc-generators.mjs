@@ -303,38 +303,41 @@ const starterDones = [
 function starterEquipmentFor({ cargo, deidad, favored = [], rng = Math.random } = {}) {
   const cargoData = CAMC.cargos[cargo] ?? CAMC.cargos.full_patch;
   const dios = CAMC.dioses[deidad] ?? {};
+  // Daño según la tabla de concreción del manual: fijo (sin dados) + bonificador de
+  // atributo. cuerpo_a_cuerpo e improvisada usan 3 + FUE; distancia_no_fuego, 3 + PER;
+  // fuego_cortas, 7 + PER. La categoría es siempre la clave exacta de CAMC.categoriasArma.
   const melee = [
     {
       name: "Cuchillo de carretera",
       img: "icons/weapons/daggers/dagger-simple.webp",
-      system: { tipo: "cuerpo_a_cuerpo", categoria: "Arma blanca", alcance: "cuerpo_a_cuerpo", dano: "1D", dano_fijo: 1, especial: "Herramienta de supervivencia y arma discreta.", descripcion: "Hoja corta útil para trabajo de campamento, intimidación y combate cercano.", equipada: true, carga: { ubicacion: "mochila", espacios: 0.5 } }
+      system: { tipo: "cuerpo_a_cuerpo", categoria: "cuerpo_a_cuerpo", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Herramienta de supervivencia y arma discreta.", descripcion: "Hoja corta útil para trabajo de campamento, intimidación y combate cercano.", equipada: true, carga: { ubicacion: "mochila", espacios: 0.5 } }
     },
     {
       name: "Llave pesada",
       img: "icons/tools/hand/wrench-steel-grey.webp",
-      system: { tipo: "cuerpo_a_cuerpo", categoria: "Improvisada", alcance: "cuerpo_a_cuerpo", dano: "1D", dano_fijo: 2, especial: "Cuenta también como herramienta de mecánica.", descripcion: "Llave de taller grande, marcada con hollín y runas de uso.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
+      system: { tipo: "cuerpo_a_cuerpo", categoria: "improvisada", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Cuenta también como herramienta de mecánica.", descripcion: "Llave de taller grande, marcada con hollín y runas de uso.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
     },
     {
       name: "Cadena de arrastre",
       img: "icons/tools/fasteners/chain-steel.webp",
-      system: { tipo: "cuerpo_a_cuerpo", categoria: "Contundente", alcance: "cuerpo_a_cuerpo", dano: "1D", dano_fijo: 2, especial: "Puede servir para bloquear, atar o remolcar.", descripcion: "Cadena de acero recuperada de un portón de carretera.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
+      system: { tipo: "cuerpo_a_cuerpo", categoria: "cuerpo_a_cuerpo", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Puede servir para bloquear, atar o remolcar.", descripcion: "Cadena de acero recuperada de un portón de carretera.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
     }
   ];
   const ranged = [
     {
       name: "Arpón",
       img: "icons/weapons/polearms/spear-hooked-brown.webp",
-      system: { tipo: "distancia", categoria: "Armas a distancia no de fuego", alcance: "distancia", dano: "1D", dano_fijo: 7, municion: { value: 1, max: 1 }, especial: "Recuperable si la escena permite recogerlo.", descripcion: "Arpón pesado usado para cazar, intimidar y detener objetivos a corta distancia.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
+      system: { tipo: "distancia_no_fuego", categoria: "distancia_no_fuego", alcance: "distancia", dano_fijo: 3, municion: { value: 0, max: 0 }, especial: "Recuperable si la escena permite recogerlo.", descripcion: "Arpón pesado usado para cazar, intimidar y detener objetivos a corta distancia.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
     },
     {
       name: "Pistola reciclada",
       img: "icons/weapons/guns/gun-pistol-brass.webp",
-      system: { tipo: "distancia", categoria: "Arma de fuego", alcance: "distancia", dano: "2D", dano_fijo: 0, municion: { value: 6, max: 6 }, especial: "Munición escasa; declarar recarga cuando se agote.", descripcion: "Arma corta reconstruida con piezas no coincidentes.", equipada: false, carga: { ubicacion: "mochila", espacios: 1 } }
+      system: { tipo: "fuego_cortas", categoria: "fuego_cortas", alcance: "distancia", dano_fijo: 7, municion: { value: 6, max: 6 }, especial: "Munición escasa; declarar recarga cuando se agote.", descripcion: "Arma corta reconstruida con piezas no coincidentes.", equipada: false, carga: { ubicacion: "mochila", espacios: 1 } }
     },
     {
       name: "Ballesta de taller",
       img: "icons/weapons/crossbows/crossbow-simple-brown.webp",
-      system: { tipo: "distancia", categoria: "Armas a distancia no de fuego", alcance: "distancia", dano: "1D", dano_fijo: 5, municion: { value: 1, max: 1 }, especial: "Silenciosa y fácil de reparar con piezas comunes.", descripcion: "Ballesta sencilla fabricada con acero de suspensión.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
+      system: { tipo: "distancia_no_fuego", categoria: "distancia_no_fuego", alcance: "distancia", dano_fijo: 3, municion: { value: 5, max: 5 }, especial: "Silenciosa y fácil de reparar con piezas comunes.", descripcion: "Ballesta sencilla fabricada con acero de suspensión.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
     }
   ];
   const useful = [

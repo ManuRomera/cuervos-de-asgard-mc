@@ -90,7 +90,7 @@ export class CAMCItem extends Item {
     if (raw.includes("fuego") && raw.includes("larga")) return "fuego_largas";
     if (raw.includes("fuego") && raw.includes("corta")) return "fuego_cortas";
     if (raw.includes("explos")) return "explosivo";
-    if (raw.includes("distancia") && !raw.includes("fuego")) return "distancia_no_fuego";
+    if (raw.includes("no de fuego") || (raw.includes("distancia") && !raw.includes("fuego"))) return "distancia_no_fuego";
     if (raw.includes("dos manos")) return "cuerpo_a_cuerpo_dos_manos";
     if (raw.includes("improvis")) return "improvisada";
     return "cuerpo_a_cuerpo";
