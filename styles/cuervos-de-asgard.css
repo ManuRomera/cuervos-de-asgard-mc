@@ -3530,6 +3530,13 @@ body.camc-compact .camc-sheet{font-size:12px;}
 }
 
 .camc-npc-kpis .health b{font-size:32px;}
+.camc-npc-kpis article small{
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  color:rgba(20,18,14,.72)!important;
+  line-height:1.2;
+}
 .camc-npc-kpis .health > i{
   display:block;
   height:6px;

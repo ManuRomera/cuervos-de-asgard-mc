@@ -228,10 +228,20 @@ function buildAttributes(order) {
   return Object.fromEntries(order.map((key, index) => [key, { value: values[index] ?? 0 }]));
 }
 
+// Reparto de creación (reglas-resumen.json): 4 habilidades a 3D, 8 a 2D, el resto a 1D.
+// Es un reparto de dados independiente de qué habilidades sean favorecidas (esas suman
+// +3 aparte al tirar, no dados extra), pero para que un PJ generado tenga sentido se
+// prioriza que sus habilidades favorecidas caigan en el tramo de 3D siempre que sea posible.
 function buildSkills(favored = [], rng = Math.random) {
+  const keys = Object.keys(CAMC.habilidades);
+  const favoredKeys = keys.filter(key => favored.includes(key));
+  const otherKeys = keys.filter(key => !favored.includes(key));
+  const ordered = [...uniquePicks(favoredKeys, favoredKeys.length, rng), ...uniquePicks(otherKeys, otherKeys.length, rng)];
+  const threeD = new Set(ordered.slice(0, 4));
+  const twoD = new Set(ordered.slice(4, 12));
   const skills = {};
   for (const [key, cfg] of Object.entries(CAMC.habilidades)) {
-    const value = favored.includes(key) ? 4 : (rng() > 0.82 ? 2 : 1);
+    const value = threeD.has(key) ? 3 : (twoD.has(key) ? 2 : 1);
     skills[key] = { value, atributo: cfg.atributo ?? "int" };
   }
   return skills;
@@ -464,7 +474,7 @@ export function generateRandomCharacter(options = {}) {
       carga: { mochila_max: 6, alforjas_base: 8, alforjas_extra: false },
       chaleco: {},
       nivel: 1,
-      notas: "Generado automáticamente siguiendo el reparto base de creación: atributos 6/4/2/1/0, habilidades base 1D y habilidades favorecidas del cargo a 4D."
+      notas: "Generado automáticamente siguiendo el reparto base de creación: atributos 6/4/2/1/0 y habilidades repartidas en 4 a 3D, 8 a 2D y el resto a 1D (las favorecidas del cargo, cuando es posible, caen en el tramo de 3D)."
     },
     items: starterEquipmentFor({ cargo, deidad, favored, rng })
   };

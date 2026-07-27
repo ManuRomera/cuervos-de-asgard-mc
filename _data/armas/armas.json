@@ -6,7 +6,7 @@
     "system": {
       "tipo": "cuerpo_a_cuerpo",
       "categoria": "cuerpo_a_cuerpo",
-      "dano_fijo": 5,
+      "dano_fijo": 3,
       "tamano": "pequeno",
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
@@ -15,7 +15,7 @@
         "value": 0,
         "max": 0
       },
-      "especial": "Ataque con Lucha. Daño 5 + FUE/2. Por su tamaño pequeño puede ocultarse y transportarse con facilidad.",
+      "especial": "Ataque con Lucha. Daño 3 + FUE. Por su tamaño pequeño puede ocultarse y transportarse con facilidad.",
       "descripcion": "Armas blancas pequeñas de uso cotidiano. Sirven como herramienta y como último recurso en combate cerrado. En Ysystem el daño del arma se suma al bonificador físico correspondiente."
     }
   },
@@ -26,7 +26,7 @@
     "system": {
       "tipo": "cuerpo_a_cuerpo",
       "categoria": "cuerpo_a_cuerpo",
-      "dano_fijo": 7,
+      "dano_fijo": 3,
       "tamano": "mediano",
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
@@ -35,7 +35,7 @@
         "value": 0,
         "max": 0
       },
-      "especial": "Ataque con Lucha. Daño 7 + FUE/2.",
+      "especial": "Ataque con Lucha. Daño 3 + FUE.",
       "descripcion": "Armas cuerpo a cuerpo habituales entre supervivientes y Cuervos. Son fiables, manufacturadas y no requieren tiradas de caducidad."
     }
   },
@@ -46,7 +46,7 @@
     "system": {
       "tipo": "cuerpo_a_cuerpo_dos_manos",
       "categoria": "cuerpo_a_cuerpo_dos_manos",
-      "dano_fijo": 10,
+      "dano_fijo": 3,
       "tamano": "grande",
       "deterioro": "M",
       "disponibilidad": "frecuente",
@@ -55,8 +55,8 @@
         "value": 0,
         "max": 0
       },
-      "especial": "Requiere ambas manos. Ataque con Lucha. Daño 10 + FUE/2.",
-      "descripcion": "Armas pesadas de gran impacto. Sacrifican comodidad y discreción a cambio de un daño base muy alto en cuerpo a cuerpo."
+      "especial": "Requiere ambas manos. Ataque con Lucha. Daño 3 + FUE x1,5 (redondeado).",
+      "descripcion": "Armas pesadas de gran impacto. Sacrifican comodidad y discreción a cambio del multiplicador de fuerza más alto en cuerpo a cuerpo."
     }
   },
   {
@@ -66,7 +66,7 @@
     "system": {
       "tipo": "cuerpo_a_cuerpo",
       "categoria": "cuerpo_a_cuerpo",
-      "dano_fijo": 7,
+      "dano_fijo": 3,
       "tamano": "mediano",
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
@@ -75,7 +75,7 @@
         "value": 0,
         "max": 0
       },
-      "especial": "Ataque con Lucha. Daño 7 + FUE/2.",
+      "especial": "Ataque con Lucha. Daño 3 + FUE.",
       "descripcion": "Armas contundentes o flexibles, útiles para pelear a corta distancia con materiales fáciles de conseguir o fabricar."
     }
   },
@@ -86,7 +86,7 @@
     "system": {
       "tipo": "cuerpo_a_cuerpo",
       "categoria": "distancia_no_fuego",
-      "dano_fijo": 7,
+      "dano_fijo": 3,
       "tamano": "grande",
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
@@ -95,7 +95,7 @@
         "value": 0,
         "max": 0
       },
-      "especial": "Puede usarse cuerpo a cuerpo con Lucha o arrojada con Puntería. Daño 7 + FUE/2 en melé o 7 + PER a distancia.",
+      "especial": "Clasificada como distancia no de fuego: ataque con Puntería, daño 3 + PER. Si se blande cuerpo a cuerpo con Lucha, el daño es 3 + FUE.",
       "descripcion": "Arma versátil para combate cercano o lanzamiento. En la hoja se clasifica como distancia no de fuego para que use Puntería por defecto."
     }
   },
@@ -106,7 +106,7 @@
     "system": {
       "tipo": "distancia_no_fuego",
       "categoria": "distancia_no_fuego",
-      "dano_fijo": 5,
+      "dano_fijo": 3,
       "tamano": "grande",
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
@@ -115,7 +115,7 @@
         "value": 20,
         "max": 20
       },
-      "especial": "Ataque con Puntería. Daño 5 + PER. Consume una flecha por disparo.",
+      "especial": "Ataque con Puntería. Daño 3 + PER. Consume una flecha por disparo.",
       "descripcion": "Arma silenciosa y fácil de mantener, útil para cazar y atacar sin delatar la posición con ruido de disparos."
     }
   },
@@ -126,7 +126,7 @@
     "system": {
       "tipo": "distancia_no_fuego",
       "categoria": "distancia_no_fuego",
-      "dano_fijo": 7,
+      "dano_fijo": 3,
       "tamano": "grande",
       "deterioro": "M",
       "disponibilidad": "infrecuente",
@@ -135,7 +135,7 @@
         "value": 15,
         "max": 15
       },
-      "especial": "Ataque con Puntería. Daño 7 + PER. Consume un virote por disparo.",
+      "especial": "Ataque con Puntería. Daño 3 + PER. Consume un virote por disparo.",
       "descripcion": "Arma de proyectiles con mayor pegada que el arco. Es menos común, pero mantiene la ventaja de no depender de munición de fuego."
     }
   },
@@ -146,7 +146,7 @@
     "system": {
       "tipo": "distancia_no_fuego",
       "categoria": "distancia_no_fuego",
-      "dano_fijo": 7,
+      "dano_fijo": 3,
       "tamano": "mediano",
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
@@ -155,7 +155,7 @@
         "value": 0,
         "max": 0
       },
-      "especial": "Ataque con Puntería. Daño 7 + PER.",
+      "especial": "Ataque con Puntería. Daño 3 + PER.",
       "descripcion": "Herramienta de pesca adaptada al combate. Funciona como arma a distancia no de fuego y no depende de cartuchos."
     }
   },
@@ -166,7 +166,7 @@
     "system": {
       "tipo": "fuego_cortas",
       "categoria": "fuego_cortas",
-      "dano_fijo": 8,
+      "dano_fijo": 7,
       "tamano": "pequeno",
       "deterioro": "R",
       "disponibilidad": "infrecuente",
@@ -175,7 +175,7 @@
         "value": 6,
         "max": 6
       },
-      "especial": "Ataque con Puntería. Daño 8 + PER. Consume una bala por disparo y exige tirada de caducidad si se ha usado durante la aventura.",
+      "especial": "Ataque con Puntería. Daño 7 + PER. Consume una bala por disparo y exige tirada de caducidad si se ha usado durante la aventura.",
       "descripcion": "Arma de fuego corta del Viejo Mundo. Potente y fácil de portar, pero dependiente de munición y poco fiable por su deterioro reciclado."
     }
   },
@@ -186,7 +186,7 @@
     "system": {
       "tipo": "fuego_largas",
       "categoria": "fuego_largas",
-      "dano_fijo": 12,
+      "dano_fijo": 10,
       "tamano": "grande",
       "deterioro": "R",
       "disponibilidad": "infrecuente",
@@ -195,7 +195,7 @@
         "value": 5,
         "max": 5
       },
-      "especial": "Ataque con Puntería. Daño 12 + PER. Consume una bala o cartucho por disparo y exige tirada de caducidad si se ha usado durante la aventura.",
+      "especial": "Ataque con Puntería. Daño 10 + PER. Consume una bala o cartucho por disparo y exige tirada de caducidad si se ha usado durante la aventura.",
       "descripcion": "Escopetas y rifles recuperados del Viejo Mundo. Son armas de fuego largas, no armas cuerpo a cuerpo: tienen alcance a distancia, munición limitada y mucho valor en las Llanuras Yermas."
     }
   },

@@ -56,7 +56,7 @@ export class CAMCItem extends Item {
     if (this.type !== "arma") return "";
     const base = Number(this.system.dano_fijo ?? 0);
     const attr = CAMC.categoriasArma[this.system.categoria]?.atributoDano ?? "";
-    const attrLabel = attr === "fue_mitad" ? "FUE/2" : attr ? attr.toUpperCase() : "";
+    const attrLabel = attr === "fue_mitad" ? "FUE/2" : attr === "fue_x1_5" ? "FUE x1,5" : attr ? attr.toUpperCase() : "";
     return [this.system.dano, base ? String(base) : "", attrLabel].filter(Boolean).join(" + ") || "0";
   }
 
@@ -98,7 +98,9 @@ export class CAMCItem extends Item {
 
   #damageAttributeBonus(actor, attr) {
     if (!actor || !attr) return 0;
-    if (attr === "fue_mitad") return Math.floor(Number(actor.system?.atributos?.fue?.value ?? 0) / 2);
+    const fue = Number(actor.system?.atributos?.fue?.value ?? 0);
+    if (attr === "fue_mitad") return Math.floor(fue / 2);
+    if (attr === "fue_x1_5") return Math.round(fue * 1.5);
     return Number(actor.system?.atributos?.[attr]?.value ?? 0);
   }
 }
