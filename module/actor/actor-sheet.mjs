@@ -731,7 +731,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
         jugador: this.actor.system.biografia?.jugador ?? "",
         edad: this.actor.system.biografia?.edad ?? "",
         cargo: this.actor.system.biografia?.cargo || "capitan_rutas",
-        deidad: this.actor.system.biografia?.deidad || "odin",
+        deidad: this.actor.system.biografia?.deidad || Object.keys(CAMC.dioses)[0],
         archetype: this.#defaultArchetypeForCargo(this.actor.system.biografia?.cargo),
         favored: []
       };
@@ -867,7 +867,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
             jugador: String(html.find('[name="jugador"]').val() || "").trim(),
             edad: String(html.find('[name="edad"]').val() || "").trim(),
             cargo: String(html.find('[name="cargo"]').val() || "capitan_rutas"),
-            deidad: String(html.find('[name="deidad"]').val() || "odin"),
+            deidad: String(html.find('[name="deidad"]').val() || Object.keys(CAMC.dioses)[0]),
             archetype: String(html.find('[name="archetype"]').val() || "ruta"),
             randomComplete: false
           })

@@ -2,6 +2,17 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.28] — 2026-07-27
+
+### Corregido
+- La Virtud de 5 de las 7 deidades patronas no era la que indica el manual: Thor pasa de «Valor» a **Coraje**, Freya de «Liderazgo» a **Responsabilidad**, Tyr de «Honor» a **Disciplina**, Heimdall de «Vigilancia» a **Lealtad** y Balder de «Esperanza» a **Bondad** (Frigg y Idunn ya estaban bien). Contrastado línea a línea con la ficha propia que el manual dedica a cada deidad patrona.
+- Odín aparecía como una octava deidad patrona seleccionable, con una Virtud («Sacrificio») que no figura en ningún sitio del manual. El manual solo desarrolla ficha de Virtud y don para 7 deidades —una por cada uno de los 7 cargos de la Mesa presidencial—; Odín es «El Perdido», el dios que se sacrificó y que el propio texto dice que no volverá a pisar los Nueve Reinos, así que no reparte dones. Se retira como opción del generador de PJ y del selector de la ficha (sigue existiendo como icono de reserva para cuando aún no se ha elegido deidad).
+- Los dones divinos no coincidían con los del manual en absoluto: cada deidad tenía entre 2 y 3 dones inventados para elegir (con nombre, coste y hasta efecto de juego distintos a los reales), Balder no tenía ningún don, y dos nombres reales del manual («Azote del Enemigo», el don de Freya, y «Guerrero Legendario», el de Tyr) estaban mal asignados a Thor. El manual da un único don fijo por deidad, no una lista para escoger. Se sustituyen los 18 dones inventados por los 7 reales (uno por deidad, con su coste y efecto exactos), tanto en el catálogo de objetos como en el generador de PJ.
+- Una moto con la estructura a 0 debía quedar «inutilizada» según el manual, pero el sistema solo le aplicaba la misma penalización de +3 a la dificultad que a una moto dañada (a la mitad de estructura), sin impedir seguir conduciéndola. Ahora el botón de Conducir se bloquea con un aviso mientras la moto siga a 0 de estructura.
+- El importador borra ahora también, en partidas ya existentes, los 5 duplicados del bestiario y los 14 dones inventados retirados en esta versión (antes se quedaban huérfanos en el mundo y el compendio).
+
+**Nota:** si algún PJ ya en juego tiene equipado uno de los dones inventados o a Odín como deidad, esta actualización no lo toca automáticamente (para no borrar nada que ya estéis usando en mesa); habría que corregirlo a mano desde la ficha del PJ.
+
 ## [1.3.27] — 2026-07-27
 
 ### Corregido

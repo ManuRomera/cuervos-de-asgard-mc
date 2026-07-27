@@ -7,191 +7,74 @@
       "deidad": "Thor",
       "coste_proezas": 2,
       "coste_descripcion": "2 proezas por uso y combate",
-      "virtud": "Valor",
-      "efecto": "Los ataques del Cuervo impactan automáticamente y causan el doble de daño durante todo un combate. Los impactos adicionales no pueden ser críticos.",
+      "virtud": "Coraje",
+      "efecto": "Una vez por combate, gastando una acción, invocas el poder de la tormenta: una lluvia de relámpagos de daño 10 que puede afectar hasta a tres oponentes distintos, o un solo rayo de daño 20 dirigido a un enemigo concreto. En ambos casos, el daño ignora cualquier tipo de protección que porte el objetivo.",
       "descripcion": "Thor te bendice con la furia de la tormenta."
     }
   },
   {
     "name": "Azote del Enemigo",
     "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-thor.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-freya.webp",
     "system": {
-      "deidad": "Thor",
+      "deidad": "Freya",
       "coste_proezas": 2,
       "coste_descripcion": "2 proezas por combate",
-      "virtud": "Valor",
-      "efecto": "Escoge uno de los atributos del enemigo (FUE, DES, PER, INT o CAR) y redúcelo a 0 durante todo el combate.",
-      "descripcion": "El dios del trueno te otorga el poder de debilitar a tus enemigos."
+      "virtud": "Responsabilidad",
+      "efecto": "Escoge una de las siguientes razas: demonios de fuego, elfos oscuros, gigantes, muertos sin reposo, trasgos o troles. Mientras dure el combate, infliges el doble de daño en todos tus ataques contra cualquier adversario de esa raza.",
+      "descripcion": "Freya te concede su favor contra los enemigos de Nueva Asgard."
     }
   },
   {
     "name": "Guerrero Legendario",
     "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-thor.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-tyr.webp",
     "system": {
-      "deidad": "Thor",
+      "deidad": "Tyr",
       "coste_proezas": 1,
       "coste_descripcion": "1 proeza por contraataque",
-      "virtud": "Valor",
-      "efecto": "Cada vez que un enemigo falle un ataque contra ti, puedes gastar 1 proeza para contraatacar automáticamente con tu arma cuerpo a cuerpo equipada.",
-      "descripcion": "Como los grandes guerreros de antaño, aprovechas cada oportunidad para golpear."
+      "virtud": "Disciplina",
+      "efecto": "Cada vez que seas víctima de un ataque cuerpo a cuerpo que te cause el más mínimo daño, puedes realizar un contraataque inmediato contra quien te lo haya infligido, a modo de acción extra de combate (siempre que no hayas caído inconsciente).",
+      "descripcion": "Tyr te enseña que ningún golpe recibido debe quedar sin respuesta."
     }
   },
   {
-    "name": "Lazos de Skuld",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-freya.webp",
-    "system": {
-      "deidad": "Freya",
-      "coste_proezas": 2,
-      "coste_descripcion": "2 proezas por uso",
-      "virtud": "Liderazgo",
-      "efecto": "Puedes obligar a un enemigo a rehacer una tirada que haya tenido éxito, quedándose con el peor resultado.",
-      "descripcion": "Como las nornas tejen el destino, tú puedes alterar el curso de los eventos."
-    }
-  },
-  {
-    "name": "Valquiria",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-freya.webp",
-    "system": {
-      "deidad": "Freya",
-      "coste_proezas": 2,
-      "coste_descripcion": "2 proezas por uso",
-      "virtud": "Liderazgo",
-      "efecto": "Durante un combate completo, todas tus tiradas de habilidad ganan +3 al resultado.",
-      "descripcion": "Las Valquirias de Freya te acompañan en batalla."
-    }
-  },
-  {
-    "name": "Espíritu de Freya",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-freya.webp",
-    "system": {
-      "deidad": "Freya",
-      "coste_proezas": 2,
-      "coste_descripcion": "2 proezas por uso",
-      "virtud": "Liderazgo",
-      "efecto": "Recuperas 1D6 puntos de Salud instantáneamente.",
-      "descripcion": "La diosa Freya te otorga su bendición sanadora."
-    }
-  },
-  {
-    "name": "Sacrificio de Tyr",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-tyr.webp",
-    "system": {
-      "deidad": "Tyr",
-      "coste_proezas": 1,
-      "coste_descripcion": "1 proeza por uso",
-      "virtud": "Honor",
-      "efecto": "Puedes interponerte entre un aliado y un ataque enemigo, recibiendo todo el daño en su lugar. Tu armadura se considera de 2 niveles superior para este ataque.",
-      "descripcion": "Como Tyr perdió su mano por el bien de todos, tú te sacrificas por tus camaradas."
-    }
-  },
-  {
-    "name": "Inquebrantable",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-tyr.webp",
-    "system": {
-      "deidad": "Tyr",
-      "coste_proezas": 2,
-      "coste_descripcion": "2 proezas por combate",
-      "virtud": "Honor",
-      "efecto": "Durante un combate completo, eres inmune a los efectos de estado (aturdido, envenenado, etc.) y no sufres penalizadores por perdida de Salud.",
-      "descripcion": "Tu honor te mantiene firme donde otros caerían."
-    }
-  },
-  {
-    "name": "Justicia",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-tyr.webp",
-    "system": {
-      "deidad": "Tyr",
-      "coste_proezas": 2,
-      "coste_descripcion": "2 proezas por uso",
-      "virtud": "Honor",
-      "efecto": "Tu próximo ataque causará daño igual a la Salud máxima del enemigo menos su Salud actual (daño por justicia).",
-      "descripcion": "El dios de la guerra te guía para castigar a los malhechores."
-    }
-  },
-  {
-    "name": "Ojo de Heimdall",
+    "name": "Caminante del Bifröst",
     "type": "don",
     "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-heimdall.webp",
     "system": {
       "deidad": "Heimdall",
       "coste_proezas": 1,
-      "coste_descripcion": "1 proeza por uso",
-      "virtud": "Vigilancia",
-      "efecto": "Detectas automáticamente todas las criaturas hostiles en un radio de 100 metros, incluyendo sus puntos de Salud aproximados y su intención inmediata.",
-      "descripcion": "El ojo omnisciente de Heimdall te permite ver lo invisible."
+      "coste_descripcion": "1 proeza por viaje",
+      "virtud": "Lealtad",
+      "efecto": "Puedes teletransportarte de forma instantánea a un lugar que hayas visitado con anterioridad, usando la energía de los fragmentos del Bifröst repartidos por los reinos. Solo puedes llevar el equipo que quepa en una mochila (ningún vehículo). Antes de viajar debes dibujar en el suelo la silueta de Yggdrasil y concentrarte unos cinco minutos en el destino; si te interrumpen, debes empezar de nuevo.",
+      "descripcion": "Heimdall te abre un paso secreto entre los Nueve Reinos."
     }
   },
   {
-    "name": "Gjallarhorn",
+    "name": "Destello Cegador",
     "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-heimdall.webp",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-balder.webp",
     "system": {
-      "deidad": "Heimdall",
-      "coste_proezas": 3,
-      "coste_descripcion": "3 proezas por uso (1 por aliado alertado)",
-      "virtud": "Vigilancia",
-      "efecto": "Todos los aliados en un radio de 1 kilómetro son alertados de tu situación y conocen tu posición exacta. Pueden responder moviéndose hacia ti a máxima velocidad.",
-      "descripcion": "El cuerno del guardián resuena a través de las Llanuras Yermas."
-    }
-  },
-  {
-    "name": "Guardian",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-heimdall.webp",
-    "system": {
-      "deidad": "Heimdall",
-      "coste_proezas": 1,
-      "coste_descripcion": "1 proeza por ronda",
-      "virtud": "Vigilancia",
-      "efecto": "Mientras estés en guardia, ningún enemigo puede tomar por sorpresa a tu grupo. Además, los enemigos que intenten acercarse sigilosamente deben superar tu Perspicacia con Sigilo.",
-      "descripcion": "El guardián del Bifrost te otorga su vigilancia eterna."
-    }
-  },
-  {
-    "name": "Visión de Frigg",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-frigg.webp",
-    "system": {
-      "deidad": "Frigg",
+      "deidad": "Balder",
       "coste_proezas": 2,
-      "coste_descripcion": "2 proezas por pregunta",
-      "virtud": "Sabiduría",
-      "efecto": "Puedes hacer una pregunta sobre el futuro inmediato (lo que ocurrirá en las próximas 24 horas). La DJ debe responder con una pista críptica pero verdadera.",
-      "descripcion": "La reina de los dioses te concede un vislumbre del destino."
+      "coste_descripcion": "2 proezas por destello y combate",
+      "virtud": "Bondad",
+      "efecto": "Una vez por combate, gastando una acción, desencadenas una explosión de luz que afecta solo a tus enemigos: quedan completamente cegados durante un turno entero (dos turnos si son elfos oscuros), sin poder realizar ninguna acción y con su Agilidad reducida a la mitad. También puedes usar una versión reducida del don fuera de combate para iluminar tu entorno de forma gratuita y automática.",
+      "descripcion": "Balder ilumina el camino y ciega a quienes te amenazan."
     }
   },
   {
-    "name": "Tejido del Destino",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-frigg.webp",
-    "system": {
-      "deidad": "Frigg",
-      "coste_proezas": 3,
-      "coste_descripcion": "3 proezas por uso",
-      "virtud": "Sabiduría",
-      "efecto": "Puedes alterar un resultado de dado recién tirado por cualquier personaje (PJ o PNJ) cambiándolo por el valor que desees.",
-      "descripcion": "Como las nornas tejen y destejen el hilo del destino, tú puedes alterar el curso de los eventos."
-    }
-  },
-  {
-    "name": "Consejo de Frigg",
+    "name": "Vitki",
     "type": "don",
     "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-frigg.webp",
     "system": {
       "deidad": "Frigg",
       "coste_proezas": 1,
-      "coste_descripcion": "1 proeza por uso",
+      "coste_descripcion": "1 proeza por pregunta",
       "virtud": "Sabiduría",
-      "efecto": "Un aliado puede repetir una tirada fallida con +2D adicionales.",
-      "descripcion": "La sabiduría de Frigg guía a través de las palabras adecuadas."
+      "efecto": "Puedes comunicarte con cualquier espíritu presente en tu mismo lugar (de la naturaleza, de los muertos o de cualquier otra índole) y obligarlo a responder tus preguntas sobre ese lugar. El espíritu debe contestar con sinceridad, aunque puede ser más o menos críptico a discreción de la DJ.",
+      "descripcion": "Frigg te concede el don de interrogar a los espíritus."
     }
   },
   {
@@ -203,34 +86,8 @@
       "coste_proezas": 1,
       "coste_descripcion": "1 proeza por activación",
       "virtud": "Perseverancia",
-      "efecto": "Te ves beneficiado con una protección de nivel 3 sin penalización. El artefacto es personal e intransferible. Se repliega mágicamente al final de cada combate adoptando el tamaño de un anillo. Requiere una acción de turno completo para equiparla.",
-      "descripcion": "Manufacturada por Idunn a partir del anillo mágico Draupnir."
-    }
-  },
-  {
-    "name": "Manzanas de Idunn",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-idunn.webp",
-    "system": {
-      "deidad": "Idunn",
-      "coste_proezas": 2,
-      "coste_descripcion": "2 proezas por uso",
-      "virtud": "Perseverancia",
-      "efecto": "Recuperas todos tus puntos de Salud perdidos y eliminas cualquier estado negativo.",
-      "descripcion": "Las mágicas manzanas de Idunn restauran la vitalidad perdida."
-    }
-  },
-  {
-    "name": "Juventud Eterna",
-    "type": "don",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-idunn.webp",
-    "system": {
-      "deidad": "Idunn",
-      "coste_proezas": 1,
-      "coste_descripcion": "1 proeza por ronda",
-      "virtud": "Perseverancia",
-      "efecto": "Durante una ronda completa, eres inmune a todo daño. Sin embargo, al final de la ronda pierdes 1D6 puntos de Salud por el coste de mantener la juventud.",
-      "descripcion": "Idunn te concede un momento de perfección eterna."
+      "efecto": "Como portador de esta cota, manufacturada por Idunn a partir del anillo mágico Draupnir, te beneficias de una protección de nivel 3 sin sufrir ningún tipo de penalización. Es personal e intransferible. Se repliega mágicamente al final de cada combate hasta adoptar el tamaño de un anillo que puedes llevar en cualquier dedo, así que pasa desapercibida hasta que decides desplegarla y equipártela (lo que exige una acción durante un turno completo).",
+      "descripcion": "Idunn te otorga una armadura que cabe en un anillo."
     }
   }
 ]
