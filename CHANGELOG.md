@@ -2,6 +2,16 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.30] — 2026-07-27
+
+### Corregido
+- El «Casco de fútbol americano» (nivel 2) tenía penalización 0 a las tiradas de DES/FUE, cuando el manual fija esa penalización en el nivel de la armadura dividido entre dos y redondeado hacia abajo (floor(2/2)=1). El resto de las 12 armaduras y escudos del catálogo ya coincidían con el manual y no se han tocado.
+- Las 15 modificaciones funcionales de moto del catálogo (`_data/motos/modificaciones-moto.json`, carpeta «CAMC · Modificaciones de moto») no se correspondían en absoluto con la «Lista de modificaciones para motos» del manual: tenían nombres, efectos y requisitos inventados (p. ej. "Blindaje improvisado", "Torreta de sidecar: requiere sidecar"...). Se sustituyen por las 15 modificaciones reales (Acelerador trucado, Alforjas extra, Chasis reforzado, Chasis ultrarreforzado, Configuración ofensiva, Dispensador de aceite, Estribos de combate, Manillar adaptado, Mejora del sistema de transmisión, Motor potenciado, Obra maestra, Ruedas reforzadas, Sidecar, Suspensión mejorada, Tubo de escape tuneado), con el efecto exacto de cada una. Las 20 modificaciones puramente estéticas del catálogo quedan intactas, tal y como permite el manual (no tienen impacto en las reglas).
+- El generador aleatorio de motos (`generateRandomMount`) tenía su propia lista interna de 15 modificaciones funcionales inventadas, completamente distinta a la del catálogo y a la lista canónica de `CAMC.modificacionesMoto`. Como el sistema solo aplica el efecto mecánico de una modificación si su nombre coincide con esa lista canónica, ninguna moto generada aleatoriamente con estas modificaciones inventadas veía realmente aplicado el bonus que su descripción prometía (por ejemplo, una moto con "Blindaje improvisado" no ganaba en realidad esos +5 de Estructura). Se sustituye por las 14 modificaciones reales aplicables por sorteo (Sidecar queda fuera de este reparto porque ya se decide como parte de la plantilla base del vehículo).
+- El importador limpia en partidas ya existentes las 15 modificaciones de moto inventadas retiradas en esta versión, igual que ya hacía con el bestiario y los dones.
+
+**Nota:** si alguna moto ya generada en una partida existente tiene una de estas modificaciones inventadas equipada directamente sobre su ficha (no en el catálogo, sino ya instalada), esta actualización no la toca automáticamente; habría que revisarla y sustituirla a mano.
+
 ## [1.3.29] — 2026-07-27
 
 ### Corregido

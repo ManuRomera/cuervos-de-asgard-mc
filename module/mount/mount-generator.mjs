@@ -96,22 +96,24 @@ export const CAMCMountTables = {
     "La Enterradora", "Runa Torcida", "Mala Señal", "La Devota", "Rugido Viejo", "La Desenterrada",
     "Juramento de Cuero", "La Rompedientes", "La Crujedientes", "La Matagigantes"
   ],
+  // Las 14 modificaciones funcionales reales del manual (Sidecar queda fuera de este
+  // reparto aleatorio porque ya se decide como parte de la plantilla base del vehículo,
+  // vía la opción withSidecar, no como una modificación más a elegir).
   functionalMods: [
-    { name: "Configuración ofensiva: pinchos", descripcion: "+1D al daño de la moto en embestidas o arrollamientos.", efecto: { dadosDano: 1 } },
-    { name: "Blindaje improvisado", descripcion: "+5 Estructura máxima y -1 Maniobrabilidad.", efecto: { estructura: 5, maniobrabilidad: -1 } },
-    { name: "Depósito ampliado", descripcion: "Aumenta autonomía narrativa en viajes largos o escasez de combustible.", efecto: { autonomia: "larga" } },
-    { name: "Escape atronador", descripcion: "Bonificador contextual para intimidar, distraer o señalar posición.", efecto: { intimidacion: 2 } },
-    { name: "Suspensión de salto", descripcion: "Mejora maniobras de terreno difícil, saltos y obstáculos.", efecto: { maniobrabilidadContextual: 2 } },
-    { name: "Neumáticos de garra", descripcion: "Mejora conducción fuera de carretera.", efecto: { offroad: 2 } },
-    { name: "Sidecar reforzado", descripcion: "Requiere sidecar. Aumenta capacidad de carga o transporte seguro.", requiereSidecar: true, efecto: { alforjasMax: 4 } },
-    { name: "Torreta de sidecar", descripcion: "Requiere sidecar. Permite montar un arma compatible.", requiereSidecar: true, efecto: { torreta: true } },
-    { name: "Silenciador de patrulla", descripcion: "Reduce ruido en infiltración y empeora intimidación sonora.", efecto: { sigilo: 2, intimidacion: -1 } },
-    { name: "Motor sobrealimentado", descripcion: "Mejora persecuciones de velocidad con riesgo de avería si se fuerza.", efecto: { velocidad: 2 } },
-    { name: "Placas rompehielos", descripcion: "Mejora avance por hielo, nieve o barro.", efecto: { terrenoDificil: 2 } },
-    { name: "Anclajes de remolque", descripcion: "Permite remolcar carga ligera o arrastrar obstáculos.", efecto: { remolque: true } },
-    { name: "Faros de largo alcance", descripcion: "Mejora conducción nocturna y exploración.", efecto: { nocturno: 2 } },
-    { name: "Sistema de arranque redundante", descripcion: "Permite mejorar una prueba de arranque o reparación en emergencia.", efecto: { arranque: 2 } },
-    { name: "Alforjas blindadas", descripcion: "Protege carga importante.", efecto: { cargaProtegida: true } }
+    { name: "Acelerador trucado", descripcion: "+5 a la tirada de iniciativa en persecuciones.", efecto: {} },
+    { name: "Alforjas extra", descripcion: "+8 espacios de alforjas. El máximo de carga a pie sigue siendo 6.", efecto: { alforjasMax: 8 } },
+    { name: "Chasis reforzado", descripcion: "+5 puntos de Estructura.", efecto: { estructura: 5 } },
+    { name: "Chasis ultrarreforzado", descripcion: "Requiere Chasis reforzado. +5 Estructura adicional; permite Embestir y Sacar de la carretera contra cualquier vehículo; -1 Maniobrabilidad.", efecto: { estructura: 5, maniobrabilidad: -1 } },
+    { name: "Configuración ofensiva", descripcion: "+1D a los Dados de daño de la moto.", efecto: { dadosDano: 1 } },
+    { name: "Dispensador de aceite", descripcion: "Hasta dos veces por persecución: +3 a la dificultad de los perseguidores durante ese turno y el siguiente.", efecto: {} },
+    { name: "Estribos de combate", descripcion: "+3 a Embestir y Sacar de la carretera frente a otras motos.", efecto: {} },
+    { name: "Manillar adaptado", descripcion: "+1 a iniciativa y +1 a Maniobrabilidad.", efecto: { maniobrabilidad: 1 } },
+    { name: "Mejora del sistema de transmisión", descripcion: "Una vez por persecución, cambia un fallo de Conducir por un éxito normal (incluida una pifia).", efecto: {} },
+    { name: "Motor potenciado", descripcion: "Una vez por persecución, permite cambiar la posición de la moto una franja.", efecto: {} },
+    { name: "Obra maestra", descripcion: "+3 a Conversación en escenas montado en la moto. No exige tirada de Mecánica.", efecto: {} },
+    { name: "Ruedas reforzadas", descripcion: "+1 Estructura y +1 Maniobrabilidad.", efecto: { estructura: 1, maniobrabilidad: 1 } },
+    { name: "Suspensión mejorada", descripcion: "+1 Maniobrabilidad y +3 a la maniobra Evadirse.", efecto: { maniobrabilidad: 1 } },
+    { name: "Tubo de escape tuneado", descripcion: "+3 a Intimidación en escenas montado en la moto.", efecto: {} }
   ],
   cosmeticMods: [
     "Runas grabadas en el depósito", "Dos cuervos pintados a mano", "Cráneo de bestia en el faro",
