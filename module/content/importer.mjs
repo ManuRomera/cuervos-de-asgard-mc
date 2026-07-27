@@ -51,6 +51,27 @@ const RETIRED_DONES_NAMES = [
   "Juventud Eterna"
 ];
 
+// El manual solo reconoce 14 modificaciones funcionales de moto (más las puramente
+// estéticas, que quedan intactas). Estas 14 eran una invención sin relación con esa
+// lista, con nombres, efectos y hasta requisitos (p. ej. "requiere sidecar") inventados.
+const RETIRED_MOD_NAMES = [
+  "Configuración ofensiva: pinchos",
+  "Blindaje improvisado",
+  "Depósito ampliado",
+  "Escape atronador",
+  "Suspensión de salto",
+  "Neumáticos de garra",
+  "Sidecar reforzado",
+  "Torreta de sidecar",
+  "Silenciador de patrulla",
+  "Motor sobrealimentado",
+  "Placas rompehielos",
+  "Anclajes de remolque",
+  "Faros de largo alcance",
+  "Sistema de arranque redundante",
+  "Alforjas blindadas"
+];
+
 export class CAMCContentImporter {
   static async importAll({ force = false } = {}) {
     if (!game.user.isGM) return;
@@ -72,6 +93,7 @@ export class CAMCContentImporter {
     await this.#importItems("_data/dones/dones.json", CAMC.itemFolders.dones.label, { force: updateExisting });
     await this.#importItems("_data/talentos/talentos.json", CAMC.itemFolders.talentos.label, { force: updateExisting });
     await this.#importItems("_data/objetos/objetos.json", CAMC.itemFolders.objetos.label, { force: updateExisting });
+    await this.#deleteWorldItems(CAMC.itemFolders.modificacionesMoto.label, RETIRED_MOD_NAMES);
     await this.#importItems("_data/motos/modificaciones-moto.json", CAMC.itemFolders.modificacionesMoto.label, { force: updateExisting });
     await this.#importItems("_data/parches/parches.json", CAMC.itemFolders.parches.label, { force: updateExisting });
     await this.#importItems("_data/vehiculos/vehiculos.json", CAMC.itemFolders.vehiculos.label, { force: updateExisting });
@@ -95,6 +117,7 @@ export class CAMCContentImporter {
     count += await this.#importPackItems("dones-camc", "_data/dones/dones.json", { force });
     count += await this.#importPackItems("talentos-camc", "_data/talentos/talentos.json", { force });
     count += await this.#importPackItems("objetos-camc", "_data/objetos/objetos.json", { force });
+    await this.#deletePackDocuments("modificaciones-moto", Item, RETIRED_MOD_NAMES);
     count += await this.#importPackItems("modificaciones-moto", "_data/motos/modificaciones-moto.json", { force });
     count += await this.#importPackItems("parches-camc", "_data/parches/parches.json", { force });
     count += await this.#importPackItems("vehiculos-camc", "_data/vehiculos/vehiculos.json", { force });

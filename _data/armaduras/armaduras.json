@@ -50,7 +50,7 @@
     "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
     "system": {
       "nivel": 2,
-      "penalizacion": 0,
+      "penalizacion": 1,
       "tamano": "mediano",
       "deterioro": "R",
       "disponibilidad": "frecuente",
