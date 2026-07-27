@@ -11,6 +11,9 @@ export class CAMCMountRolls {
 
   static async rollDrive(pilot, moto, { label = "Conducir", difficulty = null, extra = 0 } = {}) {
     if (!pilot) return ui.notifications.warn("La moto necesita un piloto vinculado para tirar Conducir.");
+    if (moto.system?.reglas?.inutilizada) {
+      return ui.notifications.warn(`${moto.name}: estructura a 0, la moto está inutilizada y no se puede conducir hasta repararla.`);
+    }
     const maneuver = Number(moto.system?.reglas?.maniobrabilidad ?? 0);
     const damagePenalty = this.damagePenalty(moto);
     const modifier = maneuver - damagePenalty + Number(extra || 0);

@@ -32,6 +32,25 @@ const RETIRED_BESTIARIO_NAMES = [
   "Draugar de Helheim"
 ];
 
+// El manual solo da un don fijo por deidad patrona (7 en total). Estos 15 eran una
+// invención con 2-3 dones a elegir por dios, con la Virtud y el efecto equivocados.
+const RETIRED_DONES_NAMES = [
+  "Lazos de Skuld",
+  "Valquiria",
+  "Espíritu de Freya",
+  "Sacrificio de Tyr",
+  "Inquebrantable",
+  "Justicia",
+  "Ojo de Heimdall",
+  "Gjallarhorn",
+  "Guardian",
+  "Visión de Frigg",
+  "Tejido del Destino",
+  "Consejo de Frigg",
+  "Manzanas de Idunn",
+  "Juventud Eterna"
+];
+
 export class CAMCContentImporter {
   static async importAll({ force = false } = {}) {
     if (!game.user.isGM) return;
@@ -49,6 +68,7 @@ export class CAMCContentImporter {
     const updateExisting = force || contentChanged;
     await this.#importItems("_data/armas/armas.json", CAMC.itemFolders.armas.label, { force: updateExisting });
     await this.#importItems("_data/armaduras/armaduras.json", CAMC.itemFolders.armaduras.label, { force: updateExisting });
+    await this.#deleteWorldItems(CAMC.itemFolders.dones.label, RETIRED_DONES_NAMES);
     await this.#importItems("_data/dones/dones.json", CAMC.itemFolders.dones.label, { force: updateExisting });
     await this.#importItems("_data/talentos/talentos.json", CAMC.itemFolders.talentos.label, { force: updateExisting });
     await this.#importItems("_data/objetos/objetos.json", CAMC.itemFolders.objetos.label, { force: updateExisting });
@@ -71,6 +91,7 @@ export class CAMCContentImporter {
     let count = 0;
     count += await this.#importPackItems("armas-camc", "_data/armas/armas.json", { force });
     count += await this.#importPackItems("protecciones-camc", "_data/armaduras/armaduras.json", { force });
+    await this.#deletePackDocuments("dones-camc", Item, RETIRED_DONES_NAMES);
     count += await this.#importPackItems("dones-camc", "_data/dones/dones.json", { force });
     count += await this.#importPackItems("talentos-camc", "_data/talentos/talentos.json", { force });
     count += await this.#importPackItems("objetos-camc", "_data/objetos/objetos.json", { force });
@@ -162,6 +183,17 @@ export class CAMCContentImporter {
     } finally {
       if (wasLocked && typeof pack.configure === "function") await pack.configure({ locked: true });
     }
+  }
+
+  static async #deleteWorldItems(folderName, names = []) {
+    if (!names.length) return 0;
+    const folder = game.folders.find(f => f.name === folderName && f.type === "Item");
+    const targets = game.items.filter(i => names.includes(i.name)
+      && (!folder || i.folder?.id === folder.id)
+      && i.flags?.[CAMC.systemId]?.source === "core-import");
+    if (!targets.length) return 0;
+    await Item.deleteDocuments(targets.map(i => i.id));
+    return targets.length;
   }
 
   static async #importItems(path, folderName, { force = false } = {}) {

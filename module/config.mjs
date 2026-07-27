@@ -1,7 +1,7 @@
 export const CAMC = {};
 
 CAMC.systemId = "cuervos-de-asgard-mc";
-CAMC.contentVersion = "1.7.6";
+CAMC.contentVersion = "1.7.7";
 
 CAMC.atributos = {
   car: { label: "Carisma", short: "CAR" },
@@ -62,15 +62,18 @@ CAMC.cargos = {
   full_patch: { label: "Full Patch", talento: "Full Patch", habilidades: [] }
 };
 
+// Solo estas 7 deidades pueden ser patronas de un PJ (una por cada uno de los 7 cargos
+// de la Mesa presidencial); el manual les dedica una ficha propia con Virtud y don.
+// Odín queda fuera a propósito: es "El Perdido", el dios que se sacrificó y que el manual
+// dice explícitamente que no volverá a pisar los Nueve Reinos, así que no reparte dones.
 CAMC.dioses = {
-  thor: { label: "Thor", virtud: "Valor", color: "#32414e", color2: "#617585", metal: "#c6d0d7" },
-  freya: { label: "Freya", virtud: "Liderazgo", color: "#6d5339", color2: "#b69165", metal: "#ded2bd" },
-  tyr: { label: "Tyr", virtud: "Honor", color: "#381d1d", color2: "#8d4b42", metal: "#d2c3bd" },
-  heimdall: { label: "Heimdall", virtud: "Vigilancia", color: "#8b7c6d", color2: "#c4b094", metal: "#e1d8bd" },
+  thor: { label: "Thor", virtud: "Coraje", color: "#32414e", color2: "#617585", metal: "#c6d0d7" },
+  freya: { label: "Freya", virtud: "Responsabilidad", color: "#6d5339", color2: "#b69165", metal: "#ded2bd" },
+  tyr: { label: "Tyr", virtud: "Disciplina", color: "#381d1d", color2: "#8d4b42", metal: "#d2c3bd" },
+  heimdall: { label: "Heimdall", virtud: "Lealtad", color: "#8b7c6d", color2: "#c4b094", metal: "#e1d8bd" },
   frigg: { label: "Frigg", virtud: "Sabiduría", color: "#30374a", color2: "#65718d", metal: "#d1d5de" },
   idunn: { label: "Idunn", virtud: "Perseverancia", color: "#7f6946", color2: "#b99e6f", metal: "#ded3bd" },
-  balder: { label: "Balder", virtud: "Esperanza", color: "#685946", color2: "#ae9371", metal: "#e4dac8" },
-  odin: { label: "Odín", virtud: "Sacrificio", color: "#403226", color2: "#897462", metal: "#d2c8bd" }
+  balder: { label: "Balder", virtud: "Bondad", color: "#685946", color2: "#ae9371", metal: "#e4dac8" }
 };
 
 CAMC.assets = {
