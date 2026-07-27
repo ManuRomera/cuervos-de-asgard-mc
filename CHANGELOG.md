@@ -2,6 +2,20 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.31] — 2026-07-27
+
+### Añadido
+- Los 7 PJ pregenerados del capítulo 10 del manual (Leon, Thomas, Absenta, Benzina, Munin, Bomani, Managarm) solo traían su biografía; ahora tienen también sus atributos, sus 24 habilidades (repartidas en 4×3D/8×2D/12×1D), su equipo (armas y armaduras) y, donde se pudo confirmar, su deidad patrona y su don. El resto de valores (Agilidad, Evasión, Aplomo, Perspicacia, Proezas, Salud, Resistencia Física, Iniciativa) no hace falta guardarlos: la ficha de PJ ya los recalcula automáticamente a partir de esos datos, y se ha verificado uno a uno que el resultado coincide exactamente con la ficha real del manual.
+- El daño de las armas de cada pregenerado no se ha copiado como un número fijo, sino como la categoría de arma correcta; así el sistema sigue calculándolo en vivo a partir de la FUE/PER real del personaje, igual que con cualquier otra arma del sistema.
+
+### Corregido
+- La Virtud de Freya que tenía Munin en su biografía («Liderazgo») se había quedado desactualizada tras el arreglo de Virtudes de la 1.3.28; ahora dice «Responsabilidad», la correcta.
+
+**Notas para quien revise esta versión:**
+- En 3 de los 7 repartos de habilidades que se me facilitaron, el recuento no sumaba exactamente 4×3D/8×2D/12×1D (se pasaban por uno en un sentido y faltaba uno en otro). Para cumplir la regla exacta del manual, en Leon se subió Información de 1D a 2D, en Thomas se subió Observación de 1D a 2D y en Benzina se bajó Lucha de 2D a 1D. Son ajustes razonables pero no verificados contra el original; si tienes la ficha a mano y alguno debería ser otro, dímelo y se corrige.
+- Munin lleva tres protecciones a la vez (cota de malla, casco y escudo) pero el sistema actual solo aplica el nivel de la PRIMERA armadura equipada que encuentra (no las suma). Se ha dejado la cota de malla (nivel 3, la más protectora) como equipada y el casco como poseído pero no equipado, para que la ficha no aplique un número engañoso; sumar varias armaduras a la vez requeriría un cambio de sistema aparte, no cubierto en esta versión.
+- La deidad patrona solo se ha podido confirmar para Thomas (Tyr, ya lo indicaba la ficha), Munin (Freya, ya indicado) y Managarm (Idunn, deducida de que su protección es literalmente el don de Idunn, la Cota de Draupnir). Para Leon, Absenta, Benzina y Bomani no había datos suficientes para confirmarla, así que se dejan sin definir en vez de inventarla.
+
 ## [1.3.30] — 2026-07-27
 
 ### Corregido
