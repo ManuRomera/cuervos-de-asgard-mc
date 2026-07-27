@@ -4,7 +4,9 @@
     "type": "personaje",
     "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/leon-viejo-craneo-cremscy.webp",
     "system": {
-      "habilidades_favorecidas": [],
+      "habilidades_favorecidas": [
+        "lucha"
+      ],
       "biografia": {
         "cargo": "presidente",
         "talento": "Autoridad de carretera",
@@ -13,10 +15,193 @@
         "cita": "Mientras tenga sangre en las venas, nadie tocará a los míos.",
         "entorno_nacimiento": "Rock Springs",
         "descripcion": "Veterano endurecido, superviviente del Viejo Mundo y figura central del capítulo.",
-        "historia": "Leon fue un fuera de la ley violento antes del Ragnarök. Sobrevivió al derrumbe del mundo junto a sus hermanos Francis y Thomas, formó parte de los Seven Originals y terminó convirtiéndose en una leyenda viva del club. Carga con el peso de los muertos, con la responsabilidad de proteger a su comunidad y con la sombra de los errores que dejaron a Francis apartado de la carretera."
+        "historia": "Leon fue un fuera de la ley violento antes del Ragnarök. Sobrevivió al derrumbe del mundo junto a sus hermanos Francis y Thomas, formó parte de los Seven Originals y terminó convirtiéndose en una leyenda viva del club. Carga con el peso de los muertos, con la responsabilidad de proteger a su comunidad y con la sombra de los errores que dejaron a Francis apartado de la carretera.",
+        "defecto_leve": "Tu vista ya no es lo que era.",
+        "defecto_grave": "Te duelen los huesos."
       },
-      "notas": "Personaje pregenerado del capítulo 10 del manual."
-    }
+      "notas": "Personaje pregenerado del capítulo 10 del manual.",
+      "atributos": {
+        "car": {
+          "value": 6
+        },
+        "des": {
+          "value": 1
+        },
+        "fue": {
+          "value": 4
+        },
+        "int": {
+          "value": 0
+        },
+        "per": {
+          "value": 2
+        }
+      },
+      "habilidades": {
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "auxilio": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "conducir": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conversacion": {
+          "value": 3,
+          "atributo": "car"
+        },
+        "cultura": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "entorno": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "fuerza_bruta": {
+          "value": 1,
+          "atributo": "fue"
+        },
+        "idioma_extranjero": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "idioma_mitico": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "informacion": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "intimidacion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "mecanica": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "memoria": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "observacion": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "ocultacion": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "oido": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "psicologia": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "rastreo": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "seduccion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "sigilo": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "subterfugio": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "supervivencia": {
+          "value": 2,
+          "atributo": "per"
+        }
+      },
+      "combate": {
+        "salud": {
+          "roll_inicial": 6
+        }
+      }
+    },
+    "items": [
+      {
+        "name": "Machete",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "alcance": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "especial": "",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "name": "Bota con navaja retráctil",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "alcance": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "especial": "Arma oculta, pequeña y discreta.",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "name": "Armadura de caucho",
+        "type": "armadura",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
+        "system": {
+          "nivel": 2,
+          "penalizacion": 1,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "compatible": false,
+          "equipada": true,
+          "descripcion": ""
+        }
+      }
+    ]
   },
   {
     "name": "Thomas «Halcón» Cremscy",
@@ -28,16 +213,178 @@
         "cargo": "vicepresidente",
         "talento": "Mano derecha",
         "deidad": "tyr",
-        "virtud": "Honor",
+        "virtud": "Disciplina",
         "concepto": "Vicepresidente marcado por la culpa",
         "motivacion": "Superar tu dolor y demostrar que aún eres digno de la confianza del MC.",
         "cita": "El dolor te enseña, si tienes el coraje de escucharlo.",
         "entorno_nacimiento": "Rock Springs",
         "descripcion": "Antiguo brazo fuerte de los Cremscy, curtido por la carretera y por la guerra.",
-        "historia": "Thomas admiró a Leon y Francis desde joven y siguió sus pasos en la vida criminal antes del fin del mundo. Se ganó el respeto del club con violencia, lealtad y presencia, pero un error dejó a Francis gravemente marcado. Desde entonces sostiene a Leon como vicepresidente y busca una forma de pagar lo que debe."
+        "historia": "Thomas admiró a Leon y Francis desde joven y siguió sus pasos en la vida criminal antes del fin del mundo. Se ganó el respeto del club con violencia, lealtad y presencia, pero un error dejó a Francis gravemente marcado. Desde entonces sostiene a Leon como vicepresidente y busca una forma de pagar lo que debe.",
+        "don_principal": "Guerrero Legendario",
+        "defecto_leve": "Arritmia y palpitaciones.",
+        "defecto_grave": "Tendencias suicidas."
       },
-      "notas": "Personaje pregenerado del capítulo 10 del manual."
-    }
+      "notas": "Personaje pregenerado del capítulo 10 del manual.",
+      "atributos": {
+        "car": {
+          "value": 4
+        },
+        "des": {
+          "value": 2
+        },
+        "fue": {
+          "value": 6
+        },
+        "int": {
+          "value": 0
+        },
+        "per": {
+          "value": 1
+        }
+      },
+      "habilidades": {
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "auxilio": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "conducir": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conversacion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "cultura": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "entorno": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "fuerza_bruta": {
+          "value": 3,
+          "atributo": "fue"
+        },
+        "idioma_extranjero": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "idioma_mitico": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "informacion": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "intimidacion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "mecanica": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "memoria": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "observacion": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "ocultacion": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "oido": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "psicologia": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "rastreo": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "seduccion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "sigilo": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "subterfugio": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "supervivencia": {
+          "value": 1,
+          "atributo": "per"
+        }
+      },
+      "combate": {
+        "salud": {
+          "roll_inicial": 6
+        }
+      }
+    },
+    "items": [
+      {
+        "name": "Hacha de combate",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo_dos_manos",
+          "categoria": "cuerpo_a_cuerpo_dos_manos",
+          "alcance": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "especial": "",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "name": "Armadura de cuero liviana",
+        "type": "armadura",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
+        "system": {
+          "nivel": 1,
+          "penalizacion": 0,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "compatible": false,
+          "equipada": true,
+          "descripcion": ""
+        }
+      }
+    ]
   },
   {
     "name": "Absenta",
@@ -60,8 +407,174 @@
         "descripcion": "Joven brillante, ferozmente inteligente y dotada para recordar nombres, rutas e historias.",
         "historia": "Absenta es hija de Francis Cremscy y de una mujer marcada por la absenta y la carretera. Creció rodeada de relatos, secretos y cuentas pendientes. Su memoria excepcional y su talento para convertir los hechos en historia la llevaron a ocupar el cargo de secretaria del MC."
       },
-      "notas": "Personaje pregenerado del capítulo 10 del manual."
-    }
+      "notas": "Personaje pregenerado del capítulo 10 del manual.",
+      "atributos": {
+        "car": {
+          "value": 4
+        },
+        "des": {
+          "value": 2
+        },
+        "fue": {
+          "value": 1
+        },
+        "int": {
+          "value": 6
+        },
+        "per": {
+          "value": 0
+        }
+      },
+      "habilidades": {
+        "atletismo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "auxilio": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "conducir": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conversacion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "cultura": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "entorno": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "fuerza_bruta": {
+          "value": 2,
+          "atributo": "fue"
+        },
+        "idioma_extranjero": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "idioma_mitico": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "informacion": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "intimidacion": {
+          "value": 3,
+          "atributo": "car"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "mecanica": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "memoria": {
+          "value": 3,
+          "atributo": "int"
+        },
+        "observacion": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "ocultacion": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "oido": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "psicologia": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "rastreo": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "seduccion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "sigilo": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "subterfugio": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "supervivencia": {
+          "value": 2,
+          "atributo": "per"
+        }
+      },
+      "combate": {
+        "salud": {
+          "roll_inicial": 6
+        }
+      }
+    },
+    "items": [
+      {
+        "name": "Espada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "alcance": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "especial": "",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "name": "Arco",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "distancia_no_fuego",
+          "categoria": "distancia_no_fuego",
+          "alcance": "distancia",
+          "dano_fijo": 3,
+          "especial": "",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 20,
+            "max": 20
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Benzina",
@@ -84,8 +597,174 @@
         "descripcion": "Superviviente práctica, curiosa y capaz de entender máquinas, heridas y recursos.",
         "historia": "Benzina aprendió a leer el mundo a través de motores, piezas rotas, partos y heridas. Tras dejar el Yunque, encontró un lugar en el capítulo de Leon, donde su capacidad para mantener vivo lo que otros dan por perdido la convirtió en tesorera."
       },
-      "notas": "Personaje pregenerado del capítulo 10 del manual."
-    }
+      "notas": "Personaje pregenerado del capítulo 10 del manual.",
+      "atributos": {
+        "car": {
+          "value": 0
+        },
+        "des": {
+          "value": 1
+        },
+        "fue": {
+          "value": 2
+        },
+        "int": {
+          "value": 4
+        },
+        "per": {
+          "value": 6
+        }
+      },
+      "habilidades": {
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "auxilio": {
+          "value": 3,
+          "atributo": "int"
+        },
+        "conducir": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conversacion": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "cultura": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "entorno": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "fuerza_bruta": {
+          "value": 2,
+          "atributo": "fue"
+        },
+        "idioma_extranjero": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "idioma_mitico": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "informacion": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "intimidacion": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "lucha": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "mecanica": {
+          "value": 3,
+          "atributo": "int"
+        },
+        "memoria": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "observacion": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "ocultacion": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "oido": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "psicologia": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "rastreo": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "seduccion": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "sigilo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "subterfugio": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "supervivencia": {
+          "value": 2,
+          "atributo": "per"
+        }
+      },
+      "combate": {
+        "salud": {
+          "roll_inicial": 6
+        }
+      }
+    },
+    "items": [
+      {
+        "name": "Cuchillo táctico militar",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "alcance": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "especial": "",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "name": "Arpón",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "distancia_no_fuego",
+          "categoria": "distancia_no_fuego",
+          "alcance": "distancia",
+          "dano_fijo": 3,
+          "especial": "",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Munin",
@@ -102,7 +781,7 @@
         "cargo": "sargento_armas",
         "talento": "Nadie pasa",
         "deidad": "freya",
-        "virtud": "Liderazgo",
+        "virtud": "Responsabilidad",
         "don_principal": "Azote del Enemigo",
         "concepto": "Sargento de armas y muro del capítulo",
         "motivacion": "Proteger a los débiles y asegurar que nadie atraviese la línea.",
@@ -111,8 +790,218 @@
         "descripcion": "Gigantesco, musculoso y directo, hecho para detener amenazas antes de que alcancen a los suyos.",
         "historia": "Nacido como Carl en los Apalaches, Munin perdió a su familia cuando los draugar arrasaron su vida. Los Cuervos lo rescataron y le dieron una carretera, un propósito y una familia nueva. Desde entonces protege el capítulo con escopeta, bate, cota de malla, casco y escudo."
       },
-      "notas": "Personaje pregenerado del capítulo 10 del manual."
-    }
+      "notas": "Personaje pregenerado del capítulo 10 del manual.",
+      "atributos": {
+        "car": {
+          "value": 1
+        },
+        "des": {
+          "value": 4
+        },
+        "fue": {
+          "value": 6
+        },
+        "int": {
+          "value": 0
+        },
+        "per": {
+          "value": 2
+        }
+      },
+      "habilidades": {
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "auxilio": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "conducir": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "conversacion": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "cultura": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "entorno": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "fuerza_bruta": {
+          "value": 2,
+          "atributo": "fue"
+        },
+        "idioma_extranjero": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "idioma_mitico": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "informacion": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "intimidacion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "mecanica": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "memoria": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "observacion": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "ocultacion": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "oido": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "psicologia": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "punteria": {
+          "value": 3,
+          "atributo": "per"
+        },
+        "rastreo": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "seduccion": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "sigilo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "subterfugio": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "supervivencia": {
+          "value": 2,
+          "atributo": "per"
+        }
+      },
+      "combate": {
+        "salud": {
+          "roll_inicial": 6
+        }
+      }
+    },
+    "items": [
+      {
+        "name": "Escopeta recortada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "fuego_largas",
+          "categoria": "fuego_largas",
+          "alcance": "distancia",
+          "dano_fijo": 10,
+          "especial": "",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 2,
+            "max": 2
+          }
+        }
+      },
+      {
+        "name": "Bate de béisbol",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo_dos_manos",
+          "categoria": "cuerpo_a_cuerpo_dos_manos",
+          "alcance": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "especial": "",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "name": "Cota de malla de anilla gruesa",
+        "type": "armadura",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
+        "system": {
+          "nivel": 3,
+          "penalizacion": 1,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "compatible": false,
+          "equipada": true,
+          "descripcion": ""
+        }
+      },
+      {
+        "name": "Casco de fútbol americano",
+        "type": "armadura",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
+        "system": {
+          "nivel": 2,
+          "penalizacion": 1,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "compatible": false,
+          "equipada": false,
+          "descripcion": ""
+        }
+      },
+      {
+        "name": "Escudo mediano de metal",
+        "type": "escudo",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
+        "system": {
+          "nivel": 2,
+          "penalizacion": 2,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "equipado": true,
+          "descripcion": ""
+        }
+      }
+    ]
   },
   {
     "name": "Bomani",
@@ -135,8 +1024,167 @@
         "descripcion": "Mecánico paciente, fuerte y orgulloso de sus raíces, capaz de devolver una moto a la carretera con casi nada.",
         "historia": "Bomani aprendió mecánica de su padre y creció sabiendo que una máquina viva puede salvar a toda una comunidad. Su linaje keniano, su habilidad con herramientas y su relación con Absenta lo atan al capítulo tanto como su deseo de demostrar que puede liderarlo."
       },
-      "notas": "Personaje pregenerado del capítulo 10 del manual."
-    }
+      "notas": "Personaje pregenerado del capítulo 10 del manual.",
+      "atributos": {
+        "car": {
+          "value": 2
+        },
+        "des": {
+          "value": 1
+        },
+        "fue": {
+          "value": 4
+        },
+        "int": {
+          "value": 6
+        },
+        "per": {
+          "value": 0
+        }
+      },
+      "habilidades": {
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "auxilio": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "conducir": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "conversacion": {
+          "value": 3,
+          "atributo": "car"
+        },
+        "cultura": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "entorno": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "fuerza_bruta": {
+          "value": 3,
+          "atributo": "fue"
+        },
+        "idioma_extranjero": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "idioma_mitico": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "informacion": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "intimidacion": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "lucha": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "mecanica": {
+          "value": 3,
+          "atributo": "int"
+        },
+        "memoria": {
+          "value": 2,
+          "atributo": "int"
+        },
+        "observacion": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "ocultacion": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "oido": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "psicologia": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "rastreo": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "seduccion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "sigilo": {
+          "value": 1,
+          "atributo": "des"
+        },
+        "subterfugio": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "supervivencia": {
+          "value": 2,
+          "atributo": "per"
+        }
+      },
+      "combate": {
+        "salud": {
+          "roll_inicial": 6
+        }
+      }
+    },
+    "items": [
+      {
+        "name": "Lanza",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "distancia_no_fuego",
+          "categoria": "distancia_no_fuego",
+          "alcance": "distancia",
+          "dano_fijo": 3,
+          "especial": "Si se blande cuerpo a cuerpo con Lucha, el daño es 3 + FUE.",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "name": "Armadura de cuero liviana",
+        "type": "armadura",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
+        "system": {
+          "nivel": 1,
+          "penalizacion": 0,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "compatible": false,
+          "equipada": true,
+          "descripcion": ""
+        }
+      }
+    ]
   },
   {
     "name": "Managarm «La loba de hierro»",
@@ -157,9 +1205,193 @@
         "cita": "Comer o ser comido; no hay más opción.",
         "entorno_nacimiento": "Desconocido",
         "descripcion": "Joven, salvaje y precisa, con instinto para leer rastros, viento y amenazas.",
-        "historia": "Managarm fue encontrada o criada cerca de una guarida de huargos y aprendió antes a sobrevivir que a convivir. Su adaptación al club fue difícil, pero su talento para rastrear, cazar y abrir camino terminó convirtiéndola en capitana de ruta."
+        "historia": "Managarm fue encontrada o criada cerca de una guarida de huargos y aprendió antes a sobrevivir que a convivir. Su adaptación al club fue difícil, pero su talento para rastrear, cazar y abrir camino terminó convirtiéndola en capitana de ruta.",
+        "deidad": "idunn",
+        "virtud": "Perseverancia",
+        "don_principal": "Cota de Draupnir"
       },
-      "notas": "Personaje pregenerado del capítulo 10 del manual."
-    }
+      "notas": "Personaje pregenerado del capítulo 10 del manual.",
+      "atributos": {
+        "car": {
+          "value": 1
+        },
+        "des": {
+          "value": 6
+        },
+        "fue": {
+          "value": 2
+        },
+        "int": {
+          "value": 0
+        },
+        "per": {
+          "value": 4
+        }
+      },
+      "habilidades": {
+        "atletismo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "auxilio": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "conducir": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "conversacion": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "cultura": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "entorno": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "fuerza_bruta": {
+          "value": 2,
+          "atributo": "fue"
+        },
+        "idioma_extranjero": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "idioma_mitico": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "informacion": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "intimidacion": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "lucha": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "mecanica": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "memoria": {
+          "value": 1,
+          "atributo": "int"
+        },
+        "observacion": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "ocultacion": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "oido": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "psicologia": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "punteria": {
+          "value": 1,
+          "atributo": "per"
+        },
+        "rastreo": {
+          "value": 2,
+          "atributo": "per"
+        },
+        "seduccion": {
+          "value": 2,
+          "atributo": "car"
+        },
+        "sigilo": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "subterfugio": {
+          "value": 1,
+          "atributo": "car"
+        },
+        "supervivencia": {
+          "value": 3,
+          "atributo": "per"
+        }
+      },
+      "combate": {
+        "salud": {
+          "roll_inicial": 6
+        }
+      }
+    },
+    "items": [
+      {
+        "name": "Maza",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "alcance": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "especial": "",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "name": "Pistola de bengalas",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "distancia_no_fuego",
+          "categoria": "distancia_no_fuego",
+          "alcance": "distancia",
+          "dano_fijo": 3,
+          "especial": "Munición especial de señalización; no es un arma de fuego convencional a efectos de reglas.",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          },
+          "municion": {
+            "value": 1,
+            "max": 1
+          }
+        }
+      },
+      {
+        "name": "Cota de Draupnir",
+        "type": "armadura",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
+        "system": {
+          "nivel": 3,
+          "penalizacion": 0,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "compatible": false,
+          "equipada": true,
+          "descripcion": ""
+        }
+      }
+    ]
   }
 ]
