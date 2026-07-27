@@ -2,6 +2,12 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.29] — 2026-07-27
+
+### Corregido
+- El equipo inicial de armas que da el asistente de creación de PJ no seguía la tabla de daño del manual: usaba categorías de arma inventadas ("Arma blanca", "Contundente", "Arma de fuego"...) que no existen en el sistema, un componente de dado ("1D") que Ysystem no usa en el daño de armas, y valores de daño fijo distintos a los reales (el cuchillo inicial hacía 1 en vez de 3, la pistola 0 en vez de 7, el arpón 7 en vez de 3...). Se corrigen las 6 armas iniciales generadas (Cuchillo de carretera, Llave pesada, Cadena de arrastre, Arpón, Pistola reciclada, Ballesta de taller) para que usen las categorías exactas del sistema y el daño fijo + atributo que indica el manual, igual que ya se corrigió para el resto de armas del sistema en la 1.3.26.
+- De paso, se corrige un bug en la normalización de categoría de arma (`#normalizeWeaponCategory`) que hacía que cualquier arma cuya categoría incluyera literalmente el texto "no de fuego" (como la etiqueta oficial "Armas a distancia no de fuego") se clasificase por error como cuerpo a cuerpo, porque la comprobación buscaba que el texto NO contuviera "fuego" sin tener en cuenta que "no de fuego" sí lo contiene.
+
 ## [1.3.28] — 2026-07-27
 
 ### Corregido
