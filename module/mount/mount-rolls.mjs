@@ -13,8 +13,7 @@ export class CAMCMountRolls {
     if (!pilot) return ui.notifications.warn("La moto necesita un piloto vinculado para tirar Conducir.");
     const maneuver = Number(moto.system?.reglas?.maniobrabilidad ?? 0);
     const damagePenalty = this.damagePenalty(moto);
-    const context = this.contextualModifier(moto, label);
-    const modifier = maneuver + context.value - damagePenalty + Number(extra || 0);
+    const modifier = maneuver - damagePenalty + Number(extra || 0);
     return YsystemDice.rollSkill(pilot, "conducir", {
       dificultad: difficulty,
       modificador: modifier,
@@ -23,8 +22,6 @@ export class CAMCMountRolls {
         name: moto.name,
         uuid: moto.uuid,
         maniobrabilidad: maneuver,
-        contextual: context.value,
-        contextualLabel: context.label,
         penalizadorDano: damagePenalty,
         accion: label
       }
@@ -90,7 +87,7 @@ export class CAMCMountRolls {
           <label><span>Dados sacrificados</span>${this.#numberStepper("dadosSacrificados", 0, 0, 3)}</label>
         </div>
         <div class="camc-checkline-group">
-          <label class="camc-checkline"><input name="aplicaSalud" type="checkbox"/> <span>Aplicar penalizador de Salud (${penalty.label})</span></label>
+          <label class="camc-checkline"><input name="aplicaSalud" type="checkbox" checked/> <span>Aplicar penalizador de Salud (${penalty.label})</span></label>
           <label class="camc-checkline"><input name="recuerdoCuando" type="checkbox" ${recuerdoUsado ? "disabled" : ""}/> <span>Recuerdo cuando (+2D, no compatible con proezas)${recuerdoUsado ? " · ya usado" : ""}</span></label>
         </div>
       </form>`;
@@ -143,10 +140,6 @@ export class CAMCMountRolls {
       input.value = String(Math.max(min, Math.min(max, Number(input.value || 0) + delta)));
       input.dispatchEvent(new Event("change", { bubbles: true }));
     });
-  }
-
-  static contextualModifier(_moto, _label = "") {
-    return { value: 0, label: "" };
   }
 
 }

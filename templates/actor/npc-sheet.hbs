@@ -21,7 +21,7 @@
     </section>
     <aside class="camc-npc-kpis">
       <div class="health {{saludTone}}"><span>Salud</span><b>{{system.combate.salud.value}}/{{system.combate.salud.max}}</b><i style="width: {{saludPct}}%"></i><div><button type="button" class="camc-adjust" data-path="system.combate.salud.value" data-delta="-1">-</button><input name="system.combate.salud.value" type="number" value="{{system.combate.salud.value}}"/><button type="button" class="camc-adjust" data-path="system.combate.salud.value" data-delta="1">+</button></div></div>
-      <article><span>Armadura</span><b>{{armaduraTotal}}</b></article>
+      <article><span>Armadura</span><b>{{armaduraTotal}}</b>{{#if escudoAgilidadBonus}}<small>+{{escudoAgilidadBonus}} Agilidad (escudo)</small>{{/if}}</article>
       <article><span>RF</span><b>{{system.combate.resistencia_fisica}}</b></article>
       <article><span>Iniciativa</span><b>{{system.combate.iniciativa}}</b></article>
     </aside>

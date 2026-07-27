@@ -66,7 +66,8 @@ export class CAMCNpcSheet extends ActorSheetV1 {
       dones: actor.items.filter(i => i.type === "don"),
       objetos: actor.items.filter(i => i.type === "objeto")
     };
-    context.armaduraTotal = Number(system.proteccion?.armadura_nivel ?? 0) + Number(system.proteccion?.escudo_nivel ?? 0);
+    context.armaduraTotal = Number(system.proteccion?.armadura_nivel ?? 0);
+    context.escudoAgilidadBonus = Number(system.proteccion?.escudo_nivel ?? 0);
     return context;
   }
 

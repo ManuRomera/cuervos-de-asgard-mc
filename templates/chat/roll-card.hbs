@@ -12,22 +12,23 @@
     </div>
     <div class="camc-dice-faces">{{#each dice}}<span class="{{#if (eq this 6)}}six{{/if}}{{#if (eq this 1)}}one{{/if}}">{{this}}</span>{{/each}}</div>
     <div class="mods">{{attrShort data.atributo}} {{data.bonificador}} {{#if data.favorecida}}· favorecida +3{{/if}} {{#if data.equipoBonus}}· equipo {{data.equipoBonus}}{{/if}} {{#if data.modificadorManual}}· mod {{data.modificadorManual}}{{/if}}</div>
-    {{#if opciones.mount}}<div class="mods mount">Moto: <strong>{{opciones.mount.name}}</strong>{{#if opciones.mount.maniobrabilidad}} · Maniobrabilidad {{opciones.mount.maniobrabilidad}}{{/if}}{{#if opciones.mount.contextual}} · Tuneado {{opciones.mount.contextual}}{{#if opciones.mount.contextualLabel}} ({{opciones.mount.contextualLabel}}){{/if}}{{/if}}{{#if opciones.mount.penalizadorDano}} · Dañada +{{opciones.mount.penalizadorDano}} DF{{/if}}</div>{{/if}}
+    {{#if opciones.mount}}<div class="mods mount">Moto: <strong>{{opciones.mount.name}}</strong>{{#if opciones.mount.maniobrabilidad}} · Maniobrabilidad {{opciones.mount.maniobrabilidad}}{{/if}}{{#if opciones.mount.penalizadorDano}} · Dañada +{{opciones.mount.penalizadorDano}} DF{{/if}}</div>{{/if}}
     <div class="mods">Base {{data.baseDados}}D{{#if data.proezaDados}} · proezas +{{data.proezaDados}}D{{/if}}{{#if data.dadosExtra}} · ajuste {{data.dadosExtra}}D{{/if}}{{#if data.recuerdoCuando}} · Recuerdo cuando +{{data.recuerdoCuandoDados}}D{{/if}}{{#if data.saludPenalty}} · Salud {{data.saludPenalty}}D{{/if}}{{#if data.desenfundar}} · desenfundar/cambiar -1D{{/if}}{{#if data.dadosSacrificados}} · sacrificados -{{data.dadosSacrificados}}D{{/if}}</div>
     {{#if data.armaPreparada}}<div class="mods">Arma preparada: {{data.armaPreparada.label}}</div>{{/if}}
     {{#if critico}}<div class="crit">CRÍTICO · gana 1 proeza</div>{{/if}}
     {{#if pifia}}<div class="fumble">PIFIA</div>{{/if}}
     {{#if danoInfo}}
-    <div class="camc-impact-note"><i class="fas fa-hand-fist"></i> Impacto con <strong>{{danoInfo.itemName}}</strong></div>
+    <div class="camc-impact-note"><i class="fas fa-hand-fist"></i> Impacto con <strong>{{danoInfo.itemName}}</strong>{{#if danoInfo.critico}} · daño doblado por crítico{{/if}}</div>
     <div class="camc-roll-main"><div class="camc-roll-total"><span>Daño</span><b>{{danoInfo.total}}</b></div></div>
     <button type="button" class="camc-chat-action" data-camc-action="apply-damage" data-damage="{{danoInfo.total}}">Aplicar daño</button>
     {{/if}}
     {{#if curaInfo}}
     <div class="camc-cura-note {{curaInfo.resultado}}">
-      {{#if (eq curaInfo.resultado "critico")}}<i class="fas fa-star"></i> ¡Crítico! {{curaInfo.targetName}} recupera <strong>4</strong> puntos de Salud.{{/if}}
-      {{#if (eq curaInfo.resultado "exito")}}<i class="fas fa-kit-medical"></i> {{curaInfo.targetName}} recupera <strong>2</strong> puntos de Salud.{{/if}}
+      {{#if (eq curaInfo.resultado "critico")}}<i class="fas fa-star"></i> ¡Crítico! {{curaInfo.targetName}} recupera <strong>{{curaInfo.cantidad}}</strong> puntos de Salud.{{/if}}
+      {{#if (eq curaInfo.resultado "exito")}}<i class="fas fa-kit-medical"></i> {{curaInfo.targetName}} recupera <strong>{{curaInfo.cantidad}}</strong> puntos de Salud.{{/if}}
       {{#if (eq curaInfo.resultado "pifia")}}<i class="fas fa-triangle-exclamation"></i> Pifia: {{curaInfo.targetName}} pierde <strong>1</strong> punto de Salud adicional.{{/if}}
       {{#if (eq curaInfo.resultado "sin_efecto")}}Sin efecto curativo esta vez.{{/if}}
+      {{#if curaInfo.bonusBotiquin}}<br/><small>Botiquín de primeros auxilios: +1 punto extra incluido.</small>{{/if}}
       <br/><small>Solo un intento de Auxilio por herida concreta.</small>
     </div>
     {{/if}}

@@ -16,8 +16,12 @@ export class YsystemDice {
     if (critico && actor.type === "personaje") await actor.ganarProezas(1);
 
     let danoInfo = null;
-    if (exito && !options.auxilioCurar && (habilidad === "lucha" || habilidad === "punteria") && data.armaPreparada && !data.armaPreparada.desarmado) {
-      danoInfo = await this.#resolverDanoDeAtaque(actor, data.armaPreparada);
+    if (exito && !options.auxilioCurar && (habilidad === "lucha" || habilidad === "punteria")) {
+      if (data.armaPreparada && !data.armaPreparada.desarmado) {
+        danoInfo = await this.#resolverDanoDeAtaque(actor, data.armaPreparada, critico);
+      } else if (habilidad === "lucha" && (!data.armaPreparada || data.armaPreparada.desarmado)) {
+        danoInfo = this.#resolverDanoDesarmado(actor, critico);
+      }
     }
 
     let curaInfo = null;
@@ -34,7 +38,7 @@ export class YsystemDice {
    * (daño fijo + bonificador de atributo, a veces con algún dado), así que se resuelve
    * en el mismo momento del impacto en vez de exigir una segunda tirada manual.
    */
-  static async #resolverDanoDeAtaque(actor, armaPreparada) {
+  static async #resolverDanoDeAtaque(actor, armaPreparada, critico = false) {
     const item = actor.items?.get(armaPreparada.id);
     if (!item) return null;
     if (typeof item.tieneMunicion === "function" && item.tieneMunicion()) {
@@ -46,7 +50,20 @@ export class YsystemDice {
     }
     const formula = (typeof item.getFormulaDano === "function" ? item.getFormulaDano(actor) : "") || "0";
     const danoRoll = await (new Roll(formula)).evaluate({ async: true });
-    return { total: danoRoll.total, formula: danoRoll.formula, itemName: item.name, itemId: item.id };
+    const total = critico ? danoRoll.total * 2 : danoRoll.total;
+    return { total, formula: danoRoll.formula, itemName: item.name, itemId: item.id, critico };
+  }
+
+  /**
+   * Reglas: sin arma, el daño de Lucha desarmada es fijo (1) + la mitad del bonificador
+   * de FUE (redondeado hacia abajo), igual que cualquier otro impacto se resuelve en el
+   * momento del éxito en vez de exigir una tirada de daño aparte.
+   */
+  static #resolverDanoDesarmado(actor, critico = false) {
+    const fue = Number(actor.system?.atributos?.fue?.value ?? 0);
+    const base = Number(CAMC.danoDesarmado?.fijo ?? 1) + Math.floor(fue / 2);
+    const total = critico ? base * 2 : base;
+    return { total, formula: `${CAMC.danoDesarmado?.fijo ?? 1} + FUE/2`, itemName: "Desarmado", itemId: null, critico };
   }
 
   /**
@@ -54,6 +71,8 @@ export class YsystemDice {
    * Éxito: +2 Salud. Crítico: +4 Salud. Pifia: -1 Salud adicional. Un único intento
    * por herida (esto último no se puede forzar automáticamente: no hay un registro
    * de heridas individuales, así que queda en manos de la DJ recordarlo).
+   * El botiquín de primeros auxilios (equipo), además de su +2 a la tirada, permite
+   * recuperar 1 punto extra de Salud cuando la cura tiene éxito.
    */
   static async #resolverCuraAuxilio(actor, options, { exito, critico, pifia }) {
     const targetUuid = options.curarTargetUuid || actor.uuid;
@@ -64,8 +83,11 @@ export class YsystemDice {
     if (critico) { cantidad = 4; resultado = "critico"; }
     else if (pifia) { cantidad = -1; resultado = "pifia"; }
     else if (exito) { cantidad = 2; resultado = "exito"; }
+    const tieneBotiquin = (actor.items ?? []).some(item => item.type === "objeto" && item.system?.equipada && String(item.name ?? "").toLowerCase().includes("botiqu"));
+    const bonusBotiquin = tieneBotiquin && cantidad > 0 ? 1 : 0;
+    cantidad += bonusBotiquin;
     if (cantidad !== 0) await target.modificarSalud(cantidad);
-    return { targetName: target.name, cantidad, resultado };
+    return { targetName: target.name, cantidad, resultado, bonusBotiquin: bonusBotiquin > 0 };
   }
 
   static async rollDamage(actor, item, options = {}) {

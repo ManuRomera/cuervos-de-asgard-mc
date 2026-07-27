@@ -202,7 +202,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
   async #rollSkill(event) {
     event.preventDefault();
     const habilidad = event.currentTarget.dataset.skill;
-    const options = event.altKey ? { dificultad: null, aplicaSalud: false } : await this.#askRollOptions(habilidad);
+    const options = event.altKey ? { dificultad: null, aplicaSalud: true } : await this.#askRollOptions(habilidad);
     if (options === null) return;
     const proezaDados = Number(options.proezaDados ?? 0);
     if (proezaDados > 0) {
@@ -263,7 +263,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
           <label><span>Dados sacrificados</span>${this.#numberStepper("dadosSacrificados", 0, 0, 3)}</label>
         </div>
         <div class="camc-checkline-group">
-          <label class="camc-checkline"><input name="aplicaSalud" type="checkbox"/> <span>Aplicar penalizador de Salud (${penalty.label})</span></label>
+          <label class="camc-checkline"><input name="aplicaSalud" type="checkbox" checked/> <span>Aplicar penalizador de Salud (${penalty.label})</span></label>
           <label class="camc-checkline"><input name="recuerdoCuando" type="checkbox" ${recuerdoUsado ? "disabled" : ""}/> <span>Recuerdo cuando (+2D, no compatible con proezas)${recuerdoUsado ? " · ya usado" : ""}</span></label>
           ${weaponInfo ? `<label class="camc-checkline"><input name="desenfundar" type="checkbox"/> <span>Desenfundar o cambiar de arma este turno (-1D)</span></label>` : ""}
         </div>
@@ -492,7 +492,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     const item = this.#getItem(event);
     if (!item || item.type !== "arma") return;
     const habilidad = this.#weaponSkill(item);
-    const options = event.altKey ? { dificultad: null, aplicaSalud: false } : await this.#askRollOptions(habilidad, { weapon: item });
+    const options = event.altKey ? { dificultad: null, aplicaSalud: true } : await this.#askRollOptions(habilidad, { weapon: item });
     if (options === null) return;
     const proezaDados = Number(options.proezaDados ?? 0);
     if (proezaDados > 0) {

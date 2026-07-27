@@ -1,7 +1,7 @@
 export const CAMC = {};
 
 CAMC.systemId = "cuervos-de-asgard-mc";
-CAMC.contentVersion = "1.7.4";
+CAMC.contentVersion = "1.7.5";
 
 CAMC.atributos = {
   car: { label: "Carisma", short: "CAR" },
@@ -190,15 +190,18 @@ CAMC.cargaPorTamano = {
 };
 
 CAMC.categoriasArma = {
-  cuerpo_a_cuerpo: { label: "Armas cuerpo a cuerpo", habilidad: "lucha", atributoDano: "fue_mitad", resumen: "Ataque con Lucha. Daño fijo del arma + la mitad de FUE." },
-  cuerpo_a_cuerpo_dos_manos: { label: "Armas cuerpo a cuerpo a dos manos", habilidad: "lucha", atributoDano: "fue_mitad", resumen: "Ataque con Lucha. Requiere ambas manos. Daño fijo del arma + la mitad de FUE." },
-  distancia_no_fuego: { label: "Armas a distancia no de fuego", habilidad: "punteria", atributoDano: "per", resumen: "Ataque con Puntería. Daño fijo del arma + PER." },
-  fuego_cortas: { label: "Armas de fuego cortas", habilidad: "punteria", atributoDano: "per", resumen: "Ataque con Puntería. Consume munición. Daño fijo del arma + PER." },
-  fuego_largas: { label: "Armas de fuego largas", habilidad: "punteria", atributoDano: "per", resumen: "Ataque con Puntería. Consume munición. Daño fijo del arma + PER." },
-  fuego_mortiferas: { label: "Armas de fuego mortíferas", habilidad: "punteria", atributoDano: "per", resumen: "Ataque con Puntería. Consume munición. Daño fijo del arma + PER; puede incluir reglas especiales como ráfagas." },
+  cuerpo_a_cuerpo: { label: "Armas cuerpo a cuerpo", habilidad: "lucha", atributoDano: "fue", resumen: "Ataque con Lucha. Daño fijo (3) + FUE íntegra." },
+  cuerpo_a_cuerpo_dos_manos: { label: "Armas cuerpo a cuerpo a dos manos", habilidad: "lucha", atributoDano: "fue_x1_5", resumen: "Ataque con Lucha. Requiere ambas manos. Daño fijo (3) + FUE íntegra x1,5 (redondeado)." },
+  distancia_no_fuego: { label: "Armas a distancia no de fuego", habilidad: "punteria", atributoDano: "per", resumen: "Ataque con Puntería. Daño fijo (3) + PER." },
+  fuego_cortas: { label: "Armas de fuego cortas", habilidad: "punteria", atributoDano: "per", resumen: "Ataque con Puntería. Consume munición. Daño fijo (7) + PER." },
+  fuego_largas: { label: "Armas de fuego largas", habilidad: "punteria", atributoDano: "per", resumen: "Ataque con Puntería. Consume munición. Daño fijo (10) + PER." },
+  fuego_mortiferas: { label: "Armas de fuego mortíferas", habilidad: "punteria", atributoDano: "per", resumen: "Ataque con Puntería. Consume munición. Daño fijo (15) + PER; puede incluir reglas especiales como ráfagas." },
   explosivo: { label: "Explosivos", habilidad: "punteria", atributoDano: "", resumen: "Daño fijo por explosión. La distancia puede reducir el daño según el explosivo." },
-  improvisada: { label: "Improvisada", habilidad: "lucha", atributoDano: "fue_mitad", resumen: "Ataque improvisado con Lucha. Daño fijo + la mitad de FUE si procede." }
+  improvisada: { label: "Improvisada", habilidad: "lucha", atributoDano: "fue", resumen: "Ataque improvisado con Lucha. Daño fijo (3) + FUE íntegra, igual que un arma convencional." }
 };
+
+/* Daño sin armas (Lucha desarmado): daño fijo 1 + la mitad del bonificador de FUE. */
+CAMC.danoDesarmado = { fijo: 1, atributoDano: "fue_mitad" };
 
 CAMC.ubicacionesCarga = {
   mochila: "Mochila / encima",

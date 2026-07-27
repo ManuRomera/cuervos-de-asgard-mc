@@ -2,6 +2,18 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.26] — 2026-07-27
+
+### Corregido
+- El daño de las armas cuerpo a cuerpo y de las armas improvisadas se calculaba con la mitad del bonificador de FUE (la fórmula pensada solo para el daño desarmado), en vez de la FUE íntegra que marca el manual; y las armas a dos manos no aplicaban el multiplicador x1,5 sobre FUE que les corresponde. Se corrige el cálculo por categoría de arma y se revisan también los valores de daño fijo de las 13 armas que trae el sistema (varias tenían el número equivocado, p. ej. los cuchillos y espadas de una mano estaban a 5 en vez de a 3).
+- Un ataque de Lucha o Puntería que impactaba con crítico no doblaba el daño fusionado en la propia tirada, al contrario que el resto de críticos del sistema.
+- Los ataques de Lucha sin arma equipada («desarmado») no generaban ningún daño automático al impactar. Ahora se calcula como indica el manual: 1 punto fijo + la mitad del bonificador de FUE (redondeado hacia abajo), doblado si es crítico.
+- El generador de PJ repartía 4 dados a las habilidades favorecidas del cargo, confundiendo «favorecida» (un +3 fijo al tirar, según el manual) con el reparto real de dados de creación (4 habilidades a 3D, 8 a 2D y el resto a 1D, independiente de cuáles sean las favorecidas). Ahora reparte los dados correctamente y prioriza que las favorecidas caigan en el tramo de 3D cuando es posible, sin que eso cambie las reglas de tirada.
+- El checkbox «Aplicar penalizador de Salud» del diálogo de tirada (PJ y motos) no estaba marcado por defecto, así que había que acordarse de activarlo en cada tirada para que la penalización por Salud baja se aplicase de verdad; ahora sale marcado por defecto (también al tirar rápido con Alt + clic).
+- El bonus del botiquín de primeros auxilios solo daba el +2 a la tirada de Auxilio, pero no el punto extra de Salud recuperada que también indica su descripción. Ahora Auxilio-Curar añade ese punto extra cuando quien cura lleva un botiquín equipado.
+- La ficha de PNJ sumaba el nivel del escudo al indicador de «Armadura», cuando en realidad el escudo no reduce daño (solo sube la Agilidad, ya corregido en la 1.3.25): ahora el indicador muestra solo la armadura real y añade una nota aparte con el bonus de Agilidad del escudo si lo tiene.
+- Se retira el modificador «contextual» de tuneados de moto: era un stub que siempre devolvía 0 y nunca llegó a implementarse, así que no cambiaba ninguna tirada; se limpia también de la tarjeta de chat.
+
 ## [1.3.25] — 2026-07-27
 
 ### Corregido
