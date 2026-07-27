@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.27] — 2026-07-27
+
+### Corregido
+- El bestiario tenía 5 monstruos duplicados con nombre en singular y en plural (Bandido/Bandidos, Carroñero/Carroñeros, Cuervo de Asgard/Cuervos de Asgard, Demonio de Fuego/Demonios de Fuego, Draug/Draugar de Helheim). Las versiones en plural eran una invención con estadísticas distintas a las del manual; se retiran y solo queda una ficha por criatura, con las estadísticas verificadas línea a línea contra la «Tabla de concreción del daño» y las fichas de combate del capítulo del bestiario.
+- Las 14 fichas de monstruos restantes (Einherjar, Elfos de la Luz, Elfos Oscuros, Enanos, Espectros, Esqueletos, los tres tipos de Gigantes, Huargos, Supervivientes, Trasgos, Troles y Valquirias) tenían atributos, valores pasivos, Salud, iniciativa y armadura que no coincidían con los que da el manual para esa criatura (en algunos casos, con diferencias de varios puntos). Se han reescrito por completo con los valores exactos del manual y se ha añadido el texto de sus reglas especiales de combate (por ejemplo, el ataque de área de los gigantes y los troles, el susto letal de los espectros, o la inmunidad a las armas de fuego de los no muertos).
+- La Puntería del Bandido de las Llanuras Yermas estaba a 2D en vez de a 3D, como indica la fórmula de daño de sus armas a distancia en el manual.
+- La iniciativa y la Resistencia Física de los PNJ se recalculaban siempre con la fórmula estándar en cada `prepareData()`, descartando el valor propio de la ficha del bestiario si era distinto (el mismo problema que ya se corrigió para la Agilidad en la 1.3.25, pero que no se había extendido a estos dos campos). Por ejemplo, el Demonio de Fuego tiene Resistencia Física 4 en el manual pese a su FUE 7, pero el sistema la recalculaba a 5. Ahora solo se usa la fórmula como valor por defecto si la ficha no trae ya uno propio.
+- Al eliminar las 5 fichas duplicadas de `_data/bestiario/enemigos.json`, el sistema ahora también borra automáticamente esas mismas fichas «huérfanas» del directorio de Actores y del compendio del bestiario en las partidas ya existentes (antes, quitar una entrada de los datos no borraba la ficha ya importada).
+
 ## [1.3.26] — 2026-07-27
 
 ### Corregido
