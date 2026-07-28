@@ -824,6 +824,8 @@ export class CAMCActorSheet extends ActorSheetV1 {
       return data;
     });
     await this.actor.createEmbeddedDocuments("Item", docs);
+    // Creación en lote: Foundry no siempre repreparara los datos derivados antes del primer render.
+    this.actor.prepareData();
   }
 
   async #characterWizardIdentity(state) {

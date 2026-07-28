@@ -408,7 +408,11 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-character .camc-icon-button,
 .camc-character .camc-die-button,
 .camc-character .camc-action-button,
-.camc-character .skill-die{
+.camc-character .skill-die,
+.camc-npc .camc-resource-actions button,
+.camc-npc .camc-icon-button,
+.camc-npc .camc-die-button,
+.camc-npc .camc-action-button{
   border-radius:0;
   background:#f2eadb!important;
   border:2px solid var(--camc-accent)!important;
@@ -672,11 +676,16 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-character .camc-resource-actions button,
 .camc-character .camc-icon-button,
 .camc-character .camc-die-button,
-.camc-character .camc-action-button{
+.camc-character .camc-action-button,
+.camc-npc .camc-resource-actions button,
+.camc-npc .camc-icon-button,
+.camc-npc .camc-die-button,
+.camc-npc .camc-action-button{
   border-radius:0!important;
   box-shadow:none!important;
 }
-.camc-character .camc-resource-actions button{background:var(--camc-paper)!important;border:2px solid var(--camc-gold)!important;color:var(--camc-ink)!important;}
+.camc-character .camc-resource-actions button,
+.camc-npc .camc-resource-actions button{background:var(--camc-paper)!important;border:2px solid var(--camc-gold)!important;color:var(--camc-ink)!important;}
 .camc-character .camc-progress{display:none;}
 .camc-character .camc-mini-vitals{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .camc-character .camc-derived-mini{display:grid;place-items:center;padding:7px;font-weight:900;}
@@ -908,7 +917,11 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-character .camc-die-button,
 .camc-character .camc-action-button,
 .camc-character .camc-resource-actions button,
-.camc-character .skill-edit-toggle{
+.camc-character .skill-edit-toggle,
+.camc-npc .camc-icon-button,
+.camc-npc .camc-die-button,
+.camc-npc .camc-action-button,
+.camc-npc .camc-resource-actions button{
   background:var(--camc-paper)!important;
   border:2px solid var(--camc-rule)!important;
   color:var(--camc-ink)!important;
@@ -918,7 +931,11 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-character .camc-die-button i,
 .camc-character .camc-action-button i,
 .camc-character .camc-resource-actions button i,
-.camc-character .skill-edit-toggle i{
+.camc-character .skill-edit-toggle i,
+.camc-npc .camc-icon-button i,
+.camc-npc .camc-die-button i,
+.camc-npc .camc-action-button i,
+.camc-npc .camc-resource-actions button i{
   color:currentColor!important;
 }
 .camc-character .camc-action-button.auto-role-skills{
@@ -1165,7 +1182,12 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-character .camc-die-button,
 .camc-character .item-equip,
 .camc-character .item-edit,
-.camc-character .item-delete{
+.camc-character .item-delete,
+.camc-npc .camc-icon-button,
+.camc-npc .camc-die-button,
+.camc-npc .item-equip,
+.camc-npc .item-edit,
+.camc-npc .item-delete{
   color:var(--camc-ink)!important;
   background:rgba(248,242,229,.9)!important;
   border-color:rgba(12,12,10,.72)!important;
@@ -1174,10 +1196,16 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-character .camc-die-button i,
 .camc-character .item-equip i,
 .camc-character .item-edit i,
-.camc-character .item-delete i{
+.camc-character .item-delete i,
+.camc-npc .camc-icon-button i,
+.camc-npc .camc-die-button i,
+.camc-npc .item-equip i,
+.camc-npc .item-edit i,
+.camc-npc .item-delete i{
   color:var(--camc-ink)!important;
 }
 .camc-character .camc-item-row.equipped .item-equip,
+.camc-npc .camc-item-row.equipped .item-equip,
 .camc-item-window .toggle-equipped.active{
   background:var(--camc-gold)!important;
   border-color:var(--camc-rust)!important;
