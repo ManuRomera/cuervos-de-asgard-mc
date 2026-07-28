@@ -313,6 +313,17 @@ Hooks.on("preUpdateItem", (item, changes, _options, userId) => validateCamcCarry
 Hooks.on("updateItem", (item, changes) => syncCamcLinkedMountLoad(item, changes));
 Hooks.on("updateActor", (actor, changes) => syncCamcLinkedMountExtraSaddlebags(actor, changes));
 
+// Retrato genérico de PJ/PNJ hasta que se le ponga el definitivo: solo se aplica si el
+// actor se crea sin imagen propia (en blanco o con el icono genérico de Foundry), para no
+// pisar un retrato ya elegido al duplicar, importar o generar un personaje/PNJ concreto.
+Hooks.on("preCreateActor", (document, data) => {
+  const defaultImg = { personaje: CAMC.assets.personajeDefaultImg, pnj: CAMC.assets.pnjDefaultImg }[data.type];
+  if (!defaultImg) return;
+  const currentImg = data.img;
+  if (currentImg && currentImg !== "icons/svg/mystery-man.svg") return;
+  document.updateSource({ img: defaultImg, "prototypeToken.texture.src": defaultImg });
+});
+
 function registerHandlebarsHelpers() {
   Handlebars.registerHelper("camcLabel", (collection, key) => CAMC[collection]?.[key]?.label ?? key);
   Handlebars.registerHelper("camcAsset", key => CAMC.assets?.[key] ?? "");

@@ -436,7 +436,7 @@ export function generateRandomCharacter(options = {}) {
   return {
     name,
     type: "personaje",
-    img: "icons/svg/mystery-man.svg",
+    img: CAMC.assets.personajeDefaultImg,
     system: {
       atributos: attributes,
       valores_pasivos: derivedFor(attributes, skills),
@@ -501,7 +501,7 @@ export function generateRandomNpc(options = {}) {
   return {
     name: `${tipo} ${pick(CAMCGeneratorTables.apodos, rng)}`,
     type: "pnj",
-    img: "icons/svg/mystery-man.svg",
+    img: CAMC.assets.pnjDefaultImg,
     system: {
       biografia: {
         nombre: tipo,
