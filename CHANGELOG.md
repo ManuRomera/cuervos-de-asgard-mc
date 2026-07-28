@@ -2,6 +2,14 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.4] — 2026-07-28
+
+### Corregido
+- Refuerzo "a machete" del fondo oscuro y el texto claro en Personaje, PNJ y Objetos: este archivo CSS tiene muchísimos bloques duplicados de rondas de diseño anteriores (fondos y colores repetidos con `!important` a distinta especificidad), y los parches selector-a-selector de las versiones 1.4.0 a 1.4.3 no siempre ganaban la cascada frente a esos duplicados. En vez de perseguir cada selector suelto otra vez, se sube deliberadamente la especificidad (repitiendo la clase de la ficha) para ganar de forma garantizada a cualquier combinación de 2-3 clases que quedara sin cubrir, tanto en fondos como en color de texto e inputs.
+
+### Nota
+- Si tras esta versión sigue habiendo texto o fondo que no coincide con lo esperado, lo más probable es que haya algo en la cadena de estilos (posiblemente del propio Foundry, no de este sistema) que no se puede diagnosticar más sin inspeccionar el elemento en vivo (clic derecho → Inspeccionar, en el navegador o en Foundry si tiene DevTools habilitado) y ver qué regla concreta está ganando.
+
 ## [1.4.3] — 2026-07-28
 
 ### Corregido
