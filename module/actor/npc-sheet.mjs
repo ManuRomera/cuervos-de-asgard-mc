@@ -1,6 +1,6 @@
 import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
-import { generateRandomNpc } from "../generator/camc-generators.mjs";
+import { generateRandomNpc, applyGeneratedStarterItems } from "../generator/camc-generators.mjs";
 
 const get = foundry.utils.getProperty;
 const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
@@ -164,9 +164,11 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     try {
       const data = generateRandomNpc({ seed: `${this.actor.id}-${Date.now()}` });
       data.img = this.actor.img || data.img;
+      const generatedItems = data.items ?? [];
       delete data.type;
       delete data.items;
       await this.actor.update(data);
+      await applyGeneratedStarterItems(this.actor, generatedItems);
       ui.notifications.info(`${this.actor.name} generado.`);
       this.render(false);
     } catch (err) {

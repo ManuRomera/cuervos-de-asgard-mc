@@ -300,52 +300,85 @@ const starterDones = [
   { name: "Cota de Draupnir", type: "don", img: "icons/equipment/chest/breastplate-collared-steel.webp", system: { deidad: "Idunn", coste_proezas: 1, coste_descripcion: "1 proeza por activación", virtud: "Perseverancia", efecto: "Como portador de esta cota, manufacturada por Idunn a partir del anillo mágico Draupnir, te beneficias de una protección de nivel 3 sin sufrir ningún tipo de penalización. Es personal e intransferible. Se repliega mágicamente al final de cada combate hasta adoptar el tamaño de un anillo que puedes llevar en cualquier dedo, así que pasa desapercibida hasta que decides desplegarla y equipártela (lo que exige una acción durante un turno completo).", descripcion: "Idunn te otorga una armadura que cabe en un anillo." } }
 ];
 
+// Daño según la tabla de concreción del manual: fijo (sin dados) + bonificador de
+// atributo. cuerpo_a_cuerpo e improvisada usan 3 + FUE; distancia_no_fuego, 3 + PER;
+// fuego_cortas, 7 + PER. La categoría es siempre la clave exacta de CAMC.categoriasArma.
+const melee = [
+  {
+    name: "Cuchillo de carretera",
+    img: "icons/weapons/daggers/dagger-simple.webp",
+    system: { tipo: "cuerpo_a_cuerpo", categoria: "cuerpo_a_cuerpo", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Herramienta de supervivencia y arma discreta.", descripcion: "Hoja corta útil para trabajo de campamento, intimidación y combate cercano.", equipada: true, carga: { ubicacion: "mochila", espacios: 0.5 } }
+  },
+  {
+    name: "Llave pesada",
+    img: "icons/tools/hand/wrench-steel-grey.webp",
+    system: { tipo: "cuerpo_a_cuerpo", categoria: "improvisada", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Cuenta también como herramienta de mecánica.", descripcion: "Llave de taller grande, marcada con hollín y runas de uso.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
+  },
+  {
+    name: "Cadena de arrastre",
+    img: "icons/tools/fasteners/chain-steel.webp",
+    system: { tipo: "cuerpo_a_cuerpo", categoria: "cuerpo_a_cuerpo", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Puede servir para bloquear, atar o remolcar.", descripcion: "Cadena de acero recuperada de un portón de carretera.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
+  },
+  {
+    name: "Bate con clavos",
+    img: "icons/weapons/clubs/club-spiked-brown.webp",
+    system: { tipo: "cuerpo_a_cuerpo", categoria: "improvisada", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Intimidante y fácil de conseguir.", descripcion: "Bate de madera reforzado con clavos oxidados.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
+  },
+  {
+    name: "Machete de matarife",
+    img: "icons/weapons/swords/sword-worn-brown.webp",
+    system: { tipo: "cuerpo_a_cuerpo", categoria: "cuerpo_a_cuerpo", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Hoja larga, útil también para abrirse paso entre maleza o chatarra.", descripcion: "Machete pesado de hoja mellada, propio de talleres y mataderos.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
+  }
+];
+const ranged = [
+  {
+    name: "Arpón",
+    img: "icons/weapons/polearms/spear-hooked-brown.webp",
+    system: { tipo: "distancia_no_fuego", categoria: "distancia_no_fuego", alcance: "distancia", dano_fijo: 3, municion: { value: 0, max: 0 }, especial: "Recuperable si la escena permite recogerlo.", descripcion: "Arpón pesado usado para cazar, intimidar y detener objetivos a corta distancia.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
+  },
+  {
+    name: "Pistola reciclada",
+    img: "icons/weapons/guns/gun-pistol-brass.webp",
+    system: { tipo: "fuego_cortas", categoria: "fuego_cortas", alcance: "distancia", dano_fijo: 7, municion: { value: 6, max: 6 }, especial: "Munición escasa; declarar recarga cuando se agote.", descripcion: "Arma corta reconstruida con piezas no coincidentes.", equipada: false, carga: { ubicacion: "mochila", espacios: 1 } }
+  },
+  {
+    name: "Ballesta de taller",
+    img: "icons/weapons/crossbows/crossbow-simple-brown.webp",
+    system: { tipo: "distancia_no_fuego", categoria: "distancia_no_fuego", alcance: "distancia", dano_fijo: 3, municion: { value: 5, max: 5 }, especial: "Silenciosa y fácil de reparar con piezas comunes.", descripcion: "Ballesta sencilla fabricada con acero de suspensión.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
+  },
+  {
+    name: "Escopeta recortada",
+    img: "icons/weapons/guns/gun-shotgun-worn.webp",
+    system: { tipo: "fuego_cortas", categoria: "fuego_cortas", alcance: "distancia", dano_fijo: 7, municion: { value: 2, max: 2 }, especial: "Munición muy escasa; devastadora a corta distancia.", descripcion: "Escopeta de cañones recortados, ruidosa y temida en cualquier capítulo.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
+  }
+];
+const useful = [
+  { name: "Kit de herramientas", img: "icons/tools/hand/hammer-and-wrench.webp", tipo: "herramienta", especial: "Permite justificar reparaciones y trabajos de Mecánica.", descripcion: "Llaves, bridas, cable, cinta, grasa y recambios pequeños.", espacios: 1 },
+  { name: "Botiquín de ruta", img: "icons/containers/bags/pack-leather-white.webp", tipo: "suministro", especial: "Apoyo narrativo para Auxilio y curas improvisadas.", descripcion: "Vendas limpias, alcohol, aguja, hilo y analgésicos de dudosa fecha.", espacios: 1 },
+  { name: "Raciones y cantimplora", img: "icons/consumables/food/bowl-stew-tofu-potato-red.webp", tipo: "suministro", especial: "Comida y agua para una salida corta.", descripcion: "Lo justo para sobrevivir a una ruta sin depender de nadie.", espacios: 1 },
+  { name: "Mapa plastificado", img: "icons/sundries/documents/document-map-yellow.webp", tipo: "general", especial: "Ayuda a justificar rutas, atajos y memoria del territorio.", descripcion: "Mapa del Viejo Mundo lleno de marcas nuevas del capítulo.", espacios: 0 }
+];
+
+// Mismos niveles y penalizaciones reales del manual (ver _data/armaduras/armaduras.json),
+// usados aquí para poder repartirlos al azar entre los PNJ generados.
+const armorPool = [
+  { name: "Armadura de cuero / Ropa acolchada", nivel: 1, penalizacion: 0 },
+  { name: "Armadura de caucho", nivel: 2, penalizacion: 1 },
+  { name: "Casco de fútbol americano", nivel: 2, penalizacion: 1 },
+  { name: "Cota de malla de anilla gruesa", nivel: 3, penalizacion: 1 },
+  { name: "Armadura de placas o cota de malla de anilla fina", nivel: 4, penalizacion: 2 },
+  { name: "Chaleco de kevlar", nivel: 4, penalizacion: 0 },
+  { name: "Traje antidisturbios del Viejo Mundo", nivel: 5, penalizacion: 2 }
+];
+const shieldPool = [
+  { name: "Escudo pequeño", nivel: 1, penalizacion: 1 },
+  { name: "Escudo mediano", nivel: 2, penalizacion: 2 },
+  { name: "Escudo grande", nivel: 3, penalizacion: 3 }
+];
+
 function starterEquipmentFor({ cargo, deidad, favored = [], rng = Math.random } = {}) {
   const cargoData = CAMC.cargos[cargo] ?? CAMC.cargos.full_patch;
   const dios = CAMC.dioses[deidad] ?? {};
-  // Daño según la tabla de concreción del manual: fijo (sin dados) + bonificador de
-  // atributo. cuerpo_a_cuerpo e improvisada usan 3 + FUE; distancia_no_fuego, 3 + PER;
-  // fuego_cortas, 7 + PER. La categoría es siempre la clave exacta de CAMC.categoriasArma.
-  const melee = [
-    {
-      name: "Cuchillo de carretera",
-      img: "icons/weapons/daggers/dagger-simple.webp",
-      system: { tipo: "cuerpo_a_cuerpo", categoria: "cuerpo_a_cuerpo", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Herramienta de supervivencia y arma discreta.", descripcion: "Hoja corta útil para trabajo de campamento, intimidación y combate cercano.", equipada: true, carga: { ubicacion: "mochila", espacios: 0.5 } }
-    },
-    {
-      name: "Llave pesada",
-      img: "icons/tools/hand/wrench-steel-grey.webp",
-      system: { tipo: "cuerpo_a_cuerpo", categoria: "improvisada", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Cuenta también como herramienta de mecánica.", descripcion: "Llave de taller grande, marcada con hollín y runas de uso.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
-    },
-    {
-      name: "Cadena de arrastre",
-      img: "icons/tools/fasteners/chain-steel.webp",
-      system: { tipo: "cuerpo_a_cuerpo", categoria: "cuerpo_a_cuerpo", alcance: "cuerpo_a_cuerpo", dano_fijo: 3, especial: "Puede servir para bloquear, atar o remolcar.", descripcion: "Cadena de acero recuperada de un portón de carretera.", equipada: true, carga: { ubicacion: "mochila", espacios: 1 } }
-    }
-  ];
-  const ranged = [
-    {
-      name: "Arpón",
-      img: "icons/weapons/polearms/spear-hooked-brown.webp",
-      system: { tipo: "distancia_no_fuego", categoria: "distancia_no_fuego", alcance: "distancia", dano_fijo: 3, municion: { value: 0, max: 0 }, especial: "Recuperable si la escena permite recogerlo.", descripcion: "Arpón pesado usado para cazar, intimidar y detener objetivos a corta distancia.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
-    },
-    {
-      name: "Pistola reciclada",
-      img: "icons/weapons/guns/gun-pistol-brass.webp",
-      system: { tipo: "fuego_cortas", categoria: "fuego_cortas", alcance: "distancia", dano_fijo: 7, municion: { value: 6, max: 6 }, especial: "Munición escasa; declarar recarga cuando se agote.", descripcion: "Arma corta reconstruida con piezas no coincidentes.", equipada: false, carga: { ubicacion: "mochila", espacios: 1 } }
-    },
-    {
-      name: "Ballesta de taller",
-      img: "icons/weapons/crossbows/crossbow-simple-brown.webp",
-      system: { tipo: "distancia_no_fuego", categoria: "distancia_no_fuego", alcance: "distancia", dano_fijo: 3, municion: { value: 5, max: 5 }, especial: "Silenciosa y fácil de reparar con piezas comunes.", descripcion: "Ballesta sencilla fabricada con acero de suspensión.", equipada: false, carga: { ubicacion: "mochila", espacios: 2 } }
-    }
-  ];
-  const useful = [
-    { name: "Kit de herramientas", img: "icons/tools/hand/hammer-and-wrench.webp", tipo: "herramienta", especial: "Permite justificar reparaciones y trabajos de Mecánica.", descripcion: "Llaves, bridas, cable, cinta, grasa y recambios pequeños.", espacios: 1 },
-    { name: "Botiquín de ruta", img: "icons/containers/bags/pack-leather-white.webp", tipo: "suministro", especial: "Apoyo narrativo para Auxilio y curas improvisadas.", descripcion: "Vendas limpias, alcohol, aguja, hilo y analgésicos de dudosa fecha.", espacios: 1 },
-    { name: "Raciones y cantimplora", img: "icons/consumables/food/bowl-stew-tofu-potato-red.webp", tipo: "suministro", especial: "Comida y agua para una salida corta.", descripcion: "Lo justo para sobrevivir a una ruta sin depender de nadie.", espacios: 1 },
-    { name: "Mapa plastificado", img: "icons/sundries/documents/document-map-yellow.webp", tipo: "general", especial: "Ayuda a justificar rutas, atajos y memoria del territorio.", descripcion: "Mapa del Viejo Mundo lleno de marcas nuevas del capítulo.", espacios: 0 }
-  ];
   const cargoLabel = cargoData.label ?? "Cuervo";
   const deityLabel = dios.label ?? title(deidad || "deidad");
   const virtud = dios.virtud ?? "";
@@ -475,6 +508,107 @@ export function generateRandomCharacter(options = {}) {
   };
 }
 
+// Probabilidades de equipo por dificultad: cuanto más duro el PNJ, más probable que
+// venga armado y protegido, y con protección de mayor nivel. Un PNJ "menor" puede
+// perfectamente venir desarmado (pelea desarmado, ver ficha de combate).
+const npcGearOdds = {
+  menor: { weapon: 0.55, secondWeapon: 0, armor: 0.15, shield: 0, maxArmorNivel: 1, minTools: 0, maxTools: 1 },
+  normal: { weapon: 0.75, secondWeapon: 0.15, armor: 0.4, shield: 0.05, maxArmorNivel: 2, minTools: 0, maxTools: 2 },
+  duro: { weapon: 0.9, secondWeapon: 0.3, armor: 0.7, shield: 0.15, maxArmorNivel: 4, minTools: 1, maxTools: 2 },
+  elite: { weapon: 1, secondWeapon: 0.5, armor: 0.9, shield: 0.3, maxArmorNivel: 5, minTools: 1, maxTools: 2 }
+};
+
+function npcArmorItem(entry) {
+  return {
+    name: entry.name,
+    type: "armadura",
+    img: CAMC.itemIcons.armadura,
+    flags: starterFlag(),
+    system: {
+      nivel: entry.nivel,
+      penalizacion: entry.penalizacion,
+      tamano: "mediano",
+      deterioro: "M",
+      disponibilidad: "frecuente",
+      compatible: false,
+      descripcion: entry.name,
+      equipada: true,
+      carga: { ubicacion: "mochila", espacios: 1 }
+    }
+  };
+}
+
+function npcShieldItem(entry) {
+  return {
+    name: entry.name,
+    type: "escudo",
+    img: CAMC.itemIcons.escudo,
+    flags: starterFlag(),
+    system: {
+      nivel: entry.nivel,
+      penalizacion: entry.penalizacion,
+      tamano: "mediano",
+      deterioro: "M",
+      disponibilidad: "frecuente",
+      descripcion: entry.name,
+      equipado: true,
+      carga: { ubicacion: "mochila", espacios: 1 }
+    }
+  };
+}
+
+function npcGearFor(difficulty, rng) {
+  const odds = npcGearOdds[difficulty] ?? npcGearOdds.normal;
+  const items = [];
+  const meleeFirst = rng() < 0.55;
+  if (rng() < odds.weapon) {
+    const primary = clone(pick(meleeFirst ? melee : ranged, rng));
+    primary.type = "arma";
+    primary.img = CAMC.itemIcons.arma;
+    primary.flags = starterFlag();
+    primary.system.equipada = true;
+    items.push(primary);
+    if (rng() < odds.secondWeapon) {
+      const second = clone(pick(meleeFirst ? ranged : melee, rng));
+      second.type = "arma";
+      second.img = CAMC.itemIcons.arma;
+      second.flags = starterFlag();
+      second.system.equipada = false;
+      items.push(second);
+    }
+  }
+  if (rng() < odds.armor) {
+    const candidates = armorPool.filter(entry => entry.nivel <= odds.maxArmorNivel);
+    items.push(npcArmorItem(pick(candidates.length ? candidates : armorPool, rng)));
+  }
+  if (rng() < odds.shield) {
+    items.push(npcShieldItem(pick(shieldPool, rng)));
+  }
+  const toolCount = odds.minTools + Math.floor(rng() * (odds.maxTools - odds.minTools + 1));
+  if (toolCount > 0) {
+    for (const tool of uniquePicks(useful, Math.min(toolCount, useful.length), rng)) {
+      items.push({
+        name: tool.name,
+        type: "objeto",
+        img: CAMC.itemIcons.objeto,
+        flags: starterFlag(),
+        system: {
+          tipo: tool.tipo,
+          tamano: tool.espacios >= 2 ? "grande" : tool.espacios <= 0 ? "no_equipable" : "mediano",
+          deterioro: "M",
+          disponibilidad: "frecuente",
+          cantidad: 1,
+          especial: tool.especial,
+          descripcion: tool.descripcion,
+          equipada: false,
+          carga: { ubicacion: "mochila", espacios: tool.espacios }
+        }
+      });
+    }
+  }
+  return items;
+}
+
 export function generateRandomNpc(options = {}) {
   const rng = mulberry32(hashSeed(options.seed));
   const difficulty = options.difficulty || pick(["menor", "normal", "duro", "elite"], rng);
@@ -514,14 +648,9 @@ export function generateRandomNpc(options = {}) {
       valores_pasivos: derivedFor(attributes, skillsForDerived),
       combate: combatFor(attributes, skillsForDerived, true),
       habilidades_clave: habilidadesClave,
-      proteccion: {
-        armadura_nivel: difficulty === "menor" ? 0 : difficulty === "elite" ? 2 : 1,
-        armadura_descripcion: difficulty === "menor" ? "" : "protección improvisada",
-        armadura_penalizacion: 0
-      },
-      especial: pick(CAMCGeneratorTables.motivaciones, rng),
-      armas: []
-    }
+      especial: pick(CAMCGeneratorTables.motivaciones, rng)
+    },
+    items: npcGearFor(difficulty, rng)
   };
 }
 
@@ -547,4 +676,27 @@ export function generateRandomCommunity(options = {}) {
       notas: `${pick(c.notas, rng)}\nNecesidad actual: ${pick(Object.keys(resources), rng)}.`
     }
   };
+}
+
+// Reemplaza el equipo generado automáticamente (marcado con el flag "generatedStarter")
+// por uno nuevo, y fuerza un recálculo de datos derivados: en la creación en lote de
+// varios ítems de golpe, Foundry no siempre repreparara el Actor antes del primer render.
+export async function applyGeneratedStarterItems(actor, items = []) {
+  const current = actor.items
+    .filter(item => item.getFlag(CAMC.systemId, "generatedStarter"))
+    .map(item => item.id);
+  if (current.length) await actor.deleteEmbeddedDocuments("Item", current);
+  if (!items.length) return;
+  const docs = items.map(item => {
+    const data = foundry.utils.deepClone(item);
+    delete data._id;
+    data.flags ??= {};
+    data.flags[CAMC.systemId] = {
+      ...(data.flags[CAMC.systemId] ?? {}),
+      generatedStarter: true
+    };
+    return data;
+  });
+  await actor.createEmbeddedDocuments("Item", docs);
+  actor.prepareData();
 }

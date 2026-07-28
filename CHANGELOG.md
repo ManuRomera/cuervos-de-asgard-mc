@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.36] — 2026-07-28
+
+### Añadido
+- El generador aleatorio de PNJ ahora reparte equipo de verdad (armas, armaduras, escudos y objetos varios) en vez de dejar siempre al PNJ sin nada. La probabilidad y calidad del equipo dependen de la dificultad elegida (menor/normal/duro/élite): un PNJ menor puede perfectamente venir desarmado y sin protección, mientras que uno de élite casi siempre viene armado, protegido con una armadura de nivel alto y, a veces, con escudo y un arma secundaria. Se han añadido también tres armas nuevas al reparto (bate con clavos, machete de matarife, escopeta recortada) para variar más el resultado.
+- Se ha añadido un panel de "Objetos" a la ficha de PNJ (junto a Armas, Protección y Dones/rasgos), que antes no existía aunque el propio código ya agrupaba los objetos por tipo; ahora los objetos que trae un PNJ generado (o que se le añadan a mano) se pueden ver y editar desde la ficha.
+
+### Corregido
+- El equipo generado para un PNJ se aplicaba con `actor.update()` pero nunca se creaban los ítems correspondientes (`delete data.items` los descartaba sin más); ahora se crean de verdad como ítems del Actor, igual que ya ocurre con los PJ generados.
+
 ## [1.3.35] — 2026-07-28
 
 ### Corregido
