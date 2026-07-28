@@ -5709,3 +5709,146 @@ body.camc-compact .camc-sheet{font-size:12px;}
   transform:scale(var(--camc-portrait-local-scale, 1))!important;
   transform-origin:center bottom!important;
 }
+
+/* ============================================================
+   CAMC 2.0 — Rediseño de densidad y estética motera/nórdica
+   (revisión aprobada tras 3 maquetas). Bloque añadido al final a
+   propósito: reutiliza --camc-accent/--camc-deity ya existentes,
+   no toca portrait-standee/portrait-framed (sistema ya afinado en
+   píxeles), no toca .camc-body (ya es overflow:auto — el
+   redimensionado vertical con scroll interno ya funcionaba), y
+   solo sube prioridad para ganar a los bloques anteriores en vez
+   de tocarlos uno a uno (este fichero ya tenía bastante duplicado
+   antes de esta revisión).
+   ============================================================ */
+
+/* --- Personaje: cabecera de cromo oscuro con remaches, en vez de banner de pergamino --- */
+.camc-character .camc-hero{
+  background:
+    radial-gradient(circle at 10% 0%,color-mix(in srgb,var(--camc-accent) 20%,transparent),transparent 30%),
+    linear-gradient(180deg,#1b1d1d,#0a0b0b 70%,#070808)!important;
+  border:0!important;
+  border-bottom:3px solid var(--camc-accent)!important;
+  box-shadow:0 3px 0 var(--camc-rust),0 10px 22px rgba(0,0,0,.55)!important;
+  color:#ece6d6!important;
+  min-height:0!important;
+  padding:9px 12px!important;
+}
+.camc-character .camc-hero:before{
+  background:
+    repeating-linear-gradient(0deg,transparent 0 7px,rgba(255,255,255,.03) 7px 8px),
+    repeating-linear-gradient(90deg,transparent 0 13px,rgba(255,255,255,.02) 13px 14px)!important;
+  opacity:.5!important;
+}
+.camc-character .camc-hero:after{
+  content:"";
+  position:absolute; left:0; right:0; top:0; height:5px;
+  background:repeating-linear-gradient(45deg,var(--camc-gold) 0 9px,#0c0c0c 9px 18px);
+  opacity:.85; pointer-events:none;
+}
+.camc-character .camc-name{color:#f5efdd!important;text-shadow:0 1px 0 rgba(0,0,0,.6);}
+.camc-character .camc-identity-grid label span{color:#ada58f!important;}
+.camc-character .camc-identity-grid input,
+.camc-character .camc-identity-grid select{background:rgba(0,0,0,.4)!important;color:#f0eadb!important;border-color:rgba(255,255,255,.16)!important;}
+
+/* remaches en las esquinas de la cabecera, discretos */
+.camc-character .camc-hero{position:relative;}
+.camc-character .camc-hero .camc-identity:before,
+.camc-character .camc-hero .camc-identity:after{
+  content:""; position:absolute; width:5px; height:5px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#8a8067,#2a2418); box-shadow:0 1px 1px rgba(0,0,0,.5);
+  top:6px; pointer-events:none;
+}
+.camc-character .camc-hero .camc-identity:before{left:-4px;}
+.camc-character .camc-hero .camc-identity:after{right:6px;}
+
+/* divisor rúnico: mismo color de acento en las dos fichas */
+.camc-rune-divider{color:color-mix(in srgb,var(--camc-accent,#9c3820) 55%,rgba(20,18,14,.4))!important;font-size:12px!important;letter-spacing:.4em!important;margin:0!important;padding:4px 0!important;background:rgba(0,0,0,.25);}
+.camc-npc .camc-rune-divider{background:rgba(0,0,0,.06);}
+
+/* --- Densidad general: paneles y filas más compactos --- */
+.camc-character .camc-panel{padding:0 7px 7px!important;}
+.camc-character .camc-panel-title{
+  font-size:12px!important;
+  padding:5px 8px!important;
+  margin:0 0 4px!important;
+  letter-spacing:.06em!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),transparent)!important;
+}
+.camc-character .camc-item-row,
+.camc-character .camc-skill-row{min-height:0!important;padding:3px 6px!important;}
+.camc-character .camc-item-list{gap:0!important;}
+.camc-character .camc-item-row + .camc-item-row,
+.camc-character .camc-skill-row + .camc-skill-row{border-top:1px solid rgba(0,0,0,.28)!important;}
+.camc-character .camc-item-row img{width:22px!important;height:22px!important;}
+.camc-character .camc-identity-grid{gap:4px 8px!important;}
+.camc-character .camc-passive-strip article{padding:4px!important;}
+
+/* --- Habilidades: 3 columnas (convención habitual de Ysystem) --- */
+.camc-character .camc-skill-list.full{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:0 10px!important;
+}
+.camc-character .camc-skill-list.full .camc-skill-row{
+  grid-template-columns:24px minmax(70px,1fr) 34px 50px 20px!important;
+}
+@container (max-width:760px){
+  .camc-character .camc-skill-list.full{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+}
+@container (max-width:520px){
+  .camc-character .camc-skill-list.full{grid-template-columns:1fr!important;}
+}
+
+/* --- Dados de habilidad: rombos (Ysystem) en vez de cuadrados, siempre 3, rellenos según valor --- */
+.camc-character .skill-die{
+  width:11px!important;
+  height:11px!important;
+  border-radius:0!important;
+  transform:rotate(45deg)!important;
+  margin:0!important;
+}
+.camc-character .camc-skill-dice{gap:6px!important;}
+
+/* --- Acento de deidad más presente: Dones y talento de cargo --- */
+.camc-character .camc-active-equipment .camc-item-list li[data-item-id] img,
+.camc-character .camc-item-row img{box-shadow:0 0 0 1px rgba(0,0,0,.4);}
+.camc-character .camc-panel:has(.camc-panel-title i.fa-bolt){border-left:2px solid var(--camc-accent)!important;}
+
+/* --- Penalización por Salud: mismo componente, más visible --- */
+.camc-character .camc-health-penalty{font-weight:800!important;}
+
+/* ============================================================
+   PNJ — misma pasada de densidad; se conserva el pergamino claro
+   ya usado hoy en toda la ficha de PNJ (no se introduce cromo
+   oscuro aquí: no había ninguna maqueta de PNJ que lo propusiera).
+   ============================================================ */
+.camc-npc .camc-panel-title{font-size:11px!important;padding:5px 8px!important;}
+.camc-npc .camc-item-row{min-height:0!important;padding:4px 8px!important;}
+.camc-npc-kpis article,
+.camc-npc-kpis .health{padding:5px 8px!important;}
+.camc-npc-stat-grid label,
+.camc-npc-derived article{padding:4px!important;}
+
+/* Penalización por Salud del PNJ: el dato ya se calculaba (getPenalizadorSalud) pero
+   no se mostraba en la ficha; se añade con los mismos tonos que ya usa el Personaje. */
+.camc-npc .camc-health-penalty{
+  grid-column:1/-1;
+  margin-top:5px;
+  font-family:"Arial Narrow","Roboto Condensed",sans-serif;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  padding:3px 9px;
+  border-radius:3px;
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
+  width:fit-content;
+  border:1px solid rgba(9,8,6,.3);
+  background:rgba(9,8,6,.05);
+  color:#4a4338;
+}
+.camc-npc .camc-health-penalty.good{border-color:rgba(47,157,88,.55);color:#1f6b3c;background:rgba(47,157,88,.12);}
+.camc-npc .camc-health-penalty.warning{border-color:rgba(215,169,53,.7);color:#7a5c14;background:rgba(215,169,53,.16);}
+.camc-npc .camc-health-penalty.danger{border-color:rgba(182,55,37,.75);color:#7a2c18;background:rgba(182,55,37,.16);}

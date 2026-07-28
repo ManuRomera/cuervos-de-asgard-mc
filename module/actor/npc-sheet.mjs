@@ -69,6 +69,7 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     context.danoDesarmado = Number(CAMC.danoDesarmado?.fijo ?? 1) + Math.floor(Number(system.atributos?.fue?.value ?? 0) / 2);
     context.armaduraTotal = Number(system.proteccion?.armadura_nivel ?? 0);
     context.escudoAgilidadBonus = Number(system.proteccion?.escudo_nivel ?? 0);
+    context.healthPenalty = actor.getPenalizadorSalud();
     return context;
   }
 
