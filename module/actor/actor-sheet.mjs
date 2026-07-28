@@ -2,7 +2,7 @@ import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
 import { generateRandomMount } from "../mount/mount-generator.mjs";
 import { CAMCMountRolls } from "../mount/mount-rolls.mjs";
-import { CAMCCharacterArchetypes, generateRandomCharacter } from "../generator/camc-generators.mjs";
+import { CAMCCharacterArchetypes, generateRandomCharacter, applyGeneratedStarterItems } from "../generator/camc-generators.mjs";
 
 const get = foundry.utils.getProperty;
 const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
@@ -808,24 +808,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
   }
 
   async #applyGeneratedStarterItems(items = []) {
-    const current = this.actor.items
-      .filter(item => item.getFlag(CAMC.systemId, "generatedStarter"))
-      .map(item => item.id);
-    if (current.length) await this.actor.deleteEmbeddedDocuments("Item", current);
-    if (!items.length) return;
-    const docs = items.map(item => {
-      const data = foundry.utils.deepClone(item);
-      delete data._id;
-      data.flags ??= {};
-      data.flags[CAMC.systemId] = {
-        ...(data.flags[CAMC.systemId] ?? {}),
-        generatedStarter: true
-      };
-      return data;
-    });
-    await this.actor.createEmbeddedDocuments("Item", docs);
-    // Creación en lote: Foundry no siempre repreparara los datos derivados antes del primer render.
-    this.actor.prepareData();
+    await applyGeneratedStarterItems(this.actor, items);
   }
 
   async #characterWizardIdentity(state) {
