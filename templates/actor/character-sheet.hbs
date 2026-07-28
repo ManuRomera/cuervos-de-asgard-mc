@@ -228,13 +228,13 @@
               {{#each ../config.atributos as |attr key|}}<option value="{{key}}">{{attr.short}}</option>{{/each}}
               {{/select}}
             </select>
-            {{#if skill.isIdiomaMitico}}
-            <input class="camc-skill-specialization" name="system.habilidades.idioma_mitico.especializacion" type="text" value="{{skill.especializacion}}" list="camc-idiomas-miticos" placeholder="Idioma mítico"/>
-            {{/if}}
             <span class="camc-skill-dice" title="{{skill.value}} dados">
               {{#each skill.dice as |die|}}<button type="button" class="skill-die {{#if die.active}}active{{/if}}" data-skill="{{die.skill}}" data-value="{{die.rank}}"><i class="fas fa-dice-six"></i></button>{{/each}}
             </span>
             <span class="camc-bonus">{{skill.bonificador}}</span>
+            {{#if skill.isIdiomaMitico}}
+            <input class="camc-skill-specialization" name="system.habilidades.idioma_mitico.especializacion" type="text" value="{{skill.especializacion}}" list="camc-idiomas-miticos" placeholder="Idioma mítico"/>
+            {{/if}}
           </div>
           {{/each}}
         </div>
