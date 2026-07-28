@@ -2,6 +2,18 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.0] — 2026-07-28
+
+### Cambiado
+- **Primera pasada del rediseño visual de la ficha de Personaje y PNJ**, tras varias rondas de maqueta aprobadas: cabecera de Personaje más compacta y con acabado de cromo oscuro (remaches, franja de "cinta de peligro", textura de cuero) en vez del banner de pergamino anterior; paneles y filas de armas/protección/habilidades más densos (menos relleno, texto más pequeño) para aprovechar mejor el espacio; pestaña de Habilidades en 3 columnas (convención habitual de Ysystem) en vez de 1; los dados de habilidad pasan a mostrarse como rombos en lugar de cuadrados. Se añade un divisor rúnico decorativo a la ficha de Personaje (la de PNJ ya tenía uno). El acento de color de la deidad patrona se refuerza en la cabecera y en el panel de Dones.
+- La ficha de PNJ mantiene su fondo de pergamino claro ya existente (no se le aplica el cromo oscuro del Personaje: no había ninguna maqueta de PNJ revisada para ese cambio); recibe la misma pasada de densidad en paneles y filas.
+
+### Añadido
+- La ficha de PNJ ahora muestra la penalización por Salud (p. ej. "-1D por Salud 4-6"), con los mismos colores de aviso que ya tenía la ficha de Personaje. El dato ya se calculaba (`getPenalizadorSalud()`) pero no se mostraba en ningún sitio de la ficha de PNJ.
+
+### Nota técnica
+- Este cambio se ha implementado casi por completo en CSS (más una línea de contexto y una de plantilla para el aviso de Salud del PNJ), reutilizando exactamente los mismos nombres de clase de los que dependen los manejadores de clic ya existentes (`.skill-die`, `.item-equip`, `.roll-unarmed`, `.item-primary-action`, `.mount-*`, `.vest-*`, etc.) para no romper ninguna de las correcciones de las versiones 1.3.31 a 1.3.37. No se ha tocado el redimensionado de la ventana (ya soportaba ancho y alto, con scroll interno propio en `.camc-body`), ni el interruptor de retrato enmarcado/standee (ajuste ya existente del sistema), ni el chaleco de parches, ni la vinculación de moto.
+
 ## [1.3.37] — 2026-07-28
 
 ### Añadido
