@@ -227,10 +227,29 @@ export class CAMCActor extends Actor {
     const arm = this.items?.find(i => i.type === "armadura" && i.system.equipada);
     const esc = this.items?.find(i => i.type === "escudo" && i.system.equipado);
     this.system.proteccion ??= {};
-    this.system.proteccion.armadura_nivel = Number(arm?.system?.nivel ?? this.system.proteccion.armadura_nivel ?? 0);
-    this.system.proteccion.armadura_penalizacion = Number(arm?.system?.penalizacion ?? this.system.proteccion.armadura_penalizacion ?? 0);
-    this.system.proteccion.escudo_nivel = Number(esc?.system?.nivel ?? this.system.proteccion.escudo_nivel ?? 0);
-    this.system.proteccion.escudo_penalizacion = Number(esc?.system?.penalizacion ?? this.system.proteccion.escudo_penalizacion ?? 0);
+    // Si hay una armadura/escudo equipada, su nivel manda siempre, calculado aquí con el
+    // mismo valor por defecto que usa Item#prepareData() (nivel 1 si no viene indicado).
+    // No hay que esperar a que ese ítem haya completado su propio prepareData() ni fiarse
+    // de un valor de protección anterior ya guardado: si no se hace así, un arma o
+    // armadura recién creada (p. ej. por el generador de PJ) puede quedarse mostrando
+    // protección 0 hasta el próximo cambio manual de la ficha (desmarcar y volver a
+    // marcar "equipada"), aunque ya esté correctamente equipada.
+    if (arm) {
+      const nivel = Number(arm.system.nivel ?? 1);
+      this.system.proteccion.armadura_nivel = nivel;
+      this.system.proteccion.armadura_penalizacion = Number(arm.system.penalizacion ?? Math.floor(nivel / 2));
+    } else {
+      this.system.proteccion.armadura_nivel = Number(this.system.proteccion.armadura_nivel ?? 0);
+      this.system.proteccion.armadura_penalizacion = Number(this.system.proteccion.armadura_penalizacion ?? 0);
+    }
+    if (esc) {
+      const nivel = Number(esc.system.nivel ?? 1);
+      this.system.proteccion.escudo_nivel = nivel;
+      this.system.proteccion.escudo_penalizacion = Number(esc.system.penalizacion ?? nivel);
+    } else {
+      this.system.proteccion.escudo_nivel = Number(this.system.proteccion.escudo_nivel ?? 0);
+      this.system.proteccion.escudo_penalizacion = Number(this.system.proteccion.escudo_penalizacion ?? 0);
+    }
   }
 
   getAtributo(atributo) {

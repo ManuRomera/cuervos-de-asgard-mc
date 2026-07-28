@@ -2,6 +2,11 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.33] — 2026-07-27
+
+### Corregido
+- Una armadura o escudo recién equipado (por ejemplo, el que trae de serie un PJ recién hecho con el generador) podía no aplicar su protección hasta desmarcar y volver a marcar la casilla "equipada" en la ficha. `#calcularProteccion()` calculaba el nivel de protección con `arma_equipada?.nivel ?? valor_anterior_ya_guardado ?? 0`: si el ítem recién creado aún no tenía su nivel resuelto en ese instante concreto, la fórmula caía al valor anterior (0 para un PJ nuevo) en vez de al nivel real del arma. Ahora, si hay una armadura o escudo equipado, su nivel se calcula siempre directamente desde ese ítem (con el mismo valor por defecto que ya usa la ficha del objeto), sin depender de un cálculo anterior. Si no hay nada equipado, se sigue respetando el valor ya guardado en la ficha (necesario para los PNJ del bestiario, que tienen su protección anotada directamente sin un ítem de armadura de por medio).
+
 ## [1.3.32] — 2026-07-27
 
 ### Corregido
