@@ -66,6 +66,7 @@ export class CAMCNpcSheet extends ActorSheetV1 {
       dones: actor.items.filter(i => i.type === "don"),
       objetos: actor.items.filter(i => i.type === "objeto")
     };
+    context.danoDesarmado = Number(CAMC.danoDesarmado?.fijo ?? 1) + Math.floor(Number(system.atributos?.fue?.value ?? 0) / 2);
     context.armaduraTotal = Number(system.proteccion?.armadura_nivel ?? 0);
     context.escudoAgilidadBonus = Number(system.proteccion?.escudo_nivel ?? 0);
     return context;
@@ -80,6 +81,7 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     html.find(".item-edit").on("click", ev => this.#getItem(ev)?.sheet.render(true));
     html.find(".item-roll-damage").on("click", ev => this.#rollDamage(ev));
     html.find(".item-equip").on("click", ev => this.#toggleEquip(ev));
+    html.find(".roll-unarmed").on("click", ev => this.#rollUnarmedAttack(ev));
     html.find(".camc-adjust").on("click", ev => this.#adjustNumber(ev));
     html.find(".portrait-scale-adjust").on("click", ev => this.#adjustPortraitScale(ev));
   }
@@ -120,6 +122,14 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     const targetAgilidad = Number(targetToken?.actor?.system?.valores_pasivos?.agilidad ?? NaN);
     const dificultad = Number.isFinite(targetAgilidad) ? targetAgilidad : null;
     await YsystemDice.rollSkill(this.actor, habilidad, { dificultad, armaPreparada: { id: item.id, name: item.name, label: item.name } });
+  }
+
+  async #rollUnarmedAttack(event) {
+    event.preventDefault();
+    const targetToken = Array.from(game.user.targets ?? [])[0];
+    const targetAgilidad = Number(targetToken?.actor?.system?.valores_pasivos?.agilidad ?? NaN);
+    const dificultad = Number.isFinite(targetAgilidad) ? targetAgilidad : null;
+    await YsystemDice.rollSkill(this.actor, "lucha", { dificultad, armaPreparada: { id: null, name: "Desarmado", label: "Desarmado", desarmado: true } });
   }
 
   async #toggleEquip(event) {

@@ -52,7 +52,6 @@
           <input name="system.combate.salud.max" type="number" value="{{system.combate.salud.max}}"/>
           <button type="button" class="health-plus"><i class="fas fa-plus"></i></button>
         </div>
-        <button type="button" class="camc-mini-action roll-initial-values" title="Tiradas iniciales: Salud y Proezas"><i class="fas fa-dice-d6"></i> Tiradas iniciales</button>
       </div>
       <div class="camc-resource-card major">
         <div class="camc-resource-head"><i class="fas fa-bolt"></i><span>Proezas</span><strong>{{system.combate.proezas.value}} / {{system.combate.proezas.max}}</strong></div>
@@ -140,7 +139,7 @@
               <button type="button" class="item-roll-damage camc-die-button"><i class="fas fa-dice-d6"></i></button>
               <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
             </li>
-            {{else}}<li class="camc-item-row camc-unarmed"><i class="fas fa-hand-fist"></i><div><b>Desarmado</b><small>Lucha · daño 1 + FUE/2</small></div><span class="camc-pill copper">1</span></li>{{/each}}
+            {{else}}<li class="camc-item-row camc-unarmed"><i class="fas fa-hand-fist"></i><div><button type="button" class="roll-unarmed camc-row-name">Desarmado</button><small>Lucha · daño 1 + FUE/2</small></div><span class="camc-pill copper">{{danoDesarmado}}</span><button type="button" class="roll-unarmed camc-die-button"><i class="fas fa-dice-d6"></i></button></li>{{/each}}
           </ol>
           <h3><i class="fas fa-shield"></i> Protección</h3>
           <ol class="camc-item-list dense">
@@ -246,8 +245,9 @@
           <h2 class="camc-panel-title"><i class="fas fa-crossed-swords"></i> Armas</h2>
           <ol class="camc-item-list rich">
             <li class="camc-item-row camc-unarmed">
-              <i class="fas fa-hand-fist"></i><div><b>Desarmado</b><small>Lucha · daño 1 + FUE/2</small></div>
-              <span>Daño 1</span>
+              <i class="fas fa-hand-fist"></i><div><button type="button" class="roll-unarmed camc-row-name">Desarmado</button><small>Lucha · daño 1 + FUE/2</small></div>
+              <span>Daño {{danoDesarmado}}</span>
+              <button type="button" class="roll-unarmed camc-die-button"><i class="fas fa-dice-d6"></i></button>
             </li>
             {{#each itemsByType.armas as |item|}}
             <li class="item camc-item-row {{#if item.system.equipada}}equipped{{/if}}" data-item-id="{{item.id}}" draggable="true">

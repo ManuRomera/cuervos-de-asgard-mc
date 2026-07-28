@@ -122,6 +122,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     context.saludTone = this.#resourceTone(salud.value, salud.max);
     context.healthPenalty = actor.getPenalizadorSalud();
     context.initiativeWeapon = actor.getArmaPreparada();
+    context.danoDesarmado = Number(CAMC.danoDesarmado?.fijo ?? 1) + Math.floor(Number(system.atributos?.fue?.value ?? 0) / 2);
     context.proezasPct = this.#pct(proezas.value, proezas.max);
     context.habilidades = habilidades;
     context.habilidadesDestacadas = destacadas;
@@ -164,6 +165,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     html.find(".camc-vest-patch.calibrating, .camc-vest-slot-guide.calibrating").on("wheel", ev => this.#resizeVestPatch(ev));
     html.find(".vest-size-adjust").on("click", ev => this.#adjustVestPatchSize(ev));
     html.find(".item-roll-damage").on("click", ev => this.#rollDamage(ev));
+    html.find(".roll-unarmed").on("click", ev => this.#rollUnarmedAttack(ev));
     html.find(".use-don").on("click", ev => this.#useDon(ev));
     html.find(".use-cargo-talent").on("click", ev => this.#useCargoTalent(ev));
     html.find(".create-item").on("click", ev => this.#createItem(ev));
@@ -177,7 +179,6 @@ export class CAMCActorSheet extends ActorSheetV1 {
     html.find(".gain-proeza").on("click", () => this.actor.ganarProezas(1));
     html.find(".health-plus").on("click", () => this.actor.modificarSalud(1));
     html.find(".health-minus").on("click", () => this.actor.modificarSalud(-1));
-    html.find(".roll-initial-health, .roll-initial-values").on("click", ev => this.#rollInitialValues(ev));
     html.find(".mount-create").on("click", ev => this.#createMount(ev));
     html.find(".mount-generate").on("click", ev => this.#generateMount(ev));
     html.find(".mount-open").on("click", ev => this.#openMount(ev));
@@ -504,6 +505,20 @@ export class CAMCActorSheet extends ActorSheetV1 {
     await YsystemDice.rollSkill(this.actor, habilidad, options);
   }
 
+  async #rollUnarmedAttack(event) {
+    event.preventDefault();
+    const options = event.altKey ? { dificultad: null, aplicaSalud: true } : await this.#askRollOptions("lucha");
+    if (options === null) return;
+    const proezaDados = Number(options.proezaDados ?? 0);
+    if (proezaDados > 0) {
+      const ok = await this.actor.gastarProezas(proezaDados);
+      if (!ok) return ui.notifications.warn("No hay proezas suficientes para añadir dados.");
+    }
+    if (options.recuerdoCuando) await this.actor.update({ "system.biografia.recuerdo_cuando_usado": true });
+    options.armaPreparada = { id: null, name: "Desarmado", label: "Desarmado", desarmado: true };
+    await YsystemDice.rollSkill(this.actor, "lucha", options);
+  }
+
   #weaponSkill(item) {
     if (item.system?.habilidad_ataque) return item.system.habilidad_ataque;
     const tipo = String(item.system?.tipo ?? item.system?.categoria ?? item.system?.alcance ?? "").toLowerCase();
@@ -604,44 +619,6 @@ export class CAMCActorSheet extends ActorSheetV1 {
       return CAMC.itemIcons.dones[deity] ?? CAMC.itemIcons.donFallback;
     }
     return CAMC.itemIcons[type] ?? CAMC.itemIcons.objeto;
-  }
-
-  async #rollInitialValues(event) {
-    event.preventDefault();
-    if (this.actor.system.combate?.tiradas_iniciales_hechas) {
-      const confirm = await Dialog.confirm({
-        title: "Repetir tiradas iniciales",
-        content: "<p>Las tiradas iniciales ya se realizaron. ¿Seguro que quieres repetirlas? Se publicará en el chat el valor anterior y el nuevo resultado.</p>"
-      });
-      if (!confirm) return;
-    }
-    const fue = Number(this.actor.system.atributos?.fue?.value ?? 0);
-    const int = Number(this.actor.system.atributos?.int?.value ?? 0);
-    const previousHealth = foundry.utils.deepClone(this.actor.system.combate?.salud ?? {});
-    const previousProezas = foundry.utils.deepClone(this.actor.system.combate?.proezas ?? {});
-    const roll = await (new Roll("1d6")).evaluate({ async: true });
-    const saludTotal = 10 + (fue * 2) + Number(roll.total ?? 0);
-    const proezasTotal = Math.max(3, Math.floor((fue + int) / 2) + 3);
-    await ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      rolls: [roll],
-      content: `
-        <div class="camc-chat-card camc-initial-rolls">
-          <header><h3><i class="fas fa-dice-d6"></i> Tiradas iniciales</h3><strong>${this.#escapeHtml(this.actor.name)}</strong></header>
-          <p><b>Salud anterior:</b> ${Number(previousHealth.value ?? 0)} / ${Number(previousHealth.max ?? 0)}${previousHealth.roll_inicial ? ` (1D anterior: ${previousHealth.roll_inicial})` : ""}</p>
-          <p><b>Salud nueva:</b> FUE ${fue} x 2 + 10 + 1D (${Number(roll.total ?? 0)}) = <strong>${saludTotal}</strong></p>
-          <p><b>Proezas anteriores:</b> ${Number(previousProezas.value ?? 0)} / ${Number(previousProezas.max ?? 0)}</p>
-          <p><b>Proezas nuevas:</b> piso((FUE ${fue} + INT ${int}) / 2) + 3 = <strong>${proezasTotal}</strong></p>
-        </div>`
-    });
-    await this.actor.update({
-      "system.combate.salud.roll_inicial": Number(roll.total ?? 0),
-      "system.combate.salud.max": saludTotal,
-      "system.combate.salud.value": saludTotal,
-      "system.combate.proezas.max": proezasTotal,
-      "system.combate.proezas.value": proezasTotal,
-      "system.combate.tiradas_iniciales_hechas": true
-    });
   }
 
   async #buildMountCard(system) {
