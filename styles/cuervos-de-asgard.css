@@ -5949,3 +5949,105 @@ body.camc-compact .camc-sheet{font-size:12px;}
   display:flex!important;
   flex-direction:column!important;
 }
+
+/* ============================================================
+   CAMC 2.2 — fondo unificado oscuro de verdad (según captura real
+   de Foundry): se quitan los fondos de todos los paneles internos
+   de la ficha de Personaje, el texto y los iconos pasan a claro/
+   hueso, y el acento de color de deidad se conserva solo donde
+   corresponde (pestañas, botones). Se redefinen las variables
+   --camc-paper/--camc-ink/--camc-rule ya usadas por casi todos los
+   componentes en vez de perseguir selector a selector: así se
+   evita el problema de la ronda anterior (reglas sueltas que no
+   llegaban a todo).
+   ============================================================ */
+
+/* Quita el adorno decorativo de "lomo" de libro a la izquierda: usaba
+   --camc-paper (claro) y con el fondo oscuro ya no pega nada; el hueco que
+   reservaba tampoco hace falta. */
+.camc-character:after{display:none!important;}
+.camc-character .camc-hero,
+.camc-character .camc-body,
+.camc-character .camc-tabs,
+.camc-character .camc-sheet-footer{
+  margin-left:0!important;
+}
+
+/* La paleta de la ficha de Personaje pasa a ser oscura: en vez de "papel
+   claro + tinta oscura" se convierte en "sin fondo propio + texto claro",
+   dejando que se vea el degradado oscuro de .camc-sheet/.camc-body detrás.
+   Todo lo que ya usaba estas variables (títulos de panel, filas de objeto,
+   nombres de habilidad, tarjetas de atributo...) cambia solo, sin tocar
+   cada selector uno a uno. */
+.camc-character{
+  --camc-ink:#f2ecdc;
+  --camc-ink-soft:#cdc6b4;
+  --camc-muted:#a89f8d;
+  --camc-rule:rgba(255,255,255,.16);
+}
+.camc-character .camc-panel{
+  background:none!important;
+  border:1px solid var(--camc-rule)!important;
+  box-shadow:none!important;
+}
+.camc-character .camc-panel-title{
+  background:rgba(255,255,255,.04)!important;
+  border-bottom:1px solid var(--camc-rule)!important;
+}
+.camc-character .camc-item-row + .camc-item-row,
+.camc-character .camc-skill-row + .camc-skill-row{
+  border-top:1px solid rgba(255,255,255,.1)!important;
+}
+.camc-character .camc-empty{
+  background:rgba(255,255,255,.03)!important;
+  border:1px dashed rgba(255,255,255,.22)!important;
+  color:var(--camc-muted)!important;
+}
+
+/* Iconos y texto de fila que venían con un color de tinta oscura fijo
+   (pensado para fondo de papel claro): en la ficha de Personaje pasan a
+   claro. El PNJ no se toca aquí — sigue con su pergamino claro de siempre. */
+.camc-character .camc-icon-button i,
+.camc-character .skill-die i,
+.camc-character .fav-toggle i,
+.camc-character .camc-sheet-img-button i,
+.camc-character .camc-img-button i,
+.camc-character .item-equip i,
+.camc-character .item-edit i,
+.camc-character .item-delete i,
+.camc-character .camc-die-button i,
+.camc-character .use-don i{
+  color:var(--camc-ink)!important;
+  text-shadow:none!important;
+}
+.camc-character .camc-row-name,
+.camc-character .camc-skill-name,
+.camc-character .roll-skill,
+.camc-character .roll-unarmed{
+  color:var(--camc-ink)!important;
+}
+.camc-character .camc-row-name:hover,
+.camc-character .roll-skill:hover{
+  color:var(--camc-accent)!important;
+}
+.camc-character .camc-icon-button,
+.camc-character .camc-die-button,
+.camc-character .item-equip,
+.camc-character .item-edit,
+.camc-character .item-delete{
+  background:rgba(255,255,255,.06)!important;
+  border-color:var(--camc-rule)!important;
+  color:var(--camc-ink)!important;
+}
+.camc-character .item-equip.equipped,
+.camc-character .camc-icon-button.equipped{
+  background:var(--camc-accent)!important;
+  border-color:var(--camc-accent)!important;
+  color:#0c0c0a!important;
+}
+.camc-character .camc-icon-button.equipped i,
+.camc-character .item-equip.equipped i{color:#0c0c0a!important;}
+
+/* Botones de acción y pastillas: aseguran texto claro también aquí. */
+.camc-character .camc-action-button{color:var(--camc-ink)!important;}
+.camc-character .camc-pill{color:var(--camc-ink)!important;background:rgba(255,255,255,.06)!important;border-color:var(--camc-rule)!important;}
