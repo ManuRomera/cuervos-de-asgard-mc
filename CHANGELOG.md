@@ -2,6 +2,14 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.2] — 2026-07-28
+
+### Corregido
+- **Fondo real unificado en la ficha de Personaje**, tras ver que la v1.4.1 seguía sin parecerse al diseño acordado: se quita el fondo de pergamino de todos los paneles internos (Armas, Protección, Dones, etc.), que ahora quedan sin fondo propio sobre el degradado oscuro de la ficha, con el texto en color hueso/claro en vez de tinta oscura. El acento de color de la deidad patrona se conserva donde ya estaba (pestañas, botones de acción, dados activos).
+- Se elimina el adorno decorativo de "lomo" en el borde izquierdo de la ficha de Personaje (una franja con un patrón entretejido en tono papel claro): con el fondo ya oscuro no encajaba y el hueco que reservaba tampoco hacía falta.
+- Se corrigen varios iconos que se habían quedado invisibles (color de tinta oscura fijo sobre fondo ahora oscuro): equipar, editar, borrar, favorito, crear objeto, usar don, cambiar imagen.
+- **Nota:** este ajuste se limita a la ficha de Personaje; la de PNJ mantiene su pergamino claro de siempre (no se ha tocado en esta vuelta).
+
 ## [1.4.1] — 2026-07-28
 
 ### Corregido
