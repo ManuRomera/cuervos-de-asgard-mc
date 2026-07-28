@@ -2,6 +2,12 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.35] — 2026-07-28
+
+### Corregido
+- El fallo de la versión 1.3.33 (armadura/escudo recién equipado sin protección hasta desmarcar y volver a marcar la casilla) seguía dándose en los PJ creados con el generador de personajes, aunque `#calcularProteccion()` ya calculaba bien el nivel a partir del ítem equipado. La causa real estaba en el orden de la creación en lote: al generar un PJ, el sistema crea de golpe todos sus objetos iniciales (incluida la armadura de serie, ya marcada como "equipada") con `createEmbeddedDocuments`, y en ese camino concreto de creación masiva Foundry no siempre vuelve a preparar los datos derivados del Actor (incluida la protección) antes de que la ficha se dibuje por primera vez. El siguiente cambio manual sobre cualquier ítem (como desmarcar/marcar la armadura) sí disparaba ese recálculo y "arreglaba" la protección, dando la falsa impresión de que había que tocar la casilla. Ahora, justo después de crear el equipo inicial del PJ generado, se fuerza explícitamente un recálculo de los datos derivados del Actor antes de dibujar la ficha, así que la protección de la armadura o el escudo de serie aparece correcta desde el primer render, sin tener que tocar nada.
+- Los iconos de las filas de objetos (equipar, editar, borrar, tirar dado, etc.) prácticamente no se veían en la ficha de PNJ: el color de fondo oscuro de esos botones y el color casi negro forzado para el icono (pensados para funcionar juntos en un botón claro) solo tenían su contraste corregido para la ficha de Personaje (clase `.camc-character`), y nunca se había extendido esa corrección a la ficha de PNJ (clase `.camc-npc`), que se quedaba con la combinación oscuro-sobre-oscuro. Se ha añadido en el CSS la misma corrección de contraste (fondo claro, icono oscuro) también para `.camc-npc`, en los mismos puntos donde ya existía para `.camc-character`, así que ahora los botones de las filas de armas, protecciones, dones, etc. se ven igual de bien en ambas fichas.
+
 ## [1.3.34] — 2026-07-28
 
 ### Añadido
