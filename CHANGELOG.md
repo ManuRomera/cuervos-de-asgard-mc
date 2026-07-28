@@ -2,6 +2,14 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.37] — 2026-07-28
+
+### Añadido
+- "Desarmado" ahora se puede pulsar en la pestaña de Combate (y en el panel de equipo activo del Resumen) de la ficha de Personaje, y en el panel de Armas de la ficha de PNJ cuando no lleva ninguna: se comporta como un arma más (tirada de Lucha, con su propio diálogo de dificultad/proezas en el caso del PJ), pero con sus propias reglas de daño (1 + FUE/2, ya implementadas y ahora también mostradas correctamente en la ficha en vez del "1" fijo que aparecía antes).
+
+### Eliminado
+- Se retira el botón "Tiradas iniciales" de la ficha de Personaje: ya no aporta nada porque el generador de personajes calcula y tira automáticamente la Salud y las Proezas iniciales al crear el PJ, y las Proezas máximas siempre se recalculan solas a partir de FUE e INT. Para un PJ creado a mano, la Salud máxima se puede seguir ajustando directamente en su propio campo numérico de la ficha.
+
 ## [1.3.36] — 2026-07-28
 
 ### Añadido
