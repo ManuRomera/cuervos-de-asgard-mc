@@ -2,6 +2,11 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.3.34] — 2026-07-28
+
+### Añadido
+- Retrato genérico por defecto para PJ y PNJ, en vez del icono estándar de Foundry ("mystery man"), hasta que se le ponga a cada uno su imagen definitiva. Se aplica en dos casos: al crear un Personaje o un PNJ en blanco desde la barra lateral, y al generar uno con el asistente del sistema. Solo sustituye la imagen si el actor no tenía ya una propia (para no pisar un retrato elegido a mano, uno duplicado o el de un PJ/PNJ concreto ya generado).
+
 ## [1.3.33] — 2026-07-27
 
 ### Corregido

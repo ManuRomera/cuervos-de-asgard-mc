@@ -84,7 +84,9 @@ CAMC.assets = {
   vest: `systems/${CAMC.systemId}/assets/ui/chaleco.webp`,
   deityFallback: `systems/${CAMC.systemId}/assets/deities/pj-none.png`,
   npcBanner: `systems/${CAMC.systemId}/assets/deities/pnj-default.png`,
-  patchFallback: `systems/${CAMC.systemId}/assets/patches/none.svg`
+  patchFallback: `systems/${CAMC.systemId}/assets/patches/none.svg`,
+  personajeDefaultImg: `systems/${CAMC.systemId}/assets/actors/personajes/pj-default.webp`,
+  pnjDefaultImg: `systems/${CAMC.systemId}/assets/actors/bestiario/pnj-default.webp`
 };
 
 CAMC.itemIcons = {
