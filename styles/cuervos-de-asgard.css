@@ -3386,11 +3386,12 @@ body.camc-compact .camc-sheet{font-size:12px;}
   overflow:hidden;
 }
 .window-app.camc-npc-window .window-content:has(.portrait-standee){
-  /* Solo el eje horizontal necesita sangrar (el standee sale por la izquierda de la
-     ventana); si el eje vertical también queda "visible" aquí, la ventana nunca puede
-     encogerse ni el contenido de la pestaña activa hacer scroll al redimensionar. */
-  overflow-x:visible!important;
-  overflow-y:hidden!important;
+  /* La división en overflow-x/overflow-y (v1.4.1) no arregló el redimensionado
+     vertical y además coincide con el retrato standee dejando de verse; se
+     revierte al overflow:visible original en los dos ejes para priorizar que
+     el retrato vuelva a mostrarse. El redimensionado vertical en modo standee
+     queda pendiente de otra solución que no dependa de recortar este eje. */
+  overflow:visible!important;
 }
 
 .camc-npc-compact.portrait-standee{

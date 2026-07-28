@@ -2,6 +2,14 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.6] — 2026-07-28
+
+### Corregido
+- Retrato standee de PNJ: se revierte la corrección de la v1.4.1 (dividir el `overflow` en horizontal/vertical), que no solucionó el redimensionado vertical y coincide con el momento en que el retrato dejó de verse. Vuelve al `overflow:visible` original en ambos ejes para priorizar que el retrato se muestre; el redimensionado vertical en modo standee queda pendiente de otra solución.
+
+### Sin resolver (necesita ayuda para diagnosticar)
+- El fondo de los paneles internos de la ficha de Objetos (p. ej. "Arma", "Descripción") sigue mostrándose claro pese a que la regla que lo corrige ya tiene la máxima prioridad razonable dentro de este archivo. No hay ya más "parche a ciegas" razonable que aplicar sin ver qué regla concreta gana en el navegador — ver notas en el chat.
+
 ## [1.4.5] — 2026-07-28
 
 ### Corregido
