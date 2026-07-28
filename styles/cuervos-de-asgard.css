@@ -6178,3 +6178,72 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-item .camc-icon-button i,
 .camc-item .item-edit i,
 .camc-item .item-delete i{color:#f2ecdc!important;}
+
+/* ============================================================
+   CAMC 3.1 — refuerzo "a machete": el archivo tiene tantos bloques
+   duplicados de antes (fondos y colores repetidos con !important a
+   distinta especificidad) que los parches selector-a-selector de
+   las rondas anteriores no ganaban siempre la cascada. Aquí se
+   sube la especificidad a propósito (repitiendo la clase) para
+   ganar a cualquier combinación de 2-3 clases que quedara suelta,
+   en vez de perseguir cada selector uno a uno otra vez.
+   ============================================================ */
+
+.camc-sheet.camc-character.camc-character.camc-character,
+.camc-sheet.camc-character.camc-character.camc-character *,
+.camc-sheet.camc-npc.camc-npc.camc-npc,
+.camc-sheet.camc-npc.camc-npc.camc-npc *,
+.camc-sheet.camc-item.camc-item.camc-item,
+.camc-sheet.camc-item.camc-item.camc-item *{
+  background-image:none!important;
+}
+
+.camc-sheet.camc-character.camc-character.camc-character *:not(input):not(select):not(textarea):not(.camc-pill):not(.attr-des):not(.attr-fue):not(.attr-int):not(.attr-per):not(.attr-car),
+.camc-sheet.camc-npc.camc-npc.camc-npc *:not(input):not(select):not(textarea),
+.camc-sheet.camc-item.camc-item.camc-item *:not(input):not(select):not(textarea){
+  color:#f2ecdc!important;
+  text-shadow:none!important;
+}
+
+.camc-sheet.camc-character.camc-character.camc-character input,
+.camc-sheet.camc-character.camc-character.camc-character select,
+.camc-sheet.camc-character.camc-character.camc-character textarea,
+.camc-sheet.camc-npc.camc-npc.camc-npc input,
+.camc-sheet.camc-npc.camc-npc.camc-npc select,
+.camc-sheet.camc-npc.camc-npc.camc-npc textarea,
+.camc-sheet.camc-item.camc-item.camc-item input,
+.camc-sheet.camc-item.camc-item.camc-item select,
+.camc-sheet.camc-item.camc-item.camc-item textarea{
+  color:#f2ecdc!important;
+  background:rgba(255,255,255,.07)!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+}
+
+.camc-sheet.camc-character.camc-character.camc-character .camc-panel,
+.camc-sheet.camc-character.camc-character.camc-character .camc-hero,
+.camc-sheet.camc-character.camc-character.camc-character .camc-body,
+.camc-sheet.camc-character.camc-character.camc-character .camc-resource-card,
+.camc-sheet.camc-character.camc-character.camc-character .camc-derived-mini,
+.camc-sheet.camc-character.camc-character.camc-character .camc-item-row,
+.camc-sheet.camc-character.camc-character.camc-character .camc-skill-row,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-panel,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-hero,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-body,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-kpis article,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-kpis .health,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-item-row,
+.camc-sheet.camc-item.camc-item.camc-item .camc-panel{
+  background-color:transparent!important;
+  box-shadow:none!important;
+}
+
+/* El propio fondo del formulario (detrás de todo) tiene que ser oscuro de
+   verdad, no solo transparente esperando a que se vea algo detrás. */
+.camc-sheet.camc-character.camc-character.camc-character,
+.camc-sheet.camc-npc.camc-npc.camc-npc,
+.camc-sheet.camc-item.camc-item.camc-item{
+  background-color:#0a0b0a!important;
+}
+
+/* Pastillas de atributo y demás "chips" de color: se conservan tal cual
+   (excluidas arriba de la regla de texto en blanco). */
