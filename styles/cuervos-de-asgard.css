@@ -5944,7 +5944,11 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-npc-window .window-content form{
   height:100%!important;
 }
-.camc-npc{
+/* Solo en modo de retrato enmarcado: el modo standee tiene su propio sistema
+   de posicionamiento absoluto para el retrato exterior, ya delicado por la
+   cantidad de reglas duplicadas que lo ajustan; forzar aquí display:flex
+   podía ser la causa de que el retrato dejara de verse en modo standee. */
+.camc-npc:not(.portrait-standee){
   min-height:0!important;
   display:flex!important;
   flex-direction:column!important;
@@ -6051,3 +6055,126 @@ body.camc-compact .camc-sheet{font-size:12px;}
 /* Botones de acción y pastillas: aseguran texto claro también aquí. */
 .camc-character .camc-action-button{color:var(--camc-ink)!important;}
 .camc-character .camc-pill{color:var(--camc-ink)!important;background:rgba(255,255,255,.06)!important;border-color:var(--camc-rule)!important;}
+
+/* ============================================================
+   CAMC 3.0 — unifica el fondo oscuro en TODAS las hojas (PJ, PNJ,
+   objetos): quita las texturas de pergamino que quedaban sueltas
+   en tarjetas de recurso/derivados/pie de página del Personaje, y
+   extiende el mismo tratamiento (sin fondo, texto e iconos claros,
+   acento de deidad donde corresponde) a la ficha de PNJ y a la de
+   objetos, que hasta ahora se habían quedado fuera.
+   ============================================================ */
+
+/* --- PJ: quitar las texturas de pergamino que faltaban (tarjetas de
+   Salud/Proezas, Resistencia física/Iniciativa, y el pie de página). --- */
+.camc-character .camc-resource-card,
+.camc-character .camc-derived-mini,
+.camc-character .camc-mini-vitals .roll-initiative,
+.camc-character .camc-mini-vitals .camc-derived-mini{
+  background:none!important;
+  border:1px solid var(--camc-rule)!important;
+  box-shadow:none!important;
+}
+.camc-character .camc-sheet-footer{
+  background:#0a0a09!important;
+  background-image:none!important;
+}
+.camc-character .camc-resource-card *,
+.camc-character .camc-derived-mini *{color:var(--camc-ink)!important;}
+.camc-character .camc-resource-card input,
+.camc-character .camc-derived-mini input{
+  background:rgba(255,255,255,.06)!important;
+  border:1px solid var(--camc-rule)!important;
+  color:var(--camc-ink)!important;
+}
+/* Cinturón y tirantes: cualquier <label>/<span> suelto que aún dependa de un
+   color fijo en vez de las variables ya redefinidas. */
+.camc-character label,
+.camc-character label span,
+.camc-character small{color:var(--camc-ink-soft)!important;}
+
+/* --- PNJ: mismo tratamiento que el Personaje (antes se dejó con su
+   pergamino porque no había maqueta específica; ahora se pide igualarlo). --- */
+.camc-npc{
+  background-color:transparent!important;
+  color:#f2ecdc!important;
+}
+.camc-npc .camc-hero,
+.camc-npc .camc-body,
+.camc-npc .camc-panel,
+.camc-npc .camc-npc-kpis article,
+.camc-npc .camc-npc-kpis .health,
+.camc-npc .camc-npc-stat-grid label,
+.camc-npc .camc-npc-derived article,
+.camc-npc .camc-item-row{
+  background:none!important;
+  background-image:none!important;
+  background-color:transparent!important;
+  border-color:rgba(255,255,255,.18)!important;
+  box-shadow:none!important;
+  color:#f2ecdc!important;
+}
+.camc-npc .camc-name,
+.camc-npc .camc-npc-kpis b,
+.camc-npc .camc-npc-kpis span,
+.camc-npc .camc-npc-stat-grid span,
+.camc-npc .camc-npc-derived span,
+.camc-npc .camc-panel-title,
+.camc-npc .camc-row-name,
+.camc-npc .roll-skill,
+.camc-npc .roll-unarmed,
+.camc-npc small{
+  color:#f2ecdc!important;
+}
+.camc-npc input,
+.camc-npc select,
+.camc-npc textarea,
+.camc-npc .camc-npc-skill input{
+  background:rgba(255,255,255,.06)!important;
+  border:1px solid rgba(255,255,255,.2)!important;
+  color:#f2ecdc!important;
+}
+.camc-npc .camc-icon-button i,
+.camc-npc .item-equip i,
+.camc-npc .item-edit i,
+.camc-npc .item-delete i,
+.camc-npc .camc-die-button i,
+.camc-npc .camc-sheet-img-button i,
+.camc-npc .camc-img-button i{
+  color:#f2ecdc!important;
+}
+.camc-npc .camc-icon-button,
+.camc-npc .item-equip,
+.camc-npc .item-edit,
+.camc-npc .item-delete,
+.camc-npc .camc-die-button{
+  background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.2)!important;
+}
+.camc-npc .camc-item-row.equipped,
+.camc-npc .item-equip.equipped{
+  background:var(--camc-accent,#0b8996)!important;
+  border-color:var(--camc-accent,#0b8996)!important;
+}
+
+/* --- Objetos (armas, armaduras, dones, talentos, vehículos...): mismo
+   tratamiento; se conserva el acento por tipo de objeto (--item-accent). --- */
+.camc-item-window .window-content,
+.camc-item .camc-panel,
+.camc-item .camc-text-preview,
+.camc-item textarea{
+  background:none!important;
+  background-image:none!important;
+  background-color:transparent!important;
+  color:#f2ecdc!important;
+}
+.camc-item input,
+.camc-item select{
+  background:rgba(255,255,255,.06)!important;
+  border:1px solid rgba(255,255,255,.2)!important;
+  color:#f2ecdc!important;
+}
+.camc-item .camc-panel-title{color:#f2ecdc!important;}
+.camc-item .camc-icon-button i,
+.camc-item .item-edit i,
+.camc-item .item-delete i{color:#f2ecdc!important;}

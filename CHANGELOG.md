@@ -2,6 +2,20 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.3] — 2026-07-28
+
+### Corregido
+- Las tarjetas de Salud/Proezas/Resistencia física/Iniciativa de la cabecera de Personaje se habían quedado sin corregir en la v1.4.2 (solo se arreglaron los paneles de las pestañas): seguían usando la textura de pergamino de siempre. Corregido.
+- El pie de página (Reputación/Faltas/PX) también tenía esa misma textura suelta; corregido.
+- Varias etiquetas de campo (p. ej. "Entorno de nacimiento") se leían en tinta oscura sobre el fondo ya oscuro, prácticamente invisibles; corregido el color de las etiquetas en general.
+
+### Cambiado
+- **La ficha de PNJ y la de objetos (armas, armaduras, dones, talentos, vehículos...) reciben ahora el mismo tratamiento oscuro que la de Personaje**: sin fondos de pergamino ni texturas, texto e iconos en claro, conservando el acento de color que ya tenían (deidad en PNJ, color por tipo de objeto en la ficha de objetos).
+
+### Nota técnica
+- En modo de retrato "standee" del PNJ, se ha excluido a propósito el refuerzo de `display:flex` que se añadió en la v1.4.1 para el redimensionado vertical: ese modo depende de un posicionamiento absoluto ya delicado (con varias reglas superpuestas de antes de esta serie de cambios) y es la sospecha más probable de por qué el retrato dejaba de verse en ese modo. En modo de retrato enmarcado el refuerzo se mantiene.
+- Este es el tercer ajuste seguido sobre el mismo cambio de fondo; si algo se sigue viendo distinto a lo esperado en PNJ u objetos (menos probado que Personaje, al ser la primera vez que se les aplica este tratamiento), lo mejor es una captura concreta de qué falla.
+
 ## [1.4.2] — 2026-07-28
 
 ### Corregido
