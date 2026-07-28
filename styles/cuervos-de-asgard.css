@@ -6180,13 +6180,13 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-item .item-delete i{color:#f2ecdc!important;}
 
 /* ============================================================
-   CAMC 3.1 — refuerzo "a machete": el archivo tiene tantos bloques
-   duplicados de antes (fondos y colores repetidos con !important a
-   distinta especificidad) que los parches selector-a-selector de
-   las rondas anteriores no ganaban siempre la cascada. Aquí se
-   sube la especificidad a propósito (repitiendo la clase) para
-   ganar a cualquier combinación de 2-3 clases que quedara suelta,
-   en vez de perseguir cada selector uno a uno otra vez.
+   CAMC 3.1 (revisada) — la ronda "a machete" anterior forzaba el
+   color de TODO (con *), lo que también aplastaba el acento de
+   deidad/tipo de objeto en iconos y textos que sí debían
+   conservarlo. Se sustituye por una versión más quirúrgica: solo
+   quita texturas de fondo (seguro, no toca color) y fuerza el
+   fondo oscuro real del formulario; el color de texto se corrige
+   con reglas concretas más abajo, no con un "*" universal.
    ============================================================ */
 
 .camc-sheet.camc-character.camc-character.camc-character,
@@ -6196,13 +6196,6 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-sheet.camc-item.camc-item.camc-item,
 .camc-sheet.camc-item.camc-item.camc-item *{
   background-image:none!important;
-}
-
-.camc-sheet.camc-character.camc-character.camc-character *:not(input):not(select):not(textarea):not(.camc-pill):not(.attr-des):not(.attr-fue):not(.attr-int):not(.attr-per):not(.attr-car),
-.camc-sheet.camc-npc.camc-npc.camc-npc *:not(input):not(select):not(textarea),
-.camc-sheet.camc-item.camc-item.camc-item *:not(input):not(select):not(textarea){
-  color:#f2ecdc!important;
-  text-shadow:none!important;
 }
 
 .camc-sheet.camc-character.camc-character.camc-character input,
@@ -6227,12 +6220,13 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-sheet.camc-character.camc-character.camc-character .camc-item-row,
 .camc-sheet.camc-character.camc-character.camc-character .camc-skill-row,
 .camc-sheet.camc-npc.camc-npc.camc-npc .camc-panel,
-.camc-sheet.camc-npc.camc-npc.camc-npc .camc-hero,
 .camc-sheet.camc-npc.camc-npc.camc-npc .camc-body,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-topbar,
 .camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-kpis article,
 .camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-kpis .health,
 .camc-sheet.camc-npc.camc-npc.camc-npc .camc-item-row,
-.camc-sheet.camc-item.camc-item.camc-item .camc-panel{
+.camc-sheet.camc-item.camc-item.camc-item .camc-panel,
+.camc-sheet.camc-item.camc-item.camc-item .camc-hero{
   background-color:transparent!important;
   box-shadow:none!important;
 }
@@ -6245,5 +6239,62 @@ body.camc-compact .camc-sheet{font-size:12px;}
   background-color:#0a0b0a!important;
 }
 
-/* Pastillas de atributo y demás "chips" de color: se conservan tal cual
-   (excluidas arriba de la regla de texto en blanco). */
+/* Texto claro, pero solo en los elementos concretos que lo necesitan (no con
+   un "*" universal, que también aplastaba el acento de deidad/tipo de
+   objeto en iconos y textos que sí debían conservarlo). */
+.camc-sheet.camc-character.camc-character.camc-character label,
+.camc-sheet.camc-character.camc-character.camc-character label span,
+.camc-sheet.camc-character.camc-character.camc-character small,
+.camc-sheet.camc-character.camc-character.camc-character .camc-panel-title,
+.camc-sheet.camc-character.camc-character.camc-character .camc-row-name,
+.camc-sheet.camc-character.camc-character.camc-character .camc-skill-name,
+.camc-sheet.camc-character.camc-character.camc-character .camc-item-row b,
+.camc-sheet.camc-character.camc-character.camc-character .camc-item-row small,
+.camc-sheet.camc-character.camc-character.camc-character .camc-attr-card span,
+.camc-sheet.camc-character.camc-character.camc-character .camc-derived-mini span,
+.camc-sheet.camc-character.camc-character.camc-character .camc-resource-card span,
+.camc-sheet.camc-npc.camc-npc.camc-npc label,
+.camc-sheet.camc-npc.camc-npc.camc-npc label span,
+.camc-sheet.camc-npc.camc-npc.camc-npc small,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-name,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-panel-title,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-row-name,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-kpis span,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-kpis b,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-stat-grid span,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-derived span,
+.camc-sheet.camc-item.camc-item.camc-item label,
+.camc-sheet.camc-item.camc-item.camc-item label span,
+.camc-sheet.camc-item.camc-item.camc-item small,
+.camc-sheet.camc-item.camc-item.camc-item .camc-name,
+.camc-sheet.camc-item.camc-item.camc-item .camc-panel-title{
+  color:#f2ecdc!important;
+  text-shadow:none!important;
+}
+
+/* Cabecera de la ficha de PNJ: usa .camc-npc-topbar, no .camc-hero (por eso
+   se había quedado fuera de todas las rondas anteriores). */
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-topbar{
+  border-bottom:3px solid var(--camc-accent,#0b8996)!important;
+}
+
+/* Cabecera de objetos: sí usa .camc-hero (además de .camc-item-hero), pero
+   no estaba en la lista de fondos a quitar de las rondas anteriores. */
+.camc-sheet.camc-item.camc-item.camc-item .camc-hero{
+  border-bottom:3px solid var(--item-accent,#087f8c)!important;
+}
+
+/* El adorno de "lomo" de la izquierda tenía DOS pseudo-elementos
+   (:before y :after); solo se había desactivado el segundo. */
+.camc-character:before{display:none!important;}
+
+/* Botones de la cabecera de PNJ (escalar retrato, +/- de Salud) que no
+   llevan la clase camc-icon-button y por eso no cogían el color claro. */
+.camc-sheet.camc-npc.camc-npc.camc-npc .portrait-scale-adjust,
+.camc-sheet.camc-npc.camc-npc.camc-npc .portrait-scale-adjust i,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-npc-kpis .health button,
+.camc-sheet.camc-npc.camc-npc.camc-npc .camc-adjust{
+  color:#f2ecdc!important;
+  background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.2)!important;
+}
