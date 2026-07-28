@@ -3386,7 +3386,11 @@ body.camc-compact .camc-sheet{font-size:12px;}
   overflow:hidden;
 }
 .window-app.camc-npc-window .window-content:has(.portrait-standee){
-  overflow:visible!important;
+  /* Solo el eje horizontal necesita sangrar (el standee sale por la izquierda de la
+     ventana); si el eje vertical también queda "visible" aquí, la ventana nunca puede
+     encogerse ni el contenido de la pestaña activa hacer scroll al redimensionar. */
+  overflow-x:visible!important;
+  overflow-y:hidden!important;
 }
 
 .camc-npc-compact.portrait-standee{
@@ -5852,3 +5856,96 @@ body.camc-compact .camc-sheet{font-size:12px;}
 .camc-npc .camc-health-penalty.good{border-color:rgba(47,157,88,.55);color:#1f6b3c;background:rgba(47,157,88,.12);}
 .camc-npc .camc-health-penalty.warning{border-color:rgba(215,169,53,.7);color:#7a5c14;background:rgba(215,169,53,.16);}
 .camc-npc .camc-health-penalty.danger{border-color:rgba(182,55,37,.75);color:#7a2c18;background:rgba(182,55,37,.16);}
+
+/* ============================================================
+   CAMC 2.1 — correcciones tras prueba en Foundry real (v1.4.0):
+   fondo del cuerpo de la ficha de PJ, filas de Habilidades
+   apretadas, especialización de Idioma mítico, bloqueo del
+   atributo de habilidad, y encogido vertical de la ficha de PNJ.
+   ============================================================ */
+
+/* --- PJ: el cuerpo de la ficha debe ser el cromo oscuro del diseño aprobado,
+   con los paneles como tarjetas de pergamino encima (no al revés). --- */
+.camc-character .camc-body{
+  background:
+    radial-gradient(circle at 50% 0,color-mix(in srgb,var(--camc-accent) 10%,transparent),transparent 40%),
+    linear-gradient(150deg,#0d0e0d,#171918 55%,#0a0b0a)!important;
+  color:#ece6d6!important;
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.6)!important;
+}
+.camc-character .camc-panel{
+  background:linear-gradient(180deg,var(--camc-paper),var(--camc-paper2))!important;
+  border:1px solid var(--camc-rule)!important;
+  border-radius:3px!important;
+  box-shadow:0 3px 8px rgba(0,0,0,.4)!important;
+  color:var(--camc-ink)!important;
+}
+.camc-character .camc-panel-title{
+  background:rgba(0,0,0,.05)!important;
+  border-bottom:1px solid rgba(0,0,0,.18)!important;
+  color:var(--camc-ink)!important;
+}
+.camc-character .camc-tabs a{color:#c9c2b0!important;}
+.camc-character .camc-form-grid label span,
+.camc-character .camc-load-box p{color:#c9c2b0!important;}
+
+/* --- Habilidades: columnas reajustadas (el select de atributo necesita más
+   sitio del que tenía; los rombos necesitan menos) para que no se pisen. --- */
+.camc-character .camc-skill-list.full .camc-skill-row{
+  grid-template-columns:20px minmax(56px,1fr) 40px 42px 22px!important;
+  gap:4px!important;
+}
+.camc-character .camc-skill-list.full .camc-skill-name{padding:2px 3px!important;font-size:10.5px!important;}
+.camc-character .camc-skill-list.full select{
+  font-size:9.5px!important;
+  padding:1px 2px!important;
+  text-align:center;
+  text-align-last:center;
+}
+
+/* Especialización de Idioma mítico: en su propia línea, a todo lo ancho de la
+   fila, en vez de apretujada junto al select de atributo. */
+.camc-character .camc-skill-row.has-specialization{
+  grid-template-rows:auto auto;
+}
+.camc-character .camc-skill-row .camc-skill-specialization{
+  grid-column:1/-1;
+  margin-top:3px;
+  width:100%;
+}
+
+/* El atributo de una habilidad no debe poder cambiarse sin desbloquear la
+   edición (mismo candado que ya usan los rombos de dado). En bloqueado se ve
+   como una simple etiqueta; en desbloqueado recupera el aspecto de select. */
+.camc-character.skill-locked .camc-skill-list.full select{
+  pointer-events:none!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  background:transparent!important;
+  border:0!important;
+  color:var(--camc-accent)!important;
+  font-weight:900!important;
+}
+.camc-character.skill-editing .camc-skill-list.full select{
+  cursor:pointer;
+  background:rgba(0,0,0,.06)!important;
+  border:1px solid var(--camc-rule)!important;
+}
+
+/* ============================================================
+   PNJ — refuerzo del alto real: la ficha de PJ ya fuerza
+   height:100%/min-height:0 en cascada hasta el propio formulario;
+   la de PNJ no tenía el mismo refuerzo explícito, así que la
+   ventana podía dejar de encogerse en vertical (sobre todo con el
+   retrato en modo standee, ver corrección de overflow más abajo
+   en window-content).
+   ============================================================ */
+.camc-npc-window .window-content,
+.camc-npc-window .window-content form{
+  height:100%!important;
+}
+.camc-npc{
+  min-height:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+}

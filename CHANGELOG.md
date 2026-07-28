@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.1] — 2026-07-28
+
+### Corregido
+- El cuerpo de la ficha de Personaje (el área de las pestañas) se había quedado con el fondo de pergamino claro de siempre, mientras que solo la cabecera pasó al cromo oscuro del rediseño de la v1.4.0; el resultado no se parecía a la maqueta aprobada. Ahora el cuerpo de la ficha usa el mismo cromo oscuro, y cada panel se muestra como una tarjeta de pergamino independiente encima (que es como se veía en la maqueta), no al revés.
+- En la pestaña Habilidades, el selector de atributo (DES/FUE/INT/PER/CAR) se quedaba sin sitio en el diseño de 3 columnas y se solapaba con los rombos de dado. Se han reajustado los anchos de columna para que quepan los dos sin pisarse.
+- La casilla de especialización de "Idioma mítico" se apretujaba junto al selector de atributo, rompiendo la alineación del resto de habilidades; ahora aparece en su propia línea, debajo del nombre de la habilidad, sin descuadrar las demás filas.
+- El selector de atributo de cada habilidad se podía cambiar libremente en cualquier momento; ahora respeta el mismo candado que ya usan los rombos de dado (el botón de llave inglesa de la pestaña Habilidades): bloqueado por defecto, editable solo si se desbloquea.
+- La ficha de PNJ no se dejaba encoger en vertical y no aparecía barra de scroll al intentarlo. La causa real: en modo de retrato "standee", una regla existente ponía `overflow:visible` en toda la ventana (necesario para que el retrato pudiera sobresalir por el lateral), pero eso también anulaba el recorte vertical que permite que el contenido de la pestaña activa haga scroll. Ahora ese `overflow:visible` solo se aplica al eje horizontal; el vertical seguía necesitando recorte para poder encoger y hacer scroll. Además se añade a la ficha de PNJ el mismo refuerzo de altura (`height:100%` / `min-height:0` en cascada) que ya tenía la de Personaje, que no se había replicado nunca para PNJ.
+
 ## [1.4.0] — 2026-07-28
 
 ### Cambiado
