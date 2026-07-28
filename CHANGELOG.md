@@ -2,6 +2,16 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.5] — 2026-07-28
+
+### Corregido
+- **Encontrada la causa real de que la cabecera de PNJ y de Objetos siguiera clara**: la cabecera de PNJ usa la clase `.camc-npc-topbar`, no `.camc-hero` como Personaje — todas las rondas anteriores corrigieron `.camc-hero`, que en PNJ no existe, así que la cabecera nunca se llegó a tocar. La de Objetos sí usa `.camc-hero` (junto a `.camc-item-hero`), pero se había quedado fuera de la lista de fondos a quitar. Ambas corregidas ahora explícitamente.
+- Botones de la cabecera de PNJ (escalar retrato, +/- de Salud) que no tenían la clase `camc-icon-button` y por eso no cogían el color claro: corregidos.
+- Se retira el segundo pseudo-elemento decorativo de "lomo" en el borde izquierdo de Personaje (`:before`; el `:after` ya se había quitado en la v1.4.3) — las "rayas" que aparecían eran su patrón de rayas entretejidas, pensado para pergamino claro.
+
+### Cambiado
+- Se sustituye el forzado de color "a machete" de la v1.4.4 (un selector universal `*` que ponía todo el texto en claro) por reglas concretas sobre los elementos que de verdad lo necesitaban (etiquetas, nombres, títulos de panel...). El selector universal había aplastado también el acento de color de la deidad patrona y del tipo de objeto en textos e iconos que sí debían conservarlo.
+
 ## [1.4.4] — 2026-07-28
 
 ### Corregido
