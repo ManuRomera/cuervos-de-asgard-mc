@@ -258,6 +258,7 @@
               <button type="button" class="item-equip camc-icon-button"><i class="fas fa-shield"></i></button>
               <button type="button" class="item-roll-damage camc-die-button"><i class="fas fa-dice-d6"></i></button>
               <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+              <button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button>
             </li>
             {{else}}<li class="camc-empty">Sin armas.</li>{{/each}}
           </ol>
@@ -271,6 +272,7 @@
               <span>Nivel {{item.system.nivel}} · Pen. {{item.system.penalizacion}}</span>
               <button type="button" class="item-equip camc-icon-button"><i class="fas fa-toggle-on"></i></button>
               <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
+              <button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button>
             </li>
             {{else}}<li class="camc-empty">Sin protección.</li>{{/each}}
           </ol>
@@ -415,10 +417,15 @@
         <section class="camc-panel"><h2 class="camc-panel-title">Historia</h2><textarea name="system.biografia.historia">{{system.biografia.historia}}</textarea></section>
         <section class="camc-panel"><h2 class="camc-panel-title">Cita</h2><textarea name="system.biografia.cita">{{system.biografia.cita}}</textarea></section>
         <section class="camc-panel"><h2 class="camc-panel-title">Origen y defectos</h2>
-          <label class="camc-checkline"><input name="system.biografia.recuerdo_cuando_usado" type="checkbox" {{checked system.biografia.recuerdo_cuando_usado}}/> Recuerdo cuando usado</label>
-          <label class="camc-checkline"><input name="system.biografia.defecto_leve_usado" type="checkbox" {{checked system.biografia.defecto_leve_usado}}/> Defecto leve ya usado esta sesión</label>
-          <label><span>Entorno de nacimiento</span><textarea name="system.biografia.entorno_nacimiento">{{system.biografia.entorno_nacimiento}}</textarea></label>
-          <div class="camc-form-grid"><label><span>Defecto grave</span><input name="system.biografia.defecto_grave" type="text" value="{{system.biografia.defecto_grave}}"/></label><label><span>Defecto leve</span><input name="system.biografia.defecto_leve" type="text" value="{{system.biografia.defecto_leve}}"/></label></div>
+          <div class="camc-checkline-group horizontal">
+            <label class="camc-checkline"><input name="system.biografia.recuerdo_cuando_usado" type="checkbox" {{checked system.biografia.recuerdo_cuando_usado}}/><span>Recuerdo cuando usado</span></label>
+            <label class="camc-checkline"><input name="system.biografia.defecto_leve_usado" type="checkbox" {{checked system.biografia.defecto_leve_usado}}/><span>Defecto leve ya usado esta sesión</span></label>
+          </div>
+          <div class="camc-form-grid">
+            <label><span>Entorno de nacimiento</span><input name="system.biografia.entorno_nacimiento" type="text" value="{{system.biografia.entorno_nacimiento}}"/></label>
+            <label><span>Defecto grave</span><input name="system.biografia.defecto_grave" type="text" value="{{system.biografia.defecto_grave}}"/></label>
+            <label><span>Defecto leve</span><input name="system.biografia.defecto_leve" type="text" value="{{system.biografia.defecto_leve}}"/></label>
+          </div>
         </section>
         <section class="camc-panel"><h2 class="camc-panel-title">Notas</h2><textarea name="system.notas">{{system.notas}}</textarea></section>
       </div>

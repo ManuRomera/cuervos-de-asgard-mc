@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.10] — 2026-07-29
+
+### Corregido
+- Los botones "Iniciativa"/"Resistencia" del pie de página se quedaban sin fondo (mismo problema de especificidad que la pestaña activa: la regla universal de limpieza de fondo de la v1.4.7 les ganaba). Se excluyen del todo los botones de acción, las pastillas y los rombos de habilidad de esa limpieza universal, en vez de ir arreglando uno a uno cada caso que aparece.
+- Rombos de habilidad: se separan del selector de atributo (se tocaban) y ahora TODOS los rellenos (favorecidos o no) usan el color de la deidad; los de una habilidad favorecida se marcan más (con un halo).
+- Biografía: las casillas "Recuerdo cuando usado" / "Defecto leve ya usado" heredaban `display:block` de una regla global de `<label>` más específica que la del propio checkbox, así que se apilaban en vertical en vez de ir en fila; corregido, y además van una junto a otra. "Entorno de nacimiento" pasa de área de texto grande a campo de una línea, mucho más ajustado al contenido real.
+- Se añade el botón de eliminar (papelera) a armas y protecciones de la pestaña Combate de Personaje, que solo lo tenían en la pestaña Equipo.
+- El diálogo de "Opciones de tirada" (y en general cualquier diálogo de este sistema) seguía con el pergamino claro de antes del rediseño oscuro: es una ventana de Foundry aparte que ninguna corrección anterior llegaba a tocar. Se le aplica el mismo tema oscuro.
+
 ## [1.4.9] — 2026-07-29
 
 ### Corregido
