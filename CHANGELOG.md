@@ -2,6 +2,12 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.11] — 2026-07-29
+
+### Corregido
+- Los valores numéricos de Resistencia Física e Iniciativa seguían en tinta oscura: había una regla legado más específica (`.camc-character .camc-mini-vitals .camc-derived-mini strong`, 3 clases) que ganaba a la corrección de la v1.4.8 (2 clases) pese al `!important`. Se sube la especificidad con margen.
+- Se reafirma con la misma técnica el color y fondo de los botones Iniciativa/Resistencia del pie de página, por si alguna otra regla legado seguía ganándoles.
+
 ## [1.4.10] — 2026-07-29
 
 ### Corregido
