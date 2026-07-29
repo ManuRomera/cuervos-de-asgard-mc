@@ -2,6 +2,16 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.8] — 2026-07-29
+
+### Corregido
+- La pestaña activa de la ficha de Personaje y el icono de cada atributo (CAR/DES/FUE/INT/PER) perdieron su propio fondo de acento en la v1.4.7 (la limpieza universal de `background-color` no distinguía entre "fondo de textura a quitar" y "fondo de acento a conservar"). Se les devuelve su fondo, con el icono de atributo además en un tono más claro para que destaque mejor.
+- Los valores de Resistencia Física e Iniciativa, y el texto "Sin montura vinculada", se quedaron con tinta oscura fija; corregidos a texto claro.
+- Ficha de PNJ: las filas de Armas/Protección/Dones/Objetos usaban una plantilla de 6 columnas fijas pensada para filas con seis botones; una fila con menos botones (como "Desarmado", o cualquier arma/armadura sin todos los botones) dejaba columnas vacías que estiraban la fila. Se ajusta a un ancho más flexible y se activa el mismo sistema de `container queries` que ya tenía Personaje (la ficha de PNJ no lo tenía, por lo que no se adaptaba al redimensionar la ventana).
+
+### Añadido
+- La ficha de PNJ no tenía forma de eliminar armas, protecciones, dones u objetos una vez añadidos. Se añade un icono de papelera en cada fila, igual que ya existía en la ficha de Personaje.
+
 ## [1.4.7] — 2026-07-28
 
 ### Corregido
