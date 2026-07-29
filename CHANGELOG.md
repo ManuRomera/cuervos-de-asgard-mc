@@ -2,6 +2,13 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.12] — 2026-07-29
+
+### Cambiado
+- Los atributos (CAR/DES/FUE/INT/PER) tenían cada uno un color distinto ("arcoíris" heredado de varias rondas de diseño previas al rediseño oscuro, incluso con un esquema distinto según el valor del atributo); ahora los cinco usan el mismo color, el de la deidad patrona.
+- Los rombos de una habilidad favorecida ahora destacan mucho más: además del color, llevan un halo blanco y se ven un poco más grandes que los de una habilidad normal.
+- Los iconos de "equipar" de armas y armaduras estaban cruzados (las armas mostraban un escudo, la protección un interruptor genérico). Ahora las armas muestran una mano (mejor indicador de "empuñar") y armaduras/escudos muestran el icono de escudo, tanto en Personaje (Combate y Equipo) como en PNJ.
+
 ## [1.4.11] — 2026-07-29
 
 ### Corregido
