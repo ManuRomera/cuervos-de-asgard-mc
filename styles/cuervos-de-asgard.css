@@ -6410,8 +6410,11 @@ body.camc-compact .camc-sheet{font-size:12px;}
 }
 .camc-character .camc-skill-row.fav .skill-die.active{
   background:var(--camc-accent2,var(--camc-accent))!important;
-  border-color:var(--camc-accent2,var(--camc-accent))!important;
-  box-shadow:0 0 4px 1px var(--camc-deity-glow,rgba(255,255,255,.6))!important;
+  border-color:#fff!important;
+  box-shadow:0 0 3px 1px #fff,0 0 9px 3px var(--camc-accent2,var(--camc-accent))!important;
+  transform:rotate(45deg) scale(1.35)!important;
+  z-index:1;
+  position:relative;
 }
 
 /* --- Biografía: casillas en fila (el <label> heredaba display:block del
@@ -6480,4 +6483,28 @@ body.camc-compact .camc-sheet{font-size:12px;}
   background:linear-gradient(180deg,var(--camc-accent2,var(--camc-teal,#0e8f9c)),var(--camc-accent,#087f8c))!important;
   color:#0c0c0a!important;
   border-color:rgba(255,255,255,.25)!important;
+}
+
+/* ============================================================
+   CAMC 3.4 — atributos (CAR/DES/FUE/INT/PER) con un único color
+   (el de la deidad) en vez del "arcoíris" por atributo/nivel que
+   arrastraba el archivo desde hace muchas rondas de diseño, rombos
+   de habilidad favorecida mucho más luminosos, y los iconos de
+   equipar de armas/armaduras corregidos (estaban cruzados: la mano
+   es mejor indicador para un arma, el escudo para una armadura).
+   ============================================================ */
+.camc-character.camc-character.camc-character.camc-character .camc-attr-card b,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-card input,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-card .camc-attr-select,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-fue b,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-fue input,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-des b,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-des input,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-int b,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-int input,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-per b,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-per input,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-car b,
+.camc-character.camc-character.camc-character.camc-character .camc-attr-car input{
+  color:var(--camc-accent)!important;
 }
