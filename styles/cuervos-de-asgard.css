@@ -6351,9 +6351,14 @@ body.camc-compact .camc-sheet{font-size:12px;}
 }
 
 /* --- Valores de Resistencia física / Iniciativa: se quedaban con tinta
-   oscura fija en vez de heredar el texto claro. --- */
-.camc-character .camc-derived-mini strong,
-.camc-character .camc-mini-vitals strong{
+   oscura fija en vez de heredar el texto claro. Verificado con el mismo
+   análisis de especificidad de rondas anteriores: la regla legado
+   ".camc-character .camc-mini-vitals .camc-derived-mini strong" (3 clases
+   + etiqueta) le ganaba a esta (2 clases + etiqueta) pese al !important;
+   se sube la especificidad con margen. --- */
+.camc-character.camc-character.camc-character .camc-derived-mini strong,
+.camc-character.camc-character.camc-character .camc-mini-vitals strong,
+.camc-character.camc-character.camc-character .camc-mini-vitals .camc-derived-mini strong{
   color:#f2ecdc!important;
 }
 
@@ -6464,4 +6469,15 @@ body.camc-compact .camc-sheet{font-size:12px;}
   background:linear-gradient(180deg,#e8be5e,#c8912a)!important;
   color:#1c1305!important;
   border-color:#7a5c14!important;
+}
+
+/* --- Botones Iniciativa/Resistencia del pie de página: por si acaso la
+   exclusión de .camc-action-button en la limpieza universal no fuera
+   suficiente contra alguna otra regla legado del pie de página, se fuerza
+   aquí también con especificidad de sobra, en vez de confiar solo en la
+   exclusión. --- */
+.camc-character.camc-character.camc-character .camc-sheet-footer .camc-action-button{
+  background:linear-gradient(180deg,var(--camc-accent2,var(--camc-teal,#0e8f9c)),var(--camc-accent,#087f8c))!important;
+  color:#0c0c0a!important;
+  border-color:rgba(255,255,255,.25)!important;
 }
