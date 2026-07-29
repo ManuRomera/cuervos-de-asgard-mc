@@ -6324,17 +6324,21 @@ body.camc-compact .camc-sheet{font-size:12px;}
    ============================================================ */
 
 /* --- Personaje: la pestaña activa necesita SU PROPIO fondo de nuevo
-   (la limpieza universal de la v1.4.7 se lo quitó sin querer). --- */
-.camc-character .camc-tabs a.active{
+   (la limpieza universal de la v1.4.7 se lo quitó sin querer). La primera
+   corrección (v1.4.8) usaba menos clases que esa regla universal
+   (.camc-sheet.camc-character.camc-character.camc-character *), así que
+   perdía siempre pese al !important: la especificidad manda antes que el
+   orden. Se repite la clase para superarla con margen. --- */
+.camc-character.camc-character.camc-character.camc-character .camc-tabs a.active{
   background:linear-gradient(180deg,color-mix(in srgb,var(--camc-accent) 85%,#fff),var(--camc-accent))!important;
   color:#0c0c0a!important;
   text-shadow:none!important;
 }
-.camc-character .camc-tabs a.active i{color:#0c0c0a!important;}
+.camc-character.camc-character.camc-character.camc-character .camc-tabs a.active i{color:#0c0c0a!important;}
 
-/* --- Icono de atributo (CAR/DES/FUE/INT/PER): mismo problema, además de
-   subir el contraste del propio icono a un tono claro. --- */
-.camc-character .camc-attr-icon{
+/* --- Icono de atributo (CAR/DES/FUE/INT/PER): mismo problema de
+   especificidad, además de subir el contraste del propio icono. --- */
+.camc-character.camc-character.camc-character.camc-character .camc-attr-icon{
   background:color-mix(in srgb,var(--camc-accent) 45%,#1a1a1a)!important;
   color:#f6f1e4!important;
 }
