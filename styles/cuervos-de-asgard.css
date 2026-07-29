@@ -6206,10 +6206,17 @@ body.camc-compact .camc-sheet{font-size:12px;}
    anterior tocaba porque no se llaman ".camc-panel" literalmente. Se
    limpia el background-color de CUALQUIER descendiente (no el color de
    texto, que si se tocara aquí volvería a aplastar acentos como en la
-   v1.4.4) para que ya no quede ningún resto de fondo claro suelto. */
-.camc-sheet.camc-character.camc-character.camc-character *,
-.camc-sheet.camc-npc.camc-npc.camc-npc *,
-.camc-sheet.camc-item.camc-item.camc-item *{
+   v1.4.4) para que ya no quede ningún resto de fondo claro suelto.
+   Se excluyen explícitamente los estados/insignias que SÍ necesitan su
+   propio fondo de acento (pestaña activa, rombo de dado marcado, icono
+   de atributo, pastillas de atributo, botón "equipado"...): esta regla
+   universal, al tener más clases en el selector que casi cualquier otra
+   del archivo, les ganaba siempre pese a su !important, dejándolos sin
+   fondo (visto en varias rondas: pestaña activa, iconos de atributo,
+   rombos de habilidad no destacada, botones del pie de página). */
+.camc-sheet.camc-character.camc-character.camc-character *:not(.active):not(.equipped):not(.camc-attr-icon):not(.camc-pill):not(.attr-des):not(.attr-fue):not(.attr-int):not(.attr-per):not(.attr-car):not(.camc-cost-box):not(.skill-die):not(.camc-action-button),
+.camc-sheet.camc-npc.camc-npc.camc-npc *:not(.active):not(.equipped):not(.camc-pill):not(.camc-action-button),
+.camc-sheet.camc-item.camc-item.camc-item *:not(.active):not(.equipped):not(.camc-pill):not(.camc-cost-box):not(.camc-action-button){
   background-color:transparent!important;
 }
 
@@ -6374,4 +6381,87 @@ body.camc-compact .camc-sheet{font-size:12px;}
 }
 @container (max-width:520px){
   .camc-npc .camc-item-list.rich .camc-item-row{grid-template-columns:26px minmax(70px,1fr) repeat(3,24px)!important;}
+}
+
+/* ============================================================
+   CAMC 3.3 — separación de rombos de habilidad, mismo color de
+   deidad para rombos rellenos (destacados y no destacados, con más
+   énfasis en los destacados), checkbox de Biografía en fila en vez
+   de en bloque, y tema oscuro para el diálogo de "Opciones de
+   tirada" (hasta ahora sin tocar, seguía con el pergamino claro).
+   ============================================================ */
+
+/* --- Separación entre el select de atributo y los rombos: al menos el
+   ancho de un rombo, para que no se toquen. --- */
+.camc-character .camc-skill-list.full .camc-skill-dice{
+  margin-left:10px!important;
+}
+
+/* --- Rombos rellenos: todos con el color de deidad; los de una habilidad
+   destacada, más marcados (halo + un tono más claro). --- */
+.camc-character .skill-die.active{
+  background:var(--camc-accent)!important;
+  border-color:var(--camc-accent)!important;
+}
+.camc-character .camc-skill-row.fav .skill-die.active{
+  background:var(--camc-accent2,var(--camc-accent))!important;
+  border-color:var(--camc-accent2,var(--camc-accent))!important;
+  box-shadow:0 0 4px 1px var(--camc-deity-glow,rgba(255,255,255,.6))!important;
+}
+
+/* --- Biografía: casillas en fila (el <label> heredaba display:block del
+   .camc-sheet label global, que gana por especificidad a .camc-checkline
+   sin repetir clase) y ambas una junto a otra en vez de a lo ancho. --- */
+.camc-character .camc-checkline{
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  text-transform:none!important;
+  font-size:11.5px!important;
+}
+.camc-character .camc-checkline-group.horizontal{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 18px;
+  margin-bottom:8px;
+}
+
+/* --- Diálogo de "Opciones de tirada": mismo tema oscuro que el resto,
+   seguía con el pergamino claro porque es una ventana aparte (Dialog de
+   Foundry) que ninguna de las reglas de .camc-character/.camc-npc/
+   .camc-item llega a tocar. --- */
+.dialog .camc-dialog.camc-dialog.camc-dialog{
+  background:#0d0e0d!important;
+  background-image:none!important;
+  color:#f2ecdc!important;
+  border:1px solid rgba(255,255,255,.14);
+}
+.dialog .camc-dialog.camc-dialog.camc-dialog label,
+.dialog .camc-dialog.camc-dialog.camc-dialog span,
+.dialog .camc-dialog.camc-dialog.camc-dialog legend{
+  color:#f2ecdc!important;
+}
+.dialog .camc-dialog.camc-dialog.camc-dialog input,
+.dialog .camc-dialog.camc-dialog.camc-dialog select{
+  background:rgba(255,255,255,.07)!important;
+  color:#f2ecdc!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+}
+.dialog .camc-dialog.camc-dialog.camc-dialog .camc-dialog-stepper button{
+  background:rgba(255,255,255,.08)!important;
+  color:#f2ecdc!important;
+  border-color:rgba(255,255,255,.22)!important;
+}
+.dialog .camc-dialog.camc-dialog.camc-dialog .camc-target-hint{
+  background:rgba(10,120,131,.14)!important;
+  color:#e2f4f5!important;
+  border-color:rgba(10,120,131,.5)!important;
+}
+.window-app.dialog .window-content:has(.camc-dialog){
+  background:#0d0e0d!important;
+}
+.window-app.dialog:has(.camc-dialog) button{
+  background:linear-gradient(180deg,#e8be5e,#c8912a)!important;
+  color:#1c1305!important;
+  border-color:#7a5c14!important;
 }
