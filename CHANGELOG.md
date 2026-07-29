@@ -2,6 +2,11 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.7] — 2026-07-28
+
+### Corregido
+- Gracias a una captura de las herramientas de desarrollador que envió el usuario, se confirma que quedaban elementos internos de los paneles (etiquetas, envoltorios de formulario) con su propio `background-color` fijo que ninguna regla anterior tocaba porque no llevan la clase `.camc-panel` directamente. Se limpia el `background-color` de cualquier descendiente de la ficha (sin tocar el color del texto, para no repetir el problema de acentos aplastados de la v1.4.4).
+
 ## [1.4.6] — 2026-07-28
 
 ### Corregido

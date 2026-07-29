@@ -6199,6 +6199,20 @@ body.camc-compact .camc-sheet{font-size:12px;}
   background-image:none!important;
 }
 
+/* Verificado con un análisis manual de todas las reglas del archivo que
+   coinciden con .camc-item .camc-panel (y equivalentes): además de la
+   imagen de fondo, hay elementos internos (etiquetas, envoltorios de
+   formulario) con su propio background-color fijo que ninguna regla
+   anterior tocaba porque no se llaman ".camc-panel" literalmente. Se
+   limpia el background-color de CUALQUIER descendiente (no el color de
+   texto, que si se tocara aquí volvería a aplastar acentos como en la
+   v1.4.4) para que ya no quede ningún resto de fondo claro suelto. */
+.camc-sheet.camc-character.camc-character.camc-character *,
+.camc-sheet.camc-npc.camc-npc.camc-npc *,
+.camc-sheet.camc-item.camc-item.camc-item *{
+  background-color:transparent!important;
+}
+
 .camc-sheet.camc-character.camc-character.camc-character input,
 .camc-sheet.camc-character.camc-character.camc-character select,
 .camc-sheet.camc-character.camc-character.camc-character textarea,
