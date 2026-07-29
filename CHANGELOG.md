@@ -2,6 +2,11 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.9] — 2026-07-29
+
+### Corregido
+- El intento de la v1.4.8 de devolver el fondo a la pestaña activa y al icono de atributo no funcionaba: esas dos reglas tenían menos clases en el selector que la regla universal que limpia `background-color` (de la v1.4.7), así que perdían siempre pese a llevar `!important` — la especificidad decide antes que el orden en el archivo. Se sube la especificidad de ambas para que ganen con margen. La pestaña activa vuelve a verse (y a leerse) con el color de la deidad.
+
 ## [1.4.8] — 2026-07-29
 
 ### Corregido
