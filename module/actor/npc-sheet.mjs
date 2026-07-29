@@ -82,6 +82,7 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     html.find(".item-edit").on("click", ev => this.#getItem(ev)?.sheet.render(true));
     html.find(".item-roll-damage").on("click", ev => this.#rollDamage(ev));
     html.find(".item-equip").on("click", ev => this.#toggleEquip(ev));
+    html.find(".item-delete").on("click", ev => this.#deleteItem(ev));
     html.find(".roll-unarmed").on("click", ev => this.#rollUnarmedAttack(ev));
     html.find(".camc-adjust").on("click", ev => this.#adjustNumber(ev));
     html.find(".portrait-scale-adjust").on("click", ev => this.#adjustPortraitScale(ev));
@@ -140,6 +141,14 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     if (item.type === "armadura") return item.update({ "system.equipada": !item.system.equipada });
     if (item.type === "escudo") return item.update({ "system.equipado": !item.system.equipado });
     if (item.type === "arma") return item.update({ "system.equipada": !item.system.equipada });
+  }
+
+  async #deleteItem(event) {
+    event.preventDefault();
+    const item = this.#getItem(event);
+    if (!item) return;
+    const ok = await Dialog.confirm({ title: "Eliminar objeto", content: `<p>¿Eliminar <strong>${item.name}</strong>?</p>` });
+    if (ok) await item.delete();
   }
 
   async #adjustNumber(event) {
