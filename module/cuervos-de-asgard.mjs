@@ -10,6 +10,9 @@ import { YsystemDice } from "./dice/ysystem-dice.mjs";
 import { CAMCContentImporter } from "./content/importer.mjs";
 import { generateRandomMount } from "./mount/mount-generator.mjs";
 import { generateRandomCharacter, generateRandomNpc, generateRandomCommunity } from "./generator/camc-generators.mjs";
+import { validateMotoModEquip } from "./rules/vehicle-mods.mjs";
+import { computeCarryTotals, getLinkedMountSync, formatCarrySlots } from "./rules/carry.mjs";
+import { escapeHtml } from "./utils/sheet-utils.mjs";
 
 Hooks.once("init", async () => {
   console.log("CAMC | Inicializando Cuervos de Asgard Motor Club v13");
@@ -296,6 +299,7 @@ Hooks.on("renderChatMessageHTML", (message, html) => {
   root.find("[data-camc-action='apply-damage']").on("click", ev => applyDamageFromChat(message, ev));
   root.find("[data-camc-action='reroll-proeza']").on("click", ev => { ev.preventDefault(); YsystemDice.gastarProezaParaRepetir(message); });
   root.find("[data-camc-action='apply-defecto']").on("click", ev => { ev.preventDefault(); YsystemDice.openDefectoDialog(message); });
+  root.find("[data-camc-action='roll-defecto']").on("click", ev => { ev.preventDefault(); YsystemDice.rollDefectoPendiente(message); });
   root.find(".camc-gm-only").toggle(Boolean(game.user.isGM));
   root.find(".camc-chat-actions-row").each((_, row) => {
     const $row = $(row);
@@ -614,17 +618,13 @@ function cleanText(value) {
   return String(value ?? "").replace(/\s+/g, " ").trim();
 }
 
-function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[char]));
-}
-
 function validateCamcCarryUpdate(item, changes, userId) {
   if (userId && game.user.id !== userId) return;
   const actor = item.parent;
   if (actor?.type !== "personaje") return;
   const flat = foundry.utils.flattenObject(changes ?? {});
   if (flat["system.equipada"] === true && item.type === "objeto" && item.system?.tipo === "modificacion_moto") {
-    const validation = validateCamcMotoModEquip(actor, item);
+    const validation = validateMotoModEquip(actor, item);
     if (!validation.ok) {
       ui.notifications.warn(validation.message);
       return false;
@@ -639,73 +639,11 @@ function validateCamcCarryUpdate(item, changes, userId) {
   const nextLocation = nextItem.system?.carga?.ubicacion || "mochila";
   if (nextLocation === "comunidad") return;
   const items = actor.items.contents.map(entry => entry.id === item.id ? nextItem : entry);
-  const load = computeCamcCarryLoad(actor.system, items);
+  const load = computeCarryTotals(actor.system, items, getLinkedMountSync(actor.system));
   const block = nextLocation === "alforjas" ? load.alforjas : load.mochila;
   if (!block || block.value <= block.max) return;
-  ui.notifications.warn(`${item.name} no cabe en ${CAMC.ubicacionesCarga[nextLocation]}: ${formatCamcSlots(block.value)} / ${formatCamcSlots(block.max)} espacios.`);
+  ui.notifications.warn(`${item.name} no cabe en ${CAMC.ubicacionesCarga[nextLocation]}: ${formatCarrySlots(block.value)} / ${formatCarrySlots(block.max)} espacios.`);
   return false;
-}
-
-function validateCamcMotoModEquip(actor, item) {
-  const active = actor.items.filter(entry => entry.type === "objeto" && entry.system?.equipada && entry.system?.tipo === "modificacion_moto" && entry.id !== item.id);
-  const names = active.map(entry => String(entry.name ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
-  const nextName = String(item.name ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  if (nextName.includes("ultrarreforzado") && !names.includes("chasis reforzado")) {
-    return { ok: false, message: "Chasis ultrarreforzado requiere tener equipado Chasis reforzado." };
-  }
-  const hasSidecar = names.some(name => name.includes("sidecar")) || nextName.includes("sidecar");
-  const max = hasSidecar ? 3 : 2;
-  if (active.length + 1 > max) {
-    return { ok: false, message: `La moto no puede tener más de ${max} modificaciones funcionales${hasSidecar ? " con sidecar" : ""}.` };
-  }
-  return { ok: true };
-}
-
-function computeCamcCarryLoad(system, items) {
-  const portable = items.filter(entry => ["arma", "armadura", "escudo", "objeto"].includes(entry.type));
-  const mochilaMax = Number(system.carga?.mochila_max ?? 6);
-  const linkedMount = getCamcLinkedMountSync(system);
-  const vehicleMods = String(system.vehiculo?.modificaciones ?? "").toLowerCase();
-  const hasExtraSaddlebags = linkedMount?.type === "moto"
-    ? Boolean(linkedMount.system?.reglas?.alforjas_extra)
-    : Boolean(system.carga?.alforjas_extra)
-      || vehicleMods.includes("alforjas extra")
-      || items.some(entry => entry.type === "objeto" && entry.system?.equipada && String(entry.name).toLowerCase().includes("alforjas extra"));
-  const baseAlforjas = Number(system.carga?.alforjas_base ?? 8);
-  const mountAlforjas = linkedMount ? Number(linkedMount.system?.reglas?.alforjas?.max ?? 0) : 0;
-  const alforjasMax = Math.max(baseAlforjas, Number.isFinite(mountAlforjas) ? mountAlforjas : 0) + (hasExtraSaddlebags && !linkedMount ? 8 : 0);
-  const totals = { mochila: 0, alforjas: 0 };
-  for (const entry of portable) {
-    const location = entry.system?.carga?.ubicacion || "mochila";
-    if (!Object.prototype.hasOwnProperty.call(totals, location)) continue;
-    const quantity = entry.type === "objeto" ? Math.max(1, Number(entry.system?.cantidad ?? 1)) : 1;
-    totals[location] += camcItemSpaces(entry) * quantity;
-  }
-  return {
-    mochila: { value: totals.mochila, max: mochilaMax },
-    alforjas: { value: totals.alforjas, max: alforjasMax }
-  };
-}
-
-function getCamcLinkedMountSync(system) {
-  const uuid = String(system.mount?.uuid ?? "");
-  const match = uuid.match(/^Actor\.([^./]+)$/);
-  if (!match) return null;
-  const actor = game.actors?.get(match[1]);
-  return actor?.type === "moto" ? actor : null;
-}
-
-function camcItemSpaces(item) {
-  const explicit = Number(item.system?.carga?.espacios);
-  if (Number.isFinite(explicit) && explicit > 0) return explicit;
-  const size = item.system?.tamano || "mediano";
-  if (size === "no_equipable") return 0;
-  return Number(CAMC.cargaPorTamano[size] ?? 1);
-}
-
-function formatCamcSlots(value) {
-  value = Number(value) || 0;
-  return Number.isInteger(value) ? String(value) : value.toFixed(1).replace(".", ",");
 }
 
 async function syncCamcLinkedMountLoad(item, changes) {
@@ -715,9 +653,9 @@ async function syncCamcLinkedMountLoad(item, changes) {
   const relevant = ["system.carga.ubicacion", "system.carga.espacios", "system.cantidad", "system.tamano"]
     .some(path => Object.prototype.hasOwnProperty.call(flat, path));
   if (!relevant) return;
-  const mount = getCamcLinkedMountSync(actor.system);
+  const mount = getLinkedMountSync(actor.system);
   if (!mount) return;
-  const load = computeCamcCarryLoad(actor.system, actor.items.contents);
+  const load = computeCarryTotals(actor.system, actor.items.contents, mount);
   const value = load.alforjas.value;
   if (Number(mount.system?.reglas?.alforjas?.value ?? 0) !== value) {
     await mount.update({ "system.reglas.alforjas.value": value });
@@ -728,7 +666,7 @@ async function syncCamcLinkedMountExtraSaddlebags(actor, changes) {
   if (actor?.type !== "personaje") return;
   const flat = foundry.utils.flattenObject(changes ?? {});
   if (!Object.prototype.hasOwnProperty.call(flat, "system.carga.alforjas_extra")) return;
-  const mount = getCamcLinkedMountSync(actor.system);
+  const mount = getLinkedMountSync(actor.system);
   if (!mount) return;
   const active = Boolean(flat["system.carga.alforjas_extra"]);
   if (Boolean(mount.system?.reglas?.alforjas_extra) !== active) {

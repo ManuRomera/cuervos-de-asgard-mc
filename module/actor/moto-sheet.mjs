@@ -1,8 +1,9 @@
 import { CAMC } from "../config.mjs";
 import { generateRandomMount, CAMCMountTables } from "../mount/mount-generator.mjs";
 import { CAMCMountRolls } from "../mount/mount-rolls.mjs";
+import { pct, resolveActorUuid, adjustNumberField } from "../utils/sheet-utils.mjs";
+import { itemCarrySpaces, formatCarrySlots, isPortableItem } from "../rules/carry.mjs";
 
-const get = foundry.utils.getProperty;
 const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
 
 export class CAMCMotoSheet extends ActorSheetV1 {
@@ -31,7 +32,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     context.config = CAMC;
     context.system = s;
     context.owner = owner;
-    context.structurePct = this.#pct(structure.value, structure.max);
+    context.structurePct = pct(structure.value, structure.max);
     context.structureTone = this.#structureTone(structure.value, structure.max);
     context.status = this.#status();
     context.modsUsed = Number(s.reglas?.mods_funcionales_usadas ?? 0);
@@ -53,7 +54,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     this.#autosizeTextareas(html);
     html.find(".camc-auto-textarea").on("input", ev => this.#autosizeTextareas($(ev.currentTarget)));
     html.find(".moto-img-button").on("click", ev => this.#changeImage(ev));
-    html.find(".moto-adjust").on("click", ev => this.#adjustNumber(ev));
+    html.find(".moto-adjust").on("click", ev => adjustNumberField(this.actor, ev));
     html.find(".moto-apply-damage").on("click", ev => this.#applyDamage(ev));
     html.find(".moto-repair").on("click", ev => this.#repair(ev));
     html.find(".moto-roll-drive").on("click", ev => this.#rollDrive(ev));
@@ -79,45 +80,19 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     if (item.type === "objeto" && String(item.system?.tipo ?? "").includes("modificacion")) {
       return this.#installDroppedMod(item);
     }
-    if (this.#isPortable(item)) return this.#storeDroppedCargo(item);
+    if (isPortableItem(item)) return this.#storeDroppedCargo(item);
     return ui.notifications.info("Solo se pueden guardar armas, protecciones, escudos u objetos en las alforjas.");
   }
 
   async #getOwner() {
     const uuid = this.actor.system?.vinculo?.ownerUuid;
     if (!uuid) return null;
-    return this.#resolveActorUuid(uuid);
-  }
-
-  async #resolveActorUuid(uuid) {
-    if (!uuid) return null;
-    try {
-      const doc = await fromUuid(uuid);
-      if (doc) return doc;
-    } catch (_err) {
-      /* fallback below */
-    }
-    const match = String(uuid).match(/^Actor\.([^\.]+)$/);
-    return match ? game.actors.get(match[1]) ?? null : null;
+    return resolveActorUuid(uuid);
   }
 
   async #changeImage(event) {
     event.preventDefault();
     new FilePicker({ type: "image", current: this.actor.img, callback: path => this.actor.update({ img: path }) }).render(true);
-  }
-
-  async #adjustNumber(event) {
-    event.preventDefault();
-    const path = event.currentTarget.dataset.path;
-    const delta = Number(event.currentTarget.dataset.delta ?? 0);
-    if (!path || !delta) return;
-    const current = Number(get(this.actor, path) ?? 0);
-    let next = current + delta;
-    if (path.endsWith(".value")) {
-      const max = Number(get(this.actor, path.replace(/\.value$/, ".max")));
-      if (Number.isFinite(max)) next = Math.min(max, next);
-    }
-    await this.actor.update({ [path]: Math.max(0, next) });
   }
 
   async #applyDamage(event) {
@@ -246,7 +221,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     const cargo = this.#buildCargo(owner, { excludeUuid: existingInDestination ? item.uuid : "" });
     const total = this.#itemTotalSpaces(item);
     if (cargo.used + total > cargo.max) {
-      return ui.notifications.warn(`${item.name} no cabe en las alforjas de ${this.actor.name}: ${this.#formatSlots(cargo.used + total)} / ${this.#formatSlots(cargo.max)} espacios.`);
+      return ui.notifications.warn(`${item.name} no cabe en las alforjas de ${this.actor.name}: ${formatCarrySlots(cargo.used + total)} / ${formatCarrySlots(cargo.max)} espacios.`);
     }
 
     if (existingInDestination) {
@@ -342,7 +317,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     const nextMax = currentMax + (active ? 8 : -8);
     if (!active && cargo.used > nextMax) {
       event.currentTarget.checked = true;
-      return ui.notifications.warn(`No puedes quitar Alforjas extra: la moto lleva ${this.#formatSlots(cargo.used)} / ${this.#formatSlots(nextMax)} espacios.`);
+      return ui.notifications.warn(`No puedes quitar Alforjas extra: la moto lleva ${formatCarrySlots(cargo.used)} / ${formatCarrySlots(nextMax)} espacios.`);
     }
     await this.actor.update({ "system.reglas.alforjas_extra": active });
     await this.#syncAlforjasValue(owner);
@@ -463,10 +438,10 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     const rows = [];
     for (const actor of sourceActors) {
       for (const item of actor.items?.contents ?? []) {
-        if (!this.#isPortable(item)) continue;
+        if (!isPortableItem(item)) continue;
         if (item.uuid === excludeUuid) continue;
         if ((item.system?.carga?.ubicacion || "mochila") !== "alforjas") continue;
-        const spaces = this.#itemSpaces(item);
+        const spaces = itemCarrySpaces(item);
         const quantity = item.type === "objeto" ? Math.max(1, Number(item.system?.cantidad ?? 1)) : 1;
         rows.push({
           id: item.id,
@@ -476,7 +451,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
           actorName: actor.name,
           spaces,
           total: spaces * quantity,
-          totalLabel: this.#formatSlots(spaces * quantity)
+          totalLabel: formatCarrySlots(spaces * quantity)
         });
       }
     }
@@ -486,9 +461,9 @@ export class CAMCMotoSheet extends ActorSheetV1 {
       items: rows,
       used,
       max,
-      usedLabel: this.#formatSlots(used),
-      maxLabel: this.#formatSlots(max),
-      pct: this.#pct(used, max || 1),
+      usedLabel: formatCarrySlots(used),
+      maxLabel: formatCarrySlots(max),
+      pct: pct(used, max || 1),
       over: used > max
     };
   }
@@ -499,26 +474,9 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     if (current !== cargo.used) await this.actor.update({ "system.reglas.alforjas.value": cargo.used });
   }
 
-  #isPortable(item) {
-    return ["arma", "armadura", "escudo", "objeto"].includes(item?.type);
-  }
-
   #itemTotalSpaces(item) {
     const quantity = item.type === "objeto" ? Math.max(1, Number(item.system?.cantidad ?? 1)) : 1;
-    return this.#itemSpaces(item) * quantity;
-  }
-
-  #itemSpaces(item) {
-    const explicit = Number(item.system?.carga?.espacios);
-    if (Number.isFinite(explicit) && explicit >= 0) return explicit;
-    const size = item.system?.tamano || "mediano";
-    if (size === "no_equipable") return 0;
-    return Number(CAMC.cargaPorTamano[size] ?? 1);
-  }
-
-  #formatSlots(value) {
-    value = Number(value) || 0;
-    return Number.isInteger(value) ? String(value) : value.toFixed(1).replace(".", ",");
+    return itemCarrySpaces(item) * quantity;
   }
 
   #numberDialog(title, label, value = 1) {
@@ -532,12 +490,6 @@ export class CAMCMotoSheet extends ActorSheetV1 {
       default: "ok",
       close: () => resolve(null)
     }).render(true));
-  }
-
-  #pct(value, max) {
-    value = Number(value) || 0;
-    max = Number(max) || 1;
-    return Math.max(0, Math.min(100, Math.round((value / max) * 100)));
   }
 
   #structureTone(value, max) {

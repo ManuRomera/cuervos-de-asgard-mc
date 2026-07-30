@@ -45,7 +45,7 @@
     <aside class="camc-vitals">
       <div class="camc-resource-card major">
         <div class="camc-resource-head"><i class="fas fa-heart-pulse"></i><span>Salud</span><strong>{{system.combate.salud.value}} / {{system.combate.salud.max}}</strong></div>
-        <div class="camc-progress health {{saludTone}}"><i style="width: {{saludPct}}%"></i></div>
+        <div class="camc-progress health {{saludTone}}"><i style="width: {{saludPct}}%; background: hsl({{mul saludPct 1.2}}, 68%, 42%) !important; box-shadow: 0 0 8px hsla({{mul saludPct 1.2}}, 68%, 42%, .6) !important;"></i></div>
         <div class="camc-resource-actions">
           <button type="button" class="health-minus"><i class="fas fa-minus"></i></button>
           <input name="system.combate.salud.value" type="number" value="{{system.combate.salud.value}}"/>

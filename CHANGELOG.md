@@ -2,6 +2,31 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.14] — 2026-07-30
+
+### Corregido
+- **Protección desequipada seguía reduciendo daño**: al desequipar la última armadura o escudo, `armadura_nivel`/`escudo_nivel` conservaban el último valor calculado en vez de volver a 0, así que el personaje seguía absorbiendo daño con una protección que ya no llevaba puesta. Ahora se ponen a 0 en cuanto no hay nada equipado.
+- Atacar con un arma sin equipar (sin el icono de la mano activo) avisaba de nada y no dejaba constancia: ahora se muestra un aviso al jugador al pulsar, la tirada se resuelve exactamente igual (no penaliza el resultado), y la tarjeta de chat marca en rojo "Arma no equipada" para que el DJ lo vea de un vistazo.
+- Las tiradas repetidas (proeza o defecto) no activaban Dice So Nice aunque estuviera instalado: solo actualizaban la tarjeta de chat existente sin pasar por la creación de un nuevo mensaje, que es donde Dice So Nice engancha la animación. Ahora se le pide explícitamente que muestre esos dados nuevos.
+
+### Cambiado
+- **Aplicar un defecto ya no repite la tirada automáticamente**: el DJ elige el defecto (grave/leve) y la tarjeta de chat anuncia al jugador, citando el texto exacto del defecto para que pueda rolearlo, junto a un botón "Tirar dados". Es el propio jugador quien decide el momento de tirar; solo entonces se resuelve la repetición y se muestran los dados.
+- Las tiradas repetidas (por proeza o por defecto) ahora marcan visualmente qué dados son nuevos (repetidos) frente a los que se mantuvieron, con una etiqueta "Dados de la tirada repetida" encima — antes el resultado se actualizaba pero no quedaba claro cuáles habían cambiado.
+- El texto de "Beneficios" del chaleco (efecto de cada parche) pasa a color claro; se había quedado con la tinta oscura del tema de pergamino original, ilegible sobre el fondo oscuro actual.
+- Cabecera de Personaje: Salud y Proezas pasan de ir una junto a la otra a ocupar cada una el ancho completo, apiladas (Proezas debajo de Salud), aprovechando el hueco vertical que quedaba vacío bajo Res. Física/Iniciativa. La barra de Salud pasa de tres colores fijos por tramo a un degradado continuo verde→rojo según el porcentaje real de vida.
+
+## [1.4.13] — 2026-07-30
+
+### Interno (sin cambios de comportamiento visibles en mesa)
+- Se elimina código duplicado detectado en una auditoría del sistema: la validación de "modificación de moto equipable" (Chasis ultrarreforzado exige Chasis reforzado; máximo 2 modificaciones funcionales, 3 con sidecar) estaba copiada literalmente en tres sitios (`cuervos-de-asgard.mjs`, la hoja de Personaje y la hoja de Objeto); ahora vive en un único sitio (`module/rules/vehicle-mods.mjs`). El cálculo de capacidad de mochila/alforjas estaba duplicado entre el hook de validación y la hoja de Personaje; ahora comparten `module/rules/carry.mjs`. Los métodos `pct`, `formatSlots`, `escapeHtml`, `resolveActorUuid` y `adjustNumber` (idénticos en las cinco hojas del sistema) pasan a `module/utils/sheet-utils.mjs`, y el generador pseudoaleatorio con semilla (duplicado entre el generador de personajes y el de monturas) pasa a `module/utils/random.mjs`.
+- Al unificar el cálculo de espacios de carga se corrige una pequeña inconsistencia real: un objeto con `carga.espacios` puesto explícitamente a 0 contaba como 1 espacio en la mochila del PJ (la hoja de Moto sí lo respetaba correctamente); ahora ambos sitios respetan igual un 0 explícito.
+- Limpieza de CSS muerto en `styles/cuervos-de-asgard.css`: se retiran ~30 clases sin ningún uso en plantillas ni JS, restos de renombrados de rondas de rediseño anteriores (p. ej. `.camc-img-button` → hoy `.camc-sheet-img-button`; `.camc-stat-card` → hoy `.camc-attr-card`/`.camc-derived-mini`; `.npc-fields` sin prefijo → hoy `.camc-npc-fields`), además de 4 bloques de reglas duplicados de forma exacta (mismo selector y misma declaración repetidos). Ningún selector con clases en uso se ha tocado.
+- Se retiran de `template.json` los campos `chaleco.merito_izq_4` / `chaleco.merito_der_4` del Personaje: no corresponden a ningún hueco definido en `CAMC.patchSlots` (solo hay 3 pares de bolsillos de mérito) y no los leía ni escribía ningún código.
+- Se corrige la tabla de compatibilidad del README, que seguía indicando la versión 1.3.25.
+
+### Nota
+- Esta versión es una pasada de depuración interna sin nuevas funcionalidades ni cambios de reglas; el objetivo es dejar una base más limpia antes del rediseño visual de las fichas de Personaje/PNJ ya planificado, para no arrastrar deuda de CSS duplicado a una cuarta ronda de diseño.
+
 ## [1.4.12] — 2026-07-29
 
 ### Cambiado

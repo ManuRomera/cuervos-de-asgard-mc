@@ -1,7 +1,8 @@
 import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
+import { pct, adjustNumberField } from "../utils/sheet-utils.mjs";
+import { validateMotoModEquip } from "../rules/vehicle-mods.mjs";
 
-const get = foundry.utils.getProperty;
 const ItemSheetV1 = foundry.appv1.sheets.ItemSheet;
 
 export class CAMCItemSheet extends ItemSheetV1 {
@@ -29,9 +30,9 @@ export class CAMCItemSheet extends ItemSheetV1 {
     context.formulaDanoLabel = typeof item.getFormulaDanoLabel === "function" ? item.getFormulaDanoLabel(item.actor) : item.formulaDano;
     context.categoriaArmaLabel = CAMC.categoriasArma[s.categoria]?.label ?? s.categoria;
     context.isEquipped = Boolean(s.equipada || s.equipado);
-    context.structurePct = this.#pct(s.estructura?.value, s.estructura?.max);
+    context.structurePct = pct(s.estructura?.value, s.estructura?.max);
     context.structureTone = this.#resourceTone(s.estructura?.value, s.estructura?.max);
-    context.ammoPct = this.#pct(s.municion?.value, s.municion?.max);
+    context.ammoPct = pct(s.municion?.value, s.municion?.max);
     context.isPortable = ["arma", "armadura", "escudo", "objeto"].includes(item.type);
     const explicitSlots = Number(s.carga?.espacios);
     context.cargaEspacios = Number.isFinite(explicitSlots) ? explicitSlots : Number(CAMC.cargaPorTamano[s.tamano] ?? 1);
@@ -45,7 +46,7 @@ export class CAMCItemSheet extends ItemSheetV1 {
     html.find(".roll-decay").on("click", () => this.#rollDecay());
     html.find(".toggle-equipped").on("click", () => this.#toggleEquipped());
     html.find(".use-don").on("click", () => this.#useDon());
-    html.find(".camc-adjust").on("click", ev => this.#adjustNumber(ev));
+    html.find(".camc-adjust").on("click", ev => adjustNumberField(this.item, ev));
     html.find(".vehicle-action").on("click", ev => this.#vehicleAction(ev));
   }
 
@@ -81,27 +82,10 @@ export class CAMCItemSheet extends ItemSheetV1 {
   async #toggleEquipped() {
     if (this.item.type === "escudo") return this.item.update({ "system.equipado": !this.item.system.equipado });
     if (this.item.type === "objeto" && !this.item.system.equipada && this.item.system.tipo === "modificacion_moto") {
-      const validation = this.#validateMotoMod();
+      const validation = validateMotoModEquip(this.item.actor, this.item);
       if (!validation.ok) return ui.notifications.warn(validation.message);
     }
     if (["arma", "armadura", "objeto"].includes(this.item.type)) return this.item.update({ "system.equipada": !this.item.system.equipada });
-  }
-
-  #validateMotoMod() {
-    const actor = this.item.actor;
-    if (!actor) return { ok: true };
-    const active = actor.items.filter(entry => entry.type === "objeto" && entry.system?.equipada && entry.system?.tipo === "modificacion_moto" && entry.id !== this.item.id);
-    const names = active.map(entry => String(entry.name ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
-    const nextName = String(this.item.name ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    if (nextName.includes("ultrarreforzado") && !names.includes("chasis reforzado")) {
-      return { ok: false, message: "Chasis ultrarreforzado requiere tener equipado Chasis reforzado." };
-    }
-    const hasSidecar = names.some(name => name.includes("sidecar")) || nextName.includes("sidecar");
-    const max = hasSidecar ? 3 : 2;
-    if (active.length + 1 > max) {
-      return { ok: false, message: `La moto no puede tener más de ${max} modificaciones funcionales${hasSidecar ? " con sidecar" : ""}.` };
-    }
-    return { ok: true };
   }
 
   async #useDon() {
@@ -124,20 +108,6 @@ export class CAMCItemSheet extends ItemSheetV1 {
     });
   }
 
-  async #adjustNumber(event) {
-    event.preventDefault();
-    const path = event.currentTarget.dataset.path;
-    const delta = Number(event.currentTarget.dataset.delta ?? 0);
-    if (!path || !delta) return;
-    const current = Number(get(this.item, path) ?? 0);
-    let next = current + delta;
-    if (path.endsWith(".value")) {
-      const max = Number(get(this.item, path.replace(/\.value$/, ".max")));
-      if (Number.isFinite(max)) next = Math.min(max, next);
-    }
-    await this.item.update({ [path]: Math.max(0, next) });
-  }
-
   async #vehicleAction(event) {
     event.preventDefault();
     const action = event.currentTarget.dataset.action;
@@ -154,12 +124,6 @@ export class CAMCItemSheet extends ItemSheetV1 {
       const label = action === "accelerate" ? "Acelerar" : "Maniobra";
       return roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.item.actor }), flavor: `${this.item.name} · ${label}` });
     }
-  }
-
-  #pct(value, max) {
-    value = Number(value) || 0;
-    max = Number(max) || 1;
-    return Math.max(0, Math.min(100, Math.round((value / max) * 100)));
   }
 
   #resourceTone(value, max) {

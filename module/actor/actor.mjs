@@ -239,16 +239,18 @@ export class CAMCActor extends Actor {
       this.system.proteccion.armadura_nivel = nivel;
       this.system.proteccion.armadura_penalizacion = Number(arm.system.penalizacion ?? Math.floor(nivel / 2));
     } else {
-      this.system.proteccion.armadura_nivel = Number(this.system.proteccion.armadura_nivel ?? 0);
-      this.system.proteccion.armadura_penalizacion = Number(this.system.proteccion.armadura_penalizacion ?? 0);
+      // Sin armadura equipada no hay protección: si se preserva el último valor guardado
+      // en vez de ponerlo a 0, desequipar una armadura no deja de reducir daño.
+      this.system.proteccion.armadura_nivel = 0;
+      this.system.proteccion.armadura_penalizacion = 0;
     }
     if (esc) {
       const nivel = Number(esc.system.nivel ?? 1);
       this.system.proteccion.escudo_nivel = nivel;
       this.system.proteccion.escudo_penalizacion = Number(esc.system.penalizacion ?? nivel);
     } else {
-      this.system.proteccion.escudo_nivel = Number(this.system.proteccion.escudo_nivel ?? 0);
-      this.system.proteccion.escudo_penalizacion = Number(this.system.proteccion.escudo_penalizacion ?? 0);
+      this.system.proteccion.escudo_nivel = 0;
+      this.system.proteccion.escudo_penalizacion = 0;
     }
   }
 
@@ -282,12 +284,13 @@ export class CAMCActor extends Actor {
 
   getArmaPreparada() {
     const weapon = this.items?.find(i => i.type === "arma" && i.system.equipada);
-    if (!weapon) return { id: null, name: "Desarmado", label: "Desarmado", desarmado: true };
+    if (!weapon) return { id: null, name: "Desarmado", label: "Desarmado", desarmado: true, equipada: true };
     return {
       id: weapon.id,
       name: weapon.name,
       label: weapon.name,
       desarmado: false,
+      equipada: true,
       categoria: weapon.system?.categoria ?? "",
       tamano: weapon.system?.tamano ?? ""
     };

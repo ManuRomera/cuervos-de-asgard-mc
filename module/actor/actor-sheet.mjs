@@ -3,6 +3,9 @@ import { YsystemDice } from "../dice/ysystem-dice.mjs";
 import { generateRandomMount } from "../mount/mount-generator.mjs";
 import { CAMCMountRolls } from "../mount/mount-rolls.mjs";
 import { CAMCCharacterArchetypes, generateRandomCharacter, applyGeneratedStarterItems } from "../generator/camc-generators.mjs";
+import { pct, escapeHtml, resolveActorUuid, adjustNumberField, healthResourceTone } from "../utils/sheet-utils.mjs";
+import { validateMotoModEquip } from "../rules/vehicle-mods.mjs";
+import { computeCarryTotals, itemCarrySpaces, formatCarrySlots, isPortableItem } from "../rules/carry.mjs";
 
 const get = foundry.utils.getProperty;
 const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
@@ -118,12 +121,12 @@ export class CAMCActorSheet extends ActorSheetV1 {
       { key: "aplomo", label: "Aplomo", icon: "fa-heart-pulse", value: system.valores_pasivos?.aplomo ?? 0, formula: "CAR + INT + 5" },
       { key: "perspicacia", label: "Perspicacia", icon: "fa-eye", value: system.valores_pasivos?.perspicacia ?? 0, formula: "INT + PER + 5" }
     ];
-    context.saludPct = this.#pct(salud.value, salud.max);
-    context.saludTone = this.#resourceTone(salud.value, salud.max);
+    context.saludPct = pct(salud.value, salud.max);
+    context.saludTone = healthResourceTone(salud.value);
     context.healthPenalty = actor.getPenalizadorSalud();
     context.initiativeWeapon = actor.getArmaPreparada();
     context.danoDesarmado = Number(CAMC.danoDesarmado?.fijo ?? 1) + Math.floor(Number(system.atributos?.fue?.value ?? 0) / 2);
-    context.proezasPct = this.#pct(proezas.value, proezas.max);
+    context.proezasPct = pct(proezas.value, proezas.max);
     context.habilidades = habilidades;
     context.habilidadesDestacadas = destacadas;
     context.carga = carga;
@@ -174,7 +177,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     html.find(".skill-edit-toggle").on("click", ev => this.#toggleSkillEdit(ev));
     html.find(".skill-die").on("click", ev => this.#setSkillDice(ev));
     html.find(".camc-attr-select").on("change", ev => this.#setAttributeValue(ev));
-    html.find(".camc-adjust").on("click", ev => this.#adjustNumber(ev));
+    html.find(".camc-adjust").on("click", ev => adjustNumberField(this.actor, ev));
     html.find(".spend-proeza").on("click", () => this.actor.gastarProezas(1));
     html.find(".gain-proeza").on("click", () => this.actor.ganarProezas(1));
     html.find(".health-plus").on("click", () => this.actor.modificarSalud(1));
@@ -351,7 +354,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     if (item.type === "armadura") return item.update({ "system.equipada": !item.system.equipada });
     if (item.type === "escudo") return item.update({ "system.equipado": !item.system.equipado });
     if (item.type === "objeto" && !item.system.equipada && item.system.tipo === "modificacion_moto") {
-      const validation = this.#validateMotoMod(item);
+      const validation = validateMotoModEquip(this.actor, item);
       if (!validation.ok) return ui.notifications.warn(validation.message);
     }
     if (["arma", "objeto"].includes(item.type)) return item.update({ "system.equipada": !item.system.equipada });
@@ -492,6 +495,8 @@ export class CAMCActorSheet extends ActorSheetV1 {
     event.preventDefault();
     const item = this.#getItem(event);
     if (!item || item.type !== "arma") return;
+    const equipada = Boolean(item.system?.equipada);
+    if (!equipada) ui.notifications.warn(`${item.name}: no está equipada. Puedes tirar igualmente, pero el DJ verá el aviso en el chat.`);
     const habilidad = this.#weaponSkill(item);
     const options = event.altKey ? { dificultad: null, aplicaSalud: true } : await this.#askRollOptions(habilidad, { weapon: item });
     if (options === null) return;
@@ -501,7 +506,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
       if (!ok) return ui.notifications.warn("No hay proezas suficientes para añadir dados.");
     }
     if (options.recuerdoCuando) await this.actor.update({ "system.biografia.recuerdo_cuando_usado": true });
-    options.armaPreparada = { id: item.id, name: item.name, label: item.name };
+    options.armaPreparada = { id: item.id, name: item.name, label: item.name, equipada };
     await YsystemDice.rollSkill(this.actor, habilidad, options);
   }
 
@@ -623,7 +628,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
 
   async #buildMountCard(system) {
     const ref = system.mount ?? {};
-    let moto = await this.#resolveActorUuid(ref.uuid);
+    let moto = await resolveActorUuid(ref.uuid);
     if (!moto) {
       return {
         linked: false,
@@ -645,7 +650,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
       modelo: s.identidad?.modelo ?? "",
       tipo: s.identidad?.tipo ?? "",
       estructura,
-      estructuraPct: this.#pct(estructura.value, estructura.max),
+      estructuraPct: pct(estructura.value, estructura.max),
       maniobrabilidad: s.reglas?.maniobrabilidad ?? 0,
       plazas: s.reglas?.plazas ?? 1,
       dano: s.reglas?.dados_dano ?? "2D",
@@ -801,9 +806,9 @@ export class CAMCActorSheet extends ActorSheetV1 {
       <form class="camc-dialog camc-character-wizard">
         <p><strong>Paso 1 de 3: identidad y enfoque.</strong> El asistente reemplazará los datos principales de este PJ manteniendo su imagen actual.</p>
         <div class="camc-dialog-grid">
-          <label><span>Nombre</span><input name="name" type="text" value="${this.#escapeHtml(state.name)}"/></label>
-          <label><span>Jugador</span><input name="jugador" type="text" value="${this.#escapeHtml(state.jugador)}"/></label>
-          <label><span>Edad</span><input name="edad" type="text" value="${this.#escapeHtml(state.edad)}"/></label>
+          <label><span>Nombre</span><input name="name" type="text" value="${escapeHtml(state.name)}"/></label>
+          <label><span>Jugador</span><input name="jugador" type="text" value="${escapeHtml(state.jugador)}"/></label>
+          <label><span>Edad</span><input name="edad" type="text" value="${escapeHtml(state.edad)}"/></label>
           <label><span>Cargo</span><select name="cargo">${cargoOptions}</select></label>
           <label><span>Deidad</span><select name="deidad">${deityOptions}</select></label>
           <label><span>Enfoque de atributos</span><select name="archetype">${archetypeOptions}</select></label>
@@ -879,10 +884,10 @@ export class CAMCActorSheet extends ActorSheetV1 {
       <form class="camc-dialog camc-character-wizard">
         <p><strong>Paso 3 de 3: revisar y crear.</strong></p>
         <dl class="camc-wizard-summary">
-          <dt>Cargo</dt><dd>${this.#escapeHtml(CAMC.cargos[state.cargo]?.label ?? state.cargo)}</dd>
-          <dt>Deidad</dt><dd>${this.#escapeHtml(CAMC.dioses[state.deidad]?.label ?? state.deidad)} · ${this.#escapeHtml(CAMC.dioses[state.deidad]?.virtud ?? "")}</dd>
+          <dt>Cargo</dt><dd>${escapeHtml(CAMC.cargos[state.cargo]?.label ?? state.cargo)}</dd>
+          <dt>Deidad</dt><dd>${escapeHtml(CAMC.dioses[state.deidad]?.label ?? state.deidad)} · ${escapeHtml(CAMC.dioses[state.deidad]?.virtud ?? "")}</dd>
           <dt>Atributos</dt><dd>${attrs}</dd>
-          <dt>Habilidades favorecidas</dt><dd>${this.#escapeHtml(skills)}</dd>
+          <dt>Habilidades favorecidas</dt><dd>${escapeHtml(skills)}</dd>
         </dl>
         <label class="camc-checkline"><input name="rollHealth" type="checkbox" checked/> Tirar Salud inicial en el chat (FUE x 2 + 10 + 1D)</label>
         <label class="camc-checkline"><input name="createMount" type="checkbox"/> Generar y vincular una moto inicial</label>
@@ -968,16 +973,6 @@ export class CAMCActorSheet extends ActorSheetV1 {
     return map[archetype] ?? map.ruta;
   }
 
-  #escapeHtml(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      "\"": "&quot;",
-      "'": "&#39;"
-    }[char]));
-  }
-
   #pickRandom(list, fallback = "") {
     if (!Array.isArray(list) || !list.length) return fallback;
     return list[Math.floor(Math.random() * list.length)] ?? fallback;
@@ -992,19 +987,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
   async #getLinkedMount() {
     const uuid = this.actor.system.mount?.uuid;
     if (!uuid) return null;
-    return this.#resolveActorUuid(uuid);
-  }
-
-  async #resolveActorUuid(uuid) {
-    if (!uuid) return null;
-    try {
-      const doc = await fromUuid(uuid);
-      if (doc) return doc;
-    } catch (_err) {
-      /* fallback below */
-    }
-    const match = String(uuid).match(/^Actor\.([^\.]+)$/);
-    return match ? game.actors.get(match[1]) ?? null : null;
+    return resolveActorUuid(uuid);
   }
 
   async #openMount(event) {
@@ -1136,21 +1119,6 @@ export class CAMCActorSheet extends ActorSheetV1 {
     await this.actor.update({ [path]: Math.max(0, next) });
   }
 
-  #pct(value, max) {
-    value = Number(value) || 0;
-    max = Number(max) || 1;
-    return Math.max(0, Math.min(100, Math.round((value / max) * 100)));
-  }
-
-  #resourceTone(value, max) {
-    value = Number(value) || 0;
-    if (value <= 0) return "danger";
-    if (value <= 3) return "danger";
-    if (value <= 6) return "warning";
-    if (value <= 10) return "strained";
-    return "good";
-  }
-
   #scoreTone(value) {
     value = Number(value) || 0;
     if (value >= 4) return "peak";
@@ -1165,19 +1133,10 @@ export class CAMCActorSheet extends ActorSheetV1 {
   }
 
   #buildCarga(items, system, moto = null) {
-    const portable = items.filter(i => ["arma", "armadura", "escudo", "objeto"].includes(i.type));
-    const mochilaMax = Number(system.carga?.mochila_max ?? 6);
-    const motoAlforjas = moto?.type === "moto" ? Number(moto.system?.reglas?.alforjas?.max ?? 0) : null;
-    const vehicleMods = String(system.vehiculo?.modificaciones ?? "").toLowerCase();
-    const hasExtraSaddlebags = moto?.type === "moto"
-      ? Boolean(moto.system?.reglas?.alforjas_extra)
-      : Boolean(system.carga?.alforjas_extra)
-        || vehicleMods.includes("alforjas extra")
-        || items.some(i => i.type === "objeto" && i.system?.equipada && String(i.name).toLowerCase().includes("alforjas extra"));
-    const baseAlforjas = Number(system.carga?.alforjas_base ?? 8);
-    const alforjasMax = Math.max(baseAlforjas, Number.isFinite(motoAlforjas) ? motoAlforjas : 0) + (hasExtraSaddlebags && !moto ? 8 : 0);
+    const portable = items.filter(isPortableItem);
+    const totals = computeCarryTotals(system, items, moto);
     const rows = portable.map(item => {
-      const spaces = this.#itemSpaces(item);
+      const spaces = itemCarrySpaces(item);
       const quantity = item.type === "objeto" ? Math.max(1, Number(item.system.cantidad ?? 1)) : 1;
       const total = spaces * quantity;
       const ubicacion = item.system.carga?.ubicacion || "mochila";
@@ -1188,31 +1147,21 @@ export class CAMCActorSheet extends ActorSheetV1 {
         total,
         ubicacion,
         locationLabel: CAMC.ubicacionesCarga[ubicacion] ?? ubicacion,
-        slots: this.#formatSlots(total)
+        slots: formatCarrySlots(total)
       };
     });
-    const mochila = rows.filter(r => r.ubicacion === "mochila").reduce((n, r) => n + r.total, 0);
-    const alforjas = rows.filter(r => r.ubicacion === "alforjas").reduce((n, r) => n + r.total, 0);
     return {
       items: rows,
-      mochila: this.#loadBlock(mochila, mochilaMax),
-      alforjas: this.#loadBlock(alforjas, alforjasMax),
+      mochila: this.#loadBlock(totals.mochila.value, totals.mochila.max),
+      alforjas: this.#loadBlock(totals.alforjas.value, totals.alforjas.max),
       mountName: moto?.name ?? "",
       mountLinked: Boolean(moto),
-      hasExtraSaddlebags,
+      hasExtraSaddlebags: totals.hasExtraSaddlebags,
       ubicaciones: CAMC.ubicacionesCarga,
       reglas: moto
-        ? `A pie: máximo 6 espacios. Alforjas de ${moto.name}: ${this.#formatSlots(alforjasMax)} espacios${hasExtraSaddlebags ? " (extra activa)" : ""}. Pequeño 0,5; mediano 1; grande 2.`
+        ? `A pie: máximo 6 espacios. Alforjas de ${moto.name}: ${formatCarrySlots(totals.alforjas.max)} espacios${totals.hasExtraSaddlebags ? " (extra activa)" : ""}. Pequeño 0,5; mediano 1; grande 2.`
         : "A pie: máximo 6 espacios. Pequeño 0,5; mediano 1; grande 2. Alforjas: 8 espacios de la moto; alforjas extra: +8 adicionales."
     };
-  }
-
-  #itemSpaces(item) {
-    const explicit = Number(item.system.carga?.espacios);
-    if (Number.isFinite(explicit) && explicit > 0) return explicit;
-    const size = item.system.tamano || "mediano";
-    if (size === "no_equipable") return 0;
-    return Number(CAMC.cargaPorTamano[size] ?? 1);
   }
 
   async #validateCarryLocation(item, ubicacion) {
@@ -1226,39 +1175,19 @@ export class CAMCActorSheet extends ActorSheetV1 {
     if (projected <= Number(block.rawMax ?? 0)) return { ok: true };
     return {
       ok: false,
-      message: `${item.name} no cabe en ${CAMC.ubicacionesCarga[ubicacion]}: ${this.#formatSlots(projected)} / ${this.#formatSlots(block.rawMax)} espacios.`
+      message: `${item.name} no cabe en ${CAMC.ubicacionesCarga[ubicacion]}: ${formatCarrySlots(projected)} / ${formatCarrySlots(block.rawMax)} espacios.`
     };
-  }
-
-  #validateMotoMod(item) {
-    const active = this.actor.items.filter(entry => entry.type === "objeto" && entry.system?.equipada && entry.system?.tipo === "modificacion_moto" && entry.id !== item.id);
-    const names = active.map(entry => String(entry.name ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
-    const nextName = String(item.name ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    if (nextName.includes("ultrarreforzado") && !names.includes("chasis reforzado")) {
-      return { ok: false, message: "Chasis ultrarreforzado requiere tener equipado Chasis reforzado." };
-    }
-    const hasSidecar = names.some(name => name.includes("sidecar")) || nextName.includes("sidecar");
-    const max = hasSidecar ? 3 : 2;
-    if (active.length + 1 > max) {
-      return { ok: false, message: `La moto no puede tener más de ${max} modificaciones funcionales${hasSidecar ? " con sidecar" : ""}.` };
-    }
-    return { ok: true };
   }
 
   #loadBlock(value, max) {
     return {
-      value: this.#formatSlots(value),
-      max: this.#formatSlots(max),
+      value: formatCarrySlots(value),
+      max: formatCarrySlots(max),
       raw: value,
       rawMax: max,
-      pct: this.#pct(value, max),
+      pct: pct(value, max),
       over: value > max
     };
-  }
-
-  #formatSlots(value) {
-    value = Number(value) || 0;
-    return Number.isInteger(value) ? String(value) : value.toFixed(1).replace(".", ",");
   }
 
   #assetKey(value, fallback) {

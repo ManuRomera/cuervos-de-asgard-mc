@@ -1,8 +1,8 @@
 import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
 import { generateRandomNpc, applyGeneratedStarterItems } from "../generator/camc-generators.mjs";
+import { pct, healthResourceTone, adjustNumberField } from "../utils/sheet-utils.mjs";
 
-const get = foundry.utils.getProperty;
 const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
 
 export class CAMCNpcSheet extends ActorSheetV1 {
@@ -58,8 +58,8 @@ export class CAMCNpcSheet extends ActorSheetV1 {
       const atributo = value.atributo ?? CAMC.habilidades[key]?.atributo ?? "int";
       return { key, value: Number(value.value ?? 1), atributo, atributoShort: CAMC.atributos[atributo]?.short ?? atributo.toUpperCase(), label: CAMC.habilidades[key]?.label ?? key };
     });
-    context.saludPct = this.#pct(salud.value, salud.max);
-    context.saludTone = this.#resourceTone(salud.value, salud.max);
+    context.saludPct = pct(salud.value, salud.max);
+    context.saludTone = healthResourceTone(salud.value);
     context.itemsByType = {
       armas: actor.items.filter(i => i.type === "arma"),
       protecciones: actor.items.filter(i => ["armadura", "escudo"].includes(i.type)),
@@ -84,7 +84,7 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     html.find(".item-equip").on("click", ev => this.#toggleEquip(ev));
     html.find(".item-delete").on("click", ev => this.#deleteItem(ev));
     html.find(".roll-unarmed").on("click", ev => this.#rollUnarmedAttack(ev));
-    html.find(".camc-adjust").on("click", ev => this.#adjustNumber(ev));
+    html.find(".camc-adjust").on("click", ev => adjustNumberField(this.actor, ev));
     html.find(".portrait-scale-adjust").on("click", ev => this.#adjustPortraitScale(ev));
   }
 
@@ -116,6 +116,8 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     event.preventDefault();
     const item = this.#getItem(event);
     if (!item || item.type !== "arma") return;
+    const equipada = Boolean(item.system?.equipada);
+    if (!equipada) ui.notifications.warn(`${item.name}: no está equipada. Puedes tirar igualmente, pero el DJ verá el aviso en el chat.`);
     const tipo = String(item.system?.tipo ?? item.system?.categoria ?? item.system?.alcance ?? "").toLowerCase();
     const habilidad = item.system?.habilidad_ataque || (tipo.includes("distancia") || tipo.includes("fuego") || tipo.includes("arroj") ? "punteria" : "lucha");
     // Sin objetivo marcado no hay forma de saber si el PNJ impacta (regla: Lucha/Puntería
@@ -123,7 +125,7 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     const targetToken = Array.from(game.user.targets ?? [])[0];
     const targetAgilidad = Number(targetToken?.actor?.system?.valores_pasivos?.agilidad ?? NaN);
     const dificultad = Number.isFinite(targetAgilidad) ? targetAgilidad : null;
-    await YsystemDice.rollSkill(this.actor, habilidad, { dificultad, armaPreparada: { id: item.id, name: item.name, label: item.name } });
+    await YsystemDice.rollSkill(this.actor, habilidad, { dificultad, armaPreparada: { id: item.id, name: item.name, label: item.name, equipada } });
   }
 
   async #rollUnarmedAttack(event) {
@@ -149,20 +151,6 @@ export class CAMCNpcSheet extends ActorSheetV1 {
     if (!item) return;
     const ok = await Dialog.confirm({ title: "Eliminar objeto", content: `<p>¿Eliminar <strong>${item.name}</strong>?</p>` });
     if (ok) await item.delete();
-  }
-
-  async #adjustNumber(event) {
-    event.preventDefault();
-    const path = event.currentTarget.dataset.path;
-    const delta = Number(event.currentTarget.dataset.delta ?? 0);
-    if (!path || !delta) return;
-    const current = Number(get(this.actor, path) ?? 0);
-    let next = current + delta;
-    if (path.endsWith(".value")) {
-      const max = Number(get(this.actor, path.replace(/\.value$/, ".max")));
-      if (Number.isFinite(max)) next = Math.min(max, next);
-    }
-    await this.actor.update({ [path]: Math.max(0, next) });
   }
 
   #portraitImageScale() {
@@ -195,20 +183,5 @@ export class CAMCNpcSheet extends ActorSheetV1 {
       console.error("CAMC | Error generando PNJ", err);
       ui.notifications.error("No se pudo generar el PNJ. Revisa la consola.");
     }
-  }
-
-  #pct(value, max) {
-    value = Number(value) || 0;
-    max = Number(max) || 1;
-    return Math.max(0, Math.min(100, Math.round((value / max) * 100)));
-  }
-
-  #resourceTone(value, max) {
-    value = Number(value) || 0;
-    if (value <= 0) return "danger";
-    if (value <= 3) return "danger";
-    if (value <= 6) return "warning";
-    if (value <= 10) return "strained";
-    return "good";
   }
 }

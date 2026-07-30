@@ -1,4 +1,5 @@
 import { CAMC } from "../config.mjs";
+import { escapeHtml } from "../utils/sheet-utils.mjs";
 
 export class YsystemDice {
   static async rollSkill(actor, habilidad, options = {}) {
@@ -131,6 +132,7 @@ export class YsystemDice {
     const ctx = message.getFlag(CAMC.systemId, "tirada");
     if (!ctx) return ui.notifications.warn("Esta tirada no admite repetición.");
     if (ctx.repetida) return ui.notifications.warn("Esta tirada ya se ha repetido una vez.");
+    if (ctx.defectoPendiente) return ui.notifications.warn("Esta tirada tiene un defecto pendiente de tirar.");
     if (ctx.exito) return ui.notifications.warn("Solo se puede gastar una proeza para repetir una tirada fallida.");
     const dice = ctx.dice ?? [];
     if (!dice.length) return ui.notifications.warn("Esta tirada no tiene dados que repetir.");
@@ -176,7 +178,7 @@ export class YsystemDice {
               spendProeza: true,
               grantProeza: false,
               markLeveUsado: false,
-              banner: `<i class="fas fa-bolt"></i> ${this.#escape(actor.name)} gasta una proeza y repite ${rerollCount} dado(s). Ya no puede ser crítico.`
+              banner: `<i class="fas fa-bolt"></i> ${escapeHtml(actor.name)} gasta una proeza y repite ${rerollCount} dado(s). Ya no puede ser crítico.`
             }));
           }
         },
@@ -199,6 +201,7 @@ export class YsystemDice {
     const ctx = message.getFlag(CAMC.systemId, "tirada");
     if (!ctx) return ui.notifications.warn("Esta tirada no admite defectos.");
     if (ctx.repetida) return ui.notifications.warn("Esta tirada ya se ha repetido una vez.");
+    if (ctx.defectoPendiente) return ui.notifications.warn("Esta tirada ya tiene un defecto pendiente de tirar.");
     const dice = ctx.dice ?? [];
 
     const actor = ctx.actorUuid ? await fromUuid(ctx.actorUuid) : null;
@@ -206,12 +209,14 @@ export class YsystemDice {
     if (actor.type !== "personaje") return ui.notifications.warn("Los defectos solo existen para los PJ; los PNJ no tienen.");
 
     const leveUsado = Boolean(actor.system.biografia?.defecto_leve_usado);
-    const defectoLeve = this.#escape(actor.system.biografia?.defecto_leve || "(sin definir)");
-    const defectoGrave = this.#escape(actor.system.biografia?.defecto_grave || "(sin definir)");
+    const defectoLeveRaw = actor.system.biografia?.defecto_leve || "(sin definir)";
+    const defectoGraveRaw = actor.system.biografia?.defecto_grave || "(sin definir)";
+    const defectoLeve = escapeHtml(defectoLeveRaw);
+    const defectoGrave = escapeHtml(defectoGraveRaw);
 
     const content = `
       <div class="camc-dialog camc-defecto-dialog">
-        <p>Vas a obligar a <strong>${this.#escape(actor.name)}</strong> a repetir esta tirada por uno de sus defectos.
+        <p>Vas a obligar a <strong>${escapeHtml(actor.name)}</strong> a repetir esta tirada por uno de sus defectos.
         Actívalo solo si el defecto elegido interfiere de verdad con la habilidad que se ha usado.</p>
         <label class="camc-defecto-option">
           <input type="radio" name="tipo" value="grave" checked/>
@@ -230,7 +235,7 @@ export class YsystemDice {
       content,
       buttons: {
         confirm: {
-          label: "Aplicar y repetir",
+          label: "Anunciar defecto",
           callback: async html => {
             const tipo = html.find('input[name="tipo"]:checked').val();
             if (tipo === "leve" && leveUsado) {
@@ -238,17 +243,14 @@ export class YsystemDice {
               return resolve(null);
             }
             const rerollCount = tipo === "grave" ? Math.max(0, dice.length - 1) : dice.length;
-            const banner = tipo === "grave"
-              ? `<i class="fas fa-triangle-exclamation"></i> El DJ activa el <strong>Defecto grave</strong> de ${this.#escape(actor.name)}: repite con 1D menos (gana 1 proeza).`
-              : `<i class="fas fa-feather"></i> El DJ activa el <strong>Defecto leve</strong> de ${this.#escape(actor.name)}: repite la tirada.`;
-            resolve(await this.#ejecutarRepeticion(message, ctx, actor, {
-              keepValues: [],
+            const texto = tipo === "grave" ? defectoGraveRaw : defectoLeveRaw;
+            resolve(await this.#anunciarDefecto(message, ctx, actor, {
+              tipo,
+              texto,
               rerollCount,
               allowCritico: true,
-              spendProeza: false,
               grantProeza: tipo === "grave",
-              markLeveUsado: tipo === "leve",
-              banner
+              markLeveUsado: tipo === "leve"
             }));
           }
         },
@@ -257,6 +259,66 @@ export class YsystemDice {
       default: "confirm",
       close: () => resolve(null)
     }).render(true));
+  }
+
+  /**
+   * Anuncia el defecto en la propia tarjeta de la tirada (citando su texto, para que el
+   * jugador pueda rolearlo) y deja un botón "Tirar dados" para que sea el jugador quien
+   * decida el momento de tirar, en vez de repetir la tirada automáticamente al aplicarlo.
+   */
+  static async #anunciarDefecto(message, ctx, actor, { tipo, texto, rerollCount, allowCritico, grantProeza, markLeveUsado }) {
+    const etiqueta = tipo === "grave" ? "Defecto grave" : "Defecto leve";
+    const detalle = tipo === "grave"
+      ? "Repetirás con 1D menos y ganarás 1 proeza."
+      : "Repetirás la tirada igual, sin proeza (solo puede usarse una vez por sesión).";
+    const nota = `<i class="fas fa-user-shield"></i> El DJ activa tu <strong>${etiqueta}</strong>: "${escapeHtml(texto)}". ${detalle} Pulsa "Tirar dados" cuando quieras interpretarlo.`;
+    const flat = Number(ctx.data?.bonificador ?? 0) + Number(ctx.data?.bonusFavorecida ?? 0) + Number(ctx.data?.modificador ?? 0);
+    const total = (ctx.dice ?? []).reduce((a, b) => a + b, 0) + flat;
+    const defectoPendiente = { tipo, texto, rerollCount, allowCritico, grantProeza, markLeveUsado };
+
+    const content = await renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
+      tipo: "tirada",
+      habilidad: ctx.habilidad,
+      actor,
+      roll: { total },
+      dice: ctx.dice ?? [],
+      data: ctx.data ?? {},
+      critico: ctx.critico,
+      pifia: ctx.pifia,
+      exito: ctx.exito,
+      dificultad: ctx.dificultad,
+      opciones: ctx.opciones ?? {},
+      repetida: false,
+      repeticionNota: nota,
+      defectoPendiente
+    });
+
+    await message.update({
+      content,
+      [`flags.${CAMC.systemId}.tirada`]: { ...ctx, defectoPendiente }
+    });
+    return defectoPendiente;
+  }
+
+  /** El jugador (dueño del PJ) pulsa "Tirar dados" tras el anuncio del defecto: aquí se tira de verdad. */
+  static async rollDefectoPendiente(message) {
+    const ctx = message.getFlag(CAMC.systemId, "tirada");
+    const pendiente = ctx?.defectoPendiente;
+    if (!ctx || !pendiente) return ui.notifications.warn("No hay ningún defecto pendiente de tirar en esta tirada.");
+    const actor = ctx.actorUuid ? await fromUuid(ctx.actorUuid) : null;
+    if (!actor) return ui.notifications.warn("No se encuentra el personaje de esta tirada.");
+    if (!(game.user.isGM || actor.isOwner)) return ui.notifications.warn("No tienes permiso para tirar este defecto.");
+    const etiqueta = pendiente.tipo === "grave" ? "Defecto grave" : "Defecto leve";
+    const banner = `<i class="fas fa-user-shield"></i> ${escapeHtml(actor.name)} tira por su <strong>${etiqueta}</strong>: "${escapeHtml(pendiente.texto)}".`;
+    return this.#ejecutarRepeticion(message, ctx, actor, {
+      keepValues: [],
+      rerollCount: pendiente.rerollCount,
+      allowCritico: pendiente.allowCritico,
+      spendProeza: false,
+      grantProeza: pendiente.grantProeza,
+      markLeveUsado: pendiente.markLeveUsado,
+      banner
+    });
   }
 
   static async #ejecutarRepeticion(message, ctx, actor, { keepValues, rerollCount, allowCritico, spendProeza, grantProeza, markLeveUsado, banner }) {
@@ -269,8 +331,12 @@ export class YsystemDice {
     if (rerollCount > 0) {
       const roll = await (new Roll(`${rerollCount}d6`)).evaluate({ async: true });
       nuevos = roll.dice?.[0]?.results?.map(r => r.result) ?? [];
+      // Esta tirada no pasa por ChatMessage.create (solo actualiza la tarjeta ya existente),
+      // así que Dice So Nice nunca la ve a menos que se lo pidamos explícitamente aquí.
+      if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true);
     }
     const diceFinal = [...keepValues, ...nuevos];
+    const diceIsNew = keepValues.map(() => false).concat(nuevos.map(() => true));
     const flat = Number(ctx.data?.bonificador ?? 0) + Number(ctx.data?.bonusFavorecida ?? 0) + Number(ctx.data?.modificador ?? 0);
     const total = diceFinal.reduce((a, b) => a + b, 0) + flat;
     const pifia = diceFinal.length > 0 && diceFinal.every(d => d === 1);
@@ -288,6 +354,7 @@ export class YsystemDice {
       actor,
       roll: { total },
       dice: diceFinal,
+      diceIsNew,
       data: ctx.data,
       critico,
       pifia,
@@ -334,10 +401,6 @@ export class YsystemDice {
     let cells = "";
     for (let i = 1; i <= 9; i++) cells += `<i class="pip${active.has(i) ? " on" : ""}"></i>`;
     return `<span class="camc-die-pips" data-value="${value}">${cells}</span>`;
-  }
-
-  static #escape(str) {
-    return String(str ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
   static async #sendChat(payload) {
