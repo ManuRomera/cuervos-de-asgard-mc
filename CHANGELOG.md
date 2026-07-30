@@ -2,6 +2,12 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.16] — 2026-07-30
+
+### Interno (sin cambios de comportamiento visibles en mesa)
+- Se quitan dos avisos de compatibilidad que Foundry repetía en consola en cada tirada y cada apertura de ficha: la opción `{ async: true }` de `Roll#evaluate()` ya no existe (evaluar una tirada es asíncrono por defecto ahora, así que se quita sin más), y la función global `renderTemplate` pasa a usarse con su namespace actual `foundry.applications.handlebars.renderTemplate`. Ningún cambio de comportamiento, solo deja de generar ruido de depreciación.
+- Queda pendiente (no abordado en esta versión, es un cambio grande aparte): las cinco hojas del sistema y los diálogos siguen sobre el framework `ApplicationV1`/`Dialog` V1, que Foundry ya marca como obsoleto y retirará en la v16. Migrar a `ApplicationV2` es un proyecto de reescritura propio, no una corrección puntual.
+
 ## [1.4.15] — 2026-07-30
 
 ### Corregido

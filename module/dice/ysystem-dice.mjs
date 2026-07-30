@@ -8,7 +8,7 @@ export class YsystemDice {
     const flat = data.bonificador + data.bonusFavorecida + data.modificador;
     const dicePart = data.dados > 0 ? `${data.dados}d6` : "0";
     const formula = flat === 0 ? dicePart : `${dicePart} ${flat >= 0 ? "+" : "-"} ${Math.abs(flat)}`;
-    const roll = await (new Roll(formula)).evaluate({ async: true });
+    const roll = await (new Roll(formula)).evaluate();
     const dice = roll.dice?.[0]?.results?.map(r => r.result) ?? [];
     const critico = dice.filter(d => d === 6).length >= 2;
     const pifia = dice.length > 0 && dice.every(d => d === 1);
@@ -50,7 +50,7 @@ export class YsystemDice {
       }
     }
     const formula = (typeof item.getFormulaDano === "function" ? item.getFormulaDano(actor) : "") || "0";
-    const danoRoll = await (new Roll(formula)).evaluate({ async: true });
+    const danoRoll = await (new Roll(formula)).evaluate();
     const total = critico ? danoRoll.total * 2 : danoRoll.total;
     return { total, formula: danoRoll.formula, itemName: item.name, itemId: item.id, critico };
   }
@@ -96,14 +96,14 @@ export class YsystemDice {
       ? item.getFormulaDano(actor, options)
       : item?.formulaDano || `${Number(options.cantidad ?? 0)}`;
     if (options.extra && typeof item?.getFormulaDano !== "function") formula += ` + ${Number(options.extra)}`;
-    const roll = await (new Roll(formula)).evaluate({ async: true });
+    const roll = await (new Roll(formula)).evaluate();
     await this.#sendChat({ actor, tipo: "dano", item, roll, formula });
     return roll;
   }
 
   static async rollInitiative(actor) {
     const bonus = Number(actor.system.combate?.iniciativa ?? 0);
-    const roll = await (new Roll(`1d6 + ${bonus}`)).evaluate({ async: true });
+    const roll = await (new Roll(`1d6 + ${bonus}`)).evaluate();
     await this.#sendChat({ actor, tipo: "iniciativa", roll, formula: `1d6 + ${bonus}` });
     const combatant = game.combat?.combatants?.find(c => c.actor?.id === actor.id);
     if (combatant) await game.combat.setInitiative(combatant.id, roll.total);
@@ -276,7 +276,7 @@ export class YsystemDice {
     const total = (ctx.dice ?? []).reduce((a, b) => a + b, 0) + flat;
     const defectoPendiente = { tipo, texto, rerollCount, allowCritico, grantProeza, markLeveUsado };
 
-    const content = await renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
+    const content = await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
       tipo: "tirada",
       habilidad: ctx.habilidad,
       actor,
@@ -329,7 +329,7 @@ export class YsystemDice {
 
     let nuevos = [];
     if (rerollCount > 0) {
-      const roll = await (new Roll(`${rerollCount}d6`)).evaluate({ async: true });
+      const roll = await (new Roll(`${rerollCount}d6`)).evaluate();
       nuevos = roll.dice?.[0]?.results?.map(r => r.result) ?? [];
       // Esta tirada no pasa por ChatMessage.create (solo actualiza la tarjeta ya existente),
       // así que Dice So Nice nunca la ve a menos que se lo pidamos explícitamente aquí.
@@ -348,7 +348,7 @@ export class YsystemDice {
     if (grantProeza) await actor.ganarProezas(1);
     if (markLeveUsado) await actor.update({ "system.biografia.defecto_leve_usado": true });
 
-    const content = await renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
+    const content = await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
       tipo: "tirada",
       habilidad: ctx.habilidad,
       actor,
@@ -406,7 +406,7 @@ export class YsystemDice {
   static async #sendChat(payload) {
     const actor = payload.actor;
     const safePayload = { ...payload, actor: actor ?? { name: payload.item?.name ?? "CAMC" }, repetida: false };
-    const content = await renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, safePayload);
+    const content = await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, safePayload);
     const flags = {};
     if (payload.tipo === "dano" && payload.roll) {
       flags[CAMC.systemId] = {

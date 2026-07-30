@@ -565,7 +565,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     }
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content: await renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
+      content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
         actor: this.actor,
         tipo: "don",
         item,
@@ -580,7 +580,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     if (!item || item.type !== "talento") return;
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content: await renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
+      content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
         actor: this.actor,
         tipo: "talento",
         item
@@ -600,7 +600,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     };
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content: await renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
+      content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
         actor: this.actor,
         tipo: "talento",
         item
@@ -721,7 +721,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
       if (!identity) return;
       Object.assign(state, identity);
       if (state.randomComplete) {
-        const healthRoll = await (new Roll("1d6")).evaluate({ async: true });
+        const healthRoll = await (new Roll("1d6")).evaluate();
         const data = generateRandomCharacter({
           seed: `${this.actor.id}-${Date.now()}-random-full`,
           jugador: state.jugador,
@@ -753,7 +753,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
 
       let healthRoll = null;
       if (finalOptions.rollHealth) {
-        healthRoll = await (new Roll("1d6")).evaluate({ async: true });
+        healthRoll = await (new Roll("1d6")).evaluate();
       }
       const data = generateRandomCharacter({
         seed: state.seed,

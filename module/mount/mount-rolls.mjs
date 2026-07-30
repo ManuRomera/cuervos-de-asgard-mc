@@ -33,11 +33,11 @@ export class CAMCMountRolls {
 
   static async rollMountDamage(moto, { label = "Daño de moto" } = {}) {
     const formula = String(moto.system?.reglas?.dados_dano ?? "2D").replaceAll("D", "d6");
-    const roll = await new Roll(formula).evaluate({ async: true });
+    const roll = await new Roll(formula).evaluate();
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: moto }),
       rolls: [roll],
-      content: await renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
+      content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
         actor: moto,
         tipo: "dano_moto",
         roll,

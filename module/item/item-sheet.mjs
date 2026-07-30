@@ -58,7 +58,7 @@ export class CAMCItemSheet extends ItemSheetV1 {
     }
     if (this.item.type === "vehiculo") {
       const formula = String(this.item.system.dados_dano ?? "2d6").replaceAll("D", "d6");
-      const roll = await new Roll(formula).evaluate({ async: true });
+      const roll = await new Roll(formula).evaluate();
       return roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.item.actor }), flavor: `${this.item.name} · Daño de vehículo` });
     }
     return YsystemDice.rollDamage(this.item.actor, this.item);
@@ -66,7 +66,7 @@ export class CAMCItemSheet extends ItemSheetV1 {
 
   async #rollDecay() {
     if (this.item.system.deterioro !== "R") return ui.notifications.info("La caducidad solo se tira para equipo reciclado usado.");
-    const roll = await new Roll("1d6").evaluate({ async: true });
+    const roll = await new Roll("1d6").evaluate();
     const total = roll.total;
     let result = "Sigue funcionando.";
     if (total === 3) result = "Necesita reparación: Mecánica a dificultad 12, hasta tres intentos.";
@@ -99,7 +99,7 @@ export class CAMCItemSheet extends ItemSheetV1 {
     }
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor }),
-      content: await renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
+      content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
         actor,
         tipo: "don",
         item: this.item,
@@ -120,7 +120,7 @@ export class CAMCItemSheet extends ItemSheetV1 {
     }
     if (action === "accelerate" || action === "maneuver") {
       const bonus = Number(this.item.system.maniobrabilidad ?? 0);
-      const roll = await new Roll(`1d6 + ${bonus}`).evaluate({ async: true });
+      const roll = await new Roll(`1d6 + ${bonus}`).evaluate();
       const label = action === "accelerate" ? "Acelerar" : "Maniobra";
       return roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.item.actor }), flavor: `${this.item.name} · ${label}` });
     }
