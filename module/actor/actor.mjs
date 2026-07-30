@@ -5,26 +5,26 @@ const get = foundry.utils.getProperty;
 export class CAMCActor extends Actor {
   prepareData() {
     super.prepareData();
-    if (this.type === "personaje") this.#preparePersonaje();
-    if (this.type === "pnj") this.#preparePNJ();
-    if (this.type === "moto") this.#prepareMoto();
+    if (this.type === "personaje") this._preparePersonaje();
+    if (this.type === "pnj") this._preparePNJ();
+    if (this.type === "moto") this._prepareMoto();
   }
 
-  #num(path, fallback = 0) {
+  _num(path, fallback = 0) {
     const value = Number(get(this, path));
     return Number.isFinite(value) ? value : fallback;
   }
 
-  #preparePersonaje() {
+  _preparePersonaje() {
     const s = this.system;
     s.habilidades_favorecidas ??= [];
-    const fue = this.#num("system.atributos.fue.value");
-    const des = this.#num("system.atributos.des.value");
-    const int = this.#num("system.atributos.int.value");
-    const per = this.#num("system.atributos.per.value");
-    const car = this.#num("system.atributos.car.value");
-    const atletismo = this.#num("system.habilidades.atletismo.value", 1);
-    const conducir = this.#num("system.habilidades.conducir.value", 1);
+    const fue = this._num("system.atributos.fue.value");
+    const des = this._num("system.atributos.des.value");
+    const int = this._num("system.atributos.int.value");
+    const per = this._num("system.atributos.per.value");
+    const car = this._num("system.atributos.car.value");
+    const atletismo = this._num("system.habilidades.atletismo.value", 1);
+    const conducir = this._num("system.habilidades.conducir.value", 1);
     s.carga ??= {};
     s.carga.mochila_max ??= 6;
     s.carga.alforjas_base ??= 8;
@@ -45,18 +45,18 @@ export class CAMCActor extends Actor {
     s.biografia.virtud = deidad.virtud ?? "";
     s.biografia.talento = cargo.talento ?? "";
 
-    s.valores_pasivos.agilidad = (atletismo * 3) + des + this.#escudoAgilidadBonus();
+    s.valores_pasivos.agilidad = (atletismo * 3) + des + this._escudoAgilidadBonus();
     s.valores_pasivos.evasion = (conducir * 3) + des;
     s.valores_pasivos.aplomo = car + int + 5;
     s.valores_pasivos.perspicacia = int + per + 5;
-    const vehicleMods = this.#getVehicleMods();
+    const vehicleMods = this._getVehicleMods();
     s.carga.alforjas_extra_activa = Boolean(s.carga.alforjas_extra || vehicleMods.alforjasExtra);
     s.vehiculo.efectos_mods = vehicleMods.labels;
     s.vehiculo.estructura.max = Number(s.vehiculo.base_estructura ?? 15) + vehicleMods.estructura;
     s.vehiculo.estructura.value = Math.min(Number(s.vehiculo.estructura.value ?? s.vehiculo.estructura.max), s.vehiculo.estructura.max);
     s.vehiculo.maniobrabilidad = Number(s.vehiculo.base_maniobrabilidad ?? 2) + vehicleMods.maniobrabilidad;
     s.vehiculo.ocupantes = Number(s.vehiculo.base_ocupantes ?? 1) + vehicleMods.ocupantes;
-    s.vehiculo.dados_dano = this.#addVehicleDamageDice(s.vehiculo.base_dados_dano ?? "2D", vehicleMods.dadosDano);
+    s.vehiculo.dados_dano = this._addVehicleDamageDice(s.vehiculo.base_dados_dano ?? "2D", vehicleMods.dadosDano);
     s.vehiculo.modificaciones_max = vehicleMods.sidecar ? 3 : 2;
 
     s.combate.iniciativa = des + int + vehicleMods.iniciativa;
@@ -76,10 +76,10 @@ export class CAMCActor extends Actor {
     } else {
       s.combate.proezas.value = Math.max(0, previousProezasValue);
     }
-    this.#calcularProteccion();
+    this._calcularProteccion();
   }
 
-  #getVehicleMods() {
+  _getVehicleMods() {
     const mods = {
       labels: [],
       iniciativa: 0,
@@ -107,22 +107,22 @@ export class CAMCActor extends Actor {
     return mods;
   }
 
-  #addVehicleDamageDice(formula, extraDice = 0) {
+  _addVehicleDamageDice(formula, extraDice = 0) {
     const match = String(formula || "2D").match(/(\d+)\s*D/i);
     if (!match) return formula || "2D";
     return `${Number(match[1]) + Number(extraDice || 0)}D`;
   }
 
-  #preparePNJ() {
-    this.#calcularProteccion();
+  _preparePNJ() {
+    this._calcularProteccion();
     const s = this.system;
-    const fue = this.#num("system.atributos.fue.value");
-    const des = this.#num("system.atributos.des.value");
-    const int = this.#num("system.atributos.int.value");
-    const per = this.#num("system.atributos.per.value");
-    const car = this.#num("system.atributos.car.value");
-    const atletismo = this.#num("system.habilidades_clave.atletismo.value", 1);
-    const conducir = this.#num("system.habilidades_clave.conducir.value", 1);
+    const fue = this._num("system.atributos.fue.value");
+    const des = this._num("system.atributos.des.value");
+    const int = this._num("system.atributos.int.value");
+    const per = this._num("system.atributos.per.value");
+    const car = this._num("system.atributos.car.value");
+    const atletismo = this._num("system.habilidades_clave.atletismo.value", 1);
+    const conducir = this._num("system.habilidades_clave.conducir.value", 1);
     s.valores_pasivos ??= {};
     s.combate ??= {};
     // El manual permite que algunos PNJ tengan valores pasivos superiores a los que daría
@@ -130,7 +130,7 @@ export class CAMCActor extends Actor {
     // de Atletismo). Por eso aquí solo se rellenan como valor por defecto si no vienen ya
     // definidos en la ficha (importados del bestiario o escritos a mano), en vez de
     // sobrescribirlos siempre.
-    s.valores_pasivos.agilidad ??= (atletismo * 3) + des + this.#escudoAgilidadBonus();
+    s.valores_pasivos.agilidad ??= (atletismo * 3) + des + this._escudoAgilidadBonus();
     s.valores_pasivos.evasion ??= (conducir * 3) + des;
     s.valores_pasivos.aplomo ??= car + int + 5;
     s.valores_pasivos.perspicacia ??= int + per + 5;
@@ -145,7 +145,7 @@ export class CAMCActor extends Actor {
     if (s.combate?.salud) s.combate.salud.value = Math.min(s.combate.salud.value ?? s.combate.salud.max, s.combate.salud.max ?? 0);
   }
 
-  #prepareMoto() {
+  _prepareMoto() {
     const s = this.system;
     s.identidad ??= {};
     s.tecnica ??= {};
@@ -174,11 +174,11 @@ export class CAMCActor extends Actor {
     s.persecucion.franja = Number(s.persecucion.franja ?? 1);
     const itemMods = this.items?.filter(item => item.type === "objeto" && item.system?.tipo === "modificacion_moto" && item.system?.equipada) ?? [];
     const legacyMods = s.mods.funcionales ?? [];
-    const modEffects = this.#getMotoModEffects([...legacyMods, ...itemMods]);
+    const modEffects = this._getMotoModEffects([...legacyMods, ...itemMods]);
     s.reglas.estructura.max = Number(s.reglas.base_estructura ?? 15) + modEffects.estructura;
     s.reglas.maniobrabilidad = Number(s.reglas.base_maniobrabilidad ?? 2) + modEffects.maniobrabilidad;
     s.reglas.alforjas.max = Number(s.reglas.base_alforjas ?? 8) + modEffects.alforjasMax + (s.reglas.alforjas_extra ? 8 : 0);
-    s.reglas.dados_dano = this.#addVehicleDamageDice(s.reglas.base_dados_dano ?? "2D", modEffects.dadosDano);
+    s.reglas.dados_dano = this._addVehicleDamageDice(s.reglas.base_dados_dano ?? "2D", modEffects.dadosDano);
     s.reglas.efectos_mods = modEffects.labels;
     const estructura = s.reglas.estructura;
     const max = Number(estructura.max ?? 15);
@@ -191,12 +191,12 @@ export class CAMCActor extends Actor {
     s.reglas.estado = s.reglas.inutilizada ? "Inutilizada" : (s.reglas.dano_grave ? "Dañada" : (s.reglas.mantenimiento || "Operativa"));
   }
 
-  #getMotoModEffects(mods = []) {
+  _getMotoModEffects(mods = []) {
     const effects = { labels: [], estructura: 0, maniobrabilidad: 0, dadosDano: 0, alforjasMax: 0 };
     for (const mod of mods) {
       const source = mod?.system ?? mod ?? {};
       const name = String(mod?.name ?? source.name ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      if (!this.#isManualMotoMod(name)) continue;
+      if (!this._isManualMotoMod(name)) continue;
       const efecto = source.efecto ?? {};
       effects.labels.push(mod.name ?? source.name ?? "Tuneado");
       effects.estructura += Number(efecto.estructura ?? 0);
@@ -211,19 +211,19 @@ export class CAMCActor extends Actor {
     return effects;
   }
 
-  #isManualMotoMod(normalizedName) {
+  _isManualMotoMod(normalizedName) {
     return Object.values(CAMC.modificacionesMoto ?? {}).some(mod => {
       const label = String(mod.label ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       return normalizedName === label || normalizedName.includes(label);
     });
   }
 
-  #escudoAgilidadBonus() {
+  _escudoAgilidadBonus() {
     const esc = this.items?.find(i => i.type === "escudo" && i.system.equipado);
     return Number(esc?.system?.nivel ?? 0);
   }
 
-  #calcularProteccion() {
+  _calcularProteccion() {
     const arm = this.items?.find(i => i.type === "armadura" && i.system.equipada);
     const esc = this.items?.find(i => i.type === "escudo" && i.system.equipado);
     this.system.proteccion ??= {};
@@ -348,11 +348,11 @@ export class CAMCActor extends Actor {
       if (habilidad === "auxilio" && name.includes("botiqu")) bonus += 2;
       if (habilidad === "mecanica" && (name.includes("herramientas") || name.includes("kit de reparacion"))) bonus += 2;
     }
-    bonus += this.#getLinkedMotoSkillBonus(habilidad);
+    bonus += this._getLinkedMotoSkillBonus(habilidad);
     return bonus;
   }
 
-  #getLinkedMotoSkillBonus(habilidad) {
+  _getLinkedMotoSkillBonus(habilidad) {
     if (this.type !== "personaje") return 0;
     const uuid = String(this.system.mount?.uuid ?? "");
     const match = uuid.match(/^Actor\.([^./]+)$/);

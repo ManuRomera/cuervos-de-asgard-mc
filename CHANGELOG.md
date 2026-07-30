@@ -2,6 +2,11 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.4.15] — 2026-07-30
+
+### Corregido
+- **Error "Receiver must be an instance of class CAMCActor" al cargar cualquier escena con tokens de PJ/PNJ sin vincular a los datos del actor** (el caso habitual de un mismo PNJ del bestiario colocado varias veces en escena): `CAMCActor` y `CAMCItem` usaban métodos privados de JavaScript (`#metodo`), y el mecanismo de Foundry para tokens sin vincular construye un actor "sintético" que no conserva esos campos privados, así que cualquier tirada de preparación de datos fallaba en cuanto tocaba uno de esos métodos. Ya estaba así antes de esta ronda de cambios (no es una regresión de las versiones anteriores). Se han convertido a métodos internos normales (prefijo `_`), que sí funcionan igual de bien tanto en un actor de mundo normal como en uno sintético de un token sin vincular.
+
 ## [1.4.14] — 2026-07-30
 
 ### Corregido

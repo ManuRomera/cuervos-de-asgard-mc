@@ -18,7 +18,7 @@ export class CAMCItem extends Item {
       s.municion ??= { value: 0, max: 0 };
       s.equipada ??= false;
       s.dano_fijo ??= 0;
-      s.categoria = this.#normalizeWeaponCategory(s.categoria ?? s.tipo);
+      s.categoria = this._normalizeWeaponCategory(s.categoria ?? s.tipo);
       s.tipo ||= s.categoria;
       s.categoria_label = CAMC.categoriasArma[s.categoria]?.label ?? s.categoria;
       s.habilidad_ataque = CAMC.categoriasArma[s.categoria]?.habilidad ?? "lucha";
@@ -33,7 +33,7 @@ export class CAMCItem extends Item {
       s.dados_dano ??= "2D";
       s.maniobrabilidad ??= 0;
     }
-    this.#prepareCarga();
+    this._prepareCarga();
   }
 
   get formulaDano() {
@@ -46,7 +46,7 @@ export class CAMCItem extends Item {
     if (this.system.dano) parts.push(String(this.system.dano).replaceAll("D", "d6"));
     if (Number(this.system.dano_fijo)) parts.push(String(Number(this.system.dano_fijo)));
     const attr = CAMC.categoriasArma[this.system.categoria]?.atributoDano ?? "";
-    const attrBonus = this.#damageAttributeBonus(actor, attr);
+    const attrBonus = this._damageAttributeBonus(actor, attr);
     if (attrBonus) parts.push(String(attrBonus));
     if (Number(options.extra)) parts.push(String(Number(options.extra)));
     return parts.length ? parts.join(" + ") : "0";
@@ -72,7 +72,7 @@ export class CAMCItem extends Item {
     return true;
   }
 
-  #prepareCarga() {
+  _prepareCarga() {
     if (!["arma", "armadura", "escudo", "objeto"].includes(this.type)) return;
     const s = this.system;
     s.carga ??= {};
@@ -83,7 +83,7 @@ export class CAMCItem extends Item {
     }
   }
 
-  #normalizeWeaponCategory(value) {
+  _normalizeWeaponCategory(value) {
     const raw = String(value ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     if (CAMC.categoriasArma[value]) return value;
     if (raw.includes("mortif") || raw.includes("fusil") || raw.includes("lanzallamas")) return "fuego_mortiferas";
@@ -96,7 +96,7 @@ export class CAMCItem extends Item {
     return "cuerpo_a_cuerpo";
   }
 
-  #damageAttributeBonus(actor, attr) {
+  _damageAttributeBonus(actor, attr) {
     if (!actor || !attr) return 0;
     const fue = Number(actor.system?.atributos?.fue?.value ?? 0);
     if (attr === "fue_mitad") return Math.floor(fue / 2);
