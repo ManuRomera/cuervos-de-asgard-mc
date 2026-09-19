@@ -8,9 +8,9 @@ Sistema no oficial para jugar **Cuervos de Asgard Motor Club** en Foundry VTT v1
 
 ![Hojas de personaje, moto, comunidad y compendios del sistema](docs/screenshots/overview.png)
 
-![Compendios incluidos con armas, armaduras, dones, motos, objetos y parches](docs/screenshots/compendiums.png)
+![Personajes pregenerados con retratos y banderas de sus deidades](docs/screenshots/characters.png)
 
-![Ajustes del sistema y modo de figura exterior de personaje](docs/screenshots/settings.png)
+![Compendios incluidos con armas, armaduras, dones, motos, objetos y parches](docs/screenshots/compendiums.png)
 
 ## Juego premiado
 
