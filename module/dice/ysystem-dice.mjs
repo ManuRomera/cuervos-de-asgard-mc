@@ -1,3 +1,5 @@
+import { createRollMessage, showRepeatedRoll } from "../compat/chat.mjs";
+import { Dialog } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { escapeHtml } from "../utils/sheet-utils.mjs";
 
@@ -333,7 +335,7 @@ export class YsystemDice {
       nuevos = roll.dice?.[0]?.results?.map(r => r.result) ?? [];
       // Esta tirada no pasa por ChatMessage.create (solo actualiza la tarjeta ya existente),
       // así que Dice So Nice nunca la ve a menos que se lo pidamos explícitamente aquí.
-      if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true);
+      await showRepeatedRoll(roll, message);
     }
     const diceFinal = [...keepValues, ...nuevos];
     const diceIsNew = keepValues.map(() => false).concat(nuevos.map(() => true));
@@ -446,7 +448,7 @@ export class YsystemDice {
         }
       };
     }
-    await ChatMessage.create({
+    await createRollMessage({
       speaker: actor ? ChatMessage.getSpeaker({ actor }) : ChatMessage.getSpeaker(),
       content,
       rolls: payload.roll ? [payload.roll] : [],

@@ -1,3 +1,5 @@
+import { createRollMessage } from "../compat/chat.mjs";
+import { Dialog } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
 
@@ -34,7 +36,7 @@ export class CAMCMountRolls {
   static async rollMountDamage(moto, { label = "Daño de moto" } = {}) {
     const formula = String(moto.system?.reglas?.dados_dano ?? "2D").replaceAll("D", "d6");
     const roll = await new Roll(formula).evaluate();
-    await ChatMessage.create({
+    await createRollMessage({
       speaker: ChatMessage.getSpeaker({ actor: moto }),
       rolls: [roll],
       content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {

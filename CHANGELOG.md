@@ -2,6 +2,19 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.5.0] — 2026-09-19
+
+### Compatibilidad Foundry V13 / V14
+- Formulario de incidencias en GitHub y enlace de soporte desde el manifiesto y el README.
+- Capa compartida de compatibilidad, siguiendo el enfoque aplicado en Eterno Azul y contrastado con Storypath Ultra y las APIs oficiales.
+- Fichas, diálogos, imágenes y arrastre usan APIs con namespace; registro mediante DocumentSheetConfig.
+- Tiradas personalizadas respetan el modo de visibilidad: rollMode/applyRollMode en V13 y messageMode/applyMode en V14.
+- Las repeticiones de Dice So Nice conservan los destinatarios y la privacidad de la tarjeta original.
+- Normalización de elementos HTML de hooks y diagnóstico sin datos privados en game.camc.compatibility().
+- 16 pruebas automáticas y comprobación de sintaxis. Las fichas V1 existentes se conservan; no hay migración de documentos ni cambios de reglas.
+
+**Validación pendiente:** regresión real de esta versión en V13 y prueba completa en V14. Se conserva verified 13.351 del manifiesto anterior; no se declara V14 verificada. Véase docs/compatibility.md.
+
 ## [1.4.16] — 2026-07-30
 
 ### Interno (sin cambios de comportamiento visibles en mesa)

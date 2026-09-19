@@ -1,3 +1,4 @@
+import { Dialog } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { CAMCMountTables } from "../mount/mount-generator.mjs";
 

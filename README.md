@@ -2,7 +2,7 @@
 
 > **WIP / Work in Progress.** Este sistema está en desarrollo activo. Ya es usable en mesa, pero las hojas, automatizaciones, generadores y compendios pueden cambiar entre versiones mientras se completa y se revisa contra el manual.
 
-Sistema no oficial para jugar **Cuervos de Asgard Motor Club** en Foundry VTT v13. Implementa hojas nativas, tiradas y automatizaciones sobre una base Ysystem adaptada a carretera postapocalíptica, comunidad, motos, dones divinos y parches de chaleco.
+Sistema no oficial para jugar **Cuervos de Asgard Motor Club** en Foundry VTT v13 y v14. Implementa hojas nativas, tiradas y automatizaciones sobre una base Ysystem adaptada a carretera postapocalíptica, comunidad, motos, dones divinos y parches de chaleco.
 
 ## Vista rápida
 
@@ -83,7 +83,9 @@ Además conserva datos fuente estructurados en `_data/` para regenerar o importa
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
-| 1.4.16 WIP | v13 | v13.351 |
+| 1.5.0 WIP | v13 | v13.351 |
+
+Capa compartida de compatibilidad V13/V14: APIs con namespace, registro de fichas, normalización del chat y visibilidad de tiradas adaptada a cada generación. V14 pendiente de prueba real; `verified` conserva el valor histórico 13.351 y no certifica esta nueva versión. Consulta [las pruebas pendientes](docs/compatibility.md).
 
 ## Autoría y comunidad
 
@@ -104,3 +106,7 @@ Reconocimiento especial a **Jubilados de Arkham**, colaborador inestimable del p
 Este paquete es una implementación no oficial para uso en Foundry VTT. Las reglas, nombres y elementos propios de la obra pertenecen a sus titulares correspondientes. El repositorio contiene código, hojas, datos estructurados y automatizaciones para facilitar el juego en mesa virtual.
 
 El código, las imágenes y parte de los textos de apoyo de este repositorio han sido creados o asistidos mediante herramientas de inteligencia artificial, con revisión humana posterior antes de su publicación.
+
+## Informar de un problema
+
+Si encuentras un fallo, especialmente al usar Foundry V13 o V14, [abre una incidencia en GitHub](https://github.com/ManuRomera/cuervos-de-asgard-mc/issues/new/choose). El formulario pide las versiones exactas de Foundry y del sistema, los pasos para reproducirlo y qué esperabas que ocurriera. Puedes adjuntar capturas y errores de consola, y señalar si ocurre también sin módulos. Necesitas una cuenta de GitHub.

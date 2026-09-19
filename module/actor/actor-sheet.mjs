@@ -1,3 +1,5 @@
+import { createRollMessage } from "../compat/chat.mjs";
+import { ActorSheetV1, Dialog, FilePicker, TextEditor } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
 import { generateRandomMount } from "../mount/mount-generator.mjs";
@@ -8,7 +10,6 @@ import { validateMotoModEquip } from "../rules/vehicle-mods.mjs";
 import { computeCarryTotals, itemCarrySpaces, formatCarrySlots, isPortableItem } from "../rules/carry.mjs";
 
 const get = foundry.utils.getProperty;
-const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
 
 export class CAMCActorSheet extends ActorSheetV1 {
   static get defaultOptions() {
@@ -563,7 +564,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
       const ok = await this.actor.gastarProezas(coste);
       if (!ok) return ui.notifications.warn(`${item.name}: no hay proezas suficientes.`);
     }
-    await ChatMessage.create({
+    await createRollMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
         actor: this.actor,
@@ -578,7 +579,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     event.preventDefault();
     const item = this.#getItem(event);
     if (!item || item.type !== "talento") return;
-    await ChatMessage.create({
+    await createRollMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
         actor: this.actor,
@@ -598,7 +599,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
         efecto: cargo.nota || "Talento de cargo."
       }
     };
-    await ChatMessage.create({
+    await createRollMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
         actor: this.actor,

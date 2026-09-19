@@ -1,3 +1,5 @@
+import { diagnostic, normalizeHookElement, versionInfo } from "./compat/runtime.mjs";
+import { DocumentSheetConfig, ActorSheetV1, ItemSheetV1 } from "./compat/applications.mjs";
 import { CAMC } from "./config.mjs";
 import { CAMCActor } from "./actor/actor.mjs";
 import { CAMCActorSheet } from "./actor/actor-sheet.mjs";
@@ -15,25 +17,21 @@ import { computeCarryTotals, getLinkedMountSync, formatCarrySlots } from "./rule
 import { escapeHtml } from "./utils/sheet-utils.mjs";
 
 Hooks.once("init", async () => {
-  console.log("CAMC | Inicializando Cuervos de Asgard Motor Club v13");
+  console.log(`CAMC | Inicializando Cuervos de Asgard Motor Club · Foundry ${versionInfo().version}`);
 
   CONFIG.CAMC = CAMC;
   CONFIG.Actor.documentClass = CAMCActor;
   CONFIG.Item.documentClass = CAMCItem;
 
-  const ActorSheets = foundry.documents.collections.Actors;
-  const ItemSheets = foundry.documents.collections.Items;
-  const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
-  const ItemSheetV1 = foundry.appv1.sheets.ItemSheet;
 
-  ActorSheets.unregisterSheet("core", ActorSheetV1);
-  ActorSheets.registerSheet(CAMC.systemId, CAMCActorSheet, { types: ["personaje"], makeDefault: true, label: "CAMC.Personaje" });
-  ActorSheets.registerSheet(CAMC.systemId, CAMCNpcSheet, { types: ["pnj"], makeDefault: true, label: "CAMC.PNJ" });
-  ActorSheets.registerSheet(CAMC.systemId, CAMCCommunitySheet, { types: ["comunidad"], makeDefault: true, label: "CAMC.Comunidad" });
-  ActorSheets.registerSheet(CAMC.systemId, CAMCMotoSheet, { types: ["moto"], makeDefault: true, label: "CAMC.Moto" });
+  DocumentSheetConfig.unregisterSheet(Actor, "core", ActorSheetV1);
+  DocumentSheetConfig.registerSheet(Actor, CAMC.systemId, CAMCActorSheet, { types: ["personaje"], makeDefault: true, label: "CAMC.Personaje" });
+  DocumentSheetConfig.registerSheet(Actor, CAMC.systemId, CAMCNpcSheet, { types: ["pnj"], makeDefault: true, label: "CAMC.PNJ" });
+  DocumentSheetConfig.registerSheet(Actor, CAMC.systemId, CAMCCommunitySheet, { types: ["comunidad"], makeDefault: true, label: "CAMC.Comunidad" });
+  DocumentSheetConfig.registerSheet(Actor, CAMC.systemId, CAMCMotoSheet, { types: ["moto"], makeDefault: true, label: "CAMC.Moto" });
 
-  ItemSheets.unregisterSheet("core", ItemSheetV1);
-  ItemSheets.registerSheet(CAMC.systemId, CAMCItemSheet, { makeDefault: true, label: "CAMC.Item" });
+  DocumentSheetConfig.unregisterSheet(Item, "core", ItemSheetV1);
+  DocumentSheetConfig.registerSheet(Item, CAMC.systemId, CAMCItemSheet, { makeDefault: true, label: "CAMC.Item" });
 
   registerHandlebarsHelpers();
 
@@ -259,6 +257,7 @@ Hooks.once("setup", () => {
 
 Hooks.once("ready", async () => {
   game.camc = {
+    compatibility: diagnostic,
     config: CAMC,
     dice: YsystemDice,
     generateRandomMount,
@@ -295,7 +294,9 @@ Hooks.once("ready", () => {
 });
 
 Hooks.on("renderChatMessageHTML", (message, html) => {
-  const root = html?.find ? html : $(html);
+  const element = normalizeHookElement(html);
+  if (!element) return;
+  const root = $(element);
   root.find("[data-camc-action='apply-damage']").on("click", ev => applyDamageFromChat(message, ev));
   root.find("[data-camc-action='reroll-proeza']").on("click", ev => { ev.preventDefault(); YsystemDice.gastarProezaParaRepetir(message); });
   root.find("[data-camc-action='apply-defecto']").on("click", ev => { ev.preventDefault(); YsystemDice.openDefectoDialog(message); });
@@ -398,7 +399,9 @@ async function applyDamageFromChat(message, event) {
 }
 
 function activateCamcContextMenu(html) {
-  const root = html?.find ? html : $(html);
+  const element = normalizeHookElement(html);
+  if (!element) return;
+  const root = $(element);
   const scope = root.find(".camc-sheet, .camc-dialog, .camc-chat-card").addBack(".camc-sheet, .camc-dialog, .camc-chat-card");
   if (!scope.length) return;
   scope.off("contextmenu.camc-help").on("contextmenu.camc-help", "*", event => {
