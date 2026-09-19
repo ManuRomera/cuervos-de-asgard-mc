@@ -5,6 +5,7 @@ Todos los cambios relevantes de este proyecto se documentan en este archivo.
 ## [1.5.0] — 2026-09-19
 
 ### Compatibilidad Foundry V13 / V14
+- Formulario de incidencias en GitHub y enlace de soporte desde el manifiesto y el README.
 - Capa compartida de compatibilidad, siguiendo el enfoque aplicado en Eterno Azul y contrastado con Storypath Ultra y las APIs oficiales.
 - Fichas, diálogos, imágenes y arrastre usan APIs con namespace; registro mediante DocumentSheetConfig.
 - Tiradas personalizadas respetan el modo de visibilidad: rollMode/applyRollMode en V13 y messageMode/applyMode en V14.

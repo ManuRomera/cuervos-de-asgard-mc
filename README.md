@@ -106,3 +106,7 @@ Reconocimiento especial a **Jubilados de Arkham**, colaborador inestimable del p
 Este paquete es una implementación no oficial para uso en Foundry VTT. Las reglas, nombres y elementos propios de la obra pertenecen a sus titulares correspondientes. El repositorio contiene código, hojas, datos estructurados y automatizaciones para facilitar el juego en mesa virtual.
 
 El código, las imágenes y parte de los textos de apoyo de este repositorio han sido creados o asistidos mediante herramientas de inteligencia artificial, con revisión humana posterior antes de su publicación.
+
+## Informar de un problema
+
+Si encuentras un fallo, especialmente al usar Foundry V13 o V14, [abre una incidencia en GitHub](https://github.com/ManuRomera/cuervos-de-asgard-mc/issues/new/choose). El formulario pide las versiones exactas de Foundry y del sistema, los pasos para reproducirlo y qué esperabas que ocurriera. Puedes adjuntar capturas y errores de consola, y señalar si ocurre también sin módulos. Necesitas una cuenta de GitHub.
