@@ -1,0 +1,54 @@
+name: Informar de un fallo / Report a bug
+description: Comunica problemas del sistema o de compatibilidad con Foundry V13/V14.
+title: "[Fallo] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por ayudarnos a mejorar Cuervos de Asgard. Describe el fallo para que podamos reproducirlo y corregirlo. Puedes escribir en español o inglés. No incluyas contraseñas ni datos privados.
+  - type: input
+    id: foundry_version
+    attributes:
+      label: Versión exacta de Foundry VTT
+      placeholder: Por ejemplo, 13.351 o 14.368
+    validations:
+      required: true
+  - type: input
+    id: system_version
+    attributes:
+      label: Versión de Cuervos de Asgard
+      placeholder: Por ejemplo, 1.5.0
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para reproducir el fallo
+      description: Indica la ficha, acción o tirada afectada y si estabas como DJ o jugador.
+      placeholder: "1. Abrir…\n2. Pulsar…\n3. Ocurre…"
+    validations:
+      required: true
+  - type: textarea
+    id: expected_actual
+    attributes:
+      label: Qué esperabas y qué ocurrió
+    validations:
+      required: true
+  - type: dropdown
+    id: modules_disabled
+    attributes:
+      label: ¿Ocurre con los módulos desactivados?
+      options:
+        - No lo he probado
+        - Sí, también ocurre sin módulos
+        - No, solo ocurre con módulos activos
+  - type: textarea
+    id: environment
+    attributes:
+      label: Entorno y módulos relacionados
+      description: Navegador o aplicación, sistema operativo, módulos activos y sus versiones (por ejemplo, Dice So Nice).
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Capturas y errores de consola
+      description: Puedes arrastrar capturas aquí y pegar el error completo. Omite datos privados.

@@ -94,6 +94,10 @@ jobs:
             ### Notas
 
             ${{ steps.changelog.outputs.notes }}
+
+            ### Informar de un problema
+
+            Si encuentras un fallo con Foundry V13 o V14, [abre una incidencia en GitHub](https://github.com/ManuRomera/cuervos-de-asgard-mc/issues/new/choose) indicando las versiones exactas y los pasos para reproducirlo.
           files: dist/cuervos-de-asgard-mc.zip
           draft: false
           prerelease: false
