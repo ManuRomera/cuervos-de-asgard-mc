@@ -1,8 +1,8 @@
+import { ActorSheetV1, FilePicker } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { generateRandomCommunity } from "../generator/camc-generators.mjs";
 
 const get = foundry.utils.getProperty;
-const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
 
 export class CAMCCommunitySheet extends ActorSheetV1 {
   static get defaultOptions() {

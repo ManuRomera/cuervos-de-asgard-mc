@@ -1,9 +1,9 @@
+import { ActorSheetV1, Dialog } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
 import { generateRandomNpc, applyGeneratedStarterItems } from "../generator/camc-generators.mjs";
 import { pct, healthResourceTone, adjustNumberField } from "../utils/sheet-utils.mjs";
 
-const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
 
 export class CAMCNpcSheet extends ActorSheetV1 {
   static get defaultOptions() {

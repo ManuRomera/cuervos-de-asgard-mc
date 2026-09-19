@@ -1,9 +1,10 @@
+import { createRollMessage } from "../compat/chat.mjs";
+import { ItemSheetV1 } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
 import { pct, adjustNumberField } from "../utils/sheet-utils.mjs";
 import { validateMotoModEquip } from "../rules/vehicle-mods.mjs";
 
-const ItemSheetV1 = foundry.appv1.sheets.ItemSheet;
 
 export class CAMCItemSheet extends ItemSheetV1 {
   static get defaultOptions() {
@@ -97,7 +98,7 @@ export class CAMCItemSheet extends ItemSheetV1 {
       const ok = await actor.gastarProezas(coste);
       if (!ok) return ui.notifications.warn(`${this.item.name}: no hay proezas suficientes.`);
     }
-    await ChatMessage.create({
+    await createRollMessage({
       speaker: ChatMessage.getSpeaker({ actor }),
       content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
         actor,

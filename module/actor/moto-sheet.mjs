@@ -1,10 +1,10 @@
+import { ActorSheetV1, Dialog, FilePicker, TextEditor } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { generateRandomMount, CAMCMountTables } from "../mount/mount-generator.mjs";
 import { CAMCMountRolls } from "../mount/mount-rolls.mjs";
 import { pct, resolveActorUuid, adjustNumberField } from "../utils/sheet-utils.mjs";
 import { itemCarrySpaces, formatCarrySlots, isPortableItem } from "../rules/carry.mjs";
 
-const ActorSheetV1 = foundry.appv1.sheets.ActorSheet;
 
 export class CAMCMotoSheet extends ActorSheetV1 {
   static get defaultOptions() {
