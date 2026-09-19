@@ -6,7 +6,9 @@ Sistema no oficial para jugar **Cuervos de Asgard Motor Club** en Foundry VTT v1
 
 ## Vista rápida
 
-![Hojas de personaje, moto, comunidad y compendios del sistema](docs/screenshots/overview.png)
+![Hoja actual de Managarm con recursos, atributos, habilidades, equipo y moto vinculada](docs/screenshots/overview.png)
+
+![Pestaña de biografía de la hoja actual con historia, rasgos y notas de campaña](docs/screenshots/biography.png)
 
 ![Personajes pregenerados con retratos y banderas de sus deidades](docs/screenshots/characters.png)
 
