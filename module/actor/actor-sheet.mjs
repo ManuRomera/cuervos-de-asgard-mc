@@ -2,6 +2,9 @@ import { createRollMessage } from "../compat/chat.mjs";
 import { ActorSheetV1, Dialog, FilePicker, TextEditor } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
+import { askRollOptions, pagarCostes } from "../dice/roll-dialog.mjs";
+import * as R from "../rules/reglas.mjs";
+import { AsistenteCreacion } from "../apps/creacion.mjs";
 import { generateRandomMount } from "../mount/mount-generator.mjs";
 import { CAMCMountRolls } from "../mount/mount-rolls.mjs";
 import { CAMCCharacterArchetypes, generateRandomCharacter, applyGeneratedStarterItems } from "../generator/camc-generators.mjs";
@@ -30,6 +33,12 @@ export class CAMCActorSheet extends ActorSheetV1 {
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
     if (this.isEditable) {
+      buttons.unshift({
+        label: "Creación guiada",
+        class: "camc-guided-creation",
+        icon: "fas fa-wand-magic-sparkles",
+        onclick: () => new AsistenteCreacion(this.actor).render(true)
+      });
       buttons.unshift({
         label: "Generar PJ",
         class: "camc-generate-character",
@@ -106,7 +115,13 @@ export class CAMCActorSheet extends ActorSheetV1 {
     context.deidadActual = CAMC.dioses[deityKey] ?? { label: "Sin deidad", virtud: "" };
     context.cargoActual = CAMC.cargos[system.biografia?.cargo] ?? CAMC.cargos.full_patch;
     context.cargoTalent = talentos.find(t => String(t.system?.cargo ?? "").toLowerCase() === String(context.cargoActual.label ?? "").toLowerCase())
-      ?? { name: context.cargoActual.talento ?? "" };
+      ?? { name: "" };
+    context.sinTalento = !context.cargoTalent.name && Boolean(context.cargoActual.talentos?.length);
+    context.protPenalizacion = actor.getPenalizacionProteccion();
+    context.reputacionRango = R.rangoReputacion(Number(system.reputacion?.value ?? 6));
+    context.faltasCastigo = Number(system.faltas?.value ?? 0) >= R.FALTAS_PARA_CASTIGO;
+    context.pxDisponibles = Number(system.experiencia?.total ?? 0) - Number(system.experiencia?.gastada ?? 0);
+    context.talentosCargoTexto = (context.cargoActual.talentos ?? []).join(", ");
     context.logo = CAMC.assets.logo;
     context.vestImage = CAMC.assets.vest;
     context.vestSlots = this.#buildVestSlots(system);
@@ -171,7 +186,8 @@ export class CAMCActorSheet extends ActorSheetV1 {
     html.find(".item-roll-damage").on("click", ev => this.#rollDamage(ev));
     html.find(".roll-unarmed").on("click", ev => this.#rollUnarmedAttack(ev));
     html.find(".use-don").on("click", ev => this.#useDon(ev));
-    html.find(".use-cargo-talent").on("click", ev => this.#useCargoTalent(ev));
+    html.find(".choose-talent").on("click", ev => this.#chooseTalent(ev));
+    html.find(".camc-mejorar").on("click", ev => { ev.preventDefault(); this.#mejorar(); });
     html.find(".create-item").on("click", ev => this.#createItem(ev));
     html.find(".auto-role-skills").on("click", () => this.#setRoleSkills());
     html.find(".fav-toggle").on("click", ev => this.#toggleFav(ev));
@@ -209,12 +225,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     const habilidad = event.currentTarget.dataset.skill;
     const options = event.altKey ? { dificultad: null, aplicaSalud: true } : await this.#askRollOptions(habilidad);
     if (options === null) return;
-    const proezaDados = Number(options.proezaDados ?? 0);
-    if (proezaDados > 0) {
-      const ok = await this.actor.gastarProezas(proezaDados);
-      if (!ok) return ui.notifications.warn("No hay proezas suficientes para añadir dados.");
-    }
-    if (options.recuerdoCuando) await this.actor.update({ "system.biografia.recuerdo_cuando_usado": true });
+    if (!(await pagarCostes(this.actor, options))) return;
     await YsystemDice.rollSkill(this.actor, habilidad, options);
   }
 
@@ -234,113 +245,8 @@ export class CAMCActorSheet extends ActorSheetV1 {
     await this.actor.update(update);
   }
 
-  async #askRollOptions(habilidad, { weapon = null } = {}) {
-    const skillLabel = CAMC.habilidades[habilidad]?.label ?? "Tirada";
-    const targetToken = weapon ? Array.from(game.user.targets ?? [])[0] : null;
-    const targetAgilidad = targetToken ? Number(targetToken.actor?.system?.valores_pasivos?.agilidad ?? NaN) : NaN;
-    const hasTargetDifficulty = weapon && Number.isFinite(targetAgilidad);
-    const opts = [`<option value="">Sin dificultad</option>`].concat(
-      CAMC.dificultades.map(d => `<option value="${d.value}" ${!hasTargetDifficulty && d.value === 9 ? "selected" : ""}>${d.value} · ${d.label}</option>`)
-    ).join("");
-    const penalty = this.actor.getPenalizadorSalud();
-    const weaponInfo = weapon ? { label: weapon.name } : null;
-    const recuerdoUsado = Boolean(this.actor.system.biografia?.recuerdo_cuando_usado);
-    const isAuxilio = habilidad === "auxilio";
-    const curaTargetToken = isAuxilio ? Array.from(game.user.targets ?? [])[0] : null;
-    const curaTargetName = curaTargetToken?.name ?? this.actor.name;
-    const content = `
-      <form class="camc-dialog camc-roll-options">
-        <p class="camc-roll-heading"><strong>${skillLabel}</strong>${weaponInfo ? ` <span>· ${weaponInfo.label}</span>` : ""}</p>
-        ${hasTargetDifficulty ? `<p class="camc-target-hint"><i class="fas fa-crosshairs"></i> Objetivo: <strong>${targetToken.name}</strong> · Agilidad <strong>${targetAgilidad}</strong> (ya rellenada abajo, puedes cambiarla).</p>` : ""}
-        ${isAuxilio ? `
-        <div class="camc-auxilio-mode">
-          <label class="camc-defecto-option"><input type="radio" name="auxilioModo" value="normal" checked/> <span><strong>Diagnosticar / tratar</strong><br/><small>Examinar a alguien, recomendar medicamentos, etc. Dificultad normal, sin curación automática.</small></span></label>
-          <label class="camc-defecto-option"><input type="radio" name="auxilioModo" value="curar"/> <span><strong>Curar (primeros auxilios)</strong> · a ${curaTargetName}<br/><small>Dificultad fija 10. Éxito: +2 Salud. Crítico: +4. Pifia: −1. Solo un intento por herida concreta.</small></span></label>
-        </div>` : ""}
-        <div class="camc-dialog-grid camc-dificultad-row">
-          <label><span>Dificultad</span><select name="dificultad">${opts}</select></label>
-          <label><span>Dificultad personalizada</span><input name="dificultadManual" type="number" placeholder="Opcional" value="${hasTargetDifficulty ? targetAgilidad : ""}"/></label>
-        </div>
-        <div class="camc-dialog-grid">
-          <label><span>Modificador fijo</span>${this.#numberStepper("modificador", 0, -99, 99)}</label>
-          <label><span>Dados extra</span>${this.#numberStepper("dadosExtra", 0, -3, 3)}</label>
-          <label><span>Proezas para +D</span>${this.#numberStepper("proezaDados", 0, 0, 3)}</label>
-          <label><span>Dados sacrificados</span>${this.#numberStepper("dadosSacrificados", 0, 0, 3)}</label>
-        </div>
-        <div class="camc-checkline-group">
-          <label class="camc-checkline"><input name="aplicaSalud" type="checkbox" checked/> <span>Aplicar penalizador de Salud (${penalty.label})</span></label>
-          <label class="camc-checkline"><input name="recuerdoCuando" type="checkbox" ${recuerdoUsado ? "disabled" : ""}/> <span>Recuerdo cuando (+2D, no compatible con proezas)${recuerdoUsado ? " · ya usado" : ""}</span></label>
-          ${weaponInfo ? `<label class="camc-checkline"><input name="desenfundar" type="checkbox"/> <span>Desenfundar o cambiar de arma este turno (-1D)</span></label>` : ""}
-        </div>
-        <p class="notes">Los dados sacrificados sirven para apuntar o afinar una acción cuando la regla lo permita. Alt + clic tira rápido sin abrir este panel.</p>
-      </form>`;
-    return new Promise(resolve => new Dialog({
-      title: "Opciones de tirada",
-      content,
-      buttons: {
-        roll: {
-          label: "Tirar",
-          callback: html => {
-            const auxilioModo = isAuxilio ? html.find('input[name="auxilioModo"]:checked').val() : "normal";
-            const auxilioCurar = auxilioModo === "curar";
-            const dificultad = html.find('[name="dificultad"]').val();
-            const dificultadManual = Number(html.find('[name="dificultadManual"]').val());
-            const recuerdoCuando = html.find('[name="recuerdoCuando"]').is(":checked");
-            resolve({
-              dificultad: auxilioCurar ? 10 : (Number.isFinite(dificultadManual) && dificultadManual > 0 ? dificultadManual : (dificultad === "" ? null : Number(dificultad))),
-              modificador: Number(html.find('[name="modificador"]').val() ?? 0),
-              dadosExtra: Number(html.find('[name="dadosExtra"]').val() ?? 0),
-              proezaDados: recuerdoCuando ? 0 : Math.max(0, Number(html.find('[name="proezaDados"]').val() ?? 0)),
-              dadosSacrificados: Math.max(0, Number(html.find('[name="dadosSacrificados"]').val() ?? 0)),
-              aplicaSalud: html.find('[name="aplicaSalud"]').is(":checked"),
-              recuerdoCuando,
-              desenfundar: html.find('[name="desenfundar"]').is(":checked"),
-              auxilioCurar,
-              curarTargetUuid: auxilioCurar ? (curaTargetToken?.actor?.uuid ?? this.actor.uuid) : null
-            });
-          }
-        },
-        cancel: { label: "Cancelar", callback: () => resolve(null) }
-      },
-      default: "roll",
-      render: html => {
-        this.#activateDialogSteppers(html);
-        if (isAuxilio) this.#activateAuxilioModeToggle(html);
-      },
-      close: () => resolve(null)
-    }, { width: 480 }).render(true));
-  }
-
-  #activateAuxilioModeToggle(html) {
-    const update = () => {
-      const curar = html.find('input[name="auxilioModo"]:checked').val() === "curar";
-      html.find(".camc-dificultad-row").toggle(!curar);
-    };
-    html.find('input[name="auxilioModo"]').on("change", update);
-    update();
-  }
-
-  #numberStepper(name, value, min, max) {
-    return `<div class="camc-dialog-stepper" data-stepper="${name}" data-min="${min}" data-max="${max}">
-      <button type="button" class="camc-dialog-minus" data-delta="-1"><i class="fas fa-minus"></i></button>
-      <input name="${name}" type="number" value="${value}" min="${min}" max="${max}"/>
-      <button type="button" class="camc-dialog-plus" data-delta="1"><i class="fas fa-plus"></i></button>
-    </div>`;
-  }
-
-  #activateDialogSteppers(html) {
-    html.find(".camc-dialog-stepper button").on("click", ev => {
-      ev.preventDefault();
-      const wrapper = ev.currentTarget.closest(".camc-dialog-stepper");
-      const input = wrapper?.querySelector("input");
-      if (!input) return;
-      const min = Number(wrapper.dataset.min ?? input.min ?? -Infinity);
-      const max = Number(wrapper.dataset.max ?? input.max ?? Infinity);
-      const delta = Number(ev.currentTarget.dataset.delta ?? 0);
-      const next = Math.max(min, Math.min(max, Number(input.value || 0) + delta));
-      input.value = String(next);
-      input.dispatchEvent(new Event("change", { bubbles: true }));
-    });
+  #askRollOptions(habilidad, { weapon = null } = {}) {
+    return askRollOptions(this.actor, habilidad, { weapon });
   }
 
   #getItem(event) {
@@ -501,12 +407,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     const habilidad = this.#weaponSkill(item);
     const options = event.altKey ? { dificultad: null, aplicaSalud: true } : await this.#askRollOptions(habilidad, { weapon: item });
     if (options === null) return;
-    const proezaDados = Number(options.proezaDados ?? 0);
-    if (proezaDados > 0) {
-      const ok = await this.actor.gastarProezas(proezaDados);
-      if (!ok) return ui.notifications.warn("No hay proezas suficientes para añadir dados.");
-    }
-    if (options.recuerdoCuando) await this.actor.update({ "system.biografia.recuerdo_cuando_usado": true });
+    if (!(await pagarCostes(this.actor, options))) return;
     options.armaPreparada = { id: item.id, name: item.name, label: item.name, equipada };
     await YsystemDice.rollSkill(this.actor, habilidad, options);
   }
@@ -515,12 +416,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
     event.preventDefault();
     const options = event.altKey ? { dificultad: null, aplicaSalud: true } : await this.#askRollOptions("lucha");
     if (options === null) return;
-    const proezaDados = Number(options.proezaDados ?? 0);
-    if (proezaDados > 0) {
-      const ok = await this.actor.gastarProezas(proezaDados);
-      if (!ok) return ui.notifications.warn("No hay proezas suficientes para añadir dados.");
-    }
-    if (options.recuerdoCuando) await this.actor.update({ "system.biografia.recuerdo_cuando_usado": true });
+    if (!(await pagarCostes(this.actor, options))) return;
     options.armaPreparada = { id: null, name: "Desarmado", label: "Desarmado", desarmado: true };
     await YsystemDice.rollSkill(this.actor, "lucha", options);
   }
@@ -575,38 +471,104 @@ export class CAMCActorSheet extends ActorSheetV1 {
     });
   }
 
+  /** Usa un talento: los de «una vez por sesión/aventura» gastan un uso; Inspirar además da una proeza a los compañeros. */
   async #useTalento(event) {
     event.preventDefault();
     const item = this.#getItem(event);
     if (!item || item.type !== "talento") return;
+    const { value = 0, max = 0 } = item.system.usos ?? {};
+    if (max > 0 && value >= max) return ui.notifications.warn(`${item.name}: ya has usado este talento (${value}/${max}).`);
+    if (item.system.clave === "inspirar") {
+      const options = await askRollOptions(this.actor, "cultura", { dificultad: 10, etiqueta: "Inspirar" });
+      if (options === null) return;
+      if (!(await pagarCostes(this.actor, options))) return;
+      const resultado = await YsystemDice.rollSkill(this.actor, "cultura", { ...options, etiqueta: "Inspirar" });
+      if (resultado.exito) {
+        const companeros = game.actors.filter(a => a.type === "personaje" && a.id !== this.actor.id && a.hasPlayerOwner);
+        for (const c of companeros) await c.ganarProezas(1);
+        ui.notifications.info(`Inspirar: ${companeros.length} compañero(s) recuperan 1 proeza.`);
+      }
+    }
+    if (max > 0) await item.update({ "system.usos.value": value + 1 });
     await createRollMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
-        actor: this.actor,
-        tipo: "talento",
-        item
-      })
+      content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, { actor: this.actor, tipo: "talento", item })
     });
   }
 
-  async #useCargoTalent(event) {
-    event.preventDefault();
-    const cargo = CAMC.cargos[this.actor.system.biografia?.cargo] ?? CAMC.cargos.full_patch;
-    const item = {
-      name: cargo.talento || cargo.label,
-      system: {
-        cargo: cargo.label,
-        efecto: cargo.nota || "Talento de cargo."
+  /**
+   * Gastar Experiencia (cap. 3, p. 64): habilidad de 1 a 2D = 5 PX, de 2 a 3D = 10 PX; atributo +1 = nuevo valor x 3 PX,
+   * subiendo de punto en punto.
+   */
+  async #mejorar() {
+    const comprar = async (clave, tipo) => {
+      const a = this.actor;
+      const disponibles = Number(a.system.experiencia?.total ?? 0) - Number(a.system.experiencia?.gastada ?? 0);
+      let coste, cambios;
+      if (tipo === "atributo") {
+        const nuevo = Number(a.system.atributos[clave].value) + 1;
+        coste = R.costeAtributo(nuevo);
+        cambios = { [`system.atributos.${clave}.value`]: nuevo };
+      } else {
+        const dados = Number(a.system.habilidades[clave].value);
+        coste = R.costeHabilidad(dados);
+        cambios = { [`system.habilidades.${clave}.value`]: dados + 1 };
       }
+      if (coste === null || coste > disponibles) return ui.notifications.warn(`Hacen falta ${coste} PX y tienes ${disponibles}.`);
+      await a.update({ ...cambios, "system.experiencia.gastada": Number(a.system.experiencia?.gastada ?? 0) + coste });
+      ui.notifications.info(`${a.name}: mejora comprada por ${coste} PX.`);
     };
-    await createRollMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content: await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
-        actor: this.actor,
-        tipo: "talento",
-        item
-      })
+    const filas = () => {
+      const a = this.actor;
+      const libres = Number(a.system.experiencia?.total ?? 0) - Number(a.system.experiencia?.gastada ?? 0);
+      const attr = Object.entries(CAMC.atributos).map(([k, cfg]) => {
+        const v = Number(a.system.atributos[k]?.value ?? 0);
+        const c = R.costeAtributo(v + 1);
+        return `<tr><td>${cfg.label} ${v >= 0 ? "+" : ""}${v} → +${v + 1}</td><td>${c} PX</td><td><button type="button" data-tipo="atributo" data-clave="${k}" ${c > libres ? "disabled" : ""}>Subir</button></td></tr>`;
+      }).join("");
+      const hab = Object.entries(CAMC.habilidades).map(([k, cfg]) => {
+        const d = Number(a.system.habilidades[k]?.value ?? 1);
+        const c = R.costeHabilidad(d);
+        if (c === null) return "";
+        return `<tr><td>${cfg.label} ${d}D → ${d + 1}D</td><td>${c} PX</td><td><button type="button" data-tipo="habilidad" data-clave="${k}" ${c > libres ? "disabled" : ""}>Subir</button></td></tr>`;
+      }).join("");
+      return `<form class="camc-dialog"><p>Experiencia libre: <strong>${libres}</strong>. Los atributos suben de punto en punto; recuerda que cambian Agilidad, Aplomo, Perspicacia, Iniciativa, Salud y Resistencia Física.</p><table class="camc-mejora-tabla"><tbody>${attr}${hab}</tbody></table></form>`;
+    };
+    let dialogo;
+    const activar = html => html.find("button[data-clave]").on("click", async ev => {
+      await comprar(ev.currentTarget.dataset.clave, ev.currentTarget.dataset.tipo);
+      dialogo.data.content = filas();
+      await dialogo.render(true);
     });
+    dialogo = new Dialog({ title: "Mejorar el personaje", content: filas(), buttons: { cerrar: { label: "Cerrar" } }, default: "cerrar", render: activar }, { width: 460, height: 520, resizable: true });
+    dialogo.render(true);
+  }
+
+  /** Elegir uno de los tres talentos del cargo y añadirlo a la ficha (cap. 3, p. 44). */
+  async #chooseTalent(event) {
+    event.preventDefault();
+    const cargo = CAMC.cargos[this.actor.system.biografia?.cargo];
+    const nombres = cargo?.talentos ?? [];
+    const catalogo = CAMC.catalogo?.talentos ?? [];
+    if (!nombres.length || !catalogo.length) return ui.notifications.info("Este cargo no tiene talentos que elegir.");
+    const opciones = nombres.map((n, i) => {
+      const t = catalogo.find(x => x.name === n);
+      return `<label class="camc-defecto-option"><input type="radio" name="talento" value="${escapeHtml(n)}" ${i === 0 ? "checked" : ""}/> <span><strong>${escapeHtml(n)}</strong><br/><small>${escapeHtml(t?.system?.efecto ?? "")}</small></span></label>`;
+    }).join("");
+    const elegido = await new Promise(resolve => new Dialog({
+      title: `Talento de ${cargo.label}`,
+      content: `<form class="camc-dialog"><p>Solo se puede escoger uno de estos tres talentos al crear el PJ.</p>${opciones}</form>`,
+      buttons: { ok: { label: "Elegir", callback: html => resolve(html.find('[name="talento"]:checked').val()) }, cancel: { label: "Cancelar", callback: () => resolve(null) } },
+      default: "ok",
+      close: () => resolve(null)
+    }, { width: 560 }).render(true));
+    if (!elegido) return;
+    const dato = foundry.utils.deepClone(catalogo.find(x => x.name === elegido));
+    if (!dato) return;
+    const previos = this.actor.items.filter(i => i.type === "talento" && i.system.cargo === cargo.label).map(i => i.id);
+    if (previos.length) await this.actor.deleteEmbeddedDocuments("Item", previos);
+    await this.actor.createEmbeddedDocuments("Item", [dato]);
+    await this.actor.update({ "system.biografia.talento": elegido });
   }
 
   async #createItem(event) {
@@ -716,6 +678,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
         cargo: this.actor.system.biografia?.cargo || "capitan_rutas",
         deidad: this.actor.system.biografia?.deidad || Object.keys(CAMC.dioses)[0],
         archetype: this.#defaultArchetypeForCargo(this.actor.system.biografia?.cargo),
+        talento: "",
         favored: []
       };
       const identity = await this.#characterWizardIdentity(state);
@@ -762,6 +725,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
         jugador: state.jugador,
         edad: state.edad,
         cargo: state.cargo,
+        talento: state.talento,
         deidad: state.deidad,
         archetype: state.archetype,
         favored: state.favored,
@@ -811,6 +775,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
           <label><span>Jugador</span><input name="jugador" type="text" value="${escapeHtml(state.jugador)}"/></label>
           <label><span>Edad</span><input name="edad" type="text" value="${escapeHtml(state.edad)}"/></label>
           <label><span>Cargo</span><select name="cargo">${cargoOptions}</select></label>
+          <label><span>Talento del cargo</span><select name="talento">${this.#talentOptions(state.cargo, state.talento)}</select></label>
           <label><span>Deidad</span><select name="deidad">${deityOptions}</select></label>
           <label><span>Enfoque de atributos</span><select name="archetype">${archetypeOptions}</select></label>
         </div>
@@ -835,6 +800,7 @@ export class CAMCActorSheet extends ActorSheetV1 {
             jugador: String(html.find('[name="jugador"]').val() || "").trim(),
             edad: String(html.find('[name="edad"]').val() || "").trim(),
             cargo: String(html.find('[name="cargo"]').val() || "capitan_rutas"),
+            talento: String(html.find('[name="talento"]').val() || ""),
             deidad: String(html.find('[name="deidad"]').val() || Object.keys(CAMC.dioses)[0]),
             archetype: String(html.find('[name="archetype"]').val() || "ruta"),
             randomComplete: false
@@ -843,36 +809,47 @@ export class CAMCActorSheet extends ActorSheetV1 {
         cancel: { label: "Cancelar", callback: () => resolve(null) }
       },
       default: "ok",
+      render: html => html.find('[name="cargo"]').on("change", ev => {
+        html.find('[name="talento"]').html(this.#talentOptions(ev.currentTarget.value));
+      }),
       close: () => resolve(null)
     }, { width: 820, resizable: true }).render(true));
   }
 
+  #talentOptions(cargo, selected = "") {
+    const talentos = CAMC.cargos[cargo]?.talentos ?? [];
+    return talentos.map(name => `<option value="${escapeHtml(name)}" ${name === selected ? "selected" : ""}>${escapeHtml(name)}</option>`).join("")
+      || '<option value="">(sin talento)</option>';
+  }
+
   async #characterWizardFavored(state) {
-    const cargoSkills = CAMC.cargos[state.cargo]?.habilidades ?? [];
-    const defaults = cargoSkills.length ? cargoSkills : this.#defaultFavoredForArchetype(state.archetype);
+    const cargo = CAMC.cargos[state.cargo] ?? CAMC.cargos.full_patch;
+    const fijas = cargo.habilidades ?? [];
+    const libres = cargo.libres ?? 0;
     const rows = Object.entries(CAMC.habilidades).map(([key, skill]) => `
       <label class="camc-checkline">
-        <input name="favored" type="checkbox" value="${key}" ${defaults.includes(key) ? "checked" : ""}/>
+        <input name="favored" type="checkbox" value="${key}" ${fijas.includes(key) ? "checked disabled" : ""}/>
         ${skill.label} <small>${CAMC.atributos[skill.atributo]?.short ?? skill.atributo.toUpperCase()}</small>
       </label>`).join("");
-    const cargoLabel = CAMC.cargos[state.cargo]?.label ?? "Cargo";
+    const intro = libres
+      ? `${cargo.label}: ${fijas.length ? `${fijas.length} habilidades fijas y ` : ""}escoge ${libres} ${libres === 1 ? "más" : "habilidades"} (+3 permanente).`
+      : `${cargo.label} tiene sus cuatro habilidades favorecidas preasignadas.`;
     const content = `
       <form class="camc-dialog camc-character-wizard">
-        <p><strong>Paso 2 de 3: habilidades favorecidas.</strong> ${cargoLabel} ${cargoSkills.length ? "propone sus cuatro habilidades del cargo." : "permite escoger cuatro habilidades."}</p>
+        <p><strong>Paso 2 de 3: habilidades favorecidas.</strong> ${intro}</p>
         <div class="camc-wizard-skill-grid">${rows}</div>
-        <p class="notes">Debes dejar marcadas exactamente cuatro. En la ficha aparecerán como Habilidades favorecidas.</p>
       </form>`;
     return this.#dialogPromise({
       title: "Generador de PJ · Habilidades favorecidas",
       content,
       okLabel: "Siguiente",
       read: html => {
-        const selected = html.find('[name="favored"]:checked').map((_, input) => input.value).get();
-        if (selected.length !== 4) {
-          ui.notifications.warn("El PJ debe tener exactamente 4 habilidades favorecidas.");
+        const elegidas = html.find('[name="favored"]:checked:not(:disabled)').map((_, input) => input.value).get();
+        if (elegidas.length !== libres) {
+          ui.notifications.warn(`Debes escoger exactamente ${libres} habilidad${libres === 1 ? "" : "es"} favorecida${libres === 1 ? "" : "s"}.`);
           return null;
         }
-        return selected;
+        return [...fijas, ...elegidas];
       }
     });
   }
@@ -962,18 +939,6 @@ export class CAMCActorSheet extends ActorSheetV1 {
     return map[cargo] ?? "ruta";
   }
 
-  #defaultFavoredForArchetype(archetype) {
-    const map = {
-      lider: ["conversacion", "intimidacion", "informacion", "psicologia"],
-      ruta: ["conducir", "entorno", "observacion", "rastreo"],
-      combate: ["atletismo", "lucha", "punteria", "intimidacion"],
-      mecanica: ["conducir", "mecanica", "informacion", "fuerza_bruta"],
-      supervivencia: ["auxilio", "oido", "supervivencia", "ocultacion"],
-      social: ["conversacion", "seduccion", "subterfugio", "psicologia"]
-    };
-    return map[archetype] ?? map.ruta;
-  }
-
   #pickRandom(list, fallback = "") {
     if (!Array.isArray(list) || !list.length) return fallback;
     return list[Math.floor(Math.random() * list.length)] ?? fallback;
@@ -1040,46 +1005,40 @@ export class CAMCActorSheet extends ActorSheetV1 {
   }
 
   async #setRoleSkills() {
-    const cargo = this.actor.system.biografia?.cargo;
-    const skills = CAMC.cargos[cargo]?.habilidades ?? [];
-    if (!skills.length) return ui.notifications.info("Este cargo permite escoger manualmente las cuatro habilidades favorecidas.");
-    await this.actor.update({ "system.habilidades_favorecidas": skills.slice(0, 4) });
+    const cargo = CAMC.cargos[this.actor.system.biografia?.cargo];
+    const fijas = cargo?.habilidades ?? [];
+    if (!fijas.length) return ui.notifications.info("Este cargo permite escoger manualmente sus habilidades favorecidas.");
+    const libres = (this.actor.system.habilidades_favorecidas ?? []).filter(k => !fijas.includes(k)).slice(0, cargo.libres ?? 0);
+    await this.actor.update({ "system.habilidades_favorecidas": [...fijas, ...libres] });
   }
 
   async #setCargo(event) {
     const cargoKey = event.currentTarget.value;
     const cargo = CAMC.cargos[cargoKey] ?? CAMC.cargos.full_patch;
-    const fixed = cargo.habilidades ?? [];
-    if (fixed.length) {
-      await this.actor.update({
-        "system.biografia.cargo": cargoKey,
-        "system.habilidades_favorecidas": fixed.slice(0, 4)
-      });
-      ui.notifications.info(`${cargo.label}: habilidades favorecidas aplicadas automáticamente.`);
-      return;
-    }
+    const fijas = cargo.habilidades ?? [];
     await this.actor.update({
       "system.biografia.cargo": cargoKey,
-      "system.habilidades_favorecidas": []
+      "system.habilidades_favorecidas": [...fijas]
     });
-    ui.notifications.info(`${cargo.label}: escoge 4 habilidades favorecidas con las estrellas.`);
+    const talentos = (cargo.talentos ?? []).join(", ");
+    if (cargo.libres) ui.notifications.info(`${cargo.label}: ${cargo.nota} Talento a elegir: ${talentos}.`);
+    else if (fijas.length) ui.notifications.info(`${cargo.label}: habilidades favorecidas aplicadas. Talento a elegir: ${talentos}.`);
   }
 
   async #toggleFav(event) {
     event.preventDefault();
-    const button = event.currentTarget;
-    const skill = button.dataset.skill;
-    const fixed = CAMC.cargos[this.actor.system.biografia?.cargo]?.habilidades ?? [];
-    if (fixed.length) {
-      return ui.notifications.info("Este cargo tiene sus habilidades favorecidas preasignadas.");
-    }
-    const current = new Set(this.actor.system.habilidades_favorecidas ?? []);
-    if (current.has(skill)) current.delete(skill);
+    const skill = event.currentTarget.dataset.skill;
+    const cargo = CAMC.cargos[this.actor.system.biografia?.cargo] ?? CAMC.cargos.full_patch;
+    const fijas = cargo.habilidades ?? [];
+    if (fijas.includes(skill)) return ui.notifications.info("Esta habilidad es favorecida por el cargo y no se puede quitar.");
+    if (!cargo.libres) return ui.notifications.info("Este cargo no tiene habilidades favorecidas a elegir.");
+    const elegidas = new Set((this.actor.system.habilidades_favorecidas ?? []).filter(k => !fijas.includes(k)));
+    if (elegidas.has(skill)) elegidas.delete(skill);
     else {
-      if (current.size >= 4) return ui.notifications.warn("Solo puedes marcar hasta 4 habilidades favorecidas.");
-      current.add(skill);
+      if (elegidas.size >= cargo.libres) return ui.notifications.warn(`${cargo.label}: solo puedes escoger ${cargo.libres} habilidad${cargo.libres === 1 ? "" : "es"} favorecida${cargo.libres === 1 ? "" : "s"}.`);
+      elegidas.add(skill);
     }
-    await this.actor.update({ "system.habilidades_favorecidas": Array.from(current) });
+    await this.actor.update({ "system.habilidades_favorecidas": [...fijas, ...elegidas] });
   }
 
   async #setSkillDice(event) {

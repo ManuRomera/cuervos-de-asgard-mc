@@ -212,6 +212,16 @@
             {{/each}}
           </div>
         </section>
+        <section class="camc-panel camc-wide">
+          <h2 class="camc-panel-title"><i class="fas fa-person-walking-arrow-right"></i> Maniobras de combate al volante</h2>
+          <div class="camc-chase-actions compact">
+            {{#each chase.combat as |action|}}
+            <button type="button" class="camc-action-button moto-chase-roll" data-kind="maneuver" data-key="{{action.key}}" data-label="{{action.label}}" data-mod="{{action.mod}}">
+              <span>{{action.label}}</span><small>{{action.summary}}</small>
+            </button>
+            {{/each}}
+          </div>
+        </section>
       </div>
     </section>
 

@@ -18,6 +18,24 @@ jobs:
       - name: Descargar repositorio
         uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Instalar dependencias de desarrollo
+        run: npm ci
+
+      - name: Validar etiqueta, manifiesto y datos
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: npm run check
+
+      - name: Pruebas
+        run: npm test
+
+      - name: Compilar compendios
+        run: npm run build
+
       - name: Leer versión desde system.json
         id: version
         shell: bash
@@ -49,6 +67,11 @@ jobs:
           rsync -av ./ dist/cuervos-de-asgard-mc/ \
             --exclude '.git' \
             --exclude '.github' \
+            --exclude 'node_modules' \
+            --exclude 'tests' \
+            --exclude 'docs' \
+            --exclude 'scripts' \
+            --exclude 'package.json' \
             --exclude 'dist' \
             --exclude '.DS_Store' \
             --exclude '._*' \

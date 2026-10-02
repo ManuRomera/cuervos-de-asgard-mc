@@ -1,7 +1,9 @@
+import { TERRENOS, VISIBILIDAD, MOVIMIENTOS, MANIOBRAS, MANIOBRAS_COMBATE } from "./rules/reglas.mjs";
+
 export const CAMC = {};
 
 CAMC.systemId = "cuervos-de-asgard-mc";
-CAMC.contentVersion = "1.7.9";
+CAMC.contentVersion = "1.8.0";
 
 CAMC.atributos = {
   car: { label: "Carisma", short: "CAR" },
@@ -11,17 +13,13 @@ CAMC.atributos = {
   per: { label: "Percepción", short: "PER" }
 };
 
+// Idiomas míticos del manual (p. 69): hace falta 2D para un nivel básico de comprensión.
 CAMC.idiomasMiticos = [
-  "Asgardiano",
-  "Dvergar",
-  "Élfico de la luz",
-  "Élfico oscuro",
-  "Jotun",
-  "Lengua de Muspelheim",
-  "Lengua de Niflheim",
-  "Lengua de Helheim",
-  "Vanir",
-  "Runas antiguas"
+  "Élfico",
+  "Lengua de los gigantes",
+  "Demoníaco elemental",
+  "Rúnico",
+  "Trol"
 ];
 
 CAMC.habilidades = {
@@ -51,15 +49,17 @@ CAMC.habilidades = {
   supervivencia: { label: "Supervivencia", atributo: "per", descripcion: "Cazar, pescar, recolectar, encontrar refugio, fuego o agua y reconocer olores, sabores o recursos en un entorno hostil." }
 };
 
+// `habilidades`: favorecidas fijas del cargo (+3). `libres`: favorecidas que elige el jugador (pp. 43, 49-55).
+// `talentos`: los tres entre los que se elige UNO al crear el PJ (el compendio «CAMC · Talentos»).
 CAMC.cargos = {
-  presidente: { label: "Presidente", talento: "Autoridad de carretera", habilidades: [], nota: "Escoge cuatro habilidades favorecidas." },
-  vicepresidente: { label: "Vicepresidente", talento: "Mano derecha", habilidades: [], nota: "Escoge cuatro habilidades favorecidas." },
-  secretario: { label: "Secretario", talento: "Inspirar", habilidades: ["cultura", "idioma_mitico", "informacion", "memoria"] },
-  tesorero: { label: "Tesorero", talento: "Cuentas claras", habilidades: ["auxilio", "ocultacion", "oido", "supervivencia"] },
-  sargento_armas: { label: "Sargento de armas", talento: "Nadie pasa", habilidades: ["atletismo", "intimidacion", "lucha", "punteria"] },
-  capitan_rutas: { label: "Capitán de rutas", talento: "Ruta segura", habilidades: ["entorno", "observacion", "rastreo", "sigilo"] },
-  mecanico_jefe: { label: "Mecánico jefe", talento: "Arreglo de emergencia", habilidades: ["conducir", "conversacion", "fuerza_bruta", "mecanica"] },
-  full_patch: { label: "Full Patch", talento: "Full Patch", habilidades: [] }
+  presidente: { label: "Presidente", habilidades: [], libres: 4, talentos: ["Interponerse", "Líder ejemplar", "Líder nato"], nota: "Escoge cuatro habilidades favorecidas." },
+  vicepresidente: { label: "Vicepresidente", habilidades: ["psicologia", "seduccion", "subterfugio"], libres: 1, talentos: ["Embajador", "Mano derecha", "Voz"], nota: "Psicología, Seducción y Subterfugio, más una a elegir." },
+  secretario: { label: "Secretario", habilidades: ["cultura", "idioma_mitico", "informacion", "memoria"], libres: 0, talentos: ["Inspirar", "Lingüista", "Pozo de sabiduría"] },
+  tesorero: { label: "Tesorero", habilidades: ["auxilio", "ocultacion", "oido", "supervivencia"], libres: 0, talentos: ["Caja de sorpresas", "Curandero", "Urbanita"] },
+  sargento_armas: { label: "Sargento de armas", habilidades: ["atletismo", "intimidacion", "lucha", "punteria"], libres: 0, talentos: ["Curtido en mil batallas", "Digno del Valhalla", "Estratega"] },
+  capitan_rutas: { label: "Capitán de rutas", habilidades: ["entorno", "observacion", "rastreo", "sigilo"], libres: 0, talentos: ["Leer el terreno", "Sentido del peligro", "Superviviente"] },
+  mecanico_jefe: { label: "Mecánico jefe", habilidades: ["conducir", "conversacion", "fuerza_bruta", "mecanica"], libres: 0, talentos: ["Amigo de los enanos", "Chapuza", "Regatear"] },
+  full_patch: { label: "Full Patch", habilidades: [], libres: 0, talentos: [], nota: "Sin cargo en la Mesa presidencial." }
 };
 
 // Solo estas 7 deidades pueden ser patronas de un PJ (una por cada uno de los 7 cargos
@@ -123,21 +123,21 @@ CAMC.deityBanners = {
 };
 
 CAMC.patches = {
-  presidente: { label: "Presidente", group: "cargo", img: `systems/${CAMC.systemId}/assets/patches/overlay/presidente.png`, efecto: "Autoridad del capítulo. Escoge cuatro habilidades favorecidas y dirige decisiones de mesa." },
-  vicepresidente: { label: "Vicepresidente", group: "cargo", img: `systems/${CAMC.systemId}/assets/patches/overlay/vicepresidente.png`, efecto: "Sostén de la Mesa Presidencial. Escoge cuatro habilidades favorecidas y reemplaza al Presidente cuando haga falta." },
+  presidente: { label: "Presidente", group: "cargo", img: `systems/${CAMC.systemId}/assets/patches/overlay/presidente.png`, efecto: "Máximo responsable de la comunidad. Escoge sus cuatro habilidades favorecidas." },
+  vicepresidente: { label: "Vicepresidente", group: "cargo", img: `systems/${CAMC.systemId}/assets/patches/overlay/vicepresidente.png`, efecto: "Mano derecha del Presidente. Psicología, Seducción, Subterfugio y una más a elegir." },
   secretario: { label: "Secretario", group: "cargo", img: `systems/${CAMC.systemId}/assets/patches/overlay/secretario.png`, efecto: "Habilidades favorecidas: Cultura, Idioma mítico, Información y Memoria." },
   tesorero: { label: "Tesorero", group: "cargo", img: `systems/${CAMC.systemId}/assets/patches/overlay/tesorero.png`, efecto: "Habilidades favorecidas: Auxilio, Ocultación, Oído y Supervivencia." },
   sargento_armas: { label: "Sargento de armas", group: "cargo", img: `systems/${CAMC.systemId}/assets/patches/overlay/sargento_armas.png`, efecto: "Habilidades favorecidas: Atletismo, Intimidación, Lucha y Puntería." },
   capitan_rutas: { label: "Capitán de rutas", group: "cargo", img: `systems/${CAMC.systemId}/assets/patches/overlay/capitan_rutas.png`, efecto: "Habilidades favorecidas: Entorno, Observación, Rastreo y Sigilo." },
   mecanico_jefe: { label: "Mecánico jefe", group: "cargo", img: `systems/${CAMC.systemId}/assets/patches/overlay/mecanico_jefe.png`, efecto: "Habilidades favorecidas: Conducir, Conversación, Fuerza bruta y Mecánica." },
-  odin: { label: "Odín", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/odin.webp`, efecto: "Virtud: Sacrificio. Sus dones premian pagar un precio para cambiar el destino." },
-  freya: { label: "Freya", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/freya.webp`, efecto: "Virtud: Liderazgo. Sus dones protegen, inspiran y sostienen a la comunidad." },
-  thor: { label: "Thor", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/thor.webp`, efecto: "Virtud: Valor. Sus dones favorecen la fuerza, el daño y la resistencia bajo presión." },
-  tyr: { label: "Tyr", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/tyr.webp`, efecto: "Virtud: Honor. Sus dones ordenan el combate y castigan la cobardía." },
-  heimdall: { label: "Heimdall", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/heimdall.webp`, efecto: "Virtud: Vigilancia. Sus dones mejoran alerta, rastreo y percepción del peligro." },
-  balder: { label: "Balder", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/balder.webp`, efecto: "Virtud: Esperanza. Sus dones mitigan heridas, temor y desesperación." },
-  frigg: { label: "Frigg", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/frigg.webp`, efecto: "Virtud: Sabiduría. Sus dones favorecen memoria, consejo y anticipación." },
-  idunn: { label: "Idunn", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/idunn.webp`, efecto: "Virtud: Perseverancia. Sus dones ayudan a recuperarse y resistir desgaste." },
+  odin: { label: "Odín", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/odin.webp`, efecto: "Dios que se sacrificó en el Ginnungagap; ya no reparte dones." },
+  freya: { label: "Freya", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/freya.webp`, efecto: "Virtud: Responsabilidad. Don: Azote del enemigo (doble daño contra una raza)." },
+  thor: { label: "Thor", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/thor.webp`, efecto: "Virtud: Coraje. Don: Furia de la tormenta (relámpagos que ignoran protección)." },
+  tyr: { label: "Tyr", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/tyr.webp`, efecto: "Virtud: Disciplina. Don: Guerrero legendario (contraataque)." },
+  heimdall: { label: "Heimdall", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/heimdall.webp`, efecto: "Virtud: Lealtad. Don: Caminante del Bifröst (teletransporte)." },
+  balder: { label: "Balder", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/balder.webp`, efecto: "Virtud: Bondad. Don: Destello cegador (ciega a los enemigos)." },
+  frigg: { label: "Frigg", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/frigg.webp`, efecto: "Virtud: Sabiduría. Don: Vitki (interrogar espíritus)." },
+  idunn: { label: "Idunn", group: "deidad", img: `systems/${CAMC.systemId}/assets/patches/idunn.webp`, efecto: "Virtud: Perseverancia. Don: Cota de Draupnir (protección 3 sin penalización)." },
   correcaminos: { label: "Correcaminos", group: "merito", img: `systems/${CAMC.systemId}/assets/patches/correcaminos.webp`, efecto: "Reconoce dominio de rutas, velocidad y conducción bajo presión." },
   embajador: { label: "Embajador", group: "merito", img: `systems/${CAMC.systemId}/assets/patches/embajador.webp`, efecto: "Reconoce diplomacia, pactos y trato con comunidades ajenas." },
   explorador: { label: "Explorador", group: "merito", img: `systems/${CAMC.systemId}/assets/patches/explorador.webp`, efecto: "Reconoce exploración, supervivencia y descubrimiento de lugares seguros." },
@@ -232,38 +232,21 @@ CAMC.modificacionesMoto = {
   escape_tuneado: { label: "Tubo de escape tuneado", resumen: "+3 a Intimidación si el personaje llega montado en su moto." }
 };
 
+// Datos de persecución en module/rules/reglas.mjs (cap. 4, pp. 90-98), con el formato que lee la hoja de moto.
+const signed = n => (n >= 0 ? `+${n}` : `${n}`);
 CAMC.persecucion = {
-  terrenos: [
-    { key: "facil", label: "Fácil", dificultad: 8 },
-    { key: "media", label: "Media", dificultad: 10 },
-    { key: "desafiante", label: "Desafiante", dificultad: 13 },
-    { key: "dificil", label: "Difícil", dificultad: 16 },
-    { key: "muy_dificil", label: "Muy difícil", dificultad: 20 }
-  ],
-  visibilidad: [
-    { key: "normal", label: "Normal", mod: 0, signed: "+0" },
-    { key: "mala", label: "Mala", mod: 2, signed: "+2" },
-    { key: "pesima", label: "Pésima", mod: 4, signed: "+4" }
-  ],
-  movimiento: [
-    { key: "cambiar_posicion", label: "Cambiar de posición", mod: 0, summary: "Avanza 1 franja; 2 con crítico." },
-    { key: "mantener_posicion", label: "Mantener posición", mod: null, summary: "No requiere tirada; conserva la franja." },
-    { key: "obstaculizar", label: "Obstaculizar", mod: 2, summary: "Si vas 1 franja por delante, dificulta al perseguidor." },
-    { key: "quemar_rueda", label: "Quemar rueda", mod: 4, summary: "Avanza 2 franjas; 3 con crítico." }
-  ],
-  maniobras: [
-    { key: "embestir", label: "Embestir", mod: 0, summary: "Tirada enfrentada contra Evasión; causa daño de moto." },
-    { key: "arrollar", label: "Arrollar", mod: 0, summary: "Contra objetivo a pie; usa daño de moto." },
-    { key: "sacar_carretera", label: "Sacar de la carretera", mod: 3, summary: "Fuerza al rival a perder control o abandonar." },
-    { key: "evadirse", label: "Evadirse", mod: 0, summary: "Usa Conducir para ganar espacio o cortar persecución." }
-  ]
+  terrenos: TERRENOS,
+  visibilidad: VISIBILIDAD.map(v => ({ ...v, signed: signed(v.mod) })),
+  movimiento: MOVIMIENTOS.map(m => ({ ...m, summary: m.resumen })),
+  // Las maniobras exclusivas de persecuciones a pie no se muestran en la hoja de moto.
+  maniobras: MANIOBRAS.filter(m => m.solo !== "pie").map(m => ({ ...m, summary: m.resumen })),
+  combate: MANIOBRAS_COMBATE.map(m => ({ ...m, summary: m.resumen }))
 };
 
 CAMC.deterioro = {
   C: "Consumible",
   M: "Manufacturado",
-  R: "Reciclado",
-  V: "Viejo Mundo"
+  R: "Reciclado"
 };
 
 CAMC.itemFolders = {

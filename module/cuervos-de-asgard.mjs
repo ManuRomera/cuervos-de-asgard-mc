@@ -1,5 +1,5 @@
 import { diagnostic, normalizeHookElement, versionInfo } from "./compat/runtime.mjs";
-import { DocumentSheetConfig, ActorSheetV1, ItemSheetV1 } from "./compat/applications.mjs";
+import { DocumentSheetConfig, CoreActorSheetV1, CoreItemSheetV1 } from "./compat/applications.mjs";
 import { CAMC } from "./config.mjs";
 import { CAMCActor } from "./actor/actor.mjs";
 import { CAMCActorSheet } from "./actor/actor-sheet.mjs";
@@ -15,6 +15,12 @@ import { generateRandomCharacter, generateRandomNpc, generateRandomCommunity } f
 import { validateMotoModEquip } from "./rules/vehicle-mods.mjs";
 import { computeCarryTotals, getLinkedMountSync, formatCarrySlots } from "./rules/carry.mjs";
 import { escapeHtml } from "./utils/sheet-utils.mjs";
+import { cargarCatalogo } from "./content/catalogo.mjs";
+import { tirarSalvacion, resolverSuceso, tirarSucesoComunidad } from "./actor/comunidad.mjs";
+import { nuevaSesion, finDeAventura } from "./session/sesion.mjs";
+import { AsistenteCreacion } from "./apps/creacion.mjs";
+import * as R from "./rules/reglas.mjs";
+import { registrarAccesibilidad } from "./ui/accesibilidad.mjs";
 
 Hooks.once("init", async () => {
   console.log(`CAMC | Inicializando Cuervos de Asgard Motor Club · Foundry ${versionInfo().version}`);
@@ -24,18 +30,19 @@ Hooks.once("init", async () => {
   CONFIG.Item.documentClass = CAMCItem;
 
 
-  DocumentSheetConfig.unregisterSheet(Actor, "core", ActorSheetV1);
+  DocumentSheetConfig.unregisterSheet(Actor, "core", CoreActorSheetV1);
   DocumentSheetConfig.registerSheet(Actor, CAMC.systemId, CAMCActorSheet, { types: ["personaje"], makeDefault: true, label: "CAMC.Personaje" });
   DocumentSheetConfig.registerSheet(Actor, CAMC.systemId, CAMCNpcSheet, { types: ["pnj"], makeDefault: true, label: "CAMC.PNJ" });
   DocumentSheetConfig.registerSheet(Actor, CAMC.systemId, CAMCCommunitySheet, { types: ["comunidad"], makeDefault: true, label: "CAMC.Comunidad" });
   DocumentSheetConfig.registerSheet(Actor, CAMC.systemId, CAMCMotoSheet, { types: ["moto"], makeDefault: true, label: "CAMC.Moto" });
 
-  DocumentSheetConfig.unregisterSheet(Item, "core", ItemSheetV1);
+  DocumentSheetConfig.unregisterSheet(Item, "core", CoreItemSheetV1);
   DocumentSheetConfig.registerSheet(Item, CAMC.systemId, CAMCItemSheet, { makeDefault: true, label: "CAMC.Item" });
 
   registerHandlebarsHelpers();
 
   await foundry.applications.handlebars.loadTemplates([
+    `systems/${CAMC.systemId}/templates/apps/creacion.hbs`,
     `systems/${CAMC.systemId}/templates/actor/character-sheet.hbs`,
     `systems/${CAMC.systemId}/templates/actor/npc-sheet.hbs`,
     `systems/${CAMC.systemId}/templates/actor/community-sheet.hbs`,
@@ -46,6 +53,7 @@ Hooks.once("init", async () => {
 });
 
 Hooks.once("setup", () => {
+  registrarAccesibilidad();
   game.settings.register(CAMC.systemId, "contentVersion", {
     name: "CAMC.Settings.ContentVersion.Name",
     scope: "world",
@@ -61,6 +69,20 @@ Hooks.once("setup", () => {
     config: true,
     type: Boolean,
     default: true
+  });
+
+  game.settings.register(CAMC.systemId, "resistenciaAutomatica", {
+    name: "CAMC.Settings.ResistenciaAutomatica.Name",
+    hint: "CAMC.Settings.ResistenciaAutomatica.Hint",
+    scope: "world",
+    config: true,
+    type: String,
+    choices: {
+      pj: "CAMC.Settings.ResistenciaAutomatica.Pj",
+      todos: "CAMC.Settings.ResistenciaAutomatica.Todos",
+      ninguno: "CAMC.Settings.ResistenciaAutomatica.Ninguno"
+    },
+    default: "pj"
   });
 
   game.settings.register(CAMC.systemId, "systemGuideShown", {
@@ -267,10 +289,16 @@ Hooks.once("ready", async () => {
       community: generateRandomCommunity,
       mount: generateRandomMount
     },
-    importContent: CAMCContentImporter.importAll.bind(CAMCContentImporter)
+    importContent: CAMCContentImporter.importAll.bind(CAMCContentImporter),
+    nuevaSesion,
+    finDeAventura,
+    creacionGuiada: actor => new AsistenteCreacion(actor).render(true),
+    sucesoComunidad: tirarSucesoComunidad
   };
 
   document.body.classList.toggle("camc-compact", game.settings.get(CAMC.systemId, "compactSheets"));
+  try { await cargarCatalogo(); } catch (error) { console.error("CAMC | No se pudo cargar el catálogo de contenido", error); }
+  if (game.user.isGM) await migrarSaludInicial();
 
   if (game.user.isGM && game.settings.get(CAMC.systemId, "autoImportContent")) {
     await CAMCContentImporter.importAll();
@@ -285,7 +313,7 @@ Hooks.once("ready", () => {
     if (game.user.id !== game.users.activeGM?.id) return;
     const actor = await fromUuid(data.actorUuid);
     if (!actor || typeof actor.aplicarDano !== "function") return;
-    const result = await actor.aplicarDano(data.damage);
+    const result = await actor.aplicarDano(data.damage, { categoria: data.categoria ?? "" });
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker(),
       content: `<div class="camc-chat-card dano-aplicado"><header><strong>Daño aplicado</strong><span>vía ${data.requestedByName ?? "jugador"}</span></header><p>${actor.name}: ${result.final} Salud (${result.bruto} - protección ${result.proteccion})</p></div>`
@@ -299,6 +327,9 @@ Hooks.on("renderChatMessageHTML", (message, html) => {
   const root = $(element);
   root.find("[data-camc-action='apply-damage']").on("click", ev => applyDamageFromChat(message, ev));
   root.find("[data-camc-action='reroll-proeza']").on("click", ev => { ev.preventDefault(); YsystemDice.gastarProezaParaRepetir(message); });
+  root.find("[data-camc-action='proeza-dano']").on("click", ev => { ev.preventDefault(); YsystemDice.gastarProezasEnDano(message, ev.currentTarget.dataset.n); });
+  root.find("[data-camc-action='suceso-salvacion']").on("click", ev => { ev.preventDefault(); tirarSalvacion(message); });
+  root.find("[data-camc-action='suceso-resolver']").on("click", ev => { ev.preventDefault(); resolverSuceso(message, ev.currentTarget.dataset.salvado === "1"); });
   root.find("[data-camc-action='apply-defecto']").on("click", ev => { ev.preventDefault(); YsystemDice.openDefectoDialog(message); });
   root.find("[data-camc-action='roll-defecto']").on("click", ev => { ev.preventDefault(); YsystemDice.rollDefectoPendiente(message); });
   root.find(".camc-gm-only").toggle(Boolean(game.user.isGM));
@@ -308,6 +339,20 @@ Hooks.on("renderChatMessageHTML", (message, html) => {
     if (!remaining.length) $row.hide();
   });
   activateCamcContextMenu(root);
+});
+
+/** Botones del DJ en el directorio de actores: ritmo de campaña (nueva sesión, fin de aventura). */
+Hooks.on("renderActorDirectory", (_app, html) => {
+  if (!game.user.isGM) return;
+  const element = normalizeHookElement(html);
+  if (!element || element.querySelector(".camc-campaign-tools")) return;
+  const caja = document.createElement("div");
+  caja.className = "camc-campaign-tools";
+  caja.innerHTML = `<button type="button" data-camc="sesion"><i class="fas fa-play"></i> Nueva sesión</button><button type="button" data-camc="aventura"><i class="fas fa-flag-checkered"></i> Fin de aventura</button>`;
+  caja.querySelector('[data-camc="sesion"]').addEventListener("click", () => nuevaSesion());
+  caja.querySelector('[data-camc="aventura"]').addEventListener("click", () => finDeAventura());
+  const cabecera = element.querySelector(".directory-header");
+  if (cabecera) cabecera.after(caja); else element.prepend(caja);
 });
 
 for (const hook of ["renderActorSheet", "renderItemSheet", "renderDialog"]) {
@@ -322,12 +367,74 @@ Hooks.on("updateActor", (actor, changes) => syncCamcLinkedMountExtraSaddlebags(a
 // actor se crea sin imagen propia (en blanco o con el icono genérico de Foundry), para no
 // pisar un retrato ya elegido al duplicar, importar o generar un personaje/PNJ concreto.
 Hooks.on("preCreateActor", (document, data) => {
-  const defaultImg = { personaje: CAMC.assets.personajeDefaultImg, pnj: CAMC.assets.pnjDefaultImg }[data.type];
+  const defaultImg = { personaje: CAMC.assets.personajeDefaultImg, pnj: CAMC.assets.pnjDefaultImg, comunidad: CAMC.assets.logo }[data.type];
   if (!defaultImg) return;
   const currentImg = data.img;
   if (currentImg && currentImg !== "icons/svg/mystery-man.svg") return;
   document.updateSource({ img: defaultImg, "prototypeToken.texture.src": defaultImg });
 });
+
+/** Tira 1D de Salud y llena las proezas al crear un PJ a mano (pp. 47-48). */
+Hooks.on("preCreateActor", (document, data) => {
+  if (data.type !== "personaje") return;
+  const fue = Number(data.system?.atributos?.fue?.value ?? 0);
+  const int = Number(data.system?.atributos?.int?.value ?? 0);
+  const guardada = Number(data.system?.combate?.salud?.roll_inicial ?? 0);
+  const d6 = guardada >= 1 ? guardada : Math.ceil(CONFIG.Dice.randomUniform() * 6);
+  const cambios = { "system.combate.salud.roll_inicial": d6 };
+  if (data.system?.combate?.salud?.value === undefined) cambios["system.combate.salud.value"] = R.saludMaxima(fue, d6);
+  if (data.system?.combate?.proezas?.value === undefined) cambios["system.combate.proezas.value"] = R.proezasIniciales(fue, int);
+  document.updateSource(cambios);
+});
+
+/**
+ * Las proezas máximas dependen de FUE e INT: si el PJ las tenía al completo, al cambiar un atributo
+ * vuelve a tenerlas al completo con el nuevo máximo (no al revés: gastar proezas no las rellena).
+ */
+Hooks.on("preUpdateActor", (actor, changes) => {
+  if (actor.type !== "personaje") return;
+  const flat = foundry.utils.flattenObject(changes ?? {});
+  if (!("system.atributos.fue.value" in flat || "system.atributos.int.value" in flat)) return;
+  if ("system.combate.proezas.value" in flat) return;
+  const completo = Number(actor.system.combate?.proezas?.value ?? 0) >= Number(actor.system.combate?.proezas?.max ?? 0);
+  if (!completo) return;
+  const fue = Number(flat["system.atributos.fue.value"] ?? actor.system.atributos?.fue?.value ?? 0);
+  const int = Number(flat["system.atributos.int.value"] ?? actor.system.atributos?.int?.value ?? 0);
+  changes.system ??= {}; changes.system.combate ??= {}; changes.system.combate.proezas ??= {};
+  changes.system.combate.proezas.value = R.proezasIniciales(fue, int, actor.tieneTalento("lider_nato") ? 2 : 0);
+});
+
+/** Avisos al DJ cuando la Reputación cambia de rango con efecto en la Moral (p. 119) o las Faltas llegan a tres (p. 56). */
+Hooks.on("preUpdateActor", (actor, changes, options) => {
+  if (actor.type !== "personaje") return;
+  const flat = foundry.utils.flattenObject(changes ?? {});
+  options.camcAntes = { reputacion: Number(actor.system.reputacion?.value ?? 6), faltas: Number(actor.system.faltas?.value ?? 0) };
+  if ("system.reputacion.value" in flat) changes.system.reputacion.value = R.limitarReputacion(Number(flat["system.reputacion.value"]));
+});
+Hooks.on("updateActor", (actor, changes, options, userId) => {
+  if (actor.type !== "personaje" || game.user.id !== userId || !options.camcAntes) return;
+  const flat = foundry.utils.flattenObject(changes ?? {});
+  const aviso = html => ChatMessage.create({ whisper: ChatMessage.getWhisperRecipients("GM"), content: `<div class="camc-chat-card"><header><strong>${escapeHtml(actor.name)}</strong></header>${html}</div>` });
+  if ("system.reputacion.value" in flat) {
+    const antes = R.efectoMoralReputacion(options.camcAntes.reputacion);
+    const ahora = R.efectoMoralReputacion(Number(actor.system.reputacion.value));
+    if (antes !== ahora) {
+      const rango = R.rangoReputacion(Number(actor.system.reputacion.value));
+      aviso(`<p>Reputación <strong>${actor.system.reputacion.value}</strong> (${rango}). ${ahora < 0 ? "A este rango la comunidad pierde 1 punto de Moral." : ahora > 0 ? "A este rango la comunidad gana 1 punto de Moral." : "Ya no afecta a la Moral de la comunidad."}</p>`);
+    }
+  }
+  if ("system.faltas.value" in flat && Number(actor.system.faltas.value) >= R.FALTAS_PARA_CASTIGO && options.camcAntes.faltas < R.FALTAS_PARA_CASTIGO) {
+    aviso(`<p>Tres Faltas contra su Virtud (${escapeHtml(actor.system.biografia?.virtud ?? "")}): su dios patrón le impone un castigo a criterio del DJ (perder el don, confundirle en combate, un defecto adicional…).</p>`);
+  }
+});
+
+/** PJ anteriores a guardar la tirada de Salud inicial: se fija la que ya usaban, para que no cambie. */
+async function migrarSaludInicial() {
+  for (const actor of game.actors.filter(a => a.type === "personaje" && !(Number(a.system.combate?.salud?.roll_inicial) >= 1))) {
+    const fue = Number(actor.system.atributos?.fue?.value ?? 0);
+    await actor.update({ "system.combate.salud.roll_inicial": actor._saludRollInicial(fue) });
+  }
+}
 
 function registerHandlebarsHelpers() {
   Handlebars.registerHelper("camcLabel", (collection, key) => CAMC[collection]?.[key]?.label ?? key);
@@ -342,6 +449,7 @@ function registerHandlebarsHelpers() {
   Handlebars.registerHelper("eq", (a, b) => a === b);
   Handlebars.registerHelper("ne", (a, b) => a !== b);
   Handlebars.registerHelper("gt", (a, b) => Number(a) > Number(b));
+  Handlebars.registerHelper("lt", (a, b) => Number(a) < Number(b));
   Handlebars.registerHelper("or", (a, b) => a || b);
   Handlebars.registerHelper("and", (a, b) => a && b);
   Handlebars.registerHelper("not", a => !a);
@@ -374,7 +482,7 @@ async function applyDamageFromChat(message, event) {
   for (const actor of uniqueActors) {
     if (typeof actor.aplicarDano !== "function") continue;
     if (game.user.isGM || actor.isOwner) {
-      const result = await actor.aplicarDano(damage);
+      const result = await actor.aplicarDano(damage, { categoria: data.categoria ?? "" });
       results.push(`${actor.name}: ${result.final} Salud (${result.bruto} - protección ${result.proteccion})`);
     } else {
       // Sin permiso directo (p. ej. un jugador aplicando daño a un PNJ que no controla):
@@ -383,6 +491,7 @@ async function applyDamageFromChat(message, event) {
         action: "apply-damage",
         actorUuid: actor.uuid,
         damage,
+        categoria: data.categoria ?? "",
         requestedByName: game.user.name
       });
       relayed++;

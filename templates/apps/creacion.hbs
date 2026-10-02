@@ -1,0 +1,111 @@
+<div class="camc-wizard">
+  <nav class="camc-wizard-pasos">
+    {{#each pasos as |p|}}<button type="button" data-action="irA" data-paso="{{p.i}}" class="{{#if p.actual}}actual{{/if}} {{#if p.hecho}}hecho{{/if}}"><b>{{add p.i 1}}</b><span>{{p.nombre}}</span></button>{{/each}}
+  </nav>
+
+  <section class="camc-wizard-cuerpo">
+  {{#if (eq paso 0)}}
+    <h2>Quién es</h2>
+    <p class="notes">Pasos 1 a 7 del manual: nombre del jugador y del PJ, cita, motivación vital, entorno de nacimiento, edad y descripción física.</p>
+    <div class="camc-form-grid">
+      <label><span>Nombre del personaje</span><input type="text" data-campo="name" value="{{e.name}}"/></label>
+      <label><span>Jugador</span><input type="text" data-campo="jugador" value="{{e.jugador}}"/></label>
+      <label><span>Edad</span><input type="text" data-campo="edad" value="{{e.edad}}"/></label>
+    </div>
+    <label><span>Cita que define al PJ</span><input type="text" data-campo="cita" value="{{e.cita}}" placeholder="«Vive como si cada día fuese el último»"/></label>
+    <label><span>Motivación vital</span><input type="text" data-campo="motivacion" value="{{e.motivacion}}" placeholder="Lo que da sentido a su vida"/></label>
+    <label><span>Entorno de nacimiento</span><input type="text" data-campo="entorno" value="{{e.entorno}}" placeholder="Nómada, asentamiento fijo, criado solo…"/></label>
+    <label><span>Descripción física</span><textarea data-campo="descripcion">{{e.descripcion}}</textarea></label>
+  {{/if}}
+
+  {{#if (eq paso 1)}}
+    <h2>Cargo en la Mesa presidencial</h2>
+    <p class="notes">Es lo único que se decide en grupo: los cargos no se pueden duplicar. Da cuatro habilidades favorecidas (+3 permanente) y un talento a elegir entre tres.</p>
+    <label><span>Cargo</span><select data-campo="cargo">{{#each cargos as |c|}}<option value="{{c.key}}" {{#if c.selected}}selected{{/if}}>{{c.label}}</option>{{/each}}</select></label>
+    <div class="camc-wizard-opciones">
+      {{#each talentos as |t|}}
+      <label class="camc-wizard-opcion"><input type="radio" name="talento" data-campo="talento" value="{{t.name}}" {{#if t.checked}}checked{{/if}}/><span><b>{{t.name}}</b><small>{{t.efecto}}</small></span></label>
+      {{/each}}
+    </div>
+    {{#if hayLibres}}
+    <h3>Habilidades favorecidas a elegir ({{libresRestantes}} por elegir)</h3>
+    <div class="camc-wizard-habs">
+      {{#each habilidadesLista as |h|}}
+      <label class="camc-checkline {{#if h.fija}}fija{{/if}}"><input type="checkbox" data-campo="libre" data-valor="{{h.key}}" {{#if h.fija}}checked disabled{{else}}{{#if h.libre}}checked{{/if}}{{/if}}/> {{h.label}} <small>{{h.atributo}}</small></label>
+      {{/each}}
+    </div>
+    {{else}}<p class="notes">Favorecidas fijas: {{#each habilidadesLista}}{{#if this.fija}}{{this.label}} · {{/if}}{{/each}}</p>{{/if}}
+  {{/if}}
+
+  {{#if (eq paso 2)}}
+    <h2>Deidad patrona</h2>
+    <p class="notes">Cada dios concede un don y comparte una Virtud con su protegido. Varios jugadores pueden escoger el mismo dios.</p>
+    <div class="camc-wizard-opciones">
+      {{#each dioses as |d|}}
+      <label class="camc-wizard-opcion"><input type="radio" name="deidad" data-campo="deidad" value="{{d.key}}" {{#if d.checked}}checked{{/if}}/><span><b>{{d.label}} · {{d.virtud}}</b><small>{{#if d.don}}<strong>{{d.don.name}}</strong> — {{d.don.system.coste_descripcion}}. {{d.don.system.efecto}}{{/if}}</small></span></label>
+      {{/each}}
+    </div>
+  {{/if}}
+
+  {{#if (eq paso 3)}}
+    <h2>Atributos</h2>
+    <p class="notes">Reparte los bonificadores 0, +1, +2, +4 y +6 entre los cinco atributos, sin repetir ninguno.</p>
+    <div class="camc-wizard-attrs">
+      {{#each atributos as |a|}}
+      <label><span>{{a.label}} ({{a.short}})</span><select data-campo="atributo.{{a.key}}"><option value="">—</option>{{#each a.opciones as |o|}}<option value="{{o.v}}" {{#if o.selected}}selected{{/if}}>{{#if (gt o.v 0)}}+{{/if}}{{o.v}}</option>{{/each}}</select></label>
+      {{/each}}
+    </div>
+    <p class="notes">Sin usar: {{#each restantesAtributos}}<b>{{this}}</b> {{else}}ninguno{{/each}}</p>
+    <button type="button" data-action="sugerir" class="camc-action-button"><i class="fas fa-wand-magic-sparkles"></i> Sugerir según el cargo</button>
+  {{/if}}
+
+  {{#if (eq paso 4)}}
+    <h2>Habilidades</h2>
+    <p class="notes">4 habilidades a 3D, 8 a 2D y las 12 restantes a 1D. Llevas <b>{{conteo.tres}}/4</b> a 3D, <b>{{conteo.dos}}/8</b> a 2D y <b>{{conteo.uno}}/12</b> a 1D. Las estrellas son las favorecidas (+3).</p>
+    <div class="camc-wizard-habs dados">
+      {{#each habilidadesLista as |h|}}
+      <label><span>{{#if h.favorecida}}<i class="fas fa-star"></i> {{/if}}{{h.label}} <small>{{h.atributo}}</small></span>
+        <select data-campo="habilidad.{{h.key}}"><option value="1" {{#if (eq h.dados 1)}}selected{{/if}}>1D</option><option value="2" {{#if (eq h.dados 2)}}selected{{/if}}>2D</option><option value="3" {{#if (eq h.dados 3)}}selected{{/if}}>3D</option></select></label>
+      {{/each}}
+    </div>
+  {{/if}}
+
+  {{#if (eq paso 5)}}
+    <h2>Defectos</h2>
+    <p class="notes">Un defecto grave (el DJ puede obligarte a repetir con 1D menos, a cambio de una proeza) y uno leve (repetir una vez por sesión). Procura que sean muy distintos y que al menos uno sea físico.</p>
+    <label><span>Defecto grave</span><input type="text" data-campo="defectoGrave" value="{{e.defectoGrave}}"/></label>
+    <label><span>Defecto leve</span><input type="text" data-campo="defectoLeve" value="{{e.defectoLeve}}"/></label>
+  {{/if}}
+
+  {{#if (eq paso 6)}}
+    <h2>Equipo inicial</h2>
+    <p class="notes">Según tu cargo llevas: {{#if armadura}}{{armadura}}; {{/if}}{{#if escudo}}{{escudo}}; {{/if}}raciones para {{dias}} días y un arma que no sea de fuego{{#if armaFuego}} más un arma de fuego con munición{{/if}}.</p>
+    <label><span>Arma (no de fuego)</span><select data-campo="arma"><option value="">—</option>{{#each armas as |a|}}<option value="{{a.name}}" {{#if a.selected}}selected{{/if}}>{{a.name}}</option>{{/each}}</select></label>
+    <h3>Objetos a tu elección ({{numObjetos}})</h3>
+    <div class="camc-wizard-habs">{{#each objetosLibres as |o|}}<label class="camc-checkline"><input type="checkbox" data-campo="objeto" data-valor="{{o.name}}" {{#if o.checked}}checked{{/if}}/> {{o.name}}</label>{{/each}}</div>
+    <h3>Moto</h3>
+    <label class="camc-checkline"><input type="checkbox" data-campo="moto" {{#if e.moto}}checked{{/if}}/> Crear y vincular una moto con {{motosGratis}} modificación(es) gratuita(s)</label>
+    {{#if e.moto}}<label><span>Primera modificación gratuita</span><select data-campo="modMoto"><option value="">(ninguna por ahora)</option>{{#each modsMoto as |m|}}<option value="{{m.name}}" {{#if m.selected}}selected{{/if}}>{{m.name}}</option>{{/each}}</select></label>{{/if}}
+  {{/if}}
+
+  {{#if (eq paso 7)}}
+    <h2>Resumen</h2>
+    <p><b>{{e.name}}</b>, {{cargo.label}} · talento <b>{{e.talento}}</b>.</p>
+    {{#if derivados}}
+    <div class="camc-wizard-derivados">
+      <div><span>Agilidad</span><b>{{derivados.agilidad}}</b></div><div><span>Evasión</span><b>{{derivados.evasion}}</b></div>
+      <div><span>Aplomo</span><b>{{derivados.aplomo}}</b></div><div><span>Perspicacia</span><b>{{derivados.perspicacia}}</b></div>
+      <div><span>Iniciativa</span><b>{{derivados.iniciativa}}</b></div><div><span>Res. Física</span><b>{{derivados.resistencia}}</b></div>
+      <div><span>Proezas</span><b>{{derivados.proezas}}</b></div><div><span>Salud</span><b>{{#if derivados.salud}}{{derivados.salud}}{{else}}FUE×2+10+1D{{/if}}</b></div>
+    </div>
+    {{/if}}
+    <p class="notes">La Salud se tira (1D) al crear. La Reputación empieza en 6 (Respetado), con tres espacios de Faltas vacíos.</p>
+  {{/if}}
+  </section>
+
+  <footer class="camc-wizard-pie">
+    <button type="button" data-action="anterior" {{#if primero}}disabled{{/if}}><i class="fas fa-arrow-left"></i> Anterior</button>
+    {{#if ultimo}}<button type="button" data-action="crear" class="principal"><i class="fas fa-check"></i> Crear personaje</button>
+    {{else}}<button type="button" data-action="siguiente" class="principal">Siguiente <i class="fas fa-arrow-right"></i></button>{{/if}}
+  </footer>
+</div>

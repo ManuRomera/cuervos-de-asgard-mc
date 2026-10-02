@@ -1,7 +1,7 @@
 import { createRollMessage } from "../compat/chat.mjs";
-import { Dialog } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
+import { askRollOptions, pagarCostes } from "../dice/roll-dialog.mjs";
 
 export class CAMCMountRolls {
   static damagePenalty(moto) {
@@ -53,98 +53,13 @@ export class CAMCMountRolls {
   static async rollMechanic(pilot, moto, { install = true } = {}) {
     if (!pilot) return ui.notifications.warn("La moto necesita un piloto vinculado para tirar Mecánica.");
     const label = install ? "Instalar tuneado" : "Retirar tuneado";
-    const options = await this.#askRollOptions(pilot, "mecanica", {
-      dificultad: install ? 15 : 12,
-      etiqueta: label
-    });
+    const options = await askRollOptions(pilot, "mecanica", { dificultad: install ? 15 : 12, etiqueta: label });
     if (options === null) return null;
-    const proezaDados = Number(options.proezaDados ?? 0);
-    if (proezaDados > 0) {
-      const ok = await pilot.gastarProezas(proezaDados);
-      if (!ok) return ui.notifications.warn("No hay proezas suficientes para añadir dados.");
-    }
-    if (options.recuerdoCuando) await pilot.update({ "system.biografia.recuerdo_cuando_usado": true });
+    if (!(await pagarCostes(pilot, options))) return null;
     return YsystemDice.rollSkill(pilot, "mecanica", {
       ...options,
       etiqueta: label,
       mount: { name: moto.name, uuid: moto.uuid, accion: label }
     });
   }
-
-  static async #askRollOptions(actor, habilidad, { dificultad = null, etiqueta = "Tirada" } = {}) {
-    const skillLabel = CAMC.habilidades[habilidad]?.label ?? etiqueta;
-    const opts = [`<option value="">Sin dificultad</option>`]
-      .concat(CAMC.dificultades.map(d => `<option value="${d.value}" ${Number(d.value) === Number(dificultad) ? "selected" : ""}>${d.value} · ${d.label}</option>`))
-      .join("");
-    const penalty = actor.getPenalizadorSalud?.() ?? { label: "Sin penalizador" };
-    const recuerdoUsado = Boolean(actor.system?.biografia?.recuerdo_cuando_usado);
-    const content = `
-      <form class="camc-dialog camc-roll-options">
-        <p class="camc-roll-heading"><strong>${skillLabel}</strong> <span>· ${etiqueta}</span></p>
-        <div class="camc-dialog-grid">
-          <label><span>Dificultad</span><select name="dificultad">${opts}</select></label>
-          <label><span>Dificultad personalizada</span><input name="dificultadManual" type="number" placeholder="Opcional"/></label>
-        </div>
-        <div class="camc-dialog-grid">
-          <label><span>Modificador fijo</span>${this.#numberStepper("modificador", 0, -99, 99)}</label>
-          <label><span>Dados extra</span>${this.#numberStepper("dadosExtra", 0, -3, 3)}</label>
-          <label><span>Proezas para +D</span>${this.#numberStepper("proezaDados", 0, 0, 3)}</label>
-          <label><span>Dados sacrificados</span>${this.#numberStepper("dadosSacrificados", 0, 0, 3)}</label>
-        </div>
-        <div class="camc-checkline-group">
-          <label class="camc-checkline"><input name="aplicaSalud" type="checkbox" checked/> <span>Aplicar penalizador de Salud (${penalty.label})</span></label>
-          <label class="camc-checkline"><input name="recuerdoCuando" type="checkbox" ${recuerdoUsado ? "disabled" : ""}/> <span>Recuerdo cuando (+2D, no compatible con proezas)${recuerdoUsado ? " · ya usado" : ""}</span></label>
-        </div>
-      </form>`;
-    return new Promise(resolve => new Dialog({
-      title: "Opciones de tirada",
-      content,
-      buttons: {
-        roll: {
-          label: "Tirar",
-          callback: html => {
-            const selected = html.find('[name="dificultad"]').val();
-            const manual = Number(html.find('[name="dificultadManual"]').val());
-            const recuerdoCuando = html.find('[name="recuerdoCuando"]').is(":checked");
-            resolve({
-              dificultad: Number.isFinite(manual) && manual > 0 ? manual : (selected === "" ? null : Number(selected)),
-              modificador: Number(html.find('[name="modificador"]').val() ?? 0),
-              dadosExtra: Number(html.find('[name="dadosExtra"]').val() ?? 0),
-              proezaDados: recuerdoCuando ? 0 : Math.max(0, Number(html.find('[name="proezaDados"]').val() ?? 0)),
-              dadosSacrificados: Math.max(0, Number(html.find('[name="dadosSacrificados"]').val() ?? 0)),
-              aplicaSalud: html.find('[name="aplicaSalud"]').is(":checked"),
-              recuerdoCuando
-            });
-          }
-        },
-        cancel: { label: "Cancelar", callback: () => resolve(null) }
-      },
-      default: "roll",
-      render: html => this.#activateDialogSteppers(html),
-      close: () => resolve(null)
-    }, { width: 480 }).render(true));
-  }
-
-  static #numberStepper(name, value, min, max) {
-    return `<div class="camc-dialog-stepper" data-stepper="${name}" data-min="${min}" data-max="${max}">
-      <button type="button" class="camc-dialog-minus" data-delta="-1"><i class="fas fa-minus"></i></button>
-      <input name="${name}" type="number" value="${value}" min="${min}" max="${max}"/>
-      <button type="button" class="camc-dialog-plus" data-delta="1"><i class="fas fa-plus"></i></button>
-    </div>`;
-  }
-
-  static #activateDialogSteppers(html) {
-    html.find(".camc-dialog-stepper button").on("click", ev => {
-      ev.preventDefault();
-      const wrapper = ev.currentTarget.closest(".camc-dialog-stepper");
-      const input = wrapper?.querySelector("input");
-      if (!input) return;
-      const min = Number(wrapper.dataset.min ?? input.min ?? -Infinity);
-      const max = Number(wrapper.dataset.max ?? input.max ?? Infinity);
-      const delta = Number(ev.currentTarget.dataset.delta ?? 0);
-      input.value = String(Math.max(min, Math.min(max, Number(input.value || 0) + delta)));
-      input.dispatchEvent(new Event("change", { bubbles: true }));
-    });
-  }
-
 }

@@ -9,8 +9,22 @@
       "deterioro": "C",
       "disponibilidad": "muy_frecuente",
       "cantidad": 1,
-      "especial": "Haz que necesita de algún tipo de combustible para prender.",
-      "descripcion": "Fuente básica de iluminación en las Llanuras Yermas."
+      "especial": "Haz que necesita algún tipo de combustible para prender.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Balsa neumática a motor",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "general",
+      "tamano": "no_equipable",
+      "deterioro": "R",
+      "disponibilidad": "raro",
+      "cantidad": 1,
+      "especial": "Pequeño bote inflable con motor de gasolina.",
+      "descripcion": ""
     }
   },
   {
@@ -20,11 +34,11 @@
     "system": {
       "tipo": "consumible",
       "tamano": "mediano",
-      "deterioro": "R",
+      "deterioro": "C",
       "disponibilidad": "infrecuente",
       "cantidad": 1,
-      "especial": "Genéricas, aptas tanto para uso en vehículos como para otras aplicaciones eléctricas.",
-      "descripcion": "Pilas recicladas del Viejo Mundo, valiosas para cualquier dispositivo eléctrico."
+      "especial": "Genéricas, para vehículos u otras aplicaciones eléctricas.",
+      "descripcion": ""
     }
   },
   {
@@ -37,8 +51,8 @@
       "deterioro": "C",
       "disponibilidad": "infrecuente",
       "cantidad": 1,
-      "especial": "Vasija metálica acampanada de gran resistencia. Puede contener butano, acetileno, oxígeno, helio, etc.",
-      "descripcion": "Contenedor de gas precioso para soldadura, cocción u otros usos."
+      "especial": "Vasija metálica resistente: butano, acetileno, oxígeno, helio…",
+      "descripcion": ""
     }
   },
   {
@@ -51,8 +65,8 @@
       "deterioro": "C",
       "disponibilidad": "raro",
       "cantidad": 1,
-      "especial": "Otorga +2 a las tiradas de Auxilio y permite recuperar 1 punto extra de Salud.",
-      "descripcion": "Maleta o caja con suministros médicos básicos."
+      "especial": "Da +2 a las tiradas de Auxilio y permite recuperar 1 punto extra de Salud al curar.",
+      "descripcion": ""
     }
   },
   {
@@ -65,8 +79,22 @@
       "deterioro": "R",
       "disponibilidad": "infrecuente",
       "cantidad": 1,
-      "especial": "Artefacto que ha recuperado su protagonismo tras la desaparición del GPS.",
-      "descripcion": "Esencial para la navegación en las Llanuras Yermas."
+      "especial": "Recupera protagonismo en los grandes desplazamientos sin GPS.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Cámara fotográfica analógica",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "general",
+      "tamano": "pequeno",
+      "deterioro": "R",
+      "disponibilidad": "infrecuente",
+      "cantidad": 1,
+      "especial": "Cámara con carrete convencional que hay que revelar.",
+      "descripcion": ""
     }
   },
   {
@@ -79,12 +107,12 @@
       "deterioro": "C",
       "disponibilidad": "infrecuente",
       "cantidad": 1,
-      "especial": "Gasolina, diésel o biodiesel para vehículos.",
-      "descripcion": "El recurso más preciado después del agua y la comida. Sin combustible, no hay movilidad."
+      "especial": "Gasolina, queroseno o petróleo: uno de los grandes tesoros de las Llanuras Yermas. Ocupa lo que decida la DJ.",
+      "descripcion": ""
     }
   },
   {
-    "name": "Cordel y cuerdas",
+    "name": "Cuerda",
     "type": "objeto",
     "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
@@ -93,50 +121,22 @@
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
       "cantidad": 1,
-      "especial": "Útil para atar, colgar, reparar o innumerables aplicaciones.",
-      "descripcion": "Siempre útil en el yermo."
+      "especial": "Soga para escalar o atar objetos o personas.",
+      "descripcion": ""
     }
   },
   {
-    "name": "Cubiertos de supervivencia",
-    "type": "objeto",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
-    "system": {
-      "tipo": "herramienta",
-      "tamano": "pequeno",
-      "deterioro": "M",
-      "disponibilidad": "frecuente",
-      "cantidad": 1,
-      "especial": "Manta térmica de emergencia, silbato, cerillas y pequeño espejo.",
-      "descripcion": "Kit básico que todo Cuervo lleva consigo."
-    }
-  },
-  {
-    "name": "Equipo de acampada",
-    "type": "objeto",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
-    "system": {
-      "tipo": "herramienta",
-      "tamano": "grande",
-      "deterioro": "R",
-      "disponibilidad": "infrecuente",
-      "cantidad": 1,
-      "especial": "Tienda de campaña, saco de dormir y utensilios básicos.",
-      "descripcion": "Esencial para pernoctar al aire libre en las Llanuras Yermas."
-    }
-  },
-  {
-    "name": "Equipo de herramientas",
+    "name": "Equipo de soldar",
     "type": "objeto",
     "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
       "tamano": "mediano",
       "deterioro": "R",
-      "disponibilidad": "frecuente",
+      "disponibilidad": "raro",
       "cantidad": 1,
-      "especial": "Llave inglesa, destornilladores, alicates, martillo, etc.",
-      "descripcion": "Kit básico de herramientas para reparaciones."
+      "especial": "Sopletes, máscara de protección, cable, guantes…",
+      "descripcion": ""
     }
   },
   {
@@ -147,24 +147,66 @@
       "tipo": "herramienta",
       "tamano": "pequeno",
       "deterioro": "M",
-      "disponibilidad": "infrecuente",
+      "disponibilidad": "frecuente",
       "cantidad": 1,
-      "especial": "Permite intentar abrir cerraduras sin llave con una tirada de Mecánica.",
-      "descripcion": "Herramientas delicadas para forzar cerraduras."
+      "especial": "Alambres para forzar cerraduras y candados de forma limpia.",
+      "descripcion": ""
     }
   },
   {
-    "name": "Instrumentos médicos",
+    "name": "Generador",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "general",
+      "tamano": "no_equipable",
+      "deterioro": "R",
+      "disponibilidad": "infrecuente",
+      "cantidad": 1,
+      "especial": "Generador eléctrico que necesita combustible. Algunos van montados en camiones.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Herramientas",
     "type": "objeto",
     "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
       "tipo": "herramienta",
-      "tamano": "pequeno",
-      "deterioro": "R",
-      "disponibilidad": "raro",
+      "tamano": "mediano",
+      "deterioro": "M",
+      "disponibilidad": "frecuente",
       "cantidad": 1,
-      "especial": "Bisturí, tijeras quirúrgicas, agujas y sutura.",
-      "descripcion": "Instrumental médico para cirugía de campo."
+      "especial": "Herramientas manuales: indispensables para la mayoría de tiradas de Mecánica.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Hornillo de camping",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "herramienta",
+      "tamano": "mediano",
+      "deterioro": "R",
+      "disponibilidad": "infrecuente",
+      "cantidad": 1,
+      "especial": "Utensilio pequeño de gas para cocinar o calentar alimentos.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Kayak",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "general",
+      "tamano": "no_equipable",
+      "deterioro": "R",
+      "disponibilidad": "muy_raro",
+      "cantidad": 1,
+      "especial": "Canoa para navegar sin motor.",
+      "descripcion": ""
     }
   },
   {
@@ -175,38 +217,122 @@
       "tipo": "herramienta",
       "tamano": "pequeno",
       "deterioro": "R",
-      "disponibilidad": "frecuente",
-      "cantidad": 1,
-      "especial": "Requiere baterías o pilas.",
-      "descripcion": "Iluminación portátil indispensable."
-    }
-  },
-  {
-    "name": "Mapas",
-    "type": "objeto",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
-    "system": {
-      "tipo": "general",
-      "tamano": "pequeno",
-      "deterioro": "R",
       "disponibilidad": "infrecuente",
       "cantidad": 1,
-      "especial": "Mapas de la zona recopilados por los Cuervos de Asgard.",
-      "descripcion": "Información cartográfica valiosísima en un mundo sin GPS."
+      "especial": "Farol eléctrico portátil que necesita pilas.",
+      "descripcion": ""
     }
   },
   {
-    "name": "Piezas de recambio",
+    "name": "Máscara antigás",
     "type": "objeto",
     "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
-      "tipo": "recambio",
-      "tamano": "mediano",
+      "tipo": "herramienta",
+      "tamano": "pequeno",
       "deterioro": "R",
-      "disponibilidad": "frecuente",
+      "disponibilidad": "muy_raro",
       "cantidad": 1,
-      "especial": "Bujías, pastillas de freno, correas, etc.",
-      "descripcion": "Piezas para mantener los vehículos operativos."
+      "especial": "Incluye los filtros de protección frente a gases nocivos.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Medicamentos",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "consumible",
+      "tamano": "pequeno",
+      "deterioro": "C",
+      "disponibilidad": "infrecuente",
+      "cantidad": 1,
+      "especial": "Desde alcohol sanitario hasta analgésicos o antidiarreicos. Algunas medicinas son muy raras.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Munición",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "consumible",
+      "tamano": "pequeno",
+      "deterioro": "C",
+      "disponibilidad": "infrecuente",
+      "cantidad": 1,
+      "especial": "Cartuchos de bala o de postas para armas de fuego. Cierta munición es muy rara.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Pastillas de yodo",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "consumible",
+      "tamano": "pequeno",
+      "deterioro": "C",
+      "disponibilidad": "raro",
+      "cantidad": 1,
+      "especial": "Potabilizan el agua; tardan 30 minutos en actuar.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Pilas",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "consumible",
+      "tamano": "pequeno",
+      "deterioro": "C",
+      "disponibilidad": "infrecuente",
+      "cantidad": 1,
+      "especial": "Transforman energía química en eléctrica.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Pistola de bengalas",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "arma",
+      "tamano": "pequeno",
+      "deterioro": "R",
+      "disponibilidad": "muy_raro",
+      "cantidad": 1,
+      "especial": "Arma de señalización que excepcionalmente puede atacar: 5 de daño + PER.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Prismáticos",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "herramienta",
+      "tamano": "pequeno",
+      "deterioro": "R",
+      "disponibilidad": "raro",
+      "cantidad": 1,
+      "especial": "Permiten tiradas de Observación a grandes distancias.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Raciones de agua potable",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "consumible",
+      "tamano": "mediano",
+      "deterioro": "C",
+      "disponibilidad": "infrecuente",
+      "cantidad": 1,
+      "especial": "Entre cinco y ocho litros: sirven para 3 a 5 días.",
+      "descripcion": ""
     }
   },
   {
@@ -219,8 +345,22 @@
       "deterioro": "C",
       "disponibilidad": "infrecuente",
       "cantidad": 1,
-      "especial": "Aporte de unas 5000-7000 calorías. Sirve para 3-5 días.",
-      "descripcion": "Comida enlatada, deshidratada o conservada."
+      "especial": "Unas 5000-7000 calorías en total: sirven para 3 a 5 días.",
+      "descripcion": ""
+    }
+  },
+  {
+    "name": "Recambio para un vehículo",
+    "type": "objeto",
+    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+    "system": {
+      "tipo": "recambio",
+      "tamano": "mediano",
+      "deterioro": "R",
+      "disponibilidad": "frecuente",
+      "cantidad": 1,
+      "especial": "Desde bujías o pastillas de freno hasta bloques de motor. Ocupa lo que decida la DJ.",
+      "descripcion": ""
     }
   },
   {
@@ -234,7 +374,7 @@
       "disponibilidad": "muy_frecuente",
       "cantidad": 1,
       "especial": "Prendas gruesas o verdaderamente aislantes frente al frío.",
-      "descripcion": "Esencial para sobrevivir al Largo Invierno."
+      "descripcion": ""
     }
   },
   {
@@ -247,54 +387,36 @@
       "deterioro": "M",
       "disponibilidad": "muy_frecuente",
       "cantidad": 1,
-      "especial": "Prendas ligeras de materiales transpirables.",
-      "descripcion": "Para los días de calor abrasador en el desierto."
+      "especial": "Prendas ligeras y transpirables del Viejo Mundo.",
+      "descripcion": ""
     }
   },
   {
-    "name": "Cantimplora / Agua",
+    "name": "Saco de dormir",
     "type": "objeto",
     "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
-      "tipo": "consumible",
-      "tamano": "mediano",
-      "deterioro": "C",
-      "disponibilidad": "infrecuente",
-      "cantidad": 1,
-      "especial": "1 litro de agua. Esencial para la supervivencia.",
-      "descripcion": "Agua purificada, el recurso más valioso del yermo."
-    }
-  },
-  {
-    "name": "Kit de reparación de vehículos",
-    "type": "objeto",
-    "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
-    "system": {
-      "tipo": "herramienta",
+      "tipo": "general",
       "tamano": "grande",
       "deterioro": "R",
-      "disponibilidad": "frecuente",
+      "disponibilidad": "infrecuente",
       "cantidad": 1,
-      "especial": "Llaves, aceite, parches, cable eléctrico... Otorga +2 a tiradas de Mecánica.",
-      "descripcion": "Kit indispensable para mantener la moto en marcha."
+      "especial": "Receptáculo almohadillado enrollable, a veces impermeable.",
+      "descripcion": ""
     }
   },
   {
-    "name": "Mochila",
+    "name": "Tienda de campaña",
     "type": "objeto",
     "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
     "system": {
-      "tipo": "contenedor",
-      "tamano": "mediano",
-      "deterioro": "M",
-      "disponibilidad": "muy_frecuente",
+      "tipo": "general",
+      "tamano": "grande",
+      "deterioro": "R",
+      "disponibilidad": "infrecuente",
       "cantidad": 1,
-      "especial": "Referencia de carga a pie: la hoja limita la mochila/equipo encima a 6 espacios.",
-      "descripcion": "Bolsa resistente para cargar el equipo que el Cuervo lleva encima.",
-      "carga": {
-        "ubicacion": "mochila",
-        "espacios": 0
-      }
+      "especial": "Armazón de palos plegables y lona sintética con cremalleras para pernoctar.",
+      "descripcion": ""
     }
   },
   {

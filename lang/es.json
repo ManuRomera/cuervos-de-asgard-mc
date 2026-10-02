@@ -13,6 +13,18 @@
         "Name": "Importar contenido automáticamente",
         "Hint": "Crea en el mundo los ítems, PNJ y entradas de diario extraídas del manual la primera vez que se abre el sistema."
       },
+      "ResistenciaAutomatica": {
+        "Name": "Tirada de Resistencia Física automática",
+        "Hint": "Al bajar por primera vez de 11, 7, 4 y 2 puntos de Salud se tira Resistencia Física; si falla, el personaje cae inconsciente. «Nueva sesión» reinicia los umbrales.",
+        "Pj": "Solo personajes jugadores",
+        "Todos": "Todos (también PNJ)",
+        "Ninguno": "Ninguno (lo hace el DJ a mano)"
+      },
+      "Accesibilidad": {
+        "Name": "Accesibilidad",
+        "Boton": "Abrir accesibilidad",
+        "Hint": "Tamaño del texto, contraste, lectura fácil y menos movimiento en las hojas del sistema."
+      },
       "SystemGuideShown": {
         "Name": "Guía inicial CAMC mostrada"
       },

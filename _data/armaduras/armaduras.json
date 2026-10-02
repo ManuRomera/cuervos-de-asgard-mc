@@ -101,7 +101,8 @@
       "disponibilidad": "muy_raro",
       "compatible": false,
       "equipada": false,
-      "descripcion": "Solo contra armas de fuego. No comporta penalización."
+      "descripcion": "Solo contra armas de fuego. No comporta penalización.",
+      "solo_fuego": true
     }
   },
   {

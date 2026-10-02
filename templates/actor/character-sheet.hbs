@@ -166,13 +166,13 @@
             {{/each}}
             {{#each itemsByType.talentos as |item|}}
             <li class="item camc-item-row" data-item-id="{{item.id}}" draggable="true">
-              <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.cargo}}</small></div>
+              <img src="{{item.img}}"/><div><button type="button" class="item-primary-action camc-row-name">{{item.name}}</button><small>{{item.system.cargo}}{{#if item.system.usos.max}} · usos {{item.system.usos.value}}/{{item.system.usos.max}}{{/if}}</small></div>
               <button type="button" class="item-edit camc-icon-button"><i class="fas fa-pen"></i></button>
               <button type="button" class="item-delete camc-icon-button danger"><i class="fas fa-trash"></i></button>
             </li>
             {{else}}
             <li class="camc-item-row">
-              <i class="fas fa-star"></i><div><button type="button" class="use-cargo-talent camc-row-name">{{cargoTalent.name}}</button><small>{{cargoActual.label}}</small></div>
+              <i class="fas fa-star"></i>{{#if sinTalento}}<div><button type="button" class="choose-talent camc-row-name">Elegir talento</button><small>{{cargoActual.label}}: {{talentosCargoTexto}}</small></div>{{else}}<div><b class="camc-row-name">Sin talento</b><small>{{cargoActual.label}}</small></div>{{/if}}
             </li>
             {{/each}}
           </ol>
@@ -276,6 +276,7 @@
             </li>
             {{else}}<li class="camc-empty">Sin protección.</li>{{/each}}
           </ol>
+          <div class="camc-rule-strip"><b>Total</b><span>−{{system.proteccion.armadura_nivel}} al daño{{#if system.proteccion.armadura_solo_fuego}} (−{{system.proteccion.armadura_solo_fuego}} más contra armas de fuego){{/if}} · Agilidad +{{system.proteccion.escudo_nivel}} · penalización −{{protPenalizacion}} a DES y FUE</span></div>
         </section>
         <section class="camc-panel">
           <div class="camc-panel-header"><h2 class="camc-panel-title"><i class="fas fa-bolt"></i> Dones disponibles</h2><button type="button" class="create-item camc-icon-button" data-type="don" title="Nuevo don"><i class="fas fa-plus"></i></button></div>
@@ -418,13 +419,14 @@
         <section class="camc-panel"><h2 class="camc-panel-title">Cita</h2><textarea name="system.biografia.cita">{{system.biografia.cita}}</textarea></section>
         <section class="camc-panel"><h2 class="camc-panel-title">Origen y defectos</h2>
           <div class="camc-checkline-group horizontal">
-            <label class="camc-checkline"><input name="system.biografia.recuerdo_cuando_usado" type="checkbox" {{checked system.biografia.recuerdo_cuando_usado}}/><span>Recuerdo cuando usado</span></label>
+            <label class="camc-checkline"><span>Recuerdo cuando… usado</span><input name="system.biografia.recuerdo_cuando_usos" type="number" min="0" max="{{system.biografia.recuerdo_cuando_max}}" value="{{system.biografia.recuerdo_cuando_usos}}" style="width:3.4em"/><span>de {{system.biografia.recuerdo_cuando_max}}</span></label>
             <label class="camc-checkline"><input name="system.biografia.defecto_leve_usado" type="checkbox" {{checked system.biografia.defecto_leve_usado}}/><span>Defecto leve ya usado esta sesión</span></label>
           </div>
           <div class="camc-form-grid">
             <label><span>Entorno de nacimiento</span><input name="system.biografia.entorno_nacimiento" type="text" value="{{system.biografia.entorno_nacimiento}}"/></label>
             <label><span>Defecto grave</span><input name="system.biografia.defecto_grave" type="text" value="{{system.biografia.defecto_grave}}"/></label>
             <label><span>Defecto leve</span><input name="system.biografia.defecto_leve" type="text" value="{{system.biografia.defecto_leve}}"/></label>
+            <label><span>Tirada de Salud inicial (1D)</span><input name="system.combate.salud.roll_inicial" type="number" min="1" max="6" value="{{system.combate.salud.roll_inicial}}"/></label>
           </div>
         </section>
         <section class="camc-panel"><h2 class="camc-panel-title">Notas</h2><textarea name="system.notas">{{system.notas}}</textarea></section>
@@ -433,10 +435,10 @@
   </main>
 
   <footer class="camc-sheet-footer">
-    <label><span>Reputación</span><input name="system.reputacion.value" type="number" value="{{system.reputacion.value}}"/></label>
-    <label><span>Faltas</span><input name="system.faltas.value" type="number" value="{{system.faltas.value}}"/></label>
-    <label><span>Máx.</span><input name="system.faltas.max" type="number" value="{{system.faltas.max}}"/></label>
-    <label><span>PX</span><input name="system.experiencia.total" type="number" value="{{system.experiencia.total}}"/></label>
+    <label title="Reputación de 1 a 10, de medio en medio punto: {{reputacionRango}}"><span>Rep. · {{reputacionRango}}</span><input name="system.reputacion.value" type="number" min="1" max="10" step="0.5" value="{{system.reputacion.value}}"/></label>
+    <label title="Desviaciones de la Virtud de tu dios patrón"><span>Faltas{{#if faltasCastigo}} ¡3!{{/if}}</span><input name="system.faltas.value" type="number" min="0" max="3" value="{{system.faltas.value}}"/></label>
+    <label><span>PX total</span><input name="system.experiencia.total" type="number" value="{{system.experiencia.total}}" title="Experiencia total ganada"/></label>
+    <button type="button" class="camc-action-button camc-mejorar" title="Gastar Experiencia en atributos y habilidades. Libres: {{pxDisponibles}}"><i class="fas fa-arrow-up-right-dots"></i> Mejorar</button>
     <button type="button" class="camc-action-button roll-initiative"><i class="fas fa-crossed-swords"></i> Iniciativa</button>
     <button type="button" class="camc-action-button roll-resistance"><i class="fas fa-shield-heart"></i> Resistencia</button>
   </footer>

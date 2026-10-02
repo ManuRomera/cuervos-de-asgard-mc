@@ -179,16 +179,20 @@
       "mods": {
         "funcionales": [
           {
-            "name": "Escape atronador",
+            "name": "Tubo de escape tuneado",
             "tipo": "funcional",
-            "descripcion": "Bonificador contextual para intimidar, distraer o señalar posición.",
-            "ocupaRanura": true
+            "descripcion": "Tubo de escape sin reductor de ruido, con un sonido atronador.",
+            "ocupaRanura": true,
+            "efecto": {}
           },
           {
-            "name": "Configuración ofensiva: pinchos",
+            "name": "Configuración ofensiva",
             "tipo": "funcional",
-            "descripcion": "+1D al daño de la moto en embestidas o arrollamientos.",
-            "ocupaRanura": true
+            "descripcion": "Pinchos, barras, tachuelas o cadenas añadidos al chasis.",
+            "ocupaRanura": true,
+            "efecto": {
+              "dadosDano": 1
+            }
           }
         ],
         "esteticas": [
@@ -263,16 +267,13 @@
       "mods": {
         "funcionales": [
           {
-            "name": "Depósito ampliado",
+            "name": "Alforjas extra",
             "tipo": "funcional",
-            "descripcion": "Aumenta autonomía narrativa.",
-            "ocupaRanura": true
-          },
-          {
-            "name": "Alforjas blindadas",
-            "tipo": "funcional",
-            "descripcion": "Protege carga importante.",
-            "ocupaRanura": true
+            "descripcion": "Conjunto adicional de alforjas laterales y superiores.",
+            "ocupaRanura": true,
+            "efecto": {
+              "alforjasMax": 8
+            }
           }
         ],
         "esteticas": []
@@ -340,16 +341,23 @@
       "mods": {
         "funcionales": [
           {
-            "name": "Configuración ofensiva: pinchos",
+            "name": "Configuración ofensiva",
             "tipo": "funcional",
-            "descripcion": "+1D al daño en embestidas.",
-            "ocupaRanura": true
+            "descripcion": "Pinchos, barras, tachuelas o cadenas añadidos al chasis.",
+            "ocupaRanura": true,
+            "efecto": {
+              "dadosDano": 1
+            }
           },
           {
-            "name": "Neumáticos de garra",
+            "name": "Ruedas reforzadas",
             "tipo": "funcional",
-            "descripcion": "Mejora conducción fuera de carretera.",
-            "ocupaRanura": true
+            "descripcion": "Gomas más gruesas y radios reforzados que mejoran la adherencia.",
+            "ocupaRanura": true,
+            "efecto": {
+              "estructura": 1,
+              "maniobrabilidad": 1
+            }
           }
         ],
         "esteticas": []
@@ -415,20 +423,7 @@
         "mantenimiento": "Operativa"
       },
       "mods": {
-        "funcionales": [
-          {
-            "name": "Silenciador de patrulla",
-            "tipo": "funcional",
-            "descripcion": "Reduce ruido.",
-            "ocupaRanura": true
-          },
-          {
-            "name": "Faros de largo alcance",
-            "tipo": "funcional",
-            "descripcion": "Mejora conducción nocturna.",
-            "ocupaRanura": true
-          }
-        ],
+        "funcionales": [],
         "esteticas": []
       },
       "carga": {
@@ -494,16 +489,20 @@
       "mods": {
         "funcionales": [
           {
-            "name": "Blindaje improvisado",
+            "name": "Chasis reforzado",
             "tipo": "funcional",
-            "descripcion": "+5 Estructura máxima; -1 Maniobrabilidad.",
-            "ocupaRanura": true
+            "descripcion": "Mejora que hace más resistente la moto.",
+            "ocupaRanura": true,
+            "efecto": {
+              "estructura": 5
+            }
           },
           {
-            "name": "Sistema de arranque redundante",
+            "name": "Mejora del sistema de transmisión",
             "tipo": "funcional",
-            "descripcion": "Mejora arranque o reparación de emergencia.",
-            "ocupaRanura": true
+            "descripcion": "Reemplazo y ajuste perfecto de las piezas del sistema de transmisión.",
+            "ocupaRanura": true,
+            "efecto": {}
           }
         ],
         "esteticas": []
@@ -571,22 +570,13 @@
       "mods": {
         "funcionales": [
           {
-            "name": "Sidecar reforzado",
+            "name": "Sidecar",
             "tipo": "funcional",
-            "descripcion": "Aumenta capacidad de carga o transporte seguro.",
-            "ocupaRanura": true
-          },
-          {
-            "name": "Torreta de sidecar",
-            "tipo": "funcional",
-            "descripcion": "Permite montar un arma compatible.",
-            "ocupaRanura": true
-          },
-          {
-            "name": "Anclajes de remolque",
-            "tipo": "funcional",
-            "descripcion": "Permite remolcar carga ligera.",
-            "ocupaRanura": true
+            "descripcion": "Permite transportar a un pasajero adicional en condiciones cómodas.",
+            "ocupaRanura": true,
+            "efecto": {
+              "maniobrabilidad": -1
+            }
           }
         ],
         "esteticas": []
@@ -654,16 +644,22 @@
       "mods": {
         "funcionales": [
           {
-            "name": "Depósito ampliado",
+            "name": "Alforjas extra",
             "tipo": "funcional",
-            "descripcion": "Aumenta autonomía narrativa.",
-            "ocupaRanura": true
+            "descripcion": "Conjunto adicional de alforjas laterales y superiores.",
+            "ocupaRanura": true,
+            "efecto": {
+              "alforjasMax": 8
+            }
           },
           {
-            "name": "Suspensión de salto",
+            "name": "Suspensión mejorada",
             "tipo": "funcional",
-            "descripcion": "Mejora terreno difícil y saltos.",
-            "ocupaRanura": true
+            "descripcion": "Amortiguadores especialmente robustos y llamativos.",
+            "ocupaRanura": true,
+            "efecto": {
+              "maniobrabilidad": 1
+            }
           }
         ],
         "esteticas": []
@@ -731,16 +727,13 @@
       "mods": {
         "funcionales": [
           {
-            "name": "Faros de largo alcance",
+            "name": "Alforjas extra",
             "tipo": "funcional",
-            "descripcion": "Mejora conducción nocturna.",
-            "ocupaRanura": true
-          },
-          {
-            "name": "Alforjas blindadas",
-            "tipo": "funcional",
-            "descripcion": "Protege carga importante.",
-            "ocupaRanura": true
+            "descripcion": "Conjunto adicional de alforjas laterales y superiores.",
+            "ocupaRanura": true,
+            "efecto": {
+              "alforjasMax": 8
+            }
           }
         ],
         "esteticas": [

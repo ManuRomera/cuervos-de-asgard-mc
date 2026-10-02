@@ -1,12 +1,70 @@
 [
   {
-    "name": "Autoridad de carretera",
+    "name": "Interponerse",
     "type": "talento",
     "img": "systems/cuervos-de-asgard-mc/assets/patches/presidente.webp",
     "system": {
       "cargo": "Presidente",
-      "efecto": "Cuando el capítulo actúa unido bajo tus órdenes, puedes declarar una prioridad clara de la escena. El DJ puede conceder +1D a la primera tirada que siga esa orden si el grupo acepta el riesgo.",
-      "descripcion": "Talento de liderazgo para marcar rumbo, asumir responsabilidad y mantener unido al capítulo."
+      "clave": "interponerse",
+      "uso": "sesion",
+      "usos": {
+        "value": 0,
+        "max": 1
+      },
+      "compartido": "",
+      "efecto": "Una vez por sesión puedes declarar que te interpones entre un atacante y su víctima: recibes tú todo el daño de un golpe que haya tenido éxito.",
+      "descripcion": "Todo buen líder se sacrifica por los demás."
+    }
+  },
+  {
+    "name": "Líder ejemplar",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/presidente.webp",
+    "system": {
+      "cargo": "Presidente",
+      "clave": "lider_ejemplar",
+      "uso": "sesion",
+      "usos": {
+        "value": 0,
+        "max": 1
+      },
+      "compartido": "",
+      "efecto": "Una vez por sesión puedes anular la activación de un defecto grave impuesta por la DJ, ya sea el tuyo o el de un compañero. Como el defecto no llega a activarse, la DJ no entrega proeza.",
+      "descripcion": "El líder da la cara para que los demás no tropiecen."
+    }
+  },
+  {
+    "name": "Líder nato",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/presidente.webp",
+    "system": {
+      "cargo": "Presidente",
+      "clave": "lider_nato",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Tu número inicial de proezas aumenta en 2 (el sistema lo suma solo).",
+      "descripcion": "Presencia que sostiene al grupo."
+    }
+  },
+  {
+    "name": "Embajador",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/vicepresidente.webp",
+    "system": {
+      "cargo": "Vicepresidente",
+      "clave": "embajador",
+      "uso": "libre",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "En un primer encuentro con desconocidos en el que aún no haya acciones hostiles, repites sin gastar proeza la primera tirada que falles, siempre que sea de una habilidad interpersonal favorecida (Psicología, Seducción o Subterfugio).",
+      "descripcion": "Primera impresión a favor del club."
     }
   },
   {
@@ -15,8 +73,32 @@
     "img": "systems/cuervos-de-asgard-mc/assets/patches/vicepresidente.webp",
     "system": {
       "cargo": "Vicepresidente",
-      "efecto": "Una vez por escena puedes cubrir a otro Cuervo que esté actuando por el capítulo. Describe cómo le apoyas y dale +1D o reduce en 1D una penalización circunstancial.",
-      "descripcion": "Talento de apoyo para sostener la mesa presidencial y reemplazar al Presidente cuando haga falta."
+      "clave": "mano_derecha",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Como colíder del MC compartes uno de los talentos del Presidente a tu elección: Interponerse, Líder ejemplar o Líder nato. Elige cuál en el campo «Talento compartido».",
+      "descripcion": "Colíder en la sombra del Presidente."
+    }
+  },
+  {
+    "name": "Voz",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/vicepresidente.webp",
+    "system": {
+      "cargo": "Vicepresidente",
+      "clave": "voz",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Reduces en 3 puntos la dificultad de las tiradas con tus habilidades interpersonales siempre que tengan relación con la expresión verbal. En el diálogo de tirada aparece la casilla «Voz».",
+      "descripcion": "Una voz que persuade."
     }
   },
   {
@@ -25,58 +107,253 @@
     "img": "systems/cuervos-de-asgard-mc/assets/patches/secretario.webp",
     "system": {
       "cargo": "Secretario",
-      "efecto": "Cuando recuerdas una gesta, pronuncias un juramento o conviertes una escena en leyenda del club, el DJ puede conceder proezas al grupo por la interpretación memorable.",
-      "descripcion": "Talento del Secretario: conserva memoria, relato y sentido mítico del capítulo."
+      "clave": "inspirar",
+      "uso": "aventura",
+      "usos": {
+        "value": 0,
+        "max": 1
+      },
+      "compartido": "",
+      "efecto": "Una vez por aventura, si superas una tirada de Cultura a dificultad 10 narrando una historia motivadora, todos tus compañeros recuperan 1 proeza. Usar el talento lo hace por ti.",
+      "descripcion": "Los relatos junto al fuego reconfortan."
     }
   },
   {
-    "name": "Cuentas claras",
+    "name": "Lingüista",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/secretario.webp",
+    "system": {
+      "cargo": "Secretario",
+      "clave": "linguista",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Entiendes retazos de cualquier lengua que no conozcas, oral o escrita, y puedes chapurrear conceptos básicos. Requiere superar una tirada de Idioma extranjero o mítico a dificultad 14.",
+      "descripcion": "Un don para los idiomas."
+    }
+  },
+  {
+    "name": "Pozo de sabiduría",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/secretario.webp",
+    "system": {
+      "cargo": "Secretario",
+      "clave": "pozo_sabiduria",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Puedes activar el «Recuerdo cuando…» dos veces por aventura en lugar de una (el sistema lleva la cuenta).",
+      "descripcion": "Saber casi enciclopédico."
+    }
+  },
+  {
+    "name": "Caja de sorpresas",
     "type": "talento",
     "img": "systems/cuervos-de-asgard-mc/assets/patches/tesorero.webp",
     "system": {
       "cargo": "Tesorero",
-      "efecto": "Una vez por sesión puedes localizar, conservar o reasignar un recurso menor del capítulo si explicas dónde estaba guardado y qué coste social o material implica.",
-      "descripcion": "Talento de administración de recursos, favores, deuda y supervivencia logística."
+      "clave": "caja_sorpresas",
+      "uso": "aventura",
+      "usos": {
+        "value": 0,
+        "max": 1
+      },
+      "compartido": "",
+      "efecto": "Una vez por aventura, con la aprobación de la DJ, declaras que llevas un objeto mundano que ayuda al grupo y que no estaba anotado en tu ficha.",
+      "descripcion": "Las alforjas de un Tesorero siempre guardan algo."
     }
   },
   {
-    "name": "Nadie pasa",
+    "name": "Curandero",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/tesorero.webp",
+    "system": {
+      "cargo": "Tesorero",
+      "clave": "curandero",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Tus tiradas de Auxilio a dificultad 10 para curar heridas devuelven 3 puntos de Salud en lugar de 2 (6 con crítico). El sistema lo aplica solo.",
+      "descripcion": "Manos que curan."
+    }
+  },
+  {
+    "name": "Urbanita",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/tesorero.webp",
+    "system": {
+      "cargo": "Tesorero",
+      "clave": "urbanita",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Obtienes críticos en Supervivencia con un solo 6 cuando estás en entornos urbanos. En el diálogo de tirada aparece la casilla «Entorno urbano».",
+      "descripcion": "En su medio entre las ruinas del Viejo Mundo."
+    }
+  },
+  {
+    "name": "Curtido en mil batallas",
     "type": "talento",
     "img": "systems/cuervos-de-asgard-mc/assets/patches/sargento_armas.webp",
     "system": {
       "cargo": "Sargento de armas",
-      "efecto": "Cuando proteges a otro Cuervo o mantienes una línea de defensa, puedes recibir tú una consecuencia física menor para darle +1D a su siguiente tirada de resistencia, lucha o huida.",
-      "descripcion": "Talento de seguridad, pelea y presencia intimidante."
+      "clave": "curtido",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Nunca puedes ser cogido por sorpresa, ni siquiera en una emboscada perfectamente organizada.",
+      "descripcion": "Un sexto sentido para el combate."
     }
   },
   {
-    "name": "Ruta segura",
+    "name": "Digno del Valhalla",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/sargento_armas.webp",
+    "system": {
+      "cargo": "Sargento de armas",
+      "clave": "digno_valhalla",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Cuando pierdes todos tus puntos de Salud dispones de dos acciones de combate sucesivas e inmediatas sin penalizador antes de morir. Puedes gastar las proezas que te queden o activar el Recuerdo cuando…",
+      "descripcion": "Un guerrero que demuestra su valía más allá de la muerte."
+    }
+  },
+  {
+    "name": "Estratega",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/sargento_armas.webp",
+    "system": {
+      "cargo": "Sargento de armas",
+      "clave": "estratega",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Tus compañeros de combate ganan siempre la iniciativa en los empates y uno de ellos (el que elijas) sube además una posición.",
+      "descripcion": "Indicaciones tácticas acertadas."
+    }
+  },
+  {
+    "name": "Leer el terreno",
     "type": "talento",
     "img": "systems/cuervos-de-asgard-mc/assets/patches/capitan_rutas.webp",
     "system": {
       "cargo": "Capitán de rutas",
-      "efecto": "Antes de un viaje o persecución puedes declarar una ruta preparada. Si el grupo la sigue, la primera complicación de terreno, clima o orientación se afronta con +1D.",
-      "descripcion": "Talento de exploración, navegación, vigilancia de ruta y conocimiento del asfalto."
+      "clave": "leer_terreno",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Obtienes críticos en Rastreo sacando un solo 6. El sistema lo aplica solo.",
+      "descripcion": "Rastreador con reputación."
     }
   },
   {
-    "name": "Arreglo de emergencia",
+    "name": "Sentido del peligro",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/capitan_rutas.webp",
+    "system": {
+      "cargo": "Capitán de rutas",
+      "clave": "sentido_peligro",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "En espacios abiertos puedes pedir una tirada de Entorno cuando quieras para detectar señales de amenazas que no se ven a simple vista.",
+      "descripcion": "Instinto de supervivencia afinado."
+    }
+  },
+  {
+    "name": "Superviviente",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/capitan_rutas.webp",
+    "system": {
+      "cargo": "Capitán de rutas",
+      "clave": "superviviente",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Pierdes 1 punto de Salud por cada 12 horas sin beber o 24 sin comer, en lugar de cada 6 y 12 horas.",
+      "descripcion": "Acostumbrado a las privaciones."
+    }
+  },
+  {
+    "name": "Amigo de los enanos",
     "type": "talento",
     "img": "systems/cuervos-de-asgard-mc/assets/patches/mecanico_jefe.webp",
     "system": {
       "cargo": "Mecánico jefe",
-      "efecto": "Una vez por escena puedes improvisar una reparación suficiente para que una moto, arma o pieza de equipo funcione hasta el final de la escena. Después deberá repararse con tiempo y recursos.",
-      "descripcion": "Talento de mecánica práctica, apaños de carretera y soluciones con lo que haya a mano."
+      "clave": "amigo_enanos",
+      "uso": "aventura",
+      "usos": {
+        "value": 0,
+        "max": 1
+      },
+      "compartido": "",
+      "efecto": "Una vez por aventura contactas mágicamente con tu amigo enano de Svartálfaheim para pedir información o ayuda: Conversación a dificultad 12. La DJ puede pedir algo a cambio.",
+      "descripcion": "Un contacto entre los enanos."
     }
   },
   {
-    "name": "Full Patch",
+    "name": "Chapuza",
     "type": "talento",
-    "img": "systems/cuervos-de-asgard-mc/assets/patches/full_patch.svg",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/mecanico_jefe.webp",
     "system": {
-      "cargo": "Full Patch",
-      "efecto": "Cuando actúas en nombre del club y pones en juego tu reputación, puedes pedir al DJ una ventaja narrativa razonable ligada al parche. Si abusas de ello, el club también paga el precio.",
-      "descripcion": "Talento genérico de pertenencia plena al capítulo."
+      "cargo": "Mecánico jefe",
+      "clave": "chapuza",
+      "uso": "libre",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Una tirada de Mecánica a dificultad 10 repara cualquier arma o devuelve la utilidad a un objeto averiado u obsoleto durante una escena entera.",
+      "descripcion": "Reparaciones imposibles."
+    }
+  },
+  {
+    "name": "Regatear",
+    "type": "talento",
+    "img": "systems/cuervos-de-asgard-mc/assets/patches/mecanico_jefe.webp",
+    "system": {
+      "cargo": "Mecánico jefe",
+      "clave": "regatear",
+      "uso": "pasivo",
+      "usos": {
+        "value": 0,
+        "max": 0
+      },
+      "compartido": "",
+      "efecto": "Reduces en 3 puntos la dificultad de las tiradas de Conversación que impliquen intercambio, trueque o transacción. En el diálogo de tirada aparece la casilla «Regateo».",
+      "descripcion": "Tratos beneficiosos."
     }
   }
 ]
