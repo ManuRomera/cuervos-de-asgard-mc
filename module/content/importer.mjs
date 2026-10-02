@@ -203,15 +203,15 @@ export class CAMCContentImporter {
 
   static async #importManual({ force = false } = {}) {
     const folder = await getFolder(CAMC.itemFolders.manual.label, "JournalEntry");
-    const oldManual = game.journal.find(j => j.name === "CAMC · Manual completo");
-    if (oldManual) await oldManual.delete();
-
-    let guide = null;
-    for (const doc of manualDocuments(await json("_data/manual/reglas-resumen.json"))) {
-      const imported = await this.#upsertWorldJournal(folder, doc, force);
-      if (doc.name === "CAMC · Guía de uso del sistema") guide = imported;
+    // Diarios antiguos del sistema que ya no existen: el manual completo y la guía de uso (sustituida por el tutorial).
+    for (const nombre of ["CAMC · Manual completo", "CAMC · Guía de uso del sistema"]) {
+      const viejo = game.journal.find(j => j.name === nombre && j.flags?.[CAMC.systemId]?.source === "core-import");
+      if (viejo) await viejo.delete();
     }
-    await this.#showGuideOnce(guide);
+
+    for (const doc of manualDocuments(await json("_data/manual/reglas-resumen.json"))) {
+      await this.#upsertWorldJournal(folder, doc, force);
+    }
   }
 
   static async #upsertWorldJournal(folder, raw, force) {
@@ -230,13 +230,6 @@ export class CAMCContentImporter {
     const ids = journal.pages.map(page => page.id);
     if (ids.length) await journal.deleteEmbeddedDocuments("JournalEntryPage", ids);
     if (pages.length) await journal.createEmbeddedDocuments("JournalEntryPage", pages);
-  }
-
-  static async #showGuideOnce(guide) {
-    if (!guide || !game.user.isGM) return;
-    if (game.settings.get(CAMC.systemId, "systemGuideShown")) return;
-    guide.sheet?.render(true);
-    await game.settings.set(CAMC.systemId, "systemGuideShown", true);
   }
 
   static async #createSystemMacros() {

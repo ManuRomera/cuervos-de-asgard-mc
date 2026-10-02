@@ -2,6 +2,15 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.7.0] — 2026-10-02
+
+### Tutorial del sistema
+- Nuevo diario **«CAMC · Tutorial del sistema»**, en el compendio «CAMC · Reglas y guía» y copiado al mundo (visible para los jugadores): doce capítulos cortos —primeros pasos del DJ, crear un personaje, la hoja, tiradas, combate, motos y persecuciones, equipo y carga, comunidad, ritmo de campaña, PNJ y bestiario, accesibilidad y una chuleta— con un ejercicio práctico en cada uno.
+- La primera vez que cada usuario entra en el mundo se le ofrece hacerlo (Empezar / Ahora no / No volver a preguntar). Después está en el botón **Tutorial** de la pestaña de Actores (para todos) y en los ajustes del sistema.
+- Sustituye a la antigua «Guía de uso del sistema», que describía botones que ya no existen; el importador la retira del mundo.
+- Una prueba automática comprueba que cada botón que nombra el tutorial existe en la interfaz.
+- El resumen de reglas incluye las fórmulas de Salud y proezas.
+
 ## [1.6.2] — 2026-10-02
 
 Segunda auditoría en busca de fallos.
