@@ -101,6 +101,20 @@ export class CAMCActor extends Actor {
     return claves;
   }
 
+  /** ¿Lleva el PJ (o su moto vinculada) esta modificación de moto? Comparación sin tildes. */
+  tieneModMoto(nombre) {
+    const n = s => String(s ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return (this.system?.vehiculo?.efectos_mods ?? []).some(m => n(m) === n(nombre)) || this._nombresModsMoto().has(n(nombre));
+  }
+
+  _nombresModsMoto() {
+    const n = s => String(s ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const esMod = i => i.type === "objeto" && i.system?.equipada && i.system?.tipo === "modificacion_moto";
+    const match = String(this.system?.mount?.uuid ?? "").match(/^Actor\.([^./]+)$/);
+    const moto = this.type === "moto" ? this : (match ? globalThis.game?.actors?.get(match[1]) : null);
+    return new Set([...(this.items?.filter(esMod) ?? []), ...(moto?.items?.filter(esMod) ?? [])].map(i => n(i.name)));
+  }
+
   tieneTalento(clave) {
     return this.clavesTalento.has(clave);
   }
@@ -120,9 +134,15 @@ export class CAMCActor extends Actor {
     return deducida >= 1 && deducida <= 6 ? deducida : 3;
   }
 
+  /** Modificaciones que lleva el PJ y las de su moto vinculada (sin contar dos veces la misma). */
   _getVehicleMods() {
-    const activas = this.items?.filter(item => item.type === "objeto" && item.system?.equipada && item.system?.tipo === "modificacion_moto") ?? [];
-    return efectosDeMods(activas);
+    const esMod = item => item.type === "objeto" && item.system?.equipada && item.system?.tipo === "modificacion_moto";
+    const propias = this.items?.filter(esMod) ?? [];
+    const match = String(this.system?.mount?.uuid ?? "").match(/^Actor\.([^./]+)$/);
+    const moto = match ? globalThis.game?.actors?.get(match[1]) : null;
+    const nombres = new Set(propias.map(i => i.name));
+    const deMoto = moto?.type === "moto" ? moto.items.filter(i => esMod(i) && !nombres.has(i.name)) : [];
+    return efectosDeMods([...propias, ...deMoto]);
   }
 
   _addVehicleDamageDice(formula, extraDice = 0) {
@@ -229,9 +249,18 @@ export class CAMCActor extends Actor {
       const nivel = Number(a.system.nivel ?? 1);
       return { nivel, penalizacion: Number(a.system.penalizacion ?? Math.floor(nivel / 2)), compatible: Boolean(a.system.compatible), soloFuego: Boolean(a.system.solo_fuego) };
     }));
-    this.system.proteccion.armadura_nivel = p.nivel;
-    this.system.proteccion.armadura_penalizacion = p.penalizacion;
+    // Los PNJ del bestiario traen su armadura como dato (piel, placas de hielo…), no como objeto: si no llevan
+    // ninguna armadura equipada, vale la del bestiario.
+    const fuente = this._source?.system?.proteccion ?? {};
+    const deBestiario = this.type === "pnj" && !equipadas.length;
+    this.system.proteccion.armadura_nivel = deBestiario ? Number(fuente.armadura_nivel ?? 0) : p.nivel;
+    this.system.proteccion.armadura_penalizacion = deBestiario ? Number(fuente.armadura_penalizacion ?? 0) : p.penalizacion;
     this.system.proteccion.armadura_solo_fuego = p.soloFuego;
+    if (!esc && this.type === "pnj" && Number(fuente.escudo_nivel ?? 0) > 0) {
+      this.system.proteccion.escudo_nivel = Number(fuente.escudo_nivel);
+      this.system.proteccion.escudo_penalizacion = Number(fuente.escudo_penalizacion ?? fuente.escudo_nivel);
+      return;
+    }
     if (esc) {
       const nivel = Number(esc.system.nivel ?? 1);
       this.system.proteccion.escudo_nivel = nivel;
@@ -359,7 +388,7 @@ export class CAMCActor extends Actor {
   async comprobarUmbralesSalud(antes, despues) {
     const modo = game.settings.get(CAMC.systemId, "resistenciaAutomatica");
     if (modo === "ninguno" || (modo === "pj" && this.type !== "personaje")) return;
-    if (despues <= 0 || Number(this.system.combate?.resistencia_fisica ?? 1) <= 0) return;   // RF 0 = «N/A» en el bestiario
+    if (despues <= 0 || this.system.combate?.sin_penalizadores || Number(this.system.combate?.resistencia_fisica ?? 1) <= 0) return;   // RF 0 = «N/A» en el bestiario
     const hechos = this.getFlag(CAMC.systemId, "umbralesRF") ?? [];
     const nuevos = R.umbralesCruzados(antes, despues, hechos);
     if (!nuevos.length) return;

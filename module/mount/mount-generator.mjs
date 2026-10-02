@@ -78,14 +78,14 @@ export const CAMCMountTables = {
   // reparto aleatorio porque ya se decide como parte de la plantilla base del vehículo,
   // vía la opción withSidecar, no como una modificación más a elegir).
   functionalMods: [
-    { name: "Acelerador trucado", descripcion: "+5 a la tirada de iniciativa en persecuciones.", efecto: {} },
+    { name: "Acelerador trucado", descripcion: "+5 a la tirada de iniciativa yendo en la moto.", efecto: {} },
     { name: "Alforjas extra", descripcion: "+8 espacios de alforjas. El máximo de carga a pie sigue siendo 6.", efecto: { alforjasMax: 8 } },
     { name: "Chasis reforzado", descripcion: "+5 puntos de Estructura.", efecto: { estructura: 5 } },
     { name: "Chasis ultrarreforzado", descripcion: "Requiere Chasis reforzado. +5 Estructura adicional; permite Embestir y Sacar de la carretera contra cualquier vehículo; -1 Maniobrabilidad.", efecto: { estructura: 5, maniobrabilidad: -1 } },
     { name: "Configuración ofensiva", descripcion: "+1D a los Dados de daño de la moto.", efecto: { dadosDano: 1 } },
     { name: "Dispensador de aceite", descripcion: "Hasta dos veces por persecución: +3 a la dificultad de los perseguidores durante ese turno y el siguiente.", efecto: {} },
     { name: "Estribos de combate", descripcion: "+3 a Embestir y Sacar de la carretera frente a otras motos.", efecto: {} },
-    { name: "Manillar adaptado", descripcion: "+1 a iniciativa y +1 a Maniobrabilidad.", efecto: { maniobrabilidad: 1 } },
+    { name: "Manillar adaptado", descripcion: "+1 a la tirada de iniciativa yendo en la moto y +1 a Maniobrabilidad.", efecto: { maniobrabilidad: 1 } },
     { name: "Mejora del sistema de transmisión", descripcion: "Una vez por persecución, cambia un fallo de Conducir por un éxito normal (incluida una pifia).", efecto: {} },
     { name: "Motor potenciado", descripcion: "Una vez por persecución, permite cambiar la posición de la moto una franja.", efecto: {} },
     { name: "Obra maestra", descripcion: "+3 a Conversación en escenas montado en la moto. No exige tirada de Mecánica.", efecto: {} },

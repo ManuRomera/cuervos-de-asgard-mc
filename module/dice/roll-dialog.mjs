@@ -66,6 +66,9 @@ export async function askRollOptions(actor, habilidad, { weapon = null, dificult
   const voz = actor.tieneTalento?.("voz") && VOZ.includes(habilidad);
   const regateo = actor.tieneTalento?.("regatear") && habilidad === "conversacion";
   const urbanita = actor.tieneTalento?.("urbanita") && habilidad === "supervivencia";
+  // Tubo de escape tuneado (+3 Intimidación) y Obra maestra (+3 Conversación) si llega montado en su moto (p. 109).
+  const modMontado = habilidad === "intimidacion" && actor.tieneModMoto?.("Tubo de escape tuneado") ? "Tubo de escape tuneado"
+    : habilidad === "conversacion" && actor.tieneModMoto?.("Obra maestra") ? "Obra maestra" : null;
 
   const content = `
     <form class="camc-dialog camc-roll-options">
@@ -99,6 +102,7 @@ export async function askRollOptions(actor, habilidad, { weapon = null, dificult
         ${voz ? check("voz", "Talento Voz (−3 a la dificultad, expresión verbal)") : ""}
         ${regateo ? check("regateo", "Talento Regatear (−3 si es un intercambio)") : ""}
         ${urbanita ? check("entornoUrbano", "Talento Urbanita: entorno urbano (crítico con un 6)") : ""}
+        ${modMontado ? check("montado", `Llegó montado en su moto (${modMontado}, +3)`) : ""}
       </div>
       <p class="notes">Alt + clic tira rápido sin abrir este panel. Las proezas se gastan al confirmar.</p>
     </form>`;
@@ -128,11 +132,13 @@ export async function askRollOptions(actor, habilidad, { weapon = null, dificult
           if (on("regateo")) suma("Regatear", -3);
           const colaboradores = num("colaboradores");
           if (colaboradores) notas.push(`${colaboradores} colaborador${colaboradores === 1 ? "" : "es"}: +${2 * colaboradores} a la tirada`);
+          const montado = on("montado") ? 3 : 0;
+          if (montado) notas.push(`${modMontado}: +3 a la tirada`);
           const noquear = on("noquear");
           const recuerdoCuando = on("recuerdoCuando");
           resolve({
             dificultad: df,
-            modificador: num("modificador") + 2 * colaboradores,
+            modificador: num("modificador") + 2 * colaboradores + montado,
             dadosExtra: num("dadosExtra"),
             proezaDados: recuerdoCuando ? 0 : Math.max(0, num("proezaDados")),
             dadosSacrificados: Math.max(0, num("dadosSacrificados")) + (noquear ? 1 : 0),

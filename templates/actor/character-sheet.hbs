@@ -49,7 +49,7 @@
         <div class="camc-resource-actions">
           <button type="button" class="health-minus"><i class="fas fa-minus"></i></button>
           <input name="system.combate.salud.value" type="number" value="{{system.combate.salud.value}}"/>
-          <input name="system.combate.salud.max" type="number" value="{{system.combate.salud.max}}"/>
+          <input type="number" value="{{system.combate.salud.max}}" readonly title="FUE × 2 + 10 + 1D (la tirada está en Biografía)"/>
           <button type="button" class="health-plus"><i class="fas fa-plus"></i></button>
         </div>
       </div>
@@ -59,7 +59,7 @@
         <div class="camc-resource-actions">
           <button type="button" class="spend-proeza"><i class="fas fa-minus"></i></button>
           <input name="system.combate.proezas.value" type="number" value="{{system.combate.proezas.value}}"/>
-          <input name="system.combate.proezas.max" type="number" value="{{system.combate.proezas.max}}"/>
+          <input type="number" value="{{system.combate.proezas.max}}" readonly title="(FUE + INT) / 2 + 3 (+2 con Líder nato)"/>
           <button type="button" class="gain-proeza"><i class="fas fa-plus"></i></button>
         </div>
       </div>

@@ -141,9 +141,19 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     const visibility = Number(this.actor.system.persecucion?.visibilidad ?? 0);
     const target = Number(this.actor.system.persecucion?.evasion_objetivo ?? 10);
     const difficulty = kind === "maneuver" ? target + visibility + mod : terrain + visibility + mod;
+    // Modificaciones que cuentan en maniobras concretas (pp. 108-109).
+    const key = event.currentTarget.dataset.key;
+    const tiene = nombre => this.actor.tieneModMoto(nombre);
+    let extra = 0;
+    const notas = [];
+    if (key === "evadirse" && tiene("Suspensión mejorada")) { extra += 3; notas.push("Suspensión mejorada +3"); }
+    if (["embestir", "sacar"].includes(key) && tiene("Estribos de combate")) { extra += 3; notas.push("Estribos de combate +3 (solo contra otras motos)"); }
+    if (key === "embestir" && !tiene("Chasis ultrarreforzado")) ui.notifications.warn("Embestir es para vehículos que no son motos: una moto solo puede hacerlo con Chasis ultrarreforzado.");
+    if (key === "sacar" && !tiene("Chasis ultrarreforzado")) ui.notifications.info("Una moto solo puede sacar de la carretera a otras motos (salvo con Chasis ultrarreforzado).");
     return CAMCMountRolls.rollDrive(owner, this.actor, {
-      label: `Persecución: ${label}`,
-      difficulty
+      label: `Persecución: ${label}${notas.length ? ` (${notas.join(", ")})` : ""}`,
+      difficulty,
+      extra
     });
   }
 
@@ -409,6 +419,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
   }
 
   async #migrateLegacyMods() {
+    if (!this.actor.isOwner) return;
     const functional = this.actor.system.mods?.funcionales ?? [];
     const cosmetic = this.actor.system.mods?.esteticas ?? [];
     if (!functional.length && !cosmetic.length) return;
