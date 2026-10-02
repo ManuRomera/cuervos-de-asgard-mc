@@ -5,7 +5,7 @@ test("entry point loads without removed globals and registers all five sheets th
   const hooks = new Map(), registrations = [], unregistrations = [];
   globalThis.Actor = class {};
   globalThis.Item = class {};
-  globalThis.CONFIG = { Actor: {}, Item: {} };
+  globalThis.CONFIG = { Actor: {}, Item: {}, Combat: {} };
   globalThis.Hooks = { once: (key, fn) => hooks.set(key, fn), on() {} };
   globalThis.Handlebars = { registerHelper() {} };
   globalThis.foundry = {

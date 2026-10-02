@@ -124,7 +124,7 @@ test("iniciativa: el desempate prefiere DES, luego INT, PER y Agilidad (p. 81)",
   assert.ok(a > b);
   assert.ok(R.desempateIniciativa({ des: 4, int: 2 }) > R.desempateIniciativa({ des: 4, int: 1 }));
   assert.ok(R.desempateIniciativa({ des: 4, int: 2, per: 2 }) > R.desempateIniciativa({ des: 4, int: 2, per: 1 }));
-  assert.ok(a < 1, "nunca llega a mover el total entero");
+  assert.ok(R.desempateIniciativa({ des: 9, int: 9, per: 9, agilidad: 99 }) < 0.5, "nunca cambia el número redondeado");
 });
 
 test("comunidad: reparto de 6 puntos y capacidad especial (p. 126)", () => {

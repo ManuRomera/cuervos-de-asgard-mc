@@ -70,7 +70,7 @@
   {{#if (eq tipo "iniciativa")}}
     <h3>Iniciativa</h3>
     <div class="camc-roll-main"><div class="camc-roll-total"><span>Total</span><b>{{roll.total}}</b></div></div>
-    <div class="mods">{{formula}}</div>{{#if extraAccion}}<div class="crit"><i class="fas fa-bolt"></i> Un 6: acción extra al comienzo del primer turno (solo la de mayor iniciativa entre los que saquen 6)</div>{{/if}}{{#if armaPreparada}}<div class="mods">Arma preparada: {{armaPreparada.label}}</div>{{/if}}
+    <div class="mods">{{formula}}</div>{{#if moto}}<div class="mods">Yendo en la moto (modificaciones): +{{moto}} → <b>{{totalMoto}}</b></div>{{/if}}{{#if extraAccion}}<div class="crit"><i class="fas fa-bolt"></i> Un 6: acción extra al comienzo del primer turno (solo la de mayor iniciativa entre los que saquen 6)</div>{{/if}}{{#if armaPreparada}}<div class="mods">Arma preparada: {{armaPreparada.label}}</div>{{/if}}
   {{/if}}
   {{#if (eq tipo "don")}}
     <h3>{{item.name}}</h3>

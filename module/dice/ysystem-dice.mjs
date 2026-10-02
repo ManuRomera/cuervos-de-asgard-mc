@@ -143,12 +143,9 @@ export class YsystemDice {
     const bonus = Number(actor.system.combate?.iniciativa ?? 0);
     const roll = await (new Roll(`1d6 + ${bonus}`)).evaluate();
     const dado = roll.dice?.[0]?.results?.[0]?.result ?? 0;
-    const atributos = actor.system.atributos ?? {};
-    const desempate = R.desempateIniciativa({
-      des: Number(atributos.des?.value ?? 0), int: Number(atributos.int?.value ?? 0), per: Number(atributos.per?.value ?? 0),
-      agilidad: Number(actor.system.valores_pasivos?.agilidad ?? 0)
-    });
-    await this.#sendChat({ actor, tipo: "iniciativa", roll, formula: `1d6 + ${bonus}`, extraAccion: dado === 6 });
+    const desempate = Number(actor.system.combate?.desempate ?? 0);
+    const moto = Number(actor.system.combate?.iniciativa_moto ?? 0);
+    await this.#sendChat({ actor, tipo: "iniciativa", roll, formula: `1d6 + ${bonus}`, extraAccion: dado === 6, moto, totalMoto: roll.total + moto });
     const combatant = game.combat?.combatants?.find(c => c.actor?.id === actor.id);
     if (combatant) {
       await game.combat.setInitiative(combatant.id, roll.total + desempate);

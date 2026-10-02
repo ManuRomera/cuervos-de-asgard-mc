@@ -2,6 +2,13 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.6.1] — 2026-10-02
+
+### Corregido
+- **Iniciativa**: Acelerador trucado (+5) y Manillar adaptado (+1) se sumaban siempre a la Iniciativa del PJ, también a pie. Según el manual suman a la tirada yendo en la moto (la ficha de Bomani muestra 7, no 12). La Iniciativa vuelve a ser DES + INT y la tarjeta muestra aparte el total yendo en moto.
+- **Rastreador de combate**: «Tirar todos» no aplicaba los desempates del manual (DES, INT, PER y Agilidad); ahora sí, sin cambiar el número que se ve.
+- Página del proyecto: descripción de la comunidad actualizada.
+
 ## [1.6.0] — 2026-10-02
 
 Auditoría completa del sistema contra el manual (véase `docs/AUDITORIA.md`): reglas que faltaban o estaban mal, contenido inventado sustituido por el del libro, automatismos nuevos y herramientas de desarrollo.
