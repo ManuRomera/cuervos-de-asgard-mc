@@ -45,7 +45,8 @@ export class CAMCItem extends Item {
     const parts = [];
     if (this.system.dano) parts.push(String(this.system.dano).replaceAll("D", "d6"));
     if (Number(this.system.dano_fijo)) parts.push(String(Number(this.system.dano_fijo)));
-    const attr = options.sinAtributo ? "" : (CAMC.categoriasArma[this.system.categoria]?.atributoDano ?? "");
+    // Las armas del bestiario traen el daño total del libro (ya con el atributo): `fijo_total`.
+    const attr = options.sinAtributo || this.system.fijo_total ? "" : (CAMC.categoriasArma[this.system.categoria]?.atributoDano ?? "");
     const attrBonus = this._damageAttributeBonus(actor, attr);
     if (attrBonus) parts.push(String(attrBonus));
     if (Number(options.extra)) parts.push(String(Number(options.extra)));

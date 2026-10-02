@@ -2,6 +2,29 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.6.2] — 2026-10-02
+
+Segunda auditoría en busca de fallos.
+
+### Corregido
+- **La armadura de los PNJ del bestiario no protegía nunca.** Su protección (piel, placas de hielo, cotas…) viene como dato, no como objeto, y el cálculo la ponía a 0 al no encontrar armadura equipada. Ahora cuenta, igual que su escudo (fallo anterior a la 1.6.0).
+- **Los PNJ del bestiario no tenían armas**: solo podían atacar desarmados. Ahora llevan las del libro, con el ataque y el daño exactos de su ficha.
+- **Faltaban los Moteros del 1 %** (vivo y draug) del capítulo 9.
+- Draugar, einherjar, espectros, esqueletos y draugar del 1 % ya no tiran Resistencia Física automática.
+- Las modificaciones de la **moto vinculada** ahora cuentan para la iniciativa yendo en moto (antes solo las que llevaba el PJ).
+- Tras subir un atributo con Experiencia (a +3, +5…), el selector de la hoja mostraba +6 y al tocarlo intercambiaba valores. Ahora muestra el valor real y solo intercambia dentro del reparto inicial.
+- **Salud máxima y proezas máximas** se podían escribir en la hoja pero el sistema las recalcula: ahora son de solo lectura, con la fórmula en el aviso.
+- Ayudas de Observación y Oído: la dificultad contra alguien escondido o que se acerca a hurtadillas es su **Agilidad** (p. 70), no su Ocultación o Sigilo.
+- La ficha de vehículo (objeto) tenía dos tiradas inventadas («Acelerar», «Maniobra» con 1D6 + Maniobrabilidad): retiradas.
+- La hoja de moto ya no intenta migrar datos cuando la abre un jugador sin permiso.
+- Tildes en las descripciones de habilidades y en la ayuda del menú contextual.
+
+### Automatismos nuevos
+- **Tubo de escape tuneado** (+3 Intimidación) y **Obra maestra** (+3 Conversación): casilla «Llegó montado en su moto» en el diálogo de tirada.
+- **Suspensión mejorada** (+3 a Evadirse) y **Estribos de combate** (+3 a Embestir y Sacar de la carretera) se suman solos en la hoja de moto; aviso si una moto intenta Embestir sin Chasis ultrarreforzado.
+
+Los mundos existentes reciben los dos PNJ nuevos al abrirse; los PNJ del bestiario que ya estaban en el mundo no se tocan (sus versiones con armas están en el compendio, o con la macro «CAMC · Reimportar contenido»).
+
 ## [1.6.1] — 2026-10-02
 
 ### Corregido

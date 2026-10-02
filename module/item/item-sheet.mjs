@@ -111,12 +111,6 @@ export class CAMCItemSheet extends ItemSheetV1 {
       await this.item.update({ "system.estructura.value": Math.min(max, current + 1) });
       return ui.notifications.info(`${this.item.name}: +1 Estructura.`);
     }
-    if (action === "accelerate" || action === "maneuver") {
-      const bonus = Number(this.item.system.maniobrabilidad ?? 0);
-      const roll = await new Roll(`1d6 + ${bonus}`).evaluate();
-      const label = action === "accelerate" ? "Acelerar" : "Maniobra";
-      return roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.item.actor }), flavor: `${this.item.name} · ${label}` });
-    }
   }
 
   #resourceTone(value, max) {

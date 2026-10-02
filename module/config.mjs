@@ -3,7 +3,7 @@ import { TERRENOS, VISIBILIDAD, MOVIMIENTOS, MANIOBRAS, MANIOBRAS_COMBATE } from
 export const CAMC = {};
 
 CAMC.systemId = "cuervos-de-asgard-mc";
-CAMC.contentVersion = "1.8.0";
+CAMC.contentVersion = "1.8.1";
 
 CAMC.atributos = {
   car: { label: "Carisma", short: "CAR" },
@@ -23,27 +23,27 @@ CAMC.idiomasMiticos = [
 ];
 
 CAMC.habilidades = {
-  atletismo: { label: "Atletismo", atributo: "des", descripcion: "Acciones fisicas de movimiento: correr, saltar, trepar, nadar, mantener equilibrio o atravesar terreno dificil. En competiciones fisicas suele enfrentarse a Agilidad." },
-  auxilio: { label: "Auxilio", atributo: "int", descripcion: "Conocimiento sanitario practico: diagnosticar, estabilizar heridas, aplicar primeros auxilios y valorar estados de salud. Sustituye a Observacion cuando el objetivo es medico." },
-  conducir: { label: "Conducir", atributo: "des", descripcion: "Manejo de motos y vehiculos, especialmente en persecuciones, maniobras arriesgadas, terreno peligroso y situaciones de combate sobre ruedas." },
-  conversacion: { label: "Conversación", atributo: "car", descripcion: "Argumentar, negociar, regatear y obtener informacion de forma franca. La dificultad suele compararse con el Aplomo del interlocutor." },
-  cultura: { label: "Cultura", atributo: "int", descripcion: "Conocimientos generales y academicos que no cubren habilidades mas concretas como Entorno, Idiomas, Informacion o Memoria." },
-  entorno: { label: "Entorno", atributo: "per", descripcion: "Conocimiento local, social y geografico de una zona conocida: rutas, grupos, costumbres, peligros y datos publicos del lugar." },
-  fuerza_bruta: { label: "Fuerza Bruta", atributo: "fue", descripcion: "Acciones de vigor puro: romper, levantar, empujar, arrastrar, forzar y forcejear. En competiciones fisicas suele enfrentarse a Agilidad." },
-  idioma_extranjero: { label: "Idioma extranjero", atributo: "int", descripcion: "Leer, escribir y hablar lenguas humanas no nativas. Se tira para conversaciones sostenidas, textos largos o comunicacion bajo presion." },
-  idioma_mitico: { label: "Idioma mítico", atributo: "int", descripcion: "Comprender lenguas no humanas o miticas. Con 2D se alcanza alfabetizacion y comprension oral basica de esa lengua." },
-  informacion: { label: "Información", atributo: "int", descripcion: "Extraer datos utiles de fuentes escritas, archivos, registros, mapas o textos. Tiempo disponible, idioma y calidad de la fuente modifican la dificultad." },
-  intimidacion: { label: "Intimidación", atributo: "car", descripcion: "Imponer miedo, presion o obediencia mediante amenazas, presencia o violencia implicita. La dificultad suele ser el Aplomo del objetivo." },
+  atletismo: { label: "Atletismo", atributo: "des", descripcion: "Acciones físicas de movimiento: correr, saltar, trepar, nadar, mantener equilibrio o atravesar terreno difícil. En competiciones físicas suele enfrentarse a Agilidad." },
+  auxilio: { label: "Auxilio", atributo: "int", descripcion: "Conocimiento sanitario práctico: diagnosticar, estabilizar heridas, aplicar primeros auxilios y valorar estados de salud. Sustituye a Observación cuando el objetivo es médico." },
+  conducir: { label: "Conducir", atributo: "des", descripcion: "Manejo de motos y vehículos, especialmente en persecuciones, maniobras arriesgadas, terreno peligroso y situaciones de combate sobre ruedas." },
+  conversacion: { label: "Conversación", atributo: "car", descripcion: "Argumentar, negociar, regatear y obtener información de forma franca. La dificultad suele compararse con el Aplomo del interlocutor." },
+  cultura: { label: "Cultura", atributo: "int", descripcion: "Conocimientos generales y académicos que no cubren habilidades más concretas como Entorno, Idiomas, Información o Memoria." },
+  entorno: { label: "Entorno", atributo: "per", descripcion: "Conocimiento local, social y geográfico de una zona conocida: rutas, grupos, costumbres, peligros y datos públicos del lugar." },
+  fuerza_bruta: { label: "Fuerza Bruta", atributo: "fue", descripcion: "Acciones de vigor puro: romper, levantar, empujar, arrastrar, forzar y forcejear. En competiciones físicas suele enfrentarse a Agilidad." },
+  idioma_extranjero: { label: "Idioma extranjero", atributo: "int", descripcion: "Leer, escribir y hablar lenguas humanas no nativas. Se tira para conversaciones sostenidas, textos largos o comunicación bajo presión." },
+  idioma_mitico: { label: "Idioma mítico", atributo: "int", descripcion: "Comprender lenguas no humanas o míticas. Con 2D se alcanza alfabetización y comprensión oral basica de esa lengua." },
+  información: { label: "Información", atributo: "int", descripcion: "Extraer datos utiles de fuentes escritas, archivos, registros, mapas o textos. Tiempo disponible, idioma y calidad de la fuente modifican la dificultad." },
+  intimidacion: { label: "Intimidación", atributo: "car", descripcion: "Imponer miedo, presión o obediencia mediante amenazas, presencia o violencia implícita. La dificultad suele ser el Aplomo del objetivo." },
   lucha: { label: "Lucha", atributo: "des", descripcion: "Ataques cuerpo a cuerpo, con o sin armas de melee. En combate se enfrenta normalmente a la Agilidad del objetivo." },
-  mecanica: { label: "Mecánica", atributo: "int", descripcion: "Usar, reparar y manipular maquinas, herramientas, cerraduras, mecanismos y vehiculos cuando hay equipo adecuado." },
+  mecanica: { label: "Mecánica", atributo: "int", descripcion: "Usar, reparar y manipular máquinas, herramientas, cerraduras, mecanismos y vehículos cuando hay equipo adecuado." },
   memoria: { label: "Memoria", atributo: "int", descripcion: "Recordar caras, nombres, lugares, referencias y detalles ya conocidos que no encajan mejor en Cultura o Entorno." },
-  observacion: { label: "Observación", atributo: "per", descripcion: "Buscar de forma activa, examinar una escena, encontrar trampas o detectar algo oculto. Si alguien se esconde, suele enfrentarse a su Ocultacion." },
-  ocultacion: { label: "Ocultación", atributo: "des", descripcion: "Ocultar objetos o esconderse cuando hay cobertura, preparacion o un lugar adecuado. La dificultad suele compararse con Perspicacia." },
-  oido: { label: "Oído", atributo: "per", descripcion: "Escuchar, identificar sonidos, distinguir susurros o estimar distancia y direccion. Puede oponerse al Sigilo de quien se acerca." },
+  observacion: { label: "Observación", atributo: "per", descripcion: "Buscar de forma activa, examinar una escena, encontrar trampas o detectar algo oculto. Para descubrir a un PNJ escondido o que prepara una emboscada, la dificultad es su Agilidad (p. 70)." },
+  ocultacion: { label: "Ocultación", atributo: "des", descripcion: "Ocultar objetos o esconderse cuando hay cobertura, preparación o un lugar adecuado. La dificultad suele compararse con Perspicacia." },
+  oido: { label: "Oído", atributo: "per", descripcion: "Escuchar, identificar sonidos, distinguir susurros o estimar distancia y dirección. Para detectar una aproximación sigilosa, la dificultad es la Agilidad de quien se acerca (p. 70)." },
   psicologia: { label: "Psicología", atributo: "per", descripcion: "Interpretar intenciones, detectar mentiras, leer emociones, calmar, consolar o entender el estado mental de alguien." },
-  punteria: { label: "Puntería", atributo: "per", descripcion: "Precision y ataques a distancia. En combate suele enfrentarse a Agilidad; contra vehiculos puede enfrentarse a Evasion." },
-  rastreo: { label: "Rastreo", atributo: "per", descripcion: "Seguir huellas, marcas, rastros, pisadas o rodadas y deducir informacion a partir de ellas." },
-  seduccion: { label: "Seducción", atributo: "car", descripcion: "Generar atraccion, simpatia o interes personal. La dificultad suele ser el Aplomo del objetivo y puede requerir tiradas posteriores." },
+  punteria: { label: "Puntería", atributo: "per", descripcion: "Precisión y ataques a distancia. En combate suele enfrentarse a Agilidad; contra vehículos puede enfrentarse a Evasión." },
+  rastreo: { label: "Rastreo", atributo: "per", descripcion: "Seguir huellas, marcas, rastros, pisadas o rodadas y deducir información a partir de ellas." },
+  seduccion: { label: "Seducción", atributo: "car", descripcion: "Generar atracción, simpatía o interes personal. La dificultad suele ser el Aplomo del objetivo y puede requerir tiradas posteriores." },
   sigilo: { label: "Sigilo", atributo: "des", descripcion: "Moverse sin ser detectado, evitar ruido, acercarse a alguien o sustraer algo. La dificultad suele ser la Perspicacia de quien podria advertirlo." },
   subterfugio: { label: "Subterfugio", atributo: "car", descripcion: "Mentir, disfrazarse, engañar, sonsacar rumores o secretos sin levantar sospechas. La dificultad suele compararse con Perspicacia." },
   supervivencia: { label: "Supervivencia", atributo: "per", descripcion: "Cazar, pescar, recolectar, encontrar refugio, fuego o agua y reconocer olores, sabores o recursos en un entorno hostil." }

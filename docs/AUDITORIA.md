@@ -110,7 +110,7 @@ Nota sobre los pregenerados: la ficha impresa de Munin marca *Información* como
 
 ### Cap. 9 — Bestiario
 
-Comprobadas por muestreo contra el libro (bandidos, carroñeros y las reglas especiales de cada criatura); coinciden en atributos, pasivos, Salud y Resistencia Física. 🔧 Se añadió que draugar, einherjar, espectros y esqueletos no sufren penalizadores y que los de Resistencia Física «N/A» no tiran. ⏳ Los ataques de los PNJ siguen siendo texto en la ficha, no objetos de arma.
+Comprobadas por muestreo contra el libro (bandidos, carroñeros y las reglas especiales de cada criatura); coinciden en atributos, pasivos, Salud y Resistencia Física. 🔧 Se añadió que draugar, einherjar, espectros y esqueletos no sufren penalizadores y que los de Resistencia Física «N/A» no tiran. 🔧 (1.6.2) Los PNJ llevan las armas de su ficha, su armadura del bestiario ya protege y se han añadido los Moteros del 1 % (vivo y draug).
 
 ## 3. Contenido (compendios) frente al manual
 
@@ -159,8 +159,7 @@ Las versiones anteriores ya habían retirado dones y modificaciones inventados; 
 3. **Combate**: sorpresa, Defensa completa (+1D y subir en iniciativa), Inmovilizar/Zafarse, Huir con ataque de oportunidad, Digno del Valhalla (dos acciones antes de morir), Estratega.
 4. **Dones**: coste en proezas con límite «por combate» (hoy se paga cada vez), Furia de la tormenta que ignora protección y reparte 10/20, Destello cegador y Azote del enemigo con efecto en el objetivo.
 5. **Tabla de reputación** como ayuda: elegir pilar y gravedad y aplicar el cambio.
-6. **Bestiario**: armas de los PNJ como objetos para que el daño y la munición funcionen como en los PJ.
-7. **Descanso y curación** por tiempo de juego.
+6. **Descanso y curación** por tiempo de juego.
 
 ## 6. Usabilidad
 

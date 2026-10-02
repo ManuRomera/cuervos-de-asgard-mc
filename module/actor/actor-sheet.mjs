@@ -128,7 +128,9 @@ export class CAMCActorSheet extends ActorSheetV1 {
     context.patchGroups = this.#buildPatchGroups();
     context.attrCards = Object.entries(CAMC.atributos).map(([key, cfg]) => {
       const value = Number(system.atributos?.[key]?.value ?? 0);
-      const options = [6, 4, 2, 1, 0].map(option => ({ value: option, selected: option === value }));
+      // Tras subir atributos con Experiencia pueden salir valores fuera del reparto inicial (3, 5, 7…): se muestran igual.
+      const opciones = [...new Set([...(value > 6 ? [value] : []), 6, ...(value === 5 ? [5] : []), 4, ...(value === 3 ? [3] : []), 2, 1, 0])];
+      const options = opciones.map(option => ({ value: option, selected: option === value }));
       return { key, short: cfg.short, label: cfg.label, value, options, signed: this.#signed(value), tone: this.#scoreTone(value) };
     });
     context.derivedCards = [
@@ -233,12 +235,14 @@ export class CAMCActorSheet extends ActorSheetV1 {
     event.preventDefault();
     const key = event.currentTarget.dataset.attribute;
     const nextValue = Number(event.currentTarget.value);
-    if (!key || ![6, 4, 2, 1, 0].includes(nextValue)) return;
+    if (!key || !Number.isFinite(nextValue) || nextValue < 0) return;
 
     const attrs = this.actor.system.atributos ?? {};
     const previousValue = Number(attrs[key]?.value ?? 0);
     const update = { [`system.atributos.${key}.value`]: nextValue };
-    const swapEntry = Object.entries(attrs).find(([otherKey, data]) => {
+    // Intercambio solo dentro del reparto inicial 0/1/2/4/6, para no romper un valor ganado con Experiencia.
+    const iniciales = [6, 4, 2, 1, 0];
+    const swapEntry = iniciales.includes(nextValue) && iniciales.includes(previousValue) && Object.entries(attrs).find(([otherKey, data]) => {
       return otherKey !== key && Number(data?.value ?? 0) === nextValue;
     });
     if (swapEntry) update[`system.atributos.${swapEntry[0]}.value`] = previousValue;

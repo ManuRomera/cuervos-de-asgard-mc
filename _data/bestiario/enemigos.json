@@ -69,7 +69,139 @@
         "armadura_penalizacion": 0
       },
       "especial": "Solo uno de cada cinco bandidos suele ir equipado con un arma de fuego corta, y solo uno de cada diez con una larga. Alguno podría contar con un fusil de asalto muy excepcionalmente."
-    }
+    },
+    "items": [
+      {
+        "name": "Cuchillo / llave inglesa / pieza de metal improvisada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 6,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Ballesta",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "distancia_no_fuego",
+          "categoria": "distancia_no_fuego",
+          "dano_fijo": 5,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Revólver / pistola",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "fuego_cortas",
+          "categoria": "fuego_cortas",
+          "dano_fijo": 9,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Carabina / escopeta / rifle",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "fuego_largas",
+          "categoria": "fuego_largas",
+          "dano_fijo": 12,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Fusil de asalto",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "fuego_mortiferas",
+          "categoria": "fuego_mortiferas",
+          "dano_fijo": 17,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Uno de cada diez como mucho. Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Carroñero",
@@ -141,7 +273,35 @@
         "armadura_penalizacion": 0
       },
       "especial": "Su manjar favorito es la carne humana de niño. Evitan la luz solar."
-    }
+    },
+    "items": [
+      {
+        "name": "Arma de filo oxidada o contundente improvisada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 8,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Demonio de Fuego",
@@ -213,7 +373,61 @@
         "armadura_penalizacion": 0
       },
       "especial": "El mero hecho de estar cerca (combate cuerpo a cuerpo con armas) causa 1 punto de daño automático cada turno. Tocar al demonio sin armas causa 3 puntos de daño por turno. El agua les causa daño similar al que el fuego causa al resto."
-    }
+    },
+    "items": [
+      {
+        "name": "Garrazo flamígero",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 7,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "4 + 3 por fuego. Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Espada de roca incandescente o maza",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 13,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "10 + 3 por fuego. Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Draug de Helheim",
@@ -286,7 +500,61 @@
         "armadura_penalizacion": 0
       },
       "especial": "No sufre penalizaciones por daño ni tira por Resistencia Física (N/A). No puede ser convencido, seducido, aterrorizado o intimidado (sí puede ser engañado)."
-    }
+    },
+    "items": [
+      {
+        "name": "Dentellada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Daga infecta / espada mellada / hacha",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 8,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Cuervo de Asgard (Full Patch)",
@@ -358,7 +626,87 @@
         "armadura_penalizacion": 0
       },
       "especial": "Solo uno de cada diez Cuervos suele ir equipado con un arma de fuego corta o larga."
-    }
+    },
+    "items": [
+      {
+        "name": "Cuchillo / falcata / hacha / herramienta",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 7,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Viejo revólver",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "fuego_cortas",
+          "categoria": "fuego_cortas",
+          "dano_fijo": 10,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Vieja escopeta o fusil",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "fuego_largas",
+          "categoria": "fuego_largas",
+          "dano_fijo": 13,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Einherjar",
@@ -441,7 +789,61 @@
         "escudo_penalizacion": 0
       },
       "especial": "No sufre penalizaciones por daño ni tira por Resistencia Física (N/A). No puede ser aterrorizado o intimidado (sí puede ser engañado). Las armas de fuego no le hacen daño; el resto de armas (aparte de la protección de su cota de malla) causan solo la mitad."
-    }
+    },
+    "items": [
+      {
+        "name": "Dentellada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Cuchillo / espada tipo Ulfberht / hacha de mano / lanza",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 7,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Elfos de la Luz (Altos Elfos)",
@@ -523,7 +925,61 @@
         "escudo_penalizacion": 2
       },
       "especial": "El cuchillo o espada de hoja de Alfheim y el arco largo con puntas de Alfheim causan +3 puntos extra por quemadura a cualquier criatura del Ragnarök."
-    }
+    },
+    "items": [
+      {
+        "name": "Cuchillo o espada de hoja de Alfheim",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 6,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Arco largo con puntas de Alfheim",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "distancia_no_fuego",
+          "categoria": "distancia_no_fuego",
+          "dano_fijo": 13,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Elfos Oscuros (Elfos de las Cavernas)",
@@ -605,7 +1061,113 @@
         "escudo_penalizacion": 2
       },
       "especial": "El mordisco causa +3 puntos extra por la acidez de su saliva. El arco corto de madera de raíz causa +1 punto extra por turno durante cinco turnos por la quemadura venenosa que produce."
-    }
+    },
+    "items": [
+      {
+        "name": "Garrazo / mordisco",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "+3 por la saliva ácida al morder. Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Cimitarra negra / espada gancho / khopesh dentado",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 8,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Gran espada negra tipo dadao",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo_dos_manos",
+          "categoria": "cuerpo_a_cuerpo_dos_manos",
+          "dano_fijo": 10,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Arco corto de madera de raíz",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "distancia_no_fuego",
+          "categoria": "distancia_no_fuego",
+          "dano_fijo": 7,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Enanos (Dvergar)",
@@ -687,7 +1249,61 @@
         "escudo_penalizacion": 0
       },
       "especial": "Puede fabricar e imbuir objetos con magia rúnica (runas menores o mayores) a discreción de la DJ."
-    }
+    },
+    "items": [
+      {
+        "name": "Hacha de combate a dos manos / maza pesada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo_dos_manos",
+          "categoria": "cuerpo_a_cuerpo_dos_manos",
+          "dano_fijo": 12,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Cuchillo / espada tipo Ulfberht / hacha de mano / lanza",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 7,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Espectros",
@@ -841,7 +1457,35 @@
         "armadura_penalizacion": 0
       },
       "especial": "No sufre penalizaciones por daño ni tira por Resistencia Física (N/A). No puede ser convencido, seducido, aterrorizado o intimidado (sí podría ser engañado)."
-    }
+    },
+    "items": [
+      {
+        "name": "Cuchillo, espada o hacha mohosa",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 3,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Gigantes de Fuego",
@@ -921,7 +1565,35 @@
         "armadura_penalizacion": 0
       },
       "especial": "Desprende tanto calor que combatir cerca de él con armas causa 1 punto de daño automático cada turno; tocarlo sin armas causa 3 puntos por turno. No tira por Resistencia Física (N/A). No puede ser aterrorizado o intimidado (sí puede ser engañado)."
-    }
+    },
+    "items": [
+      {
+        "name": "Patada o puñetazo flamígero",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 19,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "16 + 3 por fuego. Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Gigantes de Hielo",
@@ -1001,7 +1673,61 @@
         "armadura_penalizacion": 0
       },
       "especial": "No tira por Resistencia Física (N/A). Cualquier ataque de fuego le causa el doble de daño. No puede ser aterrorizado o intimidado (sí puede ser engañado)."
-    }
+    },
+    "items": [
+      {
+        "name": "Aplastamiento / patada salvaje / puñetazo",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 26,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Espada / lanza / maza de hielo",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 53,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Gigantes de las Montañas",
@@ -1081,7 +1807,61 @@
         "armadura_penalizacion": 0
       },
       "especial": "Ataque de área con cualquier arma contundente cuerpo a cuerpo: impacta hasta a cinco rivales próximos entre sí con un solo golpe (Agilidad/Evasión de cada objetivo +2 por cada rival adicional ese turno; tirada de Lucha independiente por blanco; daño recibido por cada uno es el del golpe menos 10). No tira por Resistencia Física (N/A). No puede ser aterrorizado o intimidado (sí puede ser engañado)."
-    }
+    },
+    "items": [
+      {
+        "name": "Puñetazo demoledor",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 11,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Arma contundente improvisada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 23,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Huargos",
@@ -1161,7 +1941,35 @@
         "armadura_penalizacion": 0
       },
       "especial": "Dentellada furtiva y garrazo son sus únicos ataques; suelen combatir montados por elfos oscuros, reforzando la carga de sus jinetes."
-    }
+    },
+    "items": [
+      {
+        "name": "Dentellada furtiva / garrazo",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 10,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Supervivientes de las Llanuras Yermas",
@@ -1241,7 +2049,35 @@
         "armadura_penalizacion": 0
       },
       "especial": "Presa habitual de bandidos, carroñeros y criaturas del Ragnarök. Muchos hoy están amparados por los Cuervos de Asgard."
-    }
+    },
+    "items": [
+      {
+        "name": "Barra de hierro / cuchillo / garrote / herramienta / machete",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 5,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Trasgos",
@@ -1321,7 +2157,61 @@
         "armadura_penalizacion": 0
       },
       "especial": "Suelen moverse en cuadrillas, atacando en grupo y aprovechando el efecto sorpresa; expertos en emboscadas."
-    }
+    },
+    "items": [
+      {
+        "name": "Cuchillo / daga / espada corta / machete",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 4,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Arco corto de manufactura trasga",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "distancia_no_fuego",
+          "categoria": "distancia_no_fuego",
+          "dano_fijo": 5,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Troles",
@@ -1401,7 +2291,87 @@
         "armadura_penalizacion": 0
       },
       "especial": "Ataque de área con garrote o maza improvisada: impacta hasta a tres rivales próximos entre sí con un solo golpe (Agilidad/Evasión de cada objetivo +2 por cada rival adicional ese turno; tirada de Lucha independiente por blanco; daño recibido por cada uno es el del golpe menos 6). No tira por Resistencia Física (N/A). No puede ser convencido, seducido, aterrorizado, engañado ni intimidado."
-    }
+    },
+    "items": [
+      {
+        "name": "Puñetazo / zarpazo",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 9,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Garrote / maza improvisada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 19,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Gran roca arrojada",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "distancia_no_fuego",
+          "categoria": "distancia_no_fuego",
+          "dano_fijo": 18,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   },
   {
     "name": "Valquirias",
@@ -1483,6 +2453,287 @@
         "escudo_penalizacion": 3
       },
       "especial": "No tira nunca por Resistencia Física (N/A). Cada valquiria puede estar agraciada con dones divinos adicionales a discreción de la DJ (taumaturgia curativa, infundir valor, profecías, etc.)."
-    }
+    },
+    "items": [
+      {
+        "name": "Golpe seco con la mano / patada precisa",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 7,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Espada forjada en Asgard / lanza",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 15,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Motero del 1 % (vivo)",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/bandido-de-las-llanuras-yermas.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "Seguidor de Mogul, que juró lealtad a Hela. Odia a los Cuervos de Asgard.",
+        "raza": "Mortales",
+        "reino": "Midgard",
+        "rasgos": "Crueldad, Odio intenso (Cuervos de Asgard MC)"
+      },
+      "atributos": {
+        "car": {
+          "value": 2
+        },
+        "des": {
+          "value": 4
+        },
+        "fue": {
+          "value": 4
+        },
+        "int": {
+          "value": 2
+        },
+        "per": {
+          "value": 3
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 10,
+        "evasion": 13,
+        "aplomo": 9,
+        "perspicacia": 10
+      },
+      "combate": {
+        "salud": {
+          "value": 21,
+          "max": 21
+        },
+        "iniciativa": 6,
+        "resistencia_fisica": 8
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 2,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 1,
+        "armadura_descripcion": "Ropas de cuero",
+        "armadura_penalizacion": 0
+      },
+      "especial": "Cuando muere se levanta en el turno siguiente como draug del 1 %."
+    },
+    "items": [
+      {
+        "name": "Cuchillo / machete / cadenas / hacha / barra de acero / motosierra",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 7,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Carabina / escopeta / rifle",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "fuego_largas",
+          "categoria": "fuego_largas",
+          "dano_fijo": 13,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "distancia",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Solo uno de cada tres la lleva. Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Draug del 1 % (motero no-muerto)",
+    "type": "pnj",
+    "img": "systems/cuervos-de-asgard-mc/assets/actors/bestiario/bandido-de-las-llanuras-yermas.webp",
+    "system": {
+      "biografia": {
+        "descripcion": "Motero del 1 % levantado por la magia de Hela; aún cabalga su moto.",
+        "raza": "Muertos sin reposo",
+        "reino": "Midgard",
+        "rasgos": "Crueldad, Odio intenso (Cuervos de Asgard MC)"
+      },
+      "atributos": {
+        "car": {
+          "value": 0
+        },
+        "des": {
+          "value": 3
+        },
+        "fue": {
+          "value": 6
+        },
+        "int": {
+          "value": 0
+        },
+        "per": {
+          "value": 1
+        }
+      },
+      "valores_pasivos": {
+        "agilidad": 9,
+        "evasion": 12,
+        "aplomo": 5,
+        "perspicacia": 6
+      },
+      "combate": {
+        "salud": {
+          "value": 25,
+          "max": 25
+        },
+        "iniciativa": 3,
+        "resistencia_fisica": 0,
+        "sin_penalizadores": true
+      },
+      "habilidades_clave": {
+        "atletismo": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "conducir": {
+          "value": 3,
+          "atributo": "des"
+        },
+        "fuerza_bruta": {
+          "value": 3,
+          "atributo": "fue"
+        },
+        "lucha": {
+          "value": 2,
+          "atributo": "des"
+        },
+        "punteria": {
+          "value": 2,
+          "atributo": "per"
+        }
+      },
+      "proteccion": {
+        "armadura_nivel": 1,
+        "armadura_descripcion": "Ropas de cuero",
+        "armadura_penalizacion": 0
+      },
+      "especial": "No sufre penalizaciones por daño ni tira por Resistencia Física. No puede ser convencido, seducido, aterrorizado ni intimidado (sí engañado)."
+    },
+    "items": [
+      {
+        "name": "Arma de combate cuerpo a cuerpo oxidada y retorcida",
+        "type": "arma",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "tipo": "cuerpo_a_cuerpo",
+          "categoria": "cuerpo_a_cuerpo",
+          "dano_fijo": 9,
+          "fijo_total": true,
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "alcance": "cuerpo_a_cuerpo",
+          "municion": {
+            "value": 0,
+            "max": 0
+          },
+          "especial": "Daño total según el bestiario (ya incluye el atributo).",
+          "descripcion": "",
+          "equipada": true,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      }
+    ]
   }
 ]

@@ -564,10 +564,10 @@ function buildCamcContext(element) {
   const role = describeCamcElement(element, button, input);
   if (role) lines.push(role);
   if (input?.name) lines.push(`Campo de datos: ${escapeHtml(input.name)}`);
-  if (element.dataset?.tab) lines.push(`Pestana: ${escapeHtml(element.dataset.tab)}`);
+  if (element.dataset?.tab) lines.push(`Pestaña: ${escapeHtml(element.dataset.tab)}`);
   if (skillKey && !skill) lines.push(`Habilidad: ${escapeHtml(skillKey)}`);
   if (element.dataset?.type) lines.push(`Tipo: ${escapeHtml(element.dataset.type)}`);
-  if (element.dataset?.action) lines.push(`Accion: ${escapeHtml(element.dataset.action)}`);
+  if (element.dataset?.action) lines.push(`Acción: ${escapeHtml(element.dataset.action)}`);
   if (element.dataset?.itemId) lines.push(`ID: ${escapeHtml(element.dataset.itemId)}`);
 
   return lines;
@@ -576,28 +576,28 @@ function buildCamcContext(element) {
 function describeCamcElement(element, button, input) {
   const e = button || input || element;
   const classes = e.classList;
-  if (classes.contains("item-edit")) return "Accion: editar y abrir la ficha de este elemento.";
-  if (classes.contains("item-delete")) return "Accion: eliminar este elemento tras confirmacion.";
-  if (classes.contains("item-equip")) return "Accion: equipar o desequipar este elemento.";
-  if (classes.contains("item-roll-damage") || classes.contains("roll-damage")) return "Accion: tirar dano.";
-  if (classes.contains("roll-skill")) return "Accion: tirar esta habilidad.";
-  if (classes.contains("roll-initiative")) return "Accion: tirar iniciativa.";
-  if (classes.contains("roll-resistance")) return "Accion: tirar Resistencia Fisica.";
-  if (classes.contains("use-don")) return "Accion: usar este don y gastar proezas si procede.";
-  if (classes.contains("use-cargo-talent")) return "Accion: usar el talento del cargo.";
-  if (classes.contains("create-item")) return "Accion: crear un nuevo elemento de este tipo.";
-  if (classes.contains("skill-edit-toggle")) return "Accion: bloquear o desbloquear la edicion de dados de habilidades.";
-  if (classes.contains("vest-calibration-toggle")) return "Accion: bloquear o desbloquear la calibracion de parches del chaleco en esta ficha.";
-  if (classes.contains("fav-toggle")) return "Accion: marcar o desmarcar habilidad favorecida.";
-  if (classes.contains("skill-die")) return "Accion: cambiar el numero de dados de la habilidad si la edicion esta desbloqueada.";
+  if (classes.contains("item-edit")) return "Acción: editar y abrir la ficha de este elemento.";
+  if (classes.contains("item-delete")) return "Acción: eliminar este elemento tras confirmacion.";
+  if (classes.contains("item-equip")) return "Acción: equipar o desequipar este elemento.";
+  if (classes.contains("item-roll-damage") || classes.contains("roll-damage")) return "Acción: tirar daño.";
+  if (classes.contains("roll-skill")) return "Acción: tirar esta habilidad.";
+  if (classes.contains("roll-initiative")) return "Acción: tirar iniciativa.";
+  if (classes.contains("roll-resistance")) return "Acción: tirar Resistencia Física.";
+  if (classes.contains("use-don")) return "Acción: usar este don y gastar proezas si procede.";
+  if (classes.contains("use-cargo-talent")) return "Acción: usar el talento del cargo.";
+  if (classes.contains("create-item")) return "Acción: crear un nuevo elemento de este tipo.";
+  if (classes.contains("skill-edit-toggle")) return "Acción: bloquear o desbloquear la edición de dados de habilidades.";
+  if (classes.contains("vest-calibration-toggle")) return "Acción: bloquear o desbloquear la calibración de parches del chaleco en esta ficha.";
+  if (classes.contains("fav-toggle")) return "Acción: marcar o desmarcar habilidad favorecida.";
+  if (classes.contains("skill-die")) return "Acción: cambiar el numero de dados de la habilidad si la edición esta desbloqueada.";
   if (classes.contains("camc-attr-select")) return "Selector de atributo del personaje.";
   if (classes.contains("item-carry-location")) return "Selector de ubicacion de carga.";
-  if (classes.contains("camc-sheet-img-button") || classes.contains("camc-img-button")) return "Accion: cambiar la imagen del actor o elemento.";
+  if (classes.contains("camc-sheet-img-button") || classes.contains("camc-img-button")) return "Acción: cambiar la imagen del actor o elemento.";
   if (classes.contains("camc-resource-card")) return "Recurso de la ficha con valor actual, maximo y controles.";
   if (classes.contains("camc-derived-mini")) return "Valor derivado calculado por el sistema.";
   if (classes.contains("camc-panel")) return "Panel de la hoja.";
   if (input) return "Campo editable de la hoja.";
-  if (button) return "Boton de accion.";
+  if (button) return "Botón de acción.";
   return "";
 }
 
@@ -614,17 +614,17 @@ function findCamcDocumentForElement(element, itemId) {
 }
 
 function buildCamcItemHelp(doc) {
-  if (!doc) return ["Fila de objeto: clic izquierdo para usar, tirar o abrir segun el tipo."];
+  if (!doc) return ["Fila de objeto: clic izquierdo para usar, tirar o abrir según el tipo."];
   const s = doc.system ?? {};
   const lines = [];
   const typeLabels = {
     arma: "Arma",
-    armadura: "Proteccion",
+    armadura: "Protección",
     escudo: "Escudo",
     don: "Don",
     talento: "Talento",
     objeto: "Objeto",
-    vehiculo: "Vehiculo",
+    vehiculo: "Vehículo",
     regla: "Regla"
   };
   if (typeLabels[doc.type]) lines.push(typeLabels[doc.type]);
@@ -634,20 +634,20 @@ function buildCamcItemHelp(doc) {
   }
   if (doc.type === "talento" && s.cargo) lines.push(`Cargo: ${escapeHtml(s.cargo)}`);
   if (doc.type === "arma") {
-    const damage = `${s.dano ?? ""}${s.dano_fijo ? `+${s.dano_fijo}` : ""}`.trim();
-    if (s.categoria) lines.push(`Categoria: ${escapeHtml(s.categoria)}`);
-    if (damage) lines.push(`Dano: ${escapeHtml(damage)}`);
+    const damage = `${s.daño ?? ""}${s.dano_fijo ? `+${s.dano_fijo}` : ""}`.trim();
+    if (s.categoria) lines.push(`Categoría: ${escapeHtml(s.categoria)}`);
+    if (damage) lines.push(`Daño: ${escapeHtml(damage)}`);
   }
   if (["armadura", "escudo"].includes(doc.type)) {
-    if (s.nivel !== undefined) lines.push(`Nivel ${escapeHtml(s.nivel)} · Penalizacion ${escapeHtml(s.penalizacion ?? 0)}`);
+    if (s.nivel !== undefined) lines.push(`Nivel ${escapeHtml(s.nivel)} · Penalización ${escapeHtml(s.penalización ?? 0)}`);
   }
   if (doc.type === "objeto") {
     if (s.tipo) lines.push(`Tipo: ${escapeHtml(s.tipo)}`);
     if (s.tamano) lines.push(`Carga: ${escapeHtml(CAMC.tamanos[s.tamano] ?? s.tamano)}`);
     if (s.tipo === "modificacion_moto") {
-      lines.push("Modificacion de moto: al equiparla se aplica automaticamente a la moto del personaje cuando modifica iniciativa, estructura, maniobrabilidad, ocupantes, dados de dano o alforjas.");
-      if (String(doc.name).toLowerCase().includes("sidecar")) lines.push("Sidecar: permite una tercera modificacion funcional.");
-      if (String(doc.name).toLowerCase().includes("chasis ultrarreforzado")) lines.push("Condicion: requiere Chasis reforzado instalado.");
+      lines.push("Modificación de moto: al equiparla se aplica automaticamente a la moto del personaje cuando modifica iniciativa, estructura, maniobrabilidad, ocupantes, dados de daño o alforjas.");
+      if (String(doc.name).toLowerCase().includes("sidecar")) lines.push("Sidecar: permite una tercera modificación funcional.");
+      if (String(doc.name).toLowerCase().includes("chasis ultrarreforzado")) lines.push("Condición: requiere Chasis reforzado instalado.");
     }
   }
   if (doc.type === "vehiculo") {
@@ -684,7 +684,7 @@ function buildCamcFieldHelp(input) {
     return ["Alforjas extra: añaden 8 espacios a esta moto. No aumentan la carga que el personaje lleva a pie."];
   }
   if (name === "dificultad") {
-    return ["Dificultad: objetivo numerico de la tirada. Si se deja sin dificultad, el chat muestra solo el total."];
+    return ["Dificultad: objetivo numérico de la tirada. Si se deja sin dificultad, el chat muestra solo el total."];
   }
   if (name === "dificultadManual") {
     return ["Dificultad personalizada: sobrescribe la lista de dificultades si escribes un numero."];
@@ -693,16 +693,16 @@ function buildCamcFieldHelp(input) {
     return ["Modificador fijo: suma o resta directa al resultado final despues de tirar los dados."];
   }
   if (name === "dadosExtra") {
-    return ["Dados extra: dados circunstanciales antes de aplicar el limite de dados del sistema."];
+    return ["Dados extra: dados circunstanciales antes de aplicar el límite de dados del sistema."];
   }
   if (name === "proezaDados") {
-    return ["Proezas para +D: gasta proezas para anadir dados a la tirada."];
+    return ["Proezas para +D: gasta proezas para añadir dados a la tirada."];
   }
   if (name === "dadosSacrificados") {
-    return ["Dados sacrificados: retira dados de la tirada para apuntar o afinar una accion cuando la regla lo permita."];
+    return ["Dados sacrificados: retira dados de la tirada para apuntar o afinar una acción cuando la regla lo permita."];
   }
   if (name === "aplicaSalud") {
-    return ["Penalizador de Salud: aplica la penalizacion automatica por heridas actuales."];
+    return ["Penalizador de Salud: aplica la penalización automática por heridas actuales."];
   }
   if (name === "desenfundar") {
     return ["Desenfundar o cambiar de arma: penalizador de -1D cuando se prepara o cambia el arma en este turno."];
@@ -710,8 +710,8 @@ function buildCamcFieldHelp(input) {
   if (input.classList?.contains("item-carry-location")) {
     const label = CAMC.ubicacionesCarga[value] ?? value;
     return [
-      `Ubicacion de carga: ${escapeHtml(label)}`,
-      "Mochila/equipo encima cuenta contra el limite a pie. Alforjas cuenta contra la capacidad de la moto."
+      `Ubicación de carga: ${escapeHtml(label)}`,
+      "Mochila/equipo encima cuenta contra el límite a pie. Alforjas cuenta contra la capacidad de la moto."
     ];
   }
   return [];
