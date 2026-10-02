@@ -255,7 +255,8 @@
           "max": 23
         },
         "iniciativa": 6,
-        "resistencia_fisica": 0
+        "resistencia_fisica": 0,
+        "sin_penalizadores": true
       },
       "habilidades_clave": {
         "atletismo": {
@@ -399,7 +400,8 @@
           "max": 21
         },
         "iniciativa": 6,
-        "resistencia_fisica": 0
+        "resistencia_fisica": 0,
+        "sin_penalizadores": true
       },
       "habilidades_clave": {
         "atletismo": {
@@ -727,7 +729,8 @@
           "max": 13
         },
         "iniciativa": 5,
-        "resistencia_fisica": 0
+        "resistencia_fisica": 0,
+        "sin_penalizadores": true
       },
       "habilidades_clave": {
         "atletismo": {
@@ -807,7 +810,8 @@
           "max": 10
         },
         "iniciativa": 0,
-        "resistencia_fisica": 0
+        "resistencia_fisica": 0,
+        "sin_penalizadores": true
       },
       "habilidades_clave": {
         "atletismo": {

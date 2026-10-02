@@ -32,7 +32,7 @@ Foundry descargará el sistema desde la última release y avisará cuando haya a
 
 - Hoja de `personaje` con cabecera temática, retrato o figura exterior, deidad, cargo, parches, recursos, atributos, valores derivados, habilidades, combate, equipo, dones, moto vinculada y biografía.
 - Hoja de `pnj` rápida para mesa, con atributos, valores derivados, habilidades relevantes, ataque, acción especial, salud y notas.
-- Hoja de `comunidad` para población, reputación, recursos, defensas, aliados, amenazas, acontecimientos y situación del asentamiento.
+- Hoja de `comunidad` con las reglas del capítulo 7: Moral, Población y Recursos, capítulo y capacidad especial, Mesa presidencial, enemigo jurado y tabla de sucesos (D66) con tirada de salvación.
 - Hoja de `moto` con estructura, daño, maniobrabilidad, carga, modificaciones, acciones de conducción, tuneado y generador.
 - Hoja de `item` para armas, armaduras, escudos, dones, objetos, vehículos, talentos y reglas.
 - Chat cards temáticas para tiradas, daño, iniciativa, dones, armas y acciones de vehículo.
@@ -40,14 +40,16 @@ Foundry descargará el sistema desde la última release y avisará cuando haya a
 
 ## Automatizaciones
 
-- Tiradas iniciales, habilidad, iniciativa, resistencia, daño, dones, persecuciones y acciones rápidas de moto.
-- Cálculo de Agilidad, Aplomo, Perspicacia, Salud, Resistencia física, protección, carga y efectos de equipo.
-- Equipar y desequipar armas, armaduras, escudos, objetos, parches, dones y modificaciones.
-- Control de munición, daño de armas, daño de vehículos, salud de personajes y estructura de motos.
-- Consumo y recuperación de proezas.
-- Habilidades favorecidas por cargo, con límite y edición controlada.
-- Generadores de personaje, PNJ, comunidad y montura; el aleatorio completo de PJ crea también talento, don, equipo inicial y moto vinculada.
-- Importador automático de contenido al mundo, configurable desde ajustes.
+- **Tiradas** de habilidad con todos los modificadores del manual (armadura y escudo, falta de luz, cobertura, ráfagas, acciones combinadas, talentos), críticos y pifias, proezas (repetir dados, +1D, subir valores pasivos) y Recuerdo cuando….
+- **Defectos** activados por el DJ y repetición con proeza; si la repetición acierta, se calcula el daño.
+- **Combate**: iniciativa con los desempates del manual, daño por arma (fijo + atributo), apuntar, noquear, críticos, proezas en el daño (+1D que explota), munición y cargador vacío en ráfagas, aplicar daño con la armadura del objetivo.
+- **Salud**: penalizadores de −1D y −2D, Resistencia Física automática al bajar de 11, 7, 4 y 2 (con desmayo), curación con Auxilio.
+- **Ficha derivada**: Agilidad, Evasión, Aplomo, Perspicacia, Salud, Resistencia Física, proezas y protección se calculan solas; carga a pie y en alforjas; modificaciones de moto.
+- **Persecuciones**: terreno, visibilidad, acciones de movimiento y las ocho maniobras con sus modificadores, estructura y daño de la moto.
+- **Campaña**: «Nueva sesión» y «Fin de aventura» (Experiencia, caducidad de objetos reciclados, suceso de comunidad), Reputación con rangos, Faltas, Experiencia con los costes del manual.
+- **Comunidad**: efectos en cascada de Moral, Población y Recursos, y sucesos con salvación.
+- **Creación**: asistente guiado paso a paso, generador aleatorio completo de PJ (equipo del cargo, talento, don, moto), de PNJ, de comunidad y de montura.
+- Las hojas recuerdan posición, tamaño y pestaña. Importador de contenido al mundo, configurable.
 
 ## Compendios y contenido
 

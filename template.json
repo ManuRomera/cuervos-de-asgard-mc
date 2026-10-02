@@ -17,7 +17,7 @@
           "perspicacia": 0
         },
         "combate": {
-          "salud": { "value": 14, "max": 14 },
+          "salud": { "value": 14, "max": 14, "roll_inicial": 0 },
           "proezas": { "value": 3, "max": 3 },
           "resistencia_fisica": 12,
           "iniciativa": 0,
@@ -80,6 +80,7 @@
         "descripcion": "",
         "historia": "",
         "recuerdo_cuando_usado": false,
+        "recuerdo_cuando_usos": 0,
         "defecto_leve_usado": false
       },
       "faltas": { "value": 0, "max": 3 },
@@ -139,6 +140,23 @@
     "comunidad": {
       "nombre": "",
       "capitulo": "",
+      "capitulo_clave": "norte",
+      "bono_este": "",
+      "puntos": { "moral": 2, "poblacion": 2, "recursos": 2 },
+      "mesa": {
+        "presidente": "",
+        "vicepresidente": "",
+        "secretario": "",
+        "tesorero": "",
+        "sargento_armas": "",
+        "capitan_rutas": "",
+        "mecanico_jefe": ""
+      },
+      "bienes": "",
+      "destacados": "",
+      "enemigo_jurado": "",
+      "enemigo_historia": "",
+      "acontecimientos": [],
       "poblacion": 0,
       "reputacion": { "value": 0 },
       "recursos": {
@@ -285,6 +303,10 @@
     },
     "talento": {
       "cargo": "",
+      "clave": "",
+      "uso": "pasivo",
+      "usos": { "value": 0, "max": 0 },
+      "compartido": "",
       "efecto": "",
       "descripcion": ""
     },

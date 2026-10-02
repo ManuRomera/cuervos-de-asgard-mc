@@ -1,4 +1,4 @@
-# Compatibilidad Foundry V13 / V14 — 1.5.0
+# Compatibilidad Foundry V13 / V14 — 1.6.0
 
 Una única distribución mantiene las reglas, documentos y compendios de CAMC en ambas generaciones. La capa `module/compat/` concentra las diferencias de integración.
 
@@ -27,7 +27,7 @@ APIs contrastadas con el código instalado de Foundry 13.351 y la documentación
 
 ## Validación
 
-`node --test tests/*.test.mjs` ejecuta 16 pruebas sin dependencias: selección de APIs y ajustes de chat para los cuatro modos en cada generación, preservación del mensaje de entrada, rechazo seguro ante error de privacidad, destinatarios de Dice So Nice, normalización DOM, diagnóstico e importación/registro de fichas sin alias globales antiguos.
+`npm test` ejecuta 39 pruebas sin dependencias (16 de compatibilidad y el resto de reglas y generadores): selección de APIs y ajustes de chat para los cuatro modos en cada generación, preservación del mensaje de entrada, rechazo seguro ante error de privacidad, destinatarios de Dice So Nice, normalización DOM, diagnóstico e importación/registro de fichas sin alias globales antiguos.
 
 Estas pruebas usan dobles de las APIs de Foundry. No certifican el comportamiento visual ni sustituyen una partida de prueba. El manifiesto conserva `verified: 13.351` de la versión anterior; esta nueva versión necesita regresión real. `maximum: 14` conserva el límite de instalación anterior, no acredita una prueba en V14.
 

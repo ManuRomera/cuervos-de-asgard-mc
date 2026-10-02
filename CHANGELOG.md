@@ -2,6 +2,47 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.6.0] — 2026-10-02
+
+Auditoría completa del sistema contra el manual (véase `docs/AUDITORIA.md`): reglas que faltaban o estaban mal, contenido inventado sustituido por el del libro, automatismos nuevos y herramientas de desarrollo.
+
+### Reglas corregidas
+- **Proezas**: gastar proezas hasta quedar en 3 las volvía a llenar solas (heurística de «valor = máximo antiguo»). Ahora el máximo se calcula siempre, gastar nunca rellena, y subir FUE o INT con las proezas al completo las deja al completo.
+- **Salud**: el máximo de un PJ creado a mano se quedaba en 14 sin importar la FUE. Ahora es FUE × 2 + 10 + 1D; la tirada de 1D se hace al crear el PJ y queda en la hoja (`Biografía → Tirada de Salud inicial`). Los PJ anteriores conservan la tirada que ya tenían.
+- **Armaduras y escudos**: su penalización a las tiradas de DES y FUE estaba calculada pero nunca se aplicaba. Ahora se aplica sola y se muestra en el diálogo y en la tarjeta. Las armaduras *compatibles* (casco, gabán) se suman a la mejor armadura y el chaleco de kevlar solo cuenta contra armas de fuego y no penaliza.
+- **Vicepresidente**: sus favorecidas son Psicología, Seducción y Subterfugio más una a elegir (antes eran cuatro libres). Presidente: cuatro libres. Los demás cargos, las suyas fijas.
+- **Talentos**: el libro tiene 21 talentos (tres por cargo, se elige uno). El compendio traía 8 inventados; se sustituyen. Los de efecto mecánico se aplican solos: Líder nato (+2 proezas), Pozo de sabiduría (dos Recuerdo cuando), Leer el terreno y Urbanita (crítico con un solo 6), Curandero (3 y 6 de curación), Voz y Regatear (−3 a la dificultad). Los de «una vez por sesión/aventura» llevan la cuenta.
+- **Idiomas míticos**: élfico, lengua de los gigantes, demoníaco elemental, rúnico y trol (p. 69). Antes había una lista inventada.
+- **Parches de deidad**: las Virtudes escritas en los parches (Liderazgo, Valor, Honor…) no eran las del libro (Responsabilidad, Coraje, Disciplina…).
+- **Objetos**: la tabla de equipo se alinea con la del manual (30 objetos). Se retiran 10 que no figuran en ella y se añaden los que faltaban (prismáticos, máscara antigás, medicamentos, munición…).
+- **Persecuciones**: las maniobras tenían modificadores equivocados y faltaban cinco (Abordar, Atacar directamente, Atacar estabilizando, Atrapar, Chocar directamente). Se incluyen todas, más Arrollar y Cargar.
+- **Pregenerados**: llevan deidad, Virtud, don, talento del libro y las modificaciones de moto de su ficha; Leon y Thomas tienen sus cuatro favorecidas.
+- **Bestiario**: draugar, einherjar, espectros y esqueletos no sufren penalizadores por daño; los que no tiran Resistencia Física (valor 0) no la tiran.
+- **Una repetición con proeza que convertía un fallo en acierto** no calculaba el daño del impacto; ahora sí (y la curación y el desmayo, en su caso).
+- Los generadores llevaban su propia copia de talentos y dones; ahora leen el catálogo de `_data`. El equipo inicial generado sigue el de cada cargo del manual.
+
+### Automatismos nuevos
+- **Resistencia Física automática** al bajar por primera vez de 11, 7, 4 y 2 de Salud; si se falla, el personaje cae inconsciente. Ajuste de mundo: solo PJ (por defecto), todos o ninguno.
+- **Daño**: apuntar (+1D cuerpo a cuerpo, +2D a distancia), noquear, ataques combinados (+2 por colaborador, +1 de daño por personaje), cobertura, ráfagas, falta de luz, y botón de gastar proezas en el daño (+1D que explota, máximo 2 o 3 con armas de fuego).
+- **Iniciativa**: el desempate del manual (DES, INT, PER, Agilidad) y aviso de acción extra con un 6.
+- **Nueva sesión** y **Fin de aventura** (botones en la pestaña de Actores, solo DJ): reinician proezas, defecto leve, Recuerdo cuando, talentos, umbrales; reparten Experiencia; tiran la caducidad de los objetos reciclados; tiran el suceso de comunidad.
+- **Comunidad** según el capítulo 7: Moral, Población y Recursos con capacidad especial del capítulo, reparto inicial de 6 puntos, Mesa presidencial, enemigo jurado, efectos en cascada (XP para todos, pérdida de Población, castigo de Moral) y la **tabla de sucesos D66** con su tirada de salvación (dificultad 18, o 14 si el cargo es de un PJ). La Moral ajusta las proezas de «Nueva sesión». Las comunidades que ya tenías empiezan en Moral 2, Población 2, Recursos 2 y Capítulo Norte (ajústalos con «Reparto inicial»); sus datos antiguos (censo, seis recursos) se conservan en una pestaña de inventario.
+- **Reputación** con rangos (Repudiado … Reverenciado), pasos de medio punto y aviso al DJ cuando cambia el efecto sobre la Moral. **Faltas**: aviso al llegar a tres.
+- **Mejorar** (Experiencia): sube atributos y habilidades con los costes del manual.
+- Diálogo de tirada único para hoja y moto, con los modificadores del manual.
+
+### Interfaz y herramientas
+- **Accesibilidad**: botón con el icono de accesibilidad en la cabecera de todas las hojas (y en Ajustes) para elegir tamaño del texto (100-150 %), mayor contraste, lectura fácil y menos animaciones. Es un ajuste de cada navegador.
+- **Hoja de Comunidad en ApplicationV2** (primera hoja migrada; las demás siguen en V1).
+- **Compendios compilados al publicar** (`npm run build`, con `classic-level`) desde `_data`; `packs/` deja de estar en git. El importador ya no escribe en los compendios.
+- **El importador no pisa lo que el DJ edita en el mundo.** Solo crea lo que falta; para reponer el contenido original está la macro «CAMC · Reimportar contenido».
+- Las motos base llevaban 15 modificaciones inventadas; ahora solo las del manual.
+- Licencia MIT.
+- **Creación guiada** del PJ paso a paso (ApplicationV2) con la validación de cada regla del libro, junto al generador aleatorio.
+- Las hojas **recuerdan posición, tamaño y pestaña** por usuario y mundo.
+- Hoja de moto con todas las maniobras de persecución.
+- Reglas del manual en funciones puras (`module/rules/`) con 39 pruebas que citan la página del libro; `npm run check` valida sintaxis, JSON, rutas, idiomas, versión y coherencia de datos; el flujo «Comprobar» las ejecuta en cada subida y la publicación las exige.
+
 ## [1.5.0] — 2026-09-19
 
 ### Compatibilidad Foundry V13 / V14

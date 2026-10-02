@@ -1,7 +1,10 @@
 import { createRollMessage, showRepeatedRoll } from "../compat/chat.mjs";
 import { Dialog } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
+import * as R from "../rules/reglas.mjs";
 import { escapeHtml } from "../utils/sheet-utils.mjs";
+
+const PLANTILLA = `systems/${CAMC.systemId}/templates/chat/roll-card.hbs`;
 
 export class YsystemDice {
   static async rollSkill(actor, habilidad, options = {}) {
@@ -12,61 +15,91 @@ export class YsystemDice {
     const formula = flat === 0 ? dicePart : `${dicePart} ${flat >= 0 ? "+" : "-"} ${Math.abs(flat)}`;
     const roll = await (new Roll(formula)).evaluate();
     const dice = roll.dice?.[0]?.results?.map(r => r.result) ?? [];
-    const critico = dice.filter(d => d === 6).length >= 2;
-    const pifia = dice.length > 0 && dice.every(d => d === 1);
+    const { critico, pifia } = R.evaluarDados(dice, { umbralCritico: data.umbralCritico });
     const dificultad = options.dificultad ? Number(options.dificultad) : null;
     const exito = critico || (dificultad !== null && roll.total >= dificultad && !pifia);
-    if (critico && actor.type === "personaje") await actor.ganarProezas(1);
+    // Una proeza por crítico en tirada de habilidad (no en la Resistencia Física automática).
+    if (critico && actor.type === "personaje" && options.umbralRF === undefined) await actor.ganarProezas(1);
 
-    let danoInfo = null;
-    if (exito && !options.auxilioCurar && (habilidad === "lucha" || habilidad === "punteria")) {
-      if (data.armaPreparada && !data.armaPreparada.desarmado) {
-        danoInfo = await this.#resolverDanoDeAtaque(actor, data.armaPreparada, critico);
-      } else if (habilidad === "lucha" && (!data.armaPreparada || data.armaPreparada.desarmado)) {
-        danoInfo = this.#resolverDanoDesarmado(actor, critico);
-      }
-    }
-
-    let curaInfo = null;
-    if (options.auxilioCurar) {
-      curaInfo = await this.#resolverCuraAuxilio(actor, options, { exito, critico, pifia });
-    }
-
-    await this.#sendChat({ actor, tipo: "tirada", habilidad, roll, dice, data, critico, pifia, dificultad, exito, opciones: options, danoInfo, curaInfo });
-    return { roll, dice, critico, pifia, dificultad, exito, danoInfo, curaInfo };
+    const resultado = await this.#resolverResultado(actor, habilidad, options, data, { exito, critico, pifia });
+    const ctx = { habilidad, dificultad, dice, total: roll.total, data, opciones: options, exito, pifia, critico, ...resultado };
+    await this.#sendChat({ actor, tipo: "tirada", roll, ctx });
+    return { roll, dice, critico, pifia, dificultad, exito, ...resultado };
   }
 
   /**
-   * Reglas: el daño de un impacto con Lucha/Puntería es esencialmente fijo por arma
-   * (daño fijo + bonificador de atributo, a veces con algún dado), así que se resuelve
-   * en el mismo momento del impacto en vez de exigir una segunda tirada manual.
+   * Efectos automáticos de una tirada resuelta: daño de un impacto, curación con Auxilio y
+   * desmayo por Resistencia Física. Se usa también cuando una repetición convierte el fallo en éxito.
    */
-  static async #resolverDanoDeAtaque(actor, armaPreparada, critico = false) {
+  static async #resolverResultado(actor, habilidad, options, data, { exito, critico, pifia }) {
+    const out = {};
+    if (options.umbralRF !== undefined) {
+      if (!exito) { await actor.ponerInconsciente(true); out.desmayo = true; }
+      else if (actor.statuses?.has("unconscious") && options.umbralRF !== undefined) await actor.ponerInconsciente(false);
+    }
+    if (exito && !options.auxilioCurar && (habilidad === "lucha" || habilidad === "punteria")) {
+      if (data.armaPreparada && !data.armaPreparada.desarmado) {
+        out.danoInfo = await this.#resolverDanoDeAtaque(actor, data.armaPreparada, critico, options);
+      } else if (habilidad === "lucha") {
+        out.danoInfo = await this.#resolverDanoDesarmado(actor, critico, options);
+      }
+    }
+    if (options.auxilioCurar) out.curaInfo = await this.#resolverCuraAuxilio(actor, options, { exito, critico, pifia });
+    return out;
+  }
+
+  /**
+   * Reglas (pp. 81-83): el daño de un impacto es fijo por arma + bonificador de atributo; apuntar añade
+   * 1D (cuerpo a cuerpo) o 2D (a distancia) por dado sacrificado, sin explotar; un crítico dobla el daño;
+   * noquear lo reduce a la mitad; las ráfagas no suman el bonificador de PER; un ataque combinado suma
+   * un punto por personaje que colabora. Las proezas se gastan después, desde la tarjeta.
+   */
+  static async #resolverDanoDeAtaque(actor, armaPreparada, critico = false, options = {}) {
     const item = actor.items?.get(armaPreparada.id);
     if (!item) return null;
+    let cargadorVacio = false;
     if (typeof item.tieneMunicion === "function" && item.tieneMunicion()) {
-      const ok = await item.consumirMunicion(1);
+      // Ráfaga: un cartucho por blanco y después 1D; con 1 o 2 se vacía el cargador y toca recargar el turno siguiente (p. 83).
+      const gasto = options.rafaga ? Math.min(Number(options.rafaga), Number(item.system.municion.value)) : 1;
+      const ok = await item.consumirMunicion(Math.max(1, gasto));
       if (!ok) {
         ui.notifications.warn(`${item.name}: sin munición.`);
         return null;
       }
+      if (options.rafaga && (await (new Roll("1d6")).evaluate()).total <= 2) {
+        cargadorVacio = true;
+        await item.update({ "system.municion.value": 0 });
+      }
     }
-    const formula = (typeof item.getFormulaDano === "function" ? item.getFormulaDano(actor) : "") || "0";
+    const formula = (typeof item.getFormulaDano === "function" ? item.getFormulaDano(actor, { sinAtributo: Boolean(options.rafaga) }) : "") || "0";
     const danoRoll = await (new Roll(formula)).evaluate();
-    const total = critico ? danoRoll.total * 2 : danoRoll.total;
-    return { total, formula: danoRoll.formula, itemName: item.name, itemId: item.id, critico };
+    const aDistancia = (item.system?.habilidad_ataque ?? "") === "punteria";
+    const apuntar = options.noquear ? 0 : R.dadosPorApuntar(Number(options.dadosApuntados ?? 0), aDistancia);
+    let extra = 0;
+    if (apuntar) extra = (await (new Roll(`${apuntar}d6`)).evaluate()).total;
+    const combinado = Number(options.colaboradores ?? 0) > 0 ? Number(options.colaboradores) + 1 : 0;
+    return this.#construirDano({
+      base: danoRoll.total + extra + combinado, formula: danoRoll.formula, itemName: item.name, itemId: item.id,
+      critico, noquear: Boolean(options.noquear), apuntar, combinado, categoria: item.system?.categoria ?? "", rafaga: Number(options.rafaga ?? 0), cargadorVacio
+    });
   }
 
-  /**
-   * Reglas: sin arma, el daño de Lucha desarmada es fijo (1) + la mitad del bonificador
-   * de FUE (redondeado hacia abajo), igual que cualquier otro impacto se resuelve en el
-   * momento del éxito en vez de exigir una tirada de daño aparte.
-   */
-  static #resolverDanoDesarmado(actor, critico = false) {
+  static async #resolverDanoDesarmado(actor, critico = false, options = {}) {
     const fue = Number(actor.system?.atributos?.fue?.value ?? 0);
     const base = Number(CAMC.danoDesarmado?.fijo ?? 1) + Math.floor(fue / 2);
-    const total = critico ? base * 2 : base;
-    return { total, formula: `${CAMC.danoDesarmado?.fijo ?? 1} + FUE/2`, itemName: "Desarmado", itemId: null, critico };
+    const apuntar = options.noquear ? 0 : Number(options.dadosApuntados ?? 0);
+    const extra = apuntar ? (await (new Roll(`${apuntar}d6`)).evaluate()).total : 0;
+    const combinado = Number(options.colaboradores ?? 0) > 0 ? Number(options.colaboradores) + 1 : 0;
+    return this.#construirDano({
+      base: base + extra + combinado, formula: `${CAMC.danoDesarmado?.fijo ?? 1} + FUE/2`, itemName: "Desarmado", itemId: null,
+      critico, noquear: Boolean(options.noquear), apuntar, combinado, categoria: "desarmado", rafaga: 0
+    });
+  }
+
+  /** Aplica noqueo y crítico, y deja anotado lo necesario para sumar proezas después. */
+  static #construirDano(d) {
+    const sinCritico = d.noquear ? R.danoNoqueo(d.base) : d.base;
+    return { ...d, sinCritico, total: R.aplicarCriticoDano(sinCritico, d.critico), proezasUsadas: 0, maxProezas: R.maxProezasDano(d.categoria) };
   }
 
   /**
@@ -81,11 +114,9 @@ export class YsystemDice {
     const targetUuid = options.curarTargetUuid || actor.uuid;
     const target = targetUuid === actor.uuid ? actor : await fromUuid(targetUuid);
     if (!target || typeof target.modificarSalud !== "function") return null;
-    let cantidad = 0;
-    let resultado = "sin_efecto";
-    if (critico) { cantidad = 4; resultado = "critico"; }
-    else if (pifia) { cantidad = -1; resultado = "pifia"; }
-    else if (exito) { cantidad = 2; resultado = "exito"; }
+    const cantidad0 = R.curacionAuxilio({ exito, critico, pifia }, { curandero: actor.tieneTalento?.("curandero") });
+    let cantidad = cantidad0;
+    const resultado = critico ? "critico" : pifia ? "pifia" : exito ? "exito" : "sin_efecto";
     const tieneBotiquin = (actor.items ?? []).some(item => item.type === "objeto" && item.system?.equipada && String(item.name ?? "").toLowerCase().includes("botiqu"));
     const bonusBotiquin = tieneBotiquin && cantidad > 0 ? 1 : 0;
     cantidad += bonusBotiquin;
@@ -103,16 +134,34 @@ export class YsystemDice {
     return roll;
   }
 
+  /**
+   * Iniciativa (p. 81): 1D fijo + valor de Iniciativa. Los empates los resuelven DES, INT, PER y Agilidad
+   * (se suman como fracción al valor del rastreador). Un 6 en el dado da una acción extra al comienzo del
+   * primer turno, solo a quien tenga la iniciativa más alta entre los que sacaron 6.
+   */
   static async rollInitiative(actor) {
     const bonus = Number(actor.system.combate?.iniciativa ?? 0);
     const roll = await (new Roll(`1d6 + ${bonus}`)).evaluate();
-    await this.#sendChat({ actor, tipo: "iniciativa", roll, formula: `1d6 + ${bonus}` });
+    const dado = roll.dice?.[0]?.results?.[0]?.result ?? 0;
+    const atributos = actor.system.atributos ?? {};
+    const desempate = R.desempateIniciativa({
+      des: Number(atributos.des?.value ?? 0), int: Number(atributos.int?.value ?? 0), per: Number(atributos.per?.value ?? 0),
+      agilidad: Number(actor.system.valores_pasivos?.agilidad ?? 0)
+    });
+    await this.#sendChat({ actor, tipo: "iniciativa", roll, formula: `1d6 + ${bonus}`, extraAccion: dado === 6 });
     const combatant = game.combat?.combatants?.find(c => c.actor?.id === actor.id);
-    if (combatant) await game.combat.setInitiative(combatant.id, roll.total);
+    if (combatant) {
+      await game.combat.setInitiative(combatant.id, roll.total + desempate);
+      if (dado === 6) await combatant.setFlag(CAMC.systemId, "accionExtra", true);
+    }
     return roll;
   }
 
-  static async rollResistance(actor) {
+  /**
+   * Resistencia Física (p. 88): 3D contra el valor del personaje, con los penalizadores de Salud. Si se falla,
+   * el personaje se desmaya (estado inconsciente). `umbral` indica que la tirada viene de bajar de 11, 7, 4 o 2 de Salud.
+   */
+  static async rollResistance(actor, { umbral } = {}) {
     const dificultad = Number(actor.system.combate?.resistencia_fisica ?? 12);
     return this.rollSkill(actor, "resistencia_fisica", {
       dificultad,
@@ -121,7 +170,39 @@ export class YsystemDice {
       bonificador: 0,
       favorecida: false,
       modificador: 0,
-      etiqueta: "Resistencia Física"
+      aplicaProteccion: false,
+      umbralRF: umbral,
+      esResistencia: true,
+      etiqueta: umbral === undefined ? "Resistencia Física" : `Resistencia Física · Salud por debajo de ${umbral}`
+    });
+  }
+
+  /**
+   * Gasta proezas en el daño de un impacto: +1D por proeza (máximo 2, o 3 con armas de fuego), dados que explotan.
+   * El crítico, si lo hubo, sigue doblando el daño total (p. 79).
+   */
+  static async gastarProezasEnDano(message, cantidad) {
+    const ctx = message.getFlag(CAMC.systemId, "tirada");
+    const dano = ctx?.danoInfo;
+    if (!dano) return ui.notifications.warn("Este mensaje no tiene daño al que sumar proezas.");
+    const actor = ctx.actorUuid ? await fromUuid(ctx.actorUuid) : null;
+    if (!actor) return ui.notifications.warn("No se encuentra el personaje de esta tirada.");
+    if (!(game.user.isGM || actor.isOwner)) return ui.notifications.warn("No tienes permiso para gastar proezas de este personaje.");
+    cantidad = Math.max(1, Math.floor(Number(cantidad) || 1));
+    const quedan = dano.maxProezas - dano.proezasUsadas;
+    if (cantidad > quedan) return ui.notifications.warn(quedan ? `Solo puedes gastar ${quedan} proeza(s) más en este ataque.` : "Ya has gastado el máximo de proezas en este ataque.");
+    if (!(await actor.gastarProezas(cantidad))) return ui.notifications.warn(`${actor.name} no tiene proezas suficientes.`);
+    const roll = await (new Roll(`${cantidad}d6x`)).evaluate();
+    await showRepeatedRoll(roll, message);
+    dano.sinCritico += roll.total;
+    dano.proezasUsadas += cantidad;
+    dano.total = R.aplicarCriticoDano(dano.sinCritico, dano.critico);
+    dano.proezaDados = [...(dano.proezaDados ?? []), ...roll.dice[0].results.map(r => r.result)];
+    const actual = { ...ctx, danoInfo: dano };
+    await message.update({
+      content: await this.#renderCard(actor, actual),
+      [`flags.${CAMC.systemId}.tirada`]: actual,
+      [`flags.${CAMC.systemId}.chatAction`]: { type: "damage", total: dano.total, actorUuid: actor.uuid, itemUuid: dano.itemId ?? "", categoria: dano.categoria ?? "" }
     });
   }
 
@@ -274,30 +355,11 @@ export class YsystemDice {
       ? "Repetirás con 1D menos y ganarás 1 proeza."
       : "Repetirás la tirada igual, sin proeza (solo puede usarse una vez por sesión).";
     const nota = `<i class="fas fa-user-shield"></i> El DJ activa tu <strong>${etiqueta}</strong>: "${escapeHtml(texto)}". ${detalle} Pulsa "Tirar dados" cuando quieras interpretarlo.`;
-    const flat = Number(ctx.data?.bonificador ?? 0) + Number(ctx.data?.bonusFavorecida ?? 0) + Number(ctx.data?.modificador ?? 0);
-    const total = (ctx.dice ?? []).reduce((a, b) => a + b, 0) + flat;
     const defectoPendiente = { tipo, texto, rerollCount, allowCritico, grantProeza, markLeveUsado };
-
-    const content = await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
-      tipo: "tirada",
-      habilidad: ctx.habilidad,
-      actor,
-      roll: { total },
-      dice: ctx.dice ?? [],
-      data: ctx.data ?? {},
-      critico: ctx.critico,
-      pifia: ctx.pifia,
-      exito: ctx.exito,
-      dificultad: ctx.dificultad,
-      opciones: ctx.opciones ?? {},
-      repetida: false,
-      repeticionNota: nota,
-      defectoPendiente
-    });
-
+    const actual = { ...ctx, defectoPendiente };
     await message.update({
-      content,
-      [`flags.${CAMC.systemId}.tirada`]: { ...ctx, defectoPendiente }
+      content: await this.#renderCard(actor, actual, { repeticionNota: nota, repetida: false }),
+      [`flags.${CAMC.systemId}.tirada`]: actual
     });
     return defectoPendiente;
   }
@@ -341,8 +403,7 @@ export class YsystemDice {
     const diceIsNew = keepValues.map(() => false).concat(nuevos.map(() => true));
     const flat = Number(ctx.data?.bonificador ?? 0) + Number(ctx.data?.bonusFavorecida ?? 0) + Number(ctx.data?.modificador ?? 0);
     const total = diceFinal.reduce((a, b) => a + b, 0) + flat;
-    const pifia = diceFinal.length > 0 && diceFinal.every(d => d === 1);
-    const critico = allowCritico && diceFinal.filter(d => d === 6).length >= 2;
+    const { critico, pifia } = R.evaluarDados(diceFinal, { umbralCritico: ctx.data?.umbralCritico ?? 2, permitirCritico: allowCritico });
     const dificultad = ctx.dificultad ?? null;
     const exito = critico || (dificultad !== null && total >= dificultad && !pifia);
 
@@ -350,28 +411,43 @@ export class YsystemDice {
     if (grantProeza) await actor.ganarProezas(1);
     if (markLeveUsado) await actor.update({ "system.biografia.defecto_leve_usado": true });
 
-    const content = await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, {
+    // La repetición puede convertir un fallo en éxito: entonces también hay que resolver el daño,
+    // la curación o el desmayo que la tirada original no llegó a producir.
+    const resultado = ctx.danoInfo || ctx.curaInfo ? {} : await this.#resolverResultado(actor, ctx.habilidad, ctx.opciones ?? {}, ctx.data ?? {}, { exito, critico, pifia });
+    if (ctx.desmayo && exito) { await actor.ponerInconsciente(false); resultado.desmayo = false; }
+    const actual = { ...ctx, dice: diceFinal, total, repetida: true, exito, pifia, critico, defectoPendiente: null, ...resultado };
+    const chatAction = resultado.danoInfo
+      ? { [`flags.${CAMC.systemId}.chatAction`]: { type: "damage", total: Number(resultado.danoInfo.total ?? 0), actorUuid: actor.uuid, itemUuid: resultado.danoInfo.itemId ?? "", categoria: resultado.danoInfo.categoria ?? "" } }
+      : {};
+    await message.update({
+      content: await this.#renderCard(actor, actual, { diceIsNew, repeticionNota: banner }),
+      [`flags.${CAMC.systemId}.tirada`]: actual,
+      ...chatAction
+    });
+    return { diceFinal, total, exito, pifia, critico };
+  }
+
+  /** Dibuja la tarjeta de una tirada de habilidad a partir de su contexto guardado. */
+  static async #renderCard(actor, ctx, extra = {}) {
+    return foundry.applications.handlebars.renderTemplate(PLANTILLA, {
       tipo: "tirada",
       habilidad: ctx.habilidad,
       actor,
-      roll: { total },
-      dice: diceFinal,
-      diceIsNew,
-      data: ctx.data,
-      critico,
-      pifia,
-      exito,
-      dificultad,
+      roll: { total: ctx.total ?? (ctx.dice ?? []).reduce((a, b) => a + b, 0) + Number(ctx.data?.bonificador ?? 0) + Number(ctx.data?.bonusFavorecida ?? 0) + Number(ctx.data?.modificador ?? 0) },
+      dice: ctx.dice ?? [],
+      data: ctx.data ?? {},
+      critico: ctx.critico,
+      pifia: ctx.pifia,
+      exito: ctx.exito,
+      dificultad: ctx.dificultad,
       opciones: ctx.opciones ?? {},
-      repetida: true,
-      repeticionNota: banner
+      repetida: Boolean(ctx.repetida),
+      defectoPendiente: ctx.defectoPendiente ?? null,
+      danoInfo: ctx.danoInfo ?? null,
+      curaInfo: ctx.curaInfo ?? null,
+      desmayo: ctx.desmayo ?? false,
+      ...extra
     });
-
-    await message.update({
-      content,
-      [`flags.${CAMC.systemId}.tirada`]: { ...ctx, dice: diceFinal, repetida: true, exito, pifia, critico }
-    });
-    return { diceFinal, total, exito, pifia, critico };
   }
 
   static #activateRerollDialog(html) {
@@ -407,52 +483,25 @@ export class YsystemDice {
 
   static async #sendChat(payload) {
     const actor = payload.actor;
-    const safePayload = { ...payload, actor: actor ?? { name: payload.item?.name ?? "CAMC" }, repetida: false };
-    const content = await foundry.applications.handlebars.renderTemplate(`systems/${CAMC.systemId}/templates/chat/roll-card.hbs`, safePayload);
     const flags = {};
-    if (payload.tipo === "dano" && payload.roll) {
-      flags[CAMC.systemId] = {
-        chatAction: {
-          type: "damage",
-          total: Number(payload.roll.total ?? 0),
-          actorUuid: actor?.uuid ?? "",
-          itemUuid: payload.item?.uuid ?? ""
-        }
-      };
-    }
-    if (payload.tipo === "tirada" && payload.danoInfo) {
-      flags[CAMC.systemId] = {
-        ...(flags[CAMC.systemId] ?? {}),
-        chatAction: {
-          type: "damage",
-          total: Number(payload.danoInfo.total ?? 0),
-          actorUuid: actor?.uuid ?? "",
-          itemUuid: payload.danoInfo.itemId ?? ""
-        }
-      };
-    }
+    let content;
     if (payload.tipo === "tirada") {
-      flags[CAMC.systemId] = {
-        ...(flags[CAMC.systemId] ?? {}),
-        tirada: {
-          actorUuid: actor?.uuid ?? null,
-          habilidad: payload.habilidad,
-          dificultad: payload.dificultad ?? null,
-          dice: [...(payload.dice ?? [])],
-          data: payload.data ?? {},
-          opciones: payload.opciones ?? {},
-          exito: Boolean(payload.exito),
-          pifia: Boolean(payload.pifia),
-          critico: Boolean(payload.critico),
-          repetida: false
-        }
-      };
+      const ctx = payload.ctx;
+      content = await this.#renderCard(actor, ctx);
+      flags.tirada = { ...ctx, actorUuid: actor?.uuid ?? null, repetida: false };
+      if (ctx.danoInfo) flags.chatAction = { type: "damage", total: Number(ctx.danoInfo.total ?? 0), actorUuid: actor?.uuid ?? "", itemUuid: ctx.danoInfo.itemId ?? "", categoria: ctx.danoInfo.categoria ?? "" };
+    } else {
+      const safePayload = { ...payload, actor: actor ?? { name: payload.item?.name ?? "CAMC" }, repetida: false };
+      content = await foundry.applications.handlebars.renderTemplate(PLANTILLA, safePayload);
+      if (payload.tipo === "dano" && payload.roll) {
+        flags.chatAction = { type: "damage", total: Number(payload.roll.total ?? 0), actorUuid: actor?.uuid ?? "", itemUuid: payload.item?.uuid ?? "" };
+      }
     }
     await createRollMessage({
       speaker: actor ? ChatMessage.getSpeaker({ actor }) : ChatMessage.getSpeaker(),
       content,
       rolls: payload.roll ? [payload.roll] : [],
-      flags
+      flags: { [CAMC.systemId]: flags }
     });
   }
 }

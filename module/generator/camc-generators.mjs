@@ -1,4 +1,7 @@
 import { CAMC } from "../config.mjs";
+import { entrada } from "../content/catalogo.mjs";
+import { proezasIniciales, saludMaxima } from "../rules/reglas.mjs";
+import { CAPITULOS, repartosValidos, maximo as maximoPunto } from "../rules/comunidad.mjs";
 import { mulberry32, hashSeed, pick } from "../utils/random.mjs";
 
 const clone = value => JSON.parse(JSON.stringify(value));
@@ -202,6 +205,13 @@ const cargoArchetype = {
   full_patch: "ruta"
 };
 
+/** Favorecidas del cargo: las fijas y, si el cargo lo permite, las libres elegidas al azar (pp. 43, 49-55). */
+function favoritasPorCargo(cargo, rng) {
+  const fijas = [...(cargo.habilidades ?? [])];
+  const libres = uniquePicks(Object.keys(CAMC.habilidades).filter(k => !fijas.includes(k)), cargo.libres ?? 0, rng);
+  return [...fijas, ...libres];
+}
+
 function buildAttributes(order) {
   const values = [6, 4, 2, 1, 0];
   return Object.fromEntries(order.map((key, index) => [key, { value: values[index] ?? 0 }]));
@@ -240,8 +250,8 @@ function derivedFor(attributes, skills) {
 function combatFor(attributes, skills, npc = false, options = {}) {
   const attr = key => Number(attributes[key]?.value ?? 0);
   const healthRoll = npc ? 0 : Number(options.saludRoll ?? 1);
-  const health = npc ? 14 + (attr("fue") * 2) : 10 + (attr("fue") * 2) + healthRoll;
-  const proezasMax = Math.max(3, Math.floor((attr("fue") + attr("int")) / 2) + 3);
+  const health = npc ? 14 + (attr("fue") * 2) : saludMaxima(attr("fue"), healthRoll);
+  const proezasMax = proezasIniciales(attr("fue"), attr("int"), options.talento === "Líder nato" ? 2 : 0);
   return {
     salud: { value: health, max: health, roll_inicial: healthRoll },
     proezas: npc ? { value: 0, max: 0 } : { value: proezasMax, max: proezasMax },
@@ -254,30 +264,6 @@ function combatFor(attributes, skills, npc = false, options = {}) {
 
 const starterFlag = () => ({ [CAMC.systemId]: { generatedStarter: true } });
 const deityIcon = deity => CAMC.itemIcons.dones[normalized(deity)] ?? CAMC.itemIcons.donFallback;
-
-const starterTalents = [
-  { name: "Autoridad de carretera", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/presidente.webp`, system: { cargo: "Presidente", efecto: "Cuando el capítulo actúa unido bajo tus órdenes, puedes declarar una prioridad clara de la escena. El DJ puede conceder +1D a la primera tirada que siga esa orden si el grupo acepta el riesgo.", descripcion: "Talento de liderazgo para marcar rumbo, asumir responsabilidad y mantener unido al capítulo." } },
-  { name: "Mano derecha", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/vicepresidente.webp`, system: { cargo: "Vicepresidente", efecto: "Una vez por escena puedes cubrir a otro Cuervo que esté actuando por el capítulo. Describe cómo le apoyas y dale +1D o reduce en 1D una penalización circunstancial.", descripcion: "Talento de apoyo para sostener la mesa presidencial y reemplazar al Presidente cuando haga falta." } },
-  { name: "Inspirar", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/secretario.webp`, system: { cargo: "Secretario", efecto: "Cuando recuerdas una gesta, pronuncias un juramento o conviertes una escena en leyenda del club, el DJ puede conceder proezas al grupo por la interpretación memorable.", descripcion: "Talento del Secretario: conserva memoria, relato y sentido mítico del capítulo." } },
-  { name: "Cuentas claras", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/tesorero.webp`, system: { cargo: "Tesorero", efecto: "Una vez por sesión puedes localizar, conservar o reasignar un recurso menor del capítulo si explicas dónde estaba guardado y qué coste social o material implica.", descripcion: "Talento de administración de recursos, favores, deuda y supervivencia logística." } },
-  { name: "Nadie pasa", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/sargento_armas.webp`, system: { cargo: "Sargento de armas", efecto: "Cuando proteges a otro Cuervo o mantienes una línea de defensa, puedes recibir tú una consecuencia física menor para darle +1D a su siguiente tirada de resistencia, lucha o huida.", descripcion: "Talento de seguridad, pelea y presencia intimidante." } },
-  { name: "Ruta segura", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/capitan_rutas.webp`, system: { cargo: "Capitán de rutas", efecto: "Antes de un viaje o persecución puedes declarar una ruta preparada. Si el grupo la sigue, la primera complicación de terreno, clima o orientación se afronta con +1D.", descripcion: "Talento de exploración, navegación, vigilancia de ruta y conocimiento del asfalto." } },
-  { name: "Arreglo de emergencia", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/mecanico_jefe.webp`, system: { cargo: "Mecánico jefe", efecto: "Una vez por escena puedes improvisar una reparación suficiente para que una moto, arma o pieza de equipo funcione hasta el final de la escena. Después deberá repararse con tiempo y recursos.", descripcion: "Talento de mecánica práctica, apaños de carretera y soluciones con lo que haya a mano." } },
-  { name: "Full Patch", type: "talento", img: `systems/${CAMC.systemId}/assets/patches/full_patch.svg`, system: { cargo: "Full Patch", efecto: "Cuando actúas en nombre del club y pones en juego tu reputación, puedes pedir al DJ una ventaja narrativa razonable ligada al parche. Si abusas de ello, el club también paga el precio.", descripcion: "Talento genérico de pertenencia plena al capítulo." } }
-];
-
-// El manual otorga un único don fijo por deidad patrona (7 en total, una por cargo);
-// no es una lista de dones a elegir. Odín no está aquí porque no reparte dones: es "El
-// Perdido", el único dios que el manual no desarrolla como patrón posible de un PJ.
-const starterDones = [
-  { name: "Furia de la Tormenta", type: "don", img: "icons/magic/lightning/bolt-strike-blue.webp", system: { deidad: "Thor", coste_proezas: 2, coste_descripcion: "2 proezas por uso y combate", virtud: "Coraje", efecto: "Una vez por combate, gastando una acción, invocas el poder de la tormenta: una lluvia de relámpagos de daño 10 que puede afectar hasta a tres oponentes distintos, o un solo rayo de daño 20 dirigido a un enemigo concreto. En ambos casos, el daño ignora cualquier tipo de protección que porte el objetivo.", descripcion: "Thor te bendice con la furia de la tormenta." } },
-  { name: "Azote del Enemigo", type: "don", img: "icons/magic/fire/dagger-rune-enchant-flame-orange.webp", system: { deidad: "Freya", coste_proezas: 2, coste_descripcion: "2 proezas por combate", virtud: "Responsabilidad", efecto: "Escoge una de las siguientes razas: demonios de fuego, elfos oscuros, gigantes, muertos sin reposo, trasgos o troles. Mientras dure el combate, infliges el doble de daño en todos tus ataques contra cualquier adversario de esa raza.", descripcion: "Freya te concede su favor contra los enemigos de Nueva Asgard." } },
-  { name: "Guerrero Legendario", type: "don", img: "icons/skills/melee/weapons-crossed-swords-yellow.webp", system: { deidad: "Tyr", coste_proezas: 1, coste_descripcion: "1 proeza por contraataque", virtud: "Disciplina", efecto: "Cada vez que seas víctima de un ataque cuerpo a cuerpo que te cause el más mínimo daño, puedes realizar un contraataque inmediato contra quien te lo haya infligido, a modo de acción extra de combate (siempre que no hayas caído inconsciente).", descripcion: "Tyr te enseña que ningún golpe recibido debe quedar sin respuesta." } },
-  { name: "Caminante del Bifröst", type: "don", img: "icons/magic/movement/trail-streak-zigzag-teal.webp", system: { deidad: "Heimdall", coste_proezas: 1, coste_descripcion: "1 proeza por viaje", virtud: "Lealtad", efecto: "Puedes teletransportarte de forma instantánea a un lugar que hayas visitado con anterioridad, usando la energía de los fragmentos del Bifröst repartidos por los reinos. Solo puedes llevar el equipo que quepa en una mochila (ningún vehículo). Antes de viajar debes dibujar en el suelo la silueta de Yggdrasil y concentrarte unos cinco minutos en el destino; si te interrumpen, debes empezar de nuevo.", descripcion: "Heimdall te abre un paso secreto entre los Nueve Reinos." } },
-  { name: "Destello Cegador", type: "don", img: "icons/magic/light/explosion-star-large-blue.webp", system: { deidad: "Balder", coste_proezas: 2, coste_descripcion: "2 proezas por destello y combate", virtud: "Bondad", efecto: "Una vez por combate, gastando una acción, desencadenas una explosión de luz que afecta solo a tus enemigos: quedan completamente cegados durante un turno entero (dos turnos si son elfos oscuros), sin poder realizar ninguna acción y con su Agilidad reducida a la mitad. También puedes usar una versión reducida del don fuera de combate para iluminar tu entorno de forma gratuita y automática.", descripcion: "Balder ilumina el camino y ciega a quienes te amenazan." } },
-  { name: "Vitki", type: "don", img: "icons/magic/perception/eye-ringed-glow-angry-small-teal.webp", system: { deidad: "Frigg", coste_proezas: 1, coste_descripcion: "1 proeza por pregunta", virtud: "Sabiduría", efecto: "Puedes comunicarte con cualquier espíritu presente en tu mismo lugar (de la naturaleza, de los muertos o de cualquier otra índole) y obligarlo a responder tus preguntas sobre ese lugar. El espíritu debe contestar con sinceridad, aunque puede ser más o menos críptico a discreción de la DJ.", descripcion: "Frigg te concede el don de interrogar a los espíritus." } },
-  { name: "Cota de Draupnir", type: "don", img: "icons/equipment/chest/breastplate-collared-steel.webp", system: { deidad: "Idunn", coste_proezas: 1, coste_descripcion: "1 proeza por activación", virtud: "Perseverancia", efecto: "Como portador de esta cota, manufacturada por Idunn a partir del anillo mágico Draupnir, te beneficias de una protección de nivel 3 sin sufrir ningún tipo de penalización. Es personal e intransferible. Se repliega mágicamente al final de cada combate hasta adoptar el tamaño de un anillo que puedes llevar en cualquier dedo, así que pasa desapercibida hasta que decides desplegarla y equipártela (lo que exige una acción durante un turno completo).", descripcion: "Idunn te otorga una armadura que cabe en un anillo." } }
-];
 
 // Daño según la tabla de concreción del manual: fijo (sin dados) + bonificador de
 // atributo. cuerpo_a_cuerpo e improvisada usan 3 + FUE; distancia_no_fuego, 3 + PER;
@@ -355,81 +341,98 @@ const shieldPool = [
   { name: "Escudo grande", nivel: 3, penalizacion: 3 }
 ];
 
-function starterEquipmentFor({ cargo, deidad, favored = [], rng = Math.random } = {}) {
-  const cargoData = CAMC.cargos[cargo] ?? CAMC.cargos.full_patch;
-  const dios = CAMC.dioses[deidad] ?? {};
-  const cargoLabel = cargoData.label ?? "Cuervo";
-  const deityLabel = dios.label ?? title(deidad || "deidad");
-  const virtud = dios.virtud ?? "";
-  const talent = clone(starterTalents.find(item => normalized(item.system.cargo) === normalized(cargoLabel)) ?? starterTalents.at(-1));
-  const deityDones = starterDones.filter(item => normalized(item.system.deidad) === normalized(deityLabel));
-  const don = deityDones.length
-    ? clone(pick(deityDones, rng))
-    : {
-      name: `Don de ${deityLabel}`,
-      type: "don",
-      img: deityIcon(deityLabel),
-      system: {
-        deidad: deityLabel,
-        coste_proezas: 2,
-        coste_descripcion: "Coste base sugerido; ajusta si el don concreto lo requiere.",
-        virtud,
-        efecto: `Manifestación de ${virtud || "la virtud"} de ${deityLabel}.`,
-        descripcion: "Don inicial generado como punto de partida. Edita nombre, coste y efecto para ajustarlo al don concreto elegido en mesa."
-      }
-    };
-  talent.flags = starterFlag();
-  don.flags = starterFlag();
-  talent.img = CAMC.itemIcons.talento;
-  don.img = deityIcon(don.system?.deidad ?? deityLabel);
-  const selectedMelee = clone(pick(melee, rng));
-  const selectedRanged = clone(pick(ranged, rng));
-  selectedMelee.img = CAMC.itemIcons.arma;
-  selectedRanged.img = CAMC.itemIcons.arma;
-  const selectedTools = uniquePicks(useful, 2, rng).map(item => ({
-    name: item.name,
-    type: "objeto",
-    img: CAMC.itemIcons.objeto,
-    flags: starterFlag(),
-    system: {
-      tipo: item.tipo,
-      tamano: item.espacios >= 2 ? "grande" : item.espacios <= 0 ? "no_equipable" : "mediano",
-      deterioro: "M",
-      disponibilidad: "frecuente",
-      cantidad: 1,
-      especial: item.especial,
-      descripcion: item.descripcion,
-      equipada: false,
-      carga: { ubicacion: "mochila", espacios: item.espacios }
-    }
-  }));
+/**
+ * Equipo inicial según el cargo (cap. 3, pp. 49-55). `n` = días de raciones; `objetos` = objetos libres.
+ * `armadura` pisa nivel y penalización de la entrada base del catálogo (el manual da el nivel por cargo).
+ */
+export const EQUIPO_CARGO = {
+  presidente: { dias: 3, objetos: 2, armadura: { nombre: "Armadura de cuero", nivel: 2 } },
+  vicepresidente: { dias: 5, objetos: 2, armadura: { nombre: "Armadura liviana de cuero", nivel: 1 } },
+  secretario: { dias: 5, objetos: 2, extra: ["Cuaderno de tapa dura"] },
+  tesorero: { dias: 5, objetos: 3, extra: ["Llave del botiquín"] },
+  sargento_armas: { dias: 3, objetos: 1, armadura: { nombre: "Armadura de mallas con casco y brazales", nivel: 5 }, escudo: "Escudo mediano", armaFuego: true },
+  capitan_rutas: { dias: 7, objetos: 1, armadura: { nombre: "Armadura de cuero", nivel: 2 }, fijos: ["Prismáticos"] },
+  mecanico_jefe: { dias: 3, objetos: 4, manufacturados: true },
+  full_patch: { dias: 3, objetos: 2 }
+};
 
-  return [
-    talent,
-    don,
-    { ...selectedMelee, type: "arma", flags: starterFlag() },
-    { ...selectedRanged, type: "arma", flags: starterFlag() },
-    {
-      name: "Armadura de cuero",
-      type: "armadura",
-      img: CAMC.itemIcons.armadura,
-      flags: starterFlag(),
-      system: {
-        nivel: 1,
-        penalizacion: 0,
-        tipo: "armadura",
-        tamano: "mediano",
-        deterioro: "M",
-        disponibilidad: "frecuente",
-        compatible: true,
-        descripcion: "Protección básica de carretera, reforzada con placas recicladas.",
-        equipada: true,
-        carga: { ubicacion: "mochila", espacios: 1 }
-      }
-    },
-    ...selectedTools
-  ];
+export const OBJETOS_LIBRES = ["Linterna", "Brújula", "Cuerda", "Ganzúas", "Herramientas", "Botiquín de primeros auxilios", "Medicamentos", "Máscara antigás", "Saco de dormir", "Equipo de soldar", "Pilas", "Hornillo de camping"];
+const ES_MOD = item => item.system?.tipo === "modificacion_moto";
+
+function conBandera(item, extra = {}) {
+  const copia = clone(item);
+  copia.flags = starterFlag();
+  copia.system = { ...copia.system, ...extra };
+  return copia;
 }
+
+function armaduraInicial(catalogo, def) {
+  const base = entrada(catalogo.armaduras, "Armadura de cuero / Ropa acolchada") ?? { type: "armadura", system: {} };
+  const copia = conBandera(base, { nivel: def.nivel, penalizacion: Math.floor(def.nivel / 2), equipada: true });
+  copia.name = def.nombre;
+  copia.img = CAMC.itemIcons.armadura;
+  return copia;
+}
+
+export function starterEquipmentFor({ cargo, deidad, talento, arma, objetos, rng = Math.random, catalogo = CAMC.catalogo } = {}) {
+  if (!catalogo) return [];
+  const cargoData = CAMC.cargos[cargo] ?? CAMC.cargos.full_patch;
+  const def = EQUIPO_CARGO[cargo] ?? EQUIPO_CARGO.full_patch;
+  const dios = CAMC.dioses[deidad] ?? {};
+  const items = [];
+
+  const nombreTalento = talento || pick(cargoData.talentos?.length ? cargoData.talentos : ["Interponerse"], rng);
+  const talent = entrada(catalogo.talentos, nombreTalento);
+  if (talent) items.push(conBandera(talent));
+
+  const don = (catalogo.dones ?? []).find(d => normalized(d.system?.deidad) === normalized(dios.label));
+  if (don) items.push(conBandera(don, {}));
+
+  // Un arma que no sea de fuego a elección; el Sargento de armas añade además una de fuego.
+  const noFuego = catalogo.armas.filter(a => ["cuerpo_a_cuerpo", "cuerpo_a_cuerpo_dos_manos", "distancia_no_fuego"].includes(a.system?.categoria) && a.name !== "Lanza");
+  items.push(conBandera(noFuego.find(a => a.name === arma) ?? pick(noFuego, rng), { equipada: true }));
+  if (def.armaFuego) {
+    const fuego = catalogo.armas.filter(a => ["fuego_cortas", "fuego_largas"].includes(a.system?.categoria));
+    items.push(conBandera(pick(fuego, rng), { equipada: false }));
+    const municion = entrada(catalogo.objetos, "Munición");
+    if (municion) items.push(conBandera(municion));
+  }
+  if (def.armadura) items.push(armaduraInicial(catalogo, def.armadura));
+  if (def.escudo) {
+    const escudo = entrada(catalogo.armaduras, def.escudo);
+    if (escudo) items.push(conBandera(escudo, { equipado: true }));
+  }
+
+  const racion = Math.ceil(def.dias / 5);
+  for (const nombre of ["Raciones de comida", "Raciones de agua potable"]) {
+    const o = entrada(catalogo.objetos, nombre);
+    if (o) items.push(conBandera(o, { cantidad: racion, carga: { ubicacion: "alforjas", espacios: itemSpaces(o) } }));
+  }
+  for (const nombre of def.extra ?? []) {
+    items.push({ name: nombre, type: "objeto", img: CAMC.itemIcons.objeto, flags: starterFlag(), system: { tipo: "general", tamano: "pequeno", deterioro: "M", disponibilidad: "frecuente", cantidad: 1, especial: "Objeto propio del cargo.", descripcion: "" } });
+  }
+  const fijos = (def.fijos ?? []).map(n => entrada(catalogo.objetos, n)).filter(Boolean);
+  const pool = def.manufacturados
+    ? catalogo.objetos.filter(o => !ES_MOD(o) && o.system?.deterioro === "M")
+    : OBJETOS_LIBRES.map(n => entrada(catalogo.objetos, n)).filter(Boolean);
+  const elegidos = (objetos ?? []).map(n => entrada(catalogo.objetos, n)).filter(Boolean).slice(0, def.objetos);
+  const libres = elegidos.length ? elegidos : uniquePicks(pool.filter(o => !fijos.some(f => f.name === o.name)), def.objetos, rng);
+  for (const o of [...fijos, ...libres]) items.push(conBandera(o));
+
+  // Mochila: máximo seis líneas a pie; lo que no cabe va a las alforjas (cap. 5, p. 101).
+  let usado = 0;
+  for (const item of items) {
+    if (!["arma", "armadura", "escudo", "objeto"].includes(item.type)) continue;
+    const espacios = itemSpaces(item) * (item.type === "objeto" ? Number(item.system?.cantidad ?? 1) : 1);
+    const destino = item.system?.carga?.ubicacion === "alforjas" ? "alforjas" : (usado + espacios <= 6 ? "mochila" : "alforjas");
+    if (destino === "mochila") usado += espacios;
+    item.system.carga = { ubicacion: destino, espacios: itemSpaces(item) };
+  }
+  return items;
+}
+
+const ESPACIOS_TAMANO = { pequeno: 0.5, mediano: 1, grande: 2, no_equipable: 0 };
+const itemSpaces = item => ESPACIOS_TAMANO[item.system?.tamano] ?? 1;
 
 export function generateRandomCharacter(options = {}) {
   const rng = mulberry32(hashSeed(options.seed));
@@ -437,9 +440,10 @@ export function generateRandomCharacter(options = {}) {
   const cargo = options.cargo || pick(cargos, rng);
   const deidad = options.deidad || pick(Object.keys(CAMC.dioses), rng);
   const cargoData = CAMC.cargos[cargo] ?? CAMC.cargos.full_patch;
+  const talento = options.talento || pick(cargoData.talentos?.length ? cargoData.talentos : [""], rng);
   const favored = Array.isArray(options.favored) && options.favored.length
     ? options.favored.slice(0, 4)
-    : (cargoData.habilidades?.length ? [...cargoData.habilidades] : uniquePicks(Object.keys(CAMC.habilidades), 4, rng));
+    : favoritasPorCargo(cargoData, rng);
   const archetype = options.archetype || cargoArchetype[cargo] || "ruta";
   const attributes = buildAttributes(CAMCCharacterArchetypes[archetype] ?? CAMCCharacterArchetypes.ruta);
   const skills = buildSkills(favored, rng);
@@ -452,7 +456,7 @@ export function generateRandomCharacter(options = {}) {
     system: {
       atributos: attributes,
       valores_pasivos: derivedFor(attributes, skills),
-      combate: combatFor(attributes, skills, false, { saludRoll: options.saludRoll }),
+      combate: combatFor(attributes, skills, false, { saludRoll: options.saludRoll, talento }),
       proteccion: { armadura_nivel: 0, armadura_penalizacion: 0, escudo_nivel: 0, escudo_penalizacion: 0 },
       habilidades: skills,
       habilidades_favorecidas: favored,
@@ -461,7 +465,7 @@ export function generateRandomCharacter(options = {}) {
         concepto: "",
         edad: options.edad ?? "",
         cargo,
-        talento: cargoData.talento ?? "",
+        talento,
         deidad,
         virtud: CAMC.dioses[deidad]?.virtud ?? "",
         don_principal: "",
@@ -483,7 +487,7 @@ export function generateRandomCharacter(options = {}) {
       nivel: 1,
       notas: "Generado automáticamente siguiendo el reparto base de creación: atributos 6/4/2/1/0 y habilidades repartidas en 4 a 3D, 8 a 2D y el resto a 1D (las favorecidas del cargo, cuando es posible, caen en el tramo de 3D)."
     },
-    items: starterEquipmentFor({ cargo, deidad, favored, rng })
+    items: starterEquipmentFor({ cargo, deidad, talento, rng, catalogo: options.catalogo })
   };
 }
 
@@ -637,7 +641,11 @@ export function generateRandomCommunity(options = {}) {
   const rng = mulberry32(hashSeed(options.seed));
   const c = CAMCGeneratorTables.comunidades;
   const name = `${pick(c.prefijos, rng)} ${pick(c.nucleos, rng)}`;
-  const resources = Object.fromEntries(["comida", "agua", "combustible", "medicina", "municion", "repuestos"].map(key => [key, 2 + Math.floor(rng() * 7)]));
+  // Capítulo, reparto inicial de 6 puntos y capacidad especial (cap. 7, pp. 124-126).
+  const capitulo = options.capitulo || pick(Object.keys(CAPITULOS), rng);
+  const reparto = pick(repartosValidos(capitulo), rng);
+  const bono = CAPITULOS[capitulo].bono === "elegir" ? { [pick(["moral", "poblacion", "recursos"], rng)]: 1 } : CAPITULOS[capitulo].bono;
+  const puntos = Object.fromEntries(["moral", "poblacion", "recursos"].map(k => [k, Math.min(maximoPunto(k, capitulo), reparto[k] + (bono[k] ?? 0))]));
 
   return {
     name,
@@ -645,14 +653,15 @@ export function generateRandomCommunity(options = {}) {
     img: options.img || "systems/cuervos-de-asgard-mc/assets/ui/system-cover.png",
     system: {
       nombre: name,
-      capitulo: options.chapter || "Cuervos de Asgard MC",
-      poblacion: 25 + Math.floor(rng() * 176),
-      reputacion: { value: 2 + Math.floor(rng() * 7) },
-      recursos: resources,
-      defensas: `${pick(c.tipos, rng)} protegido por ${pick(c.defensas, rng)}.`,
+      capitulo: CAPITULOS[capitulo].label,
+      capitulo_clave: capitulo,
+      bono_este: capitulo === "este" ? Object.keys(bono)[0] : "",
+      puntos: { ...puntos, castigoMoral: false },
+      descripcion: `${pick(c.tipos, rng)}. ${pick(c.notas, rng)}`,
+      defensas: `Protegido por ${pick(c.defensas, rng)}.`,
       aliados: uniquePicks(c.aliados, 2, rng).join("\n"),
       amenazas: uniquePicks(c.amenazas, 2, rng).join("\n"),
-      notas: `${pick(c.notas, rng)}\nNecesidad actual: ${pick(Object.keys(resources), rng)}.`
+      notas: ""
     }
   };
 }

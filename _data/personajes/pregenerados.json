@@ -5,11 +5,14 @@
     "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/leon-viejo-craneo-cremscy.webp",
     "system": {
       "habilidades_favorecidas": [
+        "conducir",
+        "conversacion",
+        "intimidacion",
         "lucha"
       ],
       "biografia": {
         "cargo": "presidente",
-        "talento": "Autoridad de carretera",
+        "talento": "Líder ejemplar",
         "concepto": "Presidente de los Cuervos de Asgard MC",
         "motivacion": "Morir luchando por el MC y por la gente que depende de el.",
         "cita": "Mientras tenga sangre en las venas, nadie tocará a los míos.",
@@ -17,7 +20,10 @@
         "descripcion": "Veterano endurecido, superviviente del Viejo Mundo y figura central del capítulo.",
         "historia": "Leon fue un fuera de la ley violento antes del Ragnarök. Sobrevivió al derrumbe del mundo junto a sus hermanos Francis y Thomas, formó parte de los Seven Originals y terminó convirtiéndose en una leyenda viva del club. Carga con el peso de los muertos, con la responsabilidad de proteger a su comunidad y con la sombra de los errores que dejaron a Francis apartado de la carretera.",
         "defecto_leve": "Tu vista ya no es lo que era.",
-        "defecto_grave": "Te duelen los huesos."
+        "defecto_grave": "Te duelen los huesos.",
+        "deidad": "thor",
+        "virtud": "Coraje",
+        "don_principal": "Furia de la Tormenta"
       },
       "notas": "Personaje pregenerado del capítulo 10 del manual.",
       "atributos": {
@@ -200,6 +206,145 @@
           "equipada": true,
           "descripcion": ""
         }
+      },
+      {
+        "name": "Líder ejemplar",
+        "type": "talento",
+        "img": "systems/cuervos-de-asgard-mc/assets/patches/presidente.webp",
+        "system": {
+          "cargo": "Presidente",
+          "clave": "lider_ejemplar",
+          "uso": "sesion",
+          "usos": {
+            "value": 0,
+            "max": 1
+          },
+          "compartido": "",
+          "efecto": "Una vez por sesión puedes anular la activación de un defecto grave impuesta por la DJ, ya sea el tuyo o el de un compañero. Como el defecto no llega a activarse, la DJ no entrega proeza.",
+          "descripcion": "El líder da la cara para que los demás no tropiecen."
+        }
+      },
+      {
+        "name": "Furia de la Tormenta",
+        "type": "don",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-thor.webp",
+        "system": {
+          "deidad": "Thor",
+          "coste_proezas": 2,
+          "coste_descripcion": "2 proezas por uso y combate",
+          "virtud": "Coraje",
+          "efecto": "Una vez por combate, gastando una acción, invocas el poder de la tormenta: una lluvia de relámpagos de daño 10 que puede afectar hasta a tres oponentes distintos, o un solo rayo de daño 20 dirigido a un enemigo concreto. En ambos casos, el daño ignora cualquier tipo de protección que porte el objetivo.",
+          "descripcion": "Thor te bendice con la furia de la tormenta."
+        }
+      },
+      {
+        "name": "Raciones de comida",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Unas 5000-7000 calorías en total: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Raciones de agua potable",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Entre cinco y ocho litros: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Ganzúas",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "herramienta",
+          "tamano": "pequeno",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "Alambres para forzar cerraduras y candados de forma limpia.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Cuerda",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "herramienta",
+          "tamano": "pequeno",
+          "deterioro": "M",
+          "disponibilidad": "muy_frecuente",
+          "cantidad": 1,
+          "especial": "Soga para escalar o atar objetos o personas.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Saco de dormir",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "general",
+          "tamano": "grande",
+          "deterioro": "R",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Receptáculo almohadillado enrollable, a veces impermeable.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "alforjas",
+            "espacios": 2
+          }
+        }
+      },
+      {
+        "name": "Tubo de escape tuneado",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
+        "system": {
+          "tipo": "modificacion_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "+3 a Intimidación en escenas en las que el personaje haya llegado montado en su moto.",
+          "descripcion": "Escape sin reductores de ruido y con tubos añadidos para producir un sonido atronador.",
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "equipada": true
+        }
       }
     ]
   },
@@ -208,7 +353,12 @@
     "type": "personaje",
     "img": "systems/cuervos-de-asgard-mc/assets/actors/personajes/thomas-halcon-cremscy.webp",
     "system": {
-      "habilidades_favorecidas": [],
+      "habilidades_favorecidas": [
+        "psicologia",
+        "seduccion",
+        "subterfugio",
+        "lucha"
+      ],
       "biografia": {
         "cargo": "vicepresidente",
         "talento": "Mano derecha",
@@ -383,6 +533,145 @@
           "equipada": true,
           "descripcion": ""
         }
+      },
+      {
+        "name": "Mano derecha",
+        "type": "talento",
+        "img": "systems/cuervos-de-asgard-mc/assets/patches/vicepresidente.webp",
+        "system": {
+          "cargo": "Vicepresidente",
+          "clave": "mano_derecha",
+          "uso": "pasivo",
+          "usos": {
+            "value": 0,
+            "max": 0
+          },
+          "compartido": "Interponerse",
+          "efecto": "Como colíder del MC compartes uno de los talentos del Presidente a tu elección: Interponerse, Líder ejemplar o Líder nato. Elige cuál en el campo «Talento compartido».",
+          "descripcion": "Colíder en la sombra del Presidente."
+        }
+      },
+      {
+        "name": "Guerrero Legendario",
+        "type": "don",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-tyr.webp",
+        "system": {
+          "deidad": "Tyr",
+          "coste_proezas": 1,
+          "coste_descripcion": "1 proeza por contraataque",
+          "virtud": "Disciplina",
+          "efecto": "Cada vez que seas víctima de un ataque cuerpo a cuerpo que te cause el más mínimo daño, puedes realizar un contraataque inmediato contra quien te lo haya infligido, a modo de acción extra de combate (siempre que no hayas caído inconsciente).",
+          "descripcion": "Tyr te enseña que ningún golpe recibido debe quedar sin respuesta."
+        }
+      },
+      {
+        "name": "Raciones de comida",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Unas 5000-7000 calorías en total: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Raciones de agua potable",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Entre cinco y ocho litros: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Cuerda",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "herramienta",
+          "tamano": "pequeno",
+          "deterioro": "M",
+          "disponibilidad": "muy_frecuente",
+          "cantidad": 1,
+          "especial": "Soga para escalar o atar objetos o personas.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Antorcha",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "pequeno",
+          "deterioro": "C",
+          "disponibilidad": "muy_frecuente",
+          "cantidad": 1,
+          "especial": "Haz que necesita algún tipo de combustible para prender.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Saco de dormir",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "general",
+          "tamano": "grande",
+          "deterioro": "R",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Receptáculo almohadillado enrollable, a veces impermeable.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "alforjas",
+            "espacios": 2
+          }
+        }
+      },
+      {
+        "name": "Estribos de combate",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
+        "system": {
+          "tipo": "modificacion_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "Modificación funcional de moto: +3 a Embestir y Sacar de la carretera frente a otras motos.",
+          "descripcion": "Estribos más grandes, afilados y resistentes pensados para combate entre motos.",
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "equipada": true
+        }
       }
     ]
   },
@@ -405,7 +694,10 @@
         "cita": "Seguidme y beberemos cuando esto acabe.",
         "entorno_nacimiento": "Caravana de supervivientes",
         "descripcion": "Joven brillante, ferozmente inteligente y dotada para recordar nombres, rutas e historias.",
-        "historia": "Absenta es hija de Francis Cremscy y de una mujer marcada por la absenta y la carretera. Creció rodeada de relatos, secretos y cuentas pendientes. Su memoria excepcional y su talento para convertir los hechos en historia la llevaron a ocupar el cargo de secretaria del MC."
+        "historia": "Absenta es hija de Francis Cremscy y de una mujer marcada por la absenta y la carretera. Creció rodeada de relatos, secretos y cuentas pendientes. Su memoria excepcional y su talento para convertir los hechos en historia la llevaron a ocupar el cargo de secretaria del MC.",
+        "deidad": "frigg",
+        "virtud": "Sabiduría",
+        "don_principal": "Vitki"
       },
       "notas": "Personaje pregenerado del capítulo 10 del manual.",
       "atributos": {
@@ -573,6 +865,127 @@
             "max": 20
           }
         }
+      },
+      {
+        "name": "Inspirar",
+        "type": "talento",
+        "img": "systems/cuervos-de-asgard-mc/assets/patches/secretario.webp",
+        "system": {
+          "cargo": "Secretario",
+          "clave": "inspirar",
+          "uso": "aventura",
+          "usos": {
+            "value": 0,
+            "max": 1
+          },
+          "compartido": "",
+          "efecto": "Una vez por aventura, si superas una tirada de Cultura a dificultad 10 narrando una historia motivadora, todos tus compañeros recuperan 1 proeza. Usar el talento lo hace por ti.",
+          "descripcion": "Los relatos junto al fuego reconfortan."
+        }
+      },
+      {
+        "name": "Vitki",
+        "type": "don",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-frigg.webp",
+        "system": {
+          "deidad": "Frigg",
+          "coste_proezas": 1,
+          "coste_descripcion": "1 proeza por pregunta",
+          "virtud": "Sabiduría",
+          "efecto": "Puedes comunicarte con cualquier espíritu presente en tu mismo lugar (de la naturaleza, de los muertos o de cualquier otra índole) y obligarlo a responder tus preguntas sobre ese lugar. El espíritu debe contestar con sinceridad, aunque puede ser más o menos críptico a discreción de la DJ.",
+          "descripcion": "Frigg te concede el don de interrogar a los espíritus."
+        }
+      },
+      {
+        "name": "Raciones de comida",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Unas 5000-7000 calorías en total: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Raciones de agua potable",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Entre cinco y ocho litros: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Antorcha",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "pequeno",
+          "deterioro": "C",
+          "disponibilidad": "muy_frecuente",
+          "cantidad": 2,
+          "especial": "Haz que necesita algún tipo de combustible para prender.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Saco de dormir",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "general",
+          "tamano": "grande",
+          "deterioro": "R",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Receptáculo almohadillado enrollable, a veces impermeable.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "alforjas",
+            "espacios": 2
+          }
+        }
+      },
+      {
+        "name": "Dispensador de aceite",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
+        "system": {
+          "tipo": "modificacion_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Hasta dos veces por persecución: +3 a la dificultad de los perseguidores durante este turno y el siguiente. Activarlo no cuenta como acción.",
+          "descripcion": "Depósito que deja un reguero de aceite para dificultar el avance de quienes persiguen la moto.",
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "equipada": true
+        }
       }
     ]
   },
@@ -589,13 +1002,16 @@
       ],
       "biografia": {
         "cargo": "tesorero",
-        "talento": "Cuentas claras",
+        "talento": "Curandero",
         "concepto": "Tesorera, sanadora y mecánica de necesidad",
         "motivacion": "Saber más sobre el mundo antiguo y preservar lo útil para los que sobreviven.",
         "cita": "¡Fuego a tope!",
         "entorno_nacimiento": "Detroit",
         "descripcion": "Superviviente práctica, curiosa y capaz de entender máquinas, heridas y recursos.",
-        "historia": "Benzina aprendió a leer el mundo a través de motores, piezas rotas, partos y heridas. Tras dejar el Yunque, encontró un lugar en el capítulo de Leon, donde su capacidad para mantener vivo lo que otros dan por perdido la convirtió en tesorera."
+        "historia": "Benzina aprendió a leer el mundo a través de motores, piezas rotas, partos y heridas. Tras dejar el Yunque, encontró un lugar en el capítulo de Leon, donde su capacidad para mantener vivo lo que otros dan por perdido la convirtió en tesorera.",
+        "deidad": "balder",
+        "virtud": "Bondad",
+        "don_principal": "Destello Cegador"
       },
       "notas": "Personaje pregenerado del capítulo 10 del manual.",
       "atributos": {
@@ -763,6 +1179,145 @@
             "max": 0
           }
         }
+      },
+      {
+        "name": "Curandero",
+        "type": "talento",
+        "img": "systems/cuervos-de-asgard-mc/assets/patches/tesorero.webp",
+        "system": {
+          "cargo": "Tesorero",
+          "clave": "curandero",
+          "uso": "pasivo",
+          "usos": {
+            "value": 0,
+            "max": 0
+          },
+          "compartido": "",
+          "efecto": "Tus tiradas de Auxilio a dificultad 10 para curar heridas devuelven 3 puntos de Salud en lugar de 2 (6 con crítico). El sistema lo aplica solo.",
+          "descripcion": "Manos que curan."
+        }
+      },
+      {
+        "name": "Destello Cegador",
+        "type": "don",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-balder.webp",
+        "system": {
+          "deidad": "Balder",
+          "coste_proezas": 2,
+          "coste_descripcion": "2 proezas por destello y combate",
+          "virtud": "Bondad",
+          "efecto": "Una vez por combate, gastando una acción, desencadenas una explosión de luz que afecta solo a tus enemigos: quedan completamente cegados durante un turno entero (dos turnos si son elfos oscuros), sin poder realizar ninguna acción y con su Agilidad reducida a la mitad. También puedes usar una versión reducida del don fuera de combate para iluminar tu entorno de forma gratuita y automática.",
+          "descripcion": "Balder ilumina el camino y ciega a quienes te amenazan."
+        }
+      },
+      {
+        "name": "Raciones de comida",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Unas 5000-7000 calorías en total: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Raciones de agua potable",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Entre cinco y ocho litros: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Botiquín de primeros auxilios",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "herramienta",
+          "tamano": "pequeno",
+          "deterioro": "C",
+          "disponibilidad": "raro",
+          "cantidad": 1,
+          "especial": "Da +2 a las tiradas de Auxilio y permite recuperar 1 punto extra de Salud al curar.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Cuerda",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "herramienta",
+          "tamano": "pequeno",
+          "deterioro": "M",
+          "disponibilidad": "muy_frecuente",
+          "cantidad": 1,
+          "especial": "Soga para escalar o atar objetos o personas.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Saco de dormir",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "general",
+          "tamano": "grande",
+          "deterioro": "R",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Receptáculo almohadillado enrollable, a veces impermeable.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "alforjas",
+            "espacios": 2
+          }
+        }
+      },
+      {
+        "name": "Chasis reforzado",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
+        "system": {
+          "tipo": "modificacion_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "Modificación funcional de moto: +5 puntos de Estructura.",
+          "descripcion": "Refuerzo del bastidor para que la moto aguante más daño antes de quedar inutilizada.",
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "equipada": true
+        }
       }
     ]
   },
@@ -779,7 +1334,7 @@
       ],
       "biografia": {
         "cargo": "sargento_armas",
-        "talento": "Nadie pasa",
+        "talento": "Curtido en mil batallas",
         "deidad": "freya",
         "virtud": "Responsabilidad",
         "don_principal": "Azote del Enemigo",
@@ -982,8 +1537,8 @@
           "tamano": "mediano",
           "deterioro": "M",
           "disponibilidad": "frecuente",
-          "compatible": false,
-          "equipada": false,
+          "compatible": true,
+          "equipada": true,
           "descripcion": ""
         }
       },
@@ -999,6 +1554,127 @@
           "disponibilidad": "frecuente",
           "equipado": true,
           "descripcion": ""
+        }
+      },
+      {
+        "name": "Curtido en mil batallas",
+        "type": "talento",
+        "img": "systems/cuervos-de-asgard-mc/assets/patches/sargento_armas.webp",
+        "system": {
+          "cargo": "Sargento de armas",
+          "clave": "curtido",
+          "uso": "pasivo",
+          "usos": {
+            "value": 0,
+            "max": 0
+          },
+          "compartido": "",
+          "efecto": "Nunca puedes ser cogido por sorpresa, ni siquiera en una emboscada perfectamente organizada.",
+          "descripcion": "Un sexto sentido para el combate."
+        }
+      },
+      {
+        "name": "Azote del Enemigo",
+        "type": "don",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-freya.webp",
+        "system": {
+          "deidad": "Freya",
+          "coste_proezas": 2,
+          "coste_descripcion": "2 proezas por combate",
+          "virtud": "Responsabilidad",
+          "efecto": "Escoge una de las siguientes razas: demonios de fuego, elfos oscuros, gigantes, muertos sin reposo, trasgos o troles. Mientras dure el combate, infliges el doble de daño en todos tus ataques contra cualquier adversario de esa raza.",
+          "descripcion": "Freya te concede su favor contra los enemigos de Nueva Asgard."
+        }
+      },
+      {
+        "name": "Raciones de comida",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Unas 5000-7000 calorías en total: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Raciones de agua potable",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Entre cinco y ocho litros: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Munición",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "pequeno",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Cartuchos de bala o de postas para armas de fuego. Cierta munición es muy rara.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Saco de dormir",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "general",
+          "tamano": "grande",
+          "deterioro": "R",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Receptáculo almohadillado enrollable, a veces impermeable.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "alforjas",
+            "espacios": 2
+          }
+        }
+      },
+      {
+        "name": "Configuración ofensiva",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
+        "system": {
+          "tipo": "modificacion_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "Modificación funcional de moto: +1D a los Dados de daño de la moto.",
+          "descripcion": "Pinchos, barras, tachuelas o cadenas añadidas al chasis para hacer más peligrosas las embestidas.",
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "equipada": true
         }
       }
     ]
@@ -1016,13 +1692,16 @@
       ],
       "biografia": {
         "cargo": "mecanico_jefe",
-        "talento": "Arreglo de emergencia",
+        "talento": "Chapuza",
         "concepto": "Mecánico jefe con ambición de presidencia",
         "motivacion": "Ser merecedor de presidir el MC algún día.",
         "cita": "Solo yo sé arreglar eso. Anda, trae acá.",
         "entorno_nacimiento": "Llanuras Yermas",
         "descripcion": "Mecánico paciente, fuerte y orgulloso de sus raíces, capaz de devolver una moto a la carretera con casi nada.",
-        "historia": "Bomani aprendió mecánica de su padre y creció sabiendo que una máquina viva puede salvar a toda una comunidad. Su linaje keniano, su habilidad con herramientas y su relación con Absenta lo atan al capítulo tanto como su deseo de demostrar que puede liderarlo."
+        "historia": "Bomani aprendió mecánica de su padre y creció sabiendo que una máquina viva puede salvar a toda una comunidad. Su linaje keniano, su habilidad con herramientas y su relación con Absenta lo atan al capítulo tanto como su deseo de demostrar que puede liderarlo.",
+        "deidad": "heimdall",
+        "virtud": "Lealtad",
+        "don_principal": "Caminante del Bifröst"
       },
       "notas": "Personaje pregenerado del capítulo 10 del manual.",
       "atributos": {
@@ -1183,6 +1862,182 @@
           "equipada": true,
           "descripcion": ""
         }
+      },
+      {
+        "name": "Chapuza",
+        "type": "talento",
+        "img": "systems/cuervos-de-asgard-mc/assets/patches/mecanico_jefe.webp",
+        "system": {
+          "cargo": "Mecánico jefe",
+          "clave": "chapuza",
+          "uso": "libre",
+          "usos": {
+            "value": 0,
+            "max": 0
+          },
+          "compartido": "",
+          "efecto": "Una tirada de Mecánica a dificultad 10 repara cualquier arma o devuelve la utilidad a un objeto averiado u obsoleto durante una escena entera.",
+          "descripcion": "Reparaciones imposibles."
+        }
+      },
+      {
+        "name": "Caminante del Bifröst",
+        "type": "don",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-heimdall.webp",
+        "system": {
+          "deidad": "Heimdall",
+          "coste_proezas": 1,
+          "coste_descripcion": "1 proeza por viaje",
+          "virtud": "Lealtad",
+          "efecto": "Puedes teletransportarte de forma instantánea a un lugar que hayas visitado con anterioridad, usando la energía de los fragmentos del Bifröst repartidos por los reinos. Solo puedes llevar el equipo que quepa en una mochila (ningún vehículo). Antes de viajar debes dibujar en el suelo la silueta de Yggdrasil y concentrarte unos cinco minutos en el destino; si te interrumpen, debes empezar de nuevo.",
+          "descripcion": "Heimdall te abre un paso secreto entre los Nueve Reinos."
+        }
+      },
+      {
+        "name": "Raciones de comida",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Unas 5000-7000 calorías en total: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Raciones de agua potable",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Entre cinco y ocho litros: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Herramientas",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "herramienta",
+          "tamano": "mediano",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 2,
+          "especial": "Herramientas manuales: indispensables para la mayoría de tiradas de Mecánica.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Cuerda",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "herramienta",
+          "tamano": "pequeno",
+          "deterioro": "M",
+          "disponibilidad": "muy_frecuente",
+          "cantidad": 1,
+          "especial": "Soga para escalar o atar objetos o personas.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Ganzúas",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "herramienta",
+          "tamano": "pequeno",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "Alambres para forzar cerraduras y candados de forma limpia.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Saco de dormir",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "general",
+          "tamano": "grande",
+          "deterioro": "R",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Receptáculo almohadillado enrollable, a veces impermeable.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "alforjas",
+            "espacios": 2
+          }
+        }
+      },
+      {
+        "name": "Acelerador trucado",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
+        "system": {
+          "tipo": "modificacion_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "Modificación funcional de moto: +5 a la tirada de iniciativa.",
+          "descripcion": "Mejora de mezcla de aire y combustible para conseguir picos de velocidad.",
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "equipada": true
+        }
+      },
+      {
+        "name": "Suspensión mejorada",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
+        "system": {
+          "tipo": "modificacion_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "frecuente",
+          "cantidad": 1,
+          "especial": "+1 Maniobrabilidad y +3 a la maniobra Evadirse.",
+          "descripcion": "Amortiguadores robustos para absorber mejor las irregularidades del terreno.",
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "equipada": true
+        }
       }
     ]
   },
@@ -1199,7 +2054,7 @@
       ],
       "biografia": {
         "cargo": "capitan_rutas",
-        "talento": "Ruta segura",
+        "talento": "Leer el terreno",
         "concepto": "Capitana de ruta criada por la supervivencia",
         "motivacion": "Cazar, comer, copular y vivir la vida al día.",
         "cita": "Comer o ser comido; no hay más opción.",
@@ -1378,11 +2233,11 @@
         }
       },
       {
-        "name": "Cota de Draupnir",
+        "name": "Armadura de cuero liviana",
         "type": "armadura",
         "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armaduras-escudos.webp",
         "system": {
-          "nivel": 3,
+          "nivel": 1,
           "penalizacion": 0,
           "tamano": "mediano",
           "deterioro": "M",
@@ -1390,6 +2245,166 @@
           "compatible": false,
           "equipada": true,
           "descripcion": ""
+        }
+      },
+      {
+        "name": "Cota de Draupnir",
+        "type": "armadura",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/armas.webp",
+        "system": {
+          "nivel": 3,
+          "penalizacion": 0,
+          "tipo": "armadura",
+          "tamano": "pequeno",
+          "deterioro": "M",
+          "disponibilidad": "muy_raro",
+          "compatible": false,
+          "descripcion": "Don de Idunn: protección de nivel 3 sin penalización. Se despliega con una acción durante un turno completo y se repliega al acabar el combate.",
+          "equipada": false,
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          }
+        }
+      },
+      {
+        "name": "Leer el terreno",
+        "type": "talento",
+        "img": "systems/cuervos-de-asgard-mc/assets/patches/capitan_rutas.webp",
+        "system": {
+          "cargo": "Capitán de rutas",
+          "clave": "leer_terreno",
+          "uso": "pasivo",
+          "usos": {
+            "value": 0,
+            "max": 0
+          },
+          "compartido": "",
+          "efecto": "Obtienes críticos en Rastreo sacando un solo 6. El sistema lo aplica solo.",
+          "descripcion": "Rastreador con reputación."
+        }
+      },
+      {
+        "name": "Cota de Draupnir",
+        "type": "don",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/dones-idunn.webp",
+        "system": {
+          "deidad": "Idunn",
+          "coste_proezas": 1,
+          "coste_descripcion": "1 proeza por activación",
+          "virtud": "Perseverancia",
+          "efecto": "Como portador de esta cota, manufacturada por Idunn a partir del anillo mágico Draupnir, te beneficias de una protección de nivel 3 sin sufrir ningún tipo de penalización. Es personal e intransferible. Se repliega mágicamente al final de cada combate hasta adoptar el tamaño de un anillo que puedes llevar en cualquier dedo, así que pasa desapercibida hasta que decides desplegarla y equipártela (lo que exige una acción durante un turno completo).",
+          "descripcion": "Idunn te otorga una armadura que cabe en un anillo."
+        }
+      },
+      {
+        "name": "Raciones de comida",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 2,
+          "especial": "Unas 5000-7000 calorías en total: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Raciones de agua potable",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "consumible",
+          "tamano": "mediano",
+          "deterioro": "C",
+          "disponibilidad": "infrecuente",
+          "cantidad": 2,
+          "especial": "Entre cinco y ocho litros: sirven para 3 a 5 días.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 1
+          }
+        }
+      },
+      {
+        "name": "Prismáticos",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "herramienta",
+          "tamano": "pequeno",
+          "deterioro": "R",
+          "disponibilidad": "raro",
+          "cantidad": 1,
+          "especial": "Permiten tiradas de Observación a grandes distancias.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "mochila",
+            "espacios": 0.5
+          }
+        }
+      },
+      {
+        "name": "Saco de dormir",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/objetos-equipo.webp",
+        "system": {
+          "tipo": "general",
+          "tamano": "grande",
+          "deterioro": "R",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Receptáculo almohadillado enrollable, a veces impermeable.",
+          "descripcion": "",
+          "carga": {
+            "ubicacion": "alforjas",
+            "espacios": 2
+          }
+        }
+      },
+      {
+        "name": "Motor potenciado",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
+        "system": {
+          "tipo": "modificacion_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Una vez por persecución permite cambiar la posición de la moto en una franja.",
+          "descripcion": "Turboinyección y modificaciones del bloque motor para ganar potencia explosiva.",
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "equipada": true
+        }
+      },
+      {
+        "name": "Mejora del sistema de transmisión",
+        "type": "objeto",
+        "img": "systems/cuervos-de-asgard-mc/assets/icons/items/modificaciones-moto.webp",
+        "system": {
+          "tipo": "modificacion_moto",
+          "tamano": "no_equipable",
+          "deterioro": "M",
+          "disponibilidad": "infrecuente",
+          "cantidad": 1,
+          "especial": "Una vez por persecución puede cambiar un fallo de Conducir por un éxito normal, incluso si hubo pifia.",
+          "descripcion": "Reemplazo y ajuste de la transmisión para obtener un control más fiable de la moto.",
+          "carga": {
+            "ubicacion": "comunidad",
+            "espacios": 0
+          },
+          "equipada": true
         }
       }
     ]

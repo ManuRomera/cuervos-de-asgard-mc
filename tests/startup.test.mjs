@@ -11,12 +11,14 @@ test("entry point loads without removed globals and registers all five sheets th
   globalThis.foundry = {
     appv1: { sheets: { ActorSheet: class {}, ItemSheet: class {} }, api: { Dialog: class {} } },
     applications: {
+      api: { ApplicationV2: class {}, HandlebarsApplicationMixin: Base => class extends Base {} },
+      sheets: { ActorSheetV2: class {} },
       apps: { FilePicker: class {}, DocumentSheetConfig: {
         registerSheet: (...args) => registrations.push(args),
         unregisterSheet: (...args) => unregistrations.push(args)
       } },
       ux: { TextEditor: class {} },
-      handlebars: { async loadTemplates(paths) { assert.equal(paths.length, 6); } }
+      handlebars: { async loadTemplates(paths) { assert.equal(paths.length, 7); } }
     },
     utils: { getProperty() {} }
   };

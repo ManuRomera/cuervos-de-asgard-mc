@@ -13,6 +13,18 @@
         "Name": "Automatically import content",
         "Hint": "Creates world items, NPCs and journal entries extracted from the manual the first time the system is opened."
       },
+      "ResistenciaAutomatica": {
+        "Name": "Automatic Physical Resistance roll",
+        "Hint": "Dropping below 11, 7, 4 and 2 Health for the first time triggers a Physical Resistance roll; on failure the character falls unconscious. «New session» resets the thresholds.",
+        "Pj": "Player characters only",
+        "Todos": "Everyone (NPCs too)",
+        "Ninguno": "None (the GM rolls manually)"
+      },
+      "Accesibilidad": {
+        "Name": "Accessibility",
+        "Boton": "Open accessibility",
+        "Hint": "Text size, contrast, easy reading and reduced motion for the system sheets."
+      },
       "SystemGuideShown": {
         "Name": "Initial CAMC guide shown"
       },

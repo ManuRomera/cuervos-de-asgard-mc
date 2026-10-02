@@ -62,7 +62,7 @@
       {{/if}}
 
       {{#if (eq item.type "armadura")}}
-      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-vest"></i> Armadura</h2><div class="camc-form-grid"><label><span>Nivel</span><input name="system.nivel" type="number" value="{{system.nivel}}"/></label><label><span>Penalización</span><input name="system.penalizacion" type="number" value="{{system.penalizacion}}"/></label><label><span>Compatible</span><input name="system.compatible" type="checkbox" {{checked system.compatible}}/></label></div><button type="button" class="camc-action-button toggle-equipped {{#if system.equipada}}active{{/if}}">{{#if system.equipada}}Desequipar{{else}}Equipar{{/if}}</button></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
+      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-vest"></i> Armadura</h2><div class="camc-form-grid"><label><span>Nivel</span><input name="system.nivel" type="number" value="{{system.nivel}}"/></label><label><span>Penalización</span><input name="system.penalizacion" type="number" value="{{system.penalizacion}}"/></label><label title="Se suma a la mejor armadura normal (casco, gabán)"><span>Compatible con otras</span><input name="system.compatible" type="checkbox" {{checked system.compatible}}/></label><label title="Solo reduce el daño de armas de fuego y no penaliza (chaleco de kevlar)"><span>Solo armas de fuego</span><input name="system.solo_fuego" type="checkbox" {{checked system.solo_fuego}}/></label></div><button type="button" class="camc-action-button toggle-equipped {{#if system.equipada}}active{{/if}}">{{#if system.equipada}}Desequipar{{else}}Equipar{{/if}}</button></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
       {{/if}}
 
       {{#if (eq item.type "escudo")}}
@@ -86,7 +86,11 @@
       {{/if}}
 
       {{#if (eq item.type "talento")}}
-      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-star"></i> Talento</h2><label><span>Cargo</span><input name="system.cargo" type="text" value="{{system.cargo}}"/></label><label><span>Efecto</span><textarea name="system.efecto">{{system.efecto}}</textarea></label></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
+      <div class="camc-grid camc-item-grid"><section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-star"></i> Talento</h2><label><span>Cargo</span><input name="system.cargo" type="text" value="{{system.cargo}}"/></label>
+        <label><span>Uso</span><select name="system.uso">{{#select system.uso}}<option value="pasivo">Pasivo / permanente</option><option value="libre">Cuando se cumple la condición</option><option value="sesion">Una vez por sesión</option><option value="aventura">Una vez por aventura</option>{{/select}}</select></label>
+        <label><span>Usos (gastados / máximo)</span><span class="camc-inline-pair"><input name="system.usos.value" type="number" min="0" value="{{system.usos.value}}"/><input name="system.usos.max" type="number" min="0" value="{{system.usos.max}}"/></span></label>
+        {{#if (eq system.clave "mano_derecha")}}<label><span>Talento compartido</span><select name="system.compartido">{{#select system.compartido}}<option value="">(elige uno)</option><option value="Interponerse">Interponerse</option><option value="Líder ejemplar">Líder ejemplar</option><option value="Líder nato">Líder nato</option>{{/select}}</select></label>{{/if}}
+        <label><span>Efecto</span><textarea name="system.efecto">{{system.efecto}}</textarea></label></section><section class="camc-panel"><h2 class="camc-panel-title">Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section></div>
       {{/if}}
 
       {{#if (eq item.type "regla")}}

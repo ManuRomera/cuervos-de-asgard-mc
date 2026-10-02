@@ -1,73 +1,108 @@
-<form class="{{cssClass}} camc-sheet camc-community camc-community-infographic" autocomplete="off">
+<div class="camc-sheet camc-community camc-community-infographic camc-community-rules">
   <header class="camc-community-top">
+    <img class="camc-com-img" src="{{actor.img}}" alt="{{actor.name}}" data-action="editImage" data-edit="img" title="Cambiar imagen"/>
     <section class="camc-community-title">
-      <input class="camc-name char-name" name="name" type="text" value="{{actor.name}}" placeholder="Nombre del asentamiento"/>
+      <input class="camc-name char-name" name="name" type="text" value="{{actor.name}}" placeholder="Nombre de la comunidad"/>
       <div class="camc-community-fields">
-        <label><span>Nombre interno</span><input name="system.nombre" type="text" value="{{system.nombre}}"/></label>
-        <label><span>Capítulo</span><input name="system.capitulo" type="text" value="{{system.capitulo}}"/></label>
-        <label><span>Censo</span><input name="system.poblacion" type="number" value="{{system.poblacion}}"/></label>
-        <label><span>Reputación</span><input name="system.reputacion.value" type="number" min="0" max="10" value="{{system.reputacion.value}}"/></label>
+        <label><span>Capítulo</span>
+          <select name="system.capitulo_clave">
+            {{#each capitulos as |c|}}<option value="{{c.key}}" {{#if c.selected}}selected{{/if}}>{{c.label}}</option>{{/each}}
+          </select>
+        </label>
+        {{#if esEste}}
+        <label><span>Punto gratuito en…</span>
+          <select name="system.bono_este"><option value="">(a elegir)</option>{{#each atributosBono as |a|}}<option value="{{a.key}}" {{#if a.selected}}selected{{/if}}>{{a.label}}</option>{{/each}}</select>
+        </label>
+        {{/if}}
+        <label class="camc-com-especial"><span>Capacidad especial</span><em>{{capituloActual.especial}}</em></label>
       </div>
     </section>
     <aside class="camc-community-runes">ᚲ ᚢ ᛖ ᚱ ᚹ ᛟ ᛋ</aside>
   </header>
 
-  <section class="camc-community-stage">
-    <button type="button" class="community-img-button" title="Cambiar imagen del asentamiento">
-      <img src="{{actor.img}}" alt="{{actor.name}}"/>
-      <i class="fas fa-camera"></i>
-    </button>
-
-    <section class="camc-community-left camc-community-orbit">
-      <article class="camc-community-stat {{riesgo.tone}}">
-        <span>Estado</span>
-        <b>{{riesgo.label}}</b>
-        <small>{{riesgo.text}}</small>
-      </article>
-      <article class="camc-community-stat">
-        <span>Población</span>
-        <b>{{system.poblacion}}</b>
-        <small>{{populationTier}}</small>
-      </article>
-    </section>
-
-    <section class="camc-community-right camc-community-orbit">
-      <article class="camc-community-stat">
-        <span>Reputación</span>
-        <b>{{system.reputacion.value}} / 10</b>
-        <div class="camc-progress"><i style="width: {{reputacionPct}}%"></i></div>
-        <small>{{reputacionEstado}}</small>
-      </article>
-      <button type="button" class="community-generate camc-action-button"><i class="fas fa-dice"></i><span>Generar asentamiento</span></button>
-    </section>
-
-    <section class="camc-community-resources">
-      {{#each recursos as |r|}}
-      <article class="camc-resource-chip {{r.tone}}">
-        <i class="fas {{r.icon}}"></i>
-        <span>{{r.label}}</span>
-        <b>{{r.value}}</b>
-        <div class="camc-stepper">
-          <button type="button" class="camc-adjust" data-path="system.recursos.{{r.key}}" data-delta="-1">-</button>
-          <button type="button" class="camc-adjust" data-path="system.recursos.{{r.key}}" data-delta="1">+</button>
-        </div>
-      </article>
-      {{/each}}
-    </section>
+  <section class="camc-com-points">
+    {{#each puntos as |p|}}
+    <article class="camc-com-point {{p.key}}">
+      <header><i class="fas {{p.icon}}"></i><span>{{p.label}}</span><b>{{p.value}}<small> / {{p.max}}</small></b></header>
+      <div class="camc-com-pips">{{#each p.pips as |pip|}}<i class="{{#if pip.on}}on{{/if}}"></i>{{/each}}</div>
+      <p class="camc-com-nivel">{{p.texto}}</p>
+      <div class="camc-stepper">
+        <button type="button" data-action="punto" class="com-punto" data-attr="{{p.key}}" data-delta="-1" title="Perder 1 punto"><i class="fas fa-minus"></i></button>
+        <button type="button" data-action="punto" class="com-punto" data-attr="{{p.key}}" data-delta="1" title="Ganar 1 punto"><i class="fas fa-plus"></i></button>
+      </div>
+    </article>
+    {{/each}}
   </section>
 
-  <nav class="camc-tabs tabs" data-group="primary">
-    <a class="item active" data-tab="resumen"><i class="fas fa-gauge-high"></i> Resumen</a>
+  {{#if efectos.length}}
+  <ul class="camc-com-efectos">{{#each efectos}}<li>{{this}}</li>{{/each}}</ul>
+  {{/if}}
+
+  <nav class="camc-tabs tabs">
+    {{#each pestanas as |p|}}<a class="item {{#if p.activa}}active{{/if}}" data-action="tab" data-group="primary" data-tab="{{p.id}}"><i class="fas {{p.icono}}"></i> {{p.label}}</a>{{/each}}
   </nav>
 
   <main class="camc-body camc-community-tabs-body">
-    <section class="tab active" data-group="primary" data-tab="resumen">
+    <section class="tab {{#if (eq tabs.resumen.active true)}}active{{/if}}" data-group="primary" data-tab="resumen">
+      <div class="camc-grid camc-community-summary">
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-book-open"></i> Descripción</h2><textarea name="system.descripcion">{{system.descripcion}}</textarea></section>
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-box-open"></i> Principales bienes</h2><textarea name="system.bienes">{{system.bienes}}</textarea></section>
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-user-group"></i> Cuervos destacados y supervivientes</h2><textarea name="system.destacados">{{system.destacados}}</textarea></section>
+        <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-skull-crossbones"></i> Enemigo jurado</h2>
+          <input name="system.enemigo_jurado" type="text" value="{{system.enemigo_jurado}}" placeholder="Nombre (opcional)"/>
+          <textarea name="system.enemigo_historia" placeholder="Origen de la confrontación y punto en el que está">{{system.enemigo_historia}}</textarea>
+        </section>
+      </div>
+      <div class="camc-com-acciones">
+        <button type="button" data-action="reparto" class="camc-action-button com-reparto"><i class="fas fa-sliders"></i> Reparto inicial (6 puntos)</button>
+        <button type="button" data-action="generar" class="camc-action-button community-generate"><i class="fas fa-dice"></i> Generar comunidad</button>
+      </div>
+    </section>
+
+    <section class="tab {{#if (eq tabs.mesa.active true)}}active{{/if}}" data-group="primary" data-tab="mesa">
+      <section class="camc-panel">
+        <h2 class="camc-panel-title"><i class="fas fa-users"></i> Mesa presidencial</h2>
+        <p class="notes">Los siete cargos. Todos votan con el mismo valor; el voto del Presidente solo cuenta para desempatar.</p>
+        <div class="camc-form-grid camc-com-mesa">
+          {{#each mesa as |m|}}
+          <label><span>{{m.label}}{{#if m.pj}} <i class="fas fa-user-check" title="Lo lleva un PJ"></i>{{/if}}</span><input name="system.mesa.{{m.key}}" type="text" value="{{m.value}}"/></label>
+          {{/each}}
+        </div>
+        <button type="button" data-action="mesaPJ" class="camc-action-button com-mesa-pj"><i class="fas fa-wand-magic-sparkles"></i> Rellenar con los PJ</button>
+      </section>
+    </section>
+
+    <section class="tab {{#if (eq tabs.sucesos.active true)}}active{{/if}}" data-group="primary" data-tab="sucesos">
+      <section class="camc-panel">
+        <h2 class="camc-panel-title"><i class="fas fa-dice-d6"></i> Sucesos de la comunidad</h2>
+        <p class="notes">Al final de cada aventura se tira un suceso (2D6 leídos como D66). Salvo los favorables, hay una tirada de salvación a dificultad 18, o 14 si el cargo responsable es un PJ.</p>
+        <button type="button" data-action="suceso" class="camc-action-button com-suceso"><i class="fas fa-dice"></i> Tirar suceso (D66)</button>
+        <ol class="camc-com-diario">
+          {{#each acontecimientos as |a|}}<li><time>{{a.fecha}}</time> {{a.texto}}</li>{{else}}<li class="vacio">Todavía no hay acontecimientos anotados.</li>{{/each}}
+        </ol>
+        <label class="camc-com-libre"><span>Anotar un acontecimiento</span><input class="com-anotar" type="text" placeholder="Escribe y pulsa Intro"/></label>
+      </section>
+    </section>
+
+    <section class="tab {{#if (eq tabs.inventario.active true)}}active{{/if}}" data-group="primary" data-tab="inventario">
       <div class="camc-grid camc-community-summary">
         <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-shield"></i> Defensas</h2><textarea name="system.defensas">{{system.defensas}}</textarea></section>
         <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-handshake"></i> Aliados</h2><textarea name="system.aliados">{{system.aliados}}</textarea></section>
         <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-skull"></i> Amenazas</h2><textarea name="system.amenazas">{{system.amenazas}}</textarea></section>
         <section class="camc-panel"><h2 class="camc-panel-title"><i class="fas fa-book"></i> Notas</h2><textarea name="system.notas">{{system.notas}}</textarea></section>
       </div>
+      <section class="camc-panel">
+        <h2 class="camc-panel-title"><i class="fas fa-boxes-stacked"></i> Inventario <small>(opcional: no es una regla del manual)</small></h2>
+        <div class="camc-form-grid small">
+          <label><span>Censo</span><input name="system.poblacion" type="number" value="{{system.poblacion}}"/></label>
+          <label><span>Comida</span><input name="system.recursos.comida" type="number" value="{{system.recursos.comida}}"/></label>
+          <label><span>Agua</span><input name="system.recursos.agua" type="number" value="{{system.recursos.agua}}"/></label>
+          <label><span>Combustible</span><input name="system.recursos.combustible" type="number" value="{{system.recursos.combustible}}"/></label>
+          <label><span>Medicina</span><input name="system.recursos.medicina" type="number" value="{{system.recursos.medicina}}"/></label>
+          <label><span>Munición</span><input name="system.recursos.municion" type="number" value="{{system.recursos.municion}}"/></label>
+          <label><span>Repuestos</span><input name="system.recursos.repuestos" type="number" value="{{system.recursos.repuestos}}"/></label>
+        </div>
+      </section>
     </section>
   </main>
-</form>
+</div>

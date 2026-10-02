@@ -45,7 +45,7 @@ export class CAMCItem extends Item {
     const parts = [];
     if (this.system.dano) parts.push(String(this.system.dano).replaceAll("D", "d6"));
     if (Number(this.system.dano_fijo)) parts.push(String(Number(this.system.dano_fijo)));
-    const attr = CAMC.categoriasArma[this.system.categoria]?.atributoDano ?? "";
+    const attr = options.sinAtributo ? "" : (CAMC.categoriasArma[this.system.categoria]?.atributoDano ?? "");
     const attrBonus = this._damageAttributeBonus(actor, attr);
     if (attrBonus) parts.push(String(attrBonus));
     if (Number(options.extra)) parts.push(String(Number(options.extra)));

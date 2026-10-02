@@ -131,7 +131,7 @@ export class CAMCMotoSheet extends ActorSheetV1 {
     const label = event.currentTarget.dataset.label ?? "Persecución";
     const kind = event.currentTarget.dataset.kind ?? "movement";
     const mod = Number(event.currentTarget.dataset.mod ?? 0);
-    if (kind === "movement" && event.currentTarget.dataset.key === "mantener_posicion") {
+    if (kind === "movement" && event.currentTarget.dataset.key === "mantener") {
       return ChatMessage.create({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
         content: `<div class="camc-chat-card"><header><h3><i class="fas fa-flag-checkered"></i> Persecución</h3><strong>${this.actor.name}</strong></header><p><b>Mantener posición:</b> no requiere tirada y conserva la franja actual.</p></div>`
@@ -520,7 +520,8 @@ export class CAMCMotoSheet extends ActorSheetV1 {
       terrains: CAMC.persecucion?.terrenos ?? [],
       visibility: CAMC.persecucion?.visibilidad ?? [],
       movement: CAMC.persecucion?.movimiento ?? [],
-      maneuvers: CAMC.persecucion?.maniobras ?? []
+      maneuvers: CAMC.persecucion?.maniobras ?? [],
+      combat: CAMC.persecucion?.combate ?? []
     };
   }
 }

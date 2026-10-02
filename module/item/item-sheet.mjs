@@ -1,6 +1,7 @@
 import { createRollMessage } from "../compat/chat.mjs";
 import { ItemSheetV1 } from "../compat/applications.mjs";
 import { CAMC } from "../config.mjs";
+import { tirarCaducidad } from "../session/sesion.mjs";
 import { YsystemDice } from "../dice/ysystem-dice.mjs";
 import { pct, adjustNumberField } from "../utils/sheet-utils.mjs";
 import { validateMotoModEquip } from "../rules/vehicle-mods.mjs";
@@ -67,18 +68,9 @@ export class CAMCItemSheet extends ItemSheetV1 {
 
   async #rollDecay() {
     if (this.item.system.deterioro !== "R") return ui.notifications.info("La caducidad solo se tira para equipo reciclado usado.");
-    const roll = await new Roll("1d6").evaluate();
-    const total = roll.total;
-    let result = "Sigue funcionando.";
-    if (total === 3) result = "Necesita reparación: Mecánica a dificultad 12, hasta tres intentos.";
-    if (total === 2) result = "Necesita reparación: Mecánica a dificultad 18, hasta dos intentos.";
-    if (total === 1) result = "Roto: solo puede repararse con un crítico en una única tirada de Mecánica.";
-    return roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this.item.actor }),
-      flavor: `${this.item.name} · Caducidad de equipo reciclado<br><strong>${result}</strong>`
-    });
+    const fila = await tirarCaducidad(this.item);
+    return createRollMessage({ speaker: ChatMessage.getSpeaker({ actor: this.item.actor }), content: `<div class="camc-chat-card"><header><strong>Caducidad de equipo reciclado</strong></header><ul>${fila}</ul></div>` });
   }
-
 
   async #toggleEquipped() {
     if (this.item.type === "escudo") return this.item.update({ "system.equipado": !this.item.system.equipado });
