@@ -28,6 +28,8 @@ Hooks.once("init", async () => {
   CONFIG.CAMC = CAMC;
   CONFIG.Actor.documentClass = CAMCActor;
   CONFIG.Item.documentClass = CAMCItem;
+  // El desempate (DES, INT, PER, Agilidad) va como fracción < 0,5: con 0 decimales el rastreador muestra el total entero.
+  CONFIG.Combat.initiative = { formula: "1d6 + @combate.iniciativa + @combate.desempate", decimals: 0 };
 
 
   DocumentSheetConfig.unregisterSheet(Actor, "core", CoreActorSheetV1);

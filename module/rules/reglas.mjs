@@ -162,10 +162,11 @@ export const ESPACIOS = { grande: 2, mediano: 1, pequeno: 0.5, no_equipable: 0 }
 
 /**
  * Clave de orden que resuelve los empates del manual: mayor DES, luego INT, PER y Agilidad.
- * Se suma como fracción al total para que el rastreador de combate ordene bien.
+ * Se suma como fracción menor que 0,5 al total para que el rastreador ordene bien sin que el
+ * número que se muestra (redondeado) cambie.
  */
 export const desempateIniciativa = ({ des = 0, int = 0, per = 0, agilidad: ag = 0 }) =>
-  (clamp(des, 0, 9) * 1e-1 + clamp(int, 0, 9) * 1e-2 + clamp(per, 0, 9) * 1e-3 + clamp(ag, 0, 99) * 1e-5);
+  clamp(des, 0, 9) * 0.05 + clamp(int, 0, 9) * 0.005 + clamp(per, 0, 9) * 0.0005 + clamp(ag, 0, 99) * 0.000005;
 
 /* ---------- Reputación (cap. 6, pp. 118-120) ---------- */
 

@@ -2,7 +2,7 @@
   "id": "cuervos-de-asgard-mc",
   "title": "Cuervos de Asgard Motor Club",
   "description": "WIP / Work in Progress. Sistema no oficial para Cuervos de Asgard Motor Club en Foundry VTT v13 y v14, basado en Ysystem, con hojas de personaje, PNJ, comunidad y moto, automatización de tiradas, combate, daño, proezas, dones, parches, vehículos, generadores y compendios importables. Código e imágenes generados con asistencia de IA.",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "compatibility": {
     "minimum": "13",
     "verified": "13.351",
@@ -17,7 +17,7 @@
   "url": "https://github.com/ManuRomera/cuervos-de-asgard-mc",
   "bugs": "https://github.com/ManuRomera/cuervos-de-asgard-mc/issues/new/choose",
   "manifest": "https://raw.githubusercontent.com/ManuRomera/cuervos-de-asgard-mc/main/system.json",
-  "download": "https://github.com/ManuRomera/cuervos-de-asgard-mc/releases/download/v1.6.0/cuervos-de-asgard-mc.zip",
+  "download": "https://github.com/ManuRomera/cuervos-de-asgard-mc/releases/download/v1.6.1/cuervos-de-asgard-mc.zip",
   "icon": "systems/cuervos-de-asgard-mc/assets/ui/icon-camc.webp",
   "esmodules": [
     "module/cuervos-de-asgard.mjs"
@@ -153,5 +153,5 @@
   },
   "primaryTokenAttribute": "combate.salud",
   "secondaryTokenAttribute": "combate.proezas",
-  "initiative": "1d6 + @combate.iniciativa"
+  "initiative": "1d6 + @combate.iniciativa + @combate.desempate"
 }

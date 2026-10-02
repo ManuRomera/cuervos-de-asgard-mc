@@ -66,7 +66,11 @@ export class CAMCActor extends Actor {
     s.vehiculo.dados_dano = this._addVehicleDamageDice(s.vehiculo.base_dados_dano ?? "2D", vehicleMods.dadosDano);
     s.vehiculo.modificaciones_max = vehicleMods.sidecar ? 3 : 2;
 
-    s.combate.iniciativa = R.iniciativa(des, int) + vehicleMods.iniciativa;
+    // Iniciativa = DES + INT. Acelerador trucado y Manillar adaptado suman solo yendo en la moto (la hoja
+    // pregenerada de Bomani muestra 7, no 12): se guardan aparte.
+    s.combate.iniciativa = R.iniciativa(des, int);
+    s.combate.iniciativa_moto = vehicleMods.iniciativa;
+    s.combate.desempate = R.desempateIniciativa({ des, int, per, agilidad: s.valores_pasivos.agilidad });
     s.combate.tiradas_iniciales_hechas ??= false;
     s.combate.arma_preparada = this.getArmaPreparada();
     s.combate.penalizador_salud = this.getPenalizadorSalud();
@@ -153,6 +157,7 @@ export class CAMCActor extends Actor {
     // Fuego con RF 4 pese a su FUE 7), así que solo se rellenan si la ficha no trae ya un
     // valor propio, en vez de sobrescribirlo siempre.
     s.combate.iniciativa ??= des + int;
+    s.combate.desempate = R.desempateIniciativa({ des, int, per, agilidad: Number(s.valores_pasivos.agilidad ?? 0) });
     s.combate.arma_preparada = this.getArmaPreparada();
     s.combate.penalizador_salud = this.getPenalizadorSalud();
     s.combate.resistencia_fisica ??= Math.max(0, 12 - fue);

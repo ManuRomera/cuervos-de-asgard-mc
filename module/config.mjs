@@ -215,14 +215,14 @@ CAMC.ubicacionesCarga = {
 };
 
 CAMC.modificacionesMoto = {
-  acelerador_trucado: { label: "Acelerador trucado", resumen: "+5 a la iniciativa en persecuciones." },
+  acelerador_trucado: { label: "Acelerador trucado", resumen: "+5 a la tirada de iniciativa yendo en la moto." },
   alforjas_extra: { label: "Alforjas extra", resumen: "+8 espacios de alforjas; la carga a pie sigue limitada a 6." },
   chasis_reforzado: { label: "Chasis reforzado", resumen: "+5 Estructura." },
   chasis_ultrarreforzado: { label: "Chasis ultrarreforzado", resumen: "+5 Estructura adicional; permite maniobras ofensivas contra cualquier vehículo; -1 Maniobrabilidad." },
   configuracion_ofensiva: { label: "Configuración ofensiva", resumen: "+1D a los Dados de daño de la moto." },
   dispensador_aceite: { label: "Dispensador de aceite", resumen: "+3 a la dificultad de perseguidores durante este turno y el siguiente, hasta dos veces por persecución." },
   estribos_combate: { label: "Estribos de combate", resumen: "+3 a Embestir y Sacar de la carretera contra otras motos." },
-  manillar_adaptado: { label: "Manillar adaptado", resumen: "+1 Iniciativa y +1 Maniobrabilidad." },
+  manillar_adaptado: { label: "Manillar adaptado", resumen: "+1 a la iniciativa yendo en la moto y +1 Maniobrabilidad." },
   transmision_mejorada: { label: "Mejora del sistema de transmisión", resumen: "Una vez por persecución cambia un fallo de Conducir por éxito normal." },
   motor_potenciado: { label: "Motor potenciado", resumen: "Una vez por persecución cambia de posición en una franja." },
   obra_maestra: { label: "Obra maestra", resumen: "+3 a Conversación si el personaje llega montado en su moto." },

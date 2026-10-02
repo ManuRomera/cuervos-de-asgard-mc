@@ -65,7 +65,7 @@
       </div>
       <div class="camc-mini-vitals">
         <div class="camc-derived-mini"><i class="fas fa-shield-halved"></i><span>Res. Física</span><strong>{{system.combate.resistencia_fisica}}</strong></div>
-        <button type="button" class="camc-derived-mini roll-initiative" title="Tirar iniciativa · {{initiativeWeapon.label}}"><i class="fas fa-crossed-swords"></i><span>Iniciativa</span><strong>{{system.combate.iniciativa}}</strong><small>{{initiativeWeapon.label}}</small></button>
+        <button type="button" class="camc-derived-mini roll-initiative" title="Tirar iniciativa · {{initiativeWeapon.label}}"><i class="fas fa-crossed-swords"></i><span>Iniciativa</span><strong>{{system.combate.iniciativa}}</strong><small>{{initiativeWeapon.label}}{{#if system.combate.iniciativa_moto}} · +{{system.combate.iniciativa_moto}} en moto{{/if}}</small></button>
       </div>
       <div class="camc-health-penalty {{healthPenalty.tone}}"><i class="fas fa-triangle-exclamation"></i> {{healthPenalty.label}}{{#if healthPenalty.resistencia}} · {{healthPenalty.resistencia}}{{/if}}</div>
     </aside>
