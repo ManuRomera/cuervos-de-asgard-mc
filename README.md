@@ -30,6 +30,8 @@ Foundry descargará el sistema desde la última release y avisará cuando haya a
 
 ## Qué incluye
 
+- **Tutorial del sistema** en doce capítulos con ejercicios: se ofrece al entrar por primera vez y está en el botón «Tutorial» de la pestaña de Actores.
+
 - Hoja de `personaje` con cabecera temática, retrato o figura exterior, deidad, cargo, parches, recursos, atributos, valores derivados, habilidades, combate, equipo, dones, moto vinculada y biografía.
 - Hoja de `pnj` rápida para mesa, con atributos, valores derivados, habilidades relevantes, ataque, acción especial, salud y notas.
 - Hoja de `comunidad` con las reglas del capítulo 7: Moral, Población y Recursos, capítulo y capacidad especial, Mesa presidencial, enemigo jurado y tabla de sucesos (D66) con tirada de salvación.

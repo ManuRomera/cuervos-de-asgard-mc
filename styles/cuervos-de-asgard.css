@@ -6492,3 +6492,8 @@ body.camc-acc-facil .camc *,body.camc-acc-facil .camc-chat-card *,body.camc-acc-
 body.camc-acc-quieto .camc *,body.camc-acc-quieto .camc-chat-card *{animation:none!important;transition:none!important}
 .camc-accesibilidad{margin-right:4px}
 .camc-community-rules .camc-tabs [data-action="tab"] *{pointer-events:none}
+
+/* CAMC 1.7 — tutorial (diario): recuadros de ejercicio y de nota. */
+.camc-tuto-ejercicio{border-left:4px solid #e57922;background:rgba(229,121,34,.12);padding:6px 12px;margin:12px 0;border-radius:3px}
+.camc-tuto-ejercicio h4{margin:4px 0;font-size:1em;text-transform:uppercase;letter-spacing:.05em}
+.camc-tuto-nota{border-left:4px solid #1f97a3;background:rgba(31,151,163,.1);padding:4px 12px;margin:12px 0;border-radius:3px}

@@ -3,7 +3,7 @@ import { TERRENOS, VISIBILIDAD, MOVIMIENTOS, MANIOBRAS, MANIOBRAS_COMBATE } from
 export const CAMC = {};
 
 CAMC.systemId = "cuervos-de-asgard-mc";
-CAMC.contentVersion = "1.8.1";
+CAMC.contentVersion = "1.9.0";
 
 CAMC.atributos = {
   car: { label: "Carisma", short: "CAR" },

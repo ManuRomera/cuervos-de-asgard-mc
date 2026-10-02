@@ -25,8 +25,10 @@
         "Boton": "Abrir accesibilidad",
         "Hint": "Tamaño del texto, contraste, lectura fácil y menos movimiento en las hojas del sistema."
       },
-      "SystemGuideShown": {
-        "Name": "Guía inicial CAMC mostrada"
+      "Tutorial": {
+        "Name": "Tutorial del sistema",
+        "Boton": "Abrir el tutorial",
+        "Hint": "Doce capítulos cortos con ejercicios: personajes, tiradas, combate, motos, comunidad y campaña."
       },
       "CompactSheets": {
         "Name": "Hojas compactas",

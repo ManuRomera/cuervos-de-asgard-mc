@@ -21,6 +21,7 @@ import { nuevaSesion, finDeAventura } from "./session/sesion.mjs";
 import { AsistenteCreacion } from "./apps/creacion.mjs";
 import * as R from "./rules/reglas.mjs";
 import { registrarAccesibilidad } from "./ui/accesibilidad.mjs";
+import { registrarTutorial, abrirTutorial, ofrecerTutorial } from "./ui/tutorial.mjs";
 
 Hooks.once("init", async () => {
   console.log(`CAMC | Inicializando Cuervos de Asgard Motor Club · Foundry ${versionInfo().version}`);
@@ -56,6 +57,7 @@ Hooks.once("init", async () => {
 
 Hooks.once("setup", () => {
   registrarAccesibilidad();
+  registrarTutorial();
   game.settings.register(CAMC.systemId, "contentVersion", {
     name: "CAMC.Settings.ContentVersion.Name",
     scope: "world",
@@ -85,14 +87,6 @@ Hooks.once("setup", () => {
       ninguno: "CAMC.Settings.ResistenciaAutomatica.Ninguno"
     },
     default: "pj"
-  });
-
-  game.settings.register(CAMC.systemId, "systemGuideShown", {
-    name: "CAMC.Settings.SystemGuideShown.Name",
-    scope: "world",
-    config: false,
-    type: Boolean,
-    default: false
   });
 
   game.settings.register(CAMC.systemId, "compactSheets", {
@@ -295,6 +289,7 @@ Hooks.once("ready", async () => {
     nuevaSesion,
     finDeAventura,
     creacionGuiada: actor => new AsistenteCreacion(actor).render(true),
+    tutorial: abrirTutorial,
     sucesoComunidad: tirarSucesoComunidad
   };
 
@@ -305,6 +300,7 @@ Hooks.once("ready", async () => {
   if (game.user.isGM && game.settings.get(CAMC.systemId, "autoImportContent")) {
     await CAMCContentImporter.importAll();
   }
+  ofrecerTutorial();
 });
 
 Hooks.once("ready", () => {
@@ -343,16 +339,19 @@ Hooks.on("renderChatMessageHTML", (message, html) => {
   activateCamcContextMenu(root);
 });
 
-/** Botones del DJ en el directorio de actores: ritmo de campaña (nueva sesión, fin de aventura). */
+/** Botones en el directorio de actores: el tutorial para todos y el ritmo de campaña para el DJ. */
 Hooks.on("renderActorDirectory", (_app, html) => {
-  if (!game.user.isGM) return;
   const element = normalizeHookElement(html);
   if (!element || element.querySelector(".camc-campaign-tools")) return;
   const caja = document.createElement("div");
   caja.className = "camc-campaign-tools";
-  caja.innerHTML = `<button type="button" data-camc="sesion"><i class="fas fa-play"></i> Nueva sesión</button><button type="button" data-camc="aventura"><i class="fas fa-flag-checkered"></i> Fin de aventura</button>`;
-  caja.querySelector('[data-camc="sesion"]').addEventListener("click", () => nuevaSesion());
-  caja.querySelector('[data-camc="aventura"]').addEventListener("click", () => finDeAventura());
+  const dj = game.user.isGM
+    ? `<button type="button" data-camc="sesion"><i class="fas fa-play"></i> Nueva sesión</button><button type="button" data-camc="aventura"><i class="fas fa-flag-checkered"></i> Fin de aventura</button>`
+    : "";
+  caja.innerHTML = `${dj}<button type="button" data-camc="tutorial"><i class="fas fa-graduation-cap"></i> Tutorial</button>`;
+  caja.querySelector('[data-camc="sesion"]')?.addEventListener("click", () => nuevaSesion());
+  caja.querySelector('[data-camc="aventura"]')?.addEventListener("click", () => finDeAventura());
+  caja.querySelector('[data-camc="tutorial"]').addEventListener("click", () => abrirTutorial());
   const cabecera = element.querySelector(".directory-header");
   if (cabecera) cabecera.after(caja); else element.prepend(caja);
 });
