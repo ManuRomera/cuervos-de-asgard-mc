@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/screenshots/banner.png" alt="Cuervos de Asgard Motor Club para Foundry VTT" width="100%">
+</p>
+
 # Cuervos de Asgard Motor Club para Foundry VTT
 
 <p align="center">
