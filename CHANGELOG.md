@@ -2,6 +2,10 @@
 
 Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
+## [1.7.1] — 2026-10-05
+
+- Añadido el botón «Créditos» en los ajustes del paquete (Manu Romera · Digital RPG Design). No cambia el juego.
+
 ## [1.7.0] — 2026-10-02
 
 ### Tutorial del sistema
