@@ -128,3 +128,15 @@ El código, las imágenes y parte de los textos de apoyo de este repositorio han
 ## Informar de un problema
 
 Si encuentras un fallo, especialmente al usar Foundry V13 o V14, [abre una incidencia en GitHub](https://github.com/ManuRomera/cuervos-de-asgard-mc/issues/new/choose). El formulario pide las versiones exactas de Foundry y del sistema, los pasos para reproducirlo y qué esperabas que ocurriera. Puedes adjuntar capturas y errores de consola, y señalar si ocurre también sin módulos. Necesitas una cuenta de GitHub.
+
+---
+
+<p align="center">
+  <a href="https://github.com/ManuRomera">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ManuRomera/ManuRomera/main/brand/MR_09_Monograma_Marfil_Transparente.png">
+      <img src="https://raw.githubusercontent.com/ManuRomera/ManuRomera/main/brand/MR_10_Monograma_Negro_Transparente.png" alt="MR · Manu Romera" height="56">
+    </picture>
+  </a><br>
+  <sub>Hecho por <a href="https://github.com/ManuRomera"><b>Manu Romera</b></a> · Digital RPG Design</sub>
+</p>
